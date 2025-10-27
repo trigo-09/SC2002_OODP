@@ -1,6 +1,6 @@
 package entity.user;
-
 import entity.internship.InternshipOpportunity;
+import java.util.*;
 
 public class CompanyRep extends User {
 
@@ -9,6 +9,22 @@ public class CompanyRep extends User {
 	private String position;
 	private RepStatus status;
 	private List<InternshipOpportunity> internships;
+
+    /**
+     *
+     * @param name
+     * @param id
+     * @param pass
+     * @param company
+     * @param department
+     * @param position
+     * @param status
+     */
+    public CompanyRep(String name, String id, String pass, String company, String department, String position, RepStatus status) {
+        super(name, id, pass);
+        // TODO - implement CompanyRep.CompanyRep
+        throw new UnsupportedOperationException();
+    }
 
 	public void getDepartment() {
 		// TODO - implement CompanyRep.getDepartment
@@ -52,20 +68,6 @@ public class CompanyRep extends User {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param name
-	 * @param id
-	 * @param pass
-	 * @param company
-	 * @param department
-	 * @param position
-	 * @param status
-	 */
-	public CompanyRep(String name, String id, String pass, String company, String department, String position, RepStatus status) {
-		// TODO - implement CompanyRep.CompanyRep
-		throw new UnsupportedOperationException();
-	}
 
 	public RepStatus getStatus() {
 		return this.status;

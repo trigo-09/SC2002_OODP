@@ -1,4 +1,5 @@
 package entity.user;
+import java.util.*;
 
 public class UserFactory {
 

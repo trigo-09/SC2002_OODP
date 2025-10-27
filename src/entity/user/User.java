@@ -6,9 +6,29 @@ public abstract class User {
 	private String id;
 	private String hashedPassword;
 
-	public String getHashedPassword() {
+    /**
+     *
+     * @param name
+     * @param id
+     * @param pass
+     */
+    protected User(String name, String id, String pass) {
+        // TODO - implement User.User
+        throw new UnsupportedOperationException();
+    }
+
+
+    public String getHashedPassword() {
 		return this.hashedPassword;
 	}
+
+    /**
+     *
+     * @param pass
+     */
+    protected void setHashedPassword(String pass) {
+        this.hashedPassword = pass;
+    }
 
 	public String getID() {
 		// TODO - implement User.getID
@@ -20,23 +40,5 @@ public abstract class User {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param pass
-	 */
-	protected void setHashedPassword(String pass) {
-		this.hashedPassword = pass;
-	}
-
-	/**
-	 * 
-	 * @param name
-	 * @param id
-	 * @param pass
-	 */
-	protected User(String name, String id, String pass) {
-		// TODO - implement User.User
-		throw new UnsupportedOperationException();
-	}
 
 }

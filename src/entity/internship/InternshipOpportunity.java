@@ -1,6 +1,6 @@
 package entity.internship;
-
 import entity.application.Application;
+import java.time.LocalDate;
 import entity.user.CompanyRep;
 
 import java.util.*;
@@ -8,11 +8,11 @@ import java.util.*;
 public class InternshipOpportunity {
 
 	Collection<Application> submission;
-	private int companyName;
+	private String companyName;
 	private String title;
 	private String description;
 	private InternshipLevel level;
-	private Collection<String> preferredMajors;
+	private String preferredMajors;
 	private LocalDate openingDate;
 	private LocalDate closingDate;
 	private List<Application> appslots;
@@ -20,7 +20,7 @@ public class InternshipOpportunity {
 	private Boolean visibility;
 	private CompanyRep createdBy;
 	private String id;
-	private List<Applicantion> approvedslot;
+	private List<Application> approvedslot;
 
 	/**
 	 * 
@@ -31,12 +31,12 @@ public class InternshipOpportunity {
 	}
 
 	public void isVisibile() {
-		// TODO - implement InternshipOpportunity.isVisibile
+		// TODO - implement entity.internship.InternshipOpportunity.isVisibile
 		throw new UnsupportedOperationException();
 	}
 
 	public void getCompanyName() {
-		// TODO - implement InternshipOpportunity.getCompanyName
+		// TODO - implement entity.internship.InternshipOpportunity.getCompanyName
 		throw new UnsupportedOperationException();
 	}
 
@@ -45,7 +45,8 @@ public class InternshipOpportunity {
 	 * @param companyName
 	 */
 	public void setCompanyName(int companyName) {
-		this.companyName = companyName;
+		// TODO - implement entity.internship.InternshipOpportunity.setCompanyName
+		throw new UnsupportedOperationException();
 	}
 
 	public String getTitle() {
@@ -120,8 +121,8 @@ public class InternshipOpportunity {
 		this.closingDate = closingDate;
 	}
 
-	public Application[] getSlots() {
-		// TODO - implement InternshipOpportunity.getSlots
+	public List<Application> getSlots() {
+		// TODO - implement entity.internship.InternshipOpportunity.getSlots
 		throw new UnsupportedOperationException();
 	}
 
@@ -129,8 +130,8 @@ public class InternshipOpportunity {
 	 * 
 	 * @param slots
 	 */
-	public void setSlots(Application[] slots) {
-		// TODO - implement InternshipOpportunity.setSlots
+	public void setSlots(List<Application> slots) {
+		// TODO - implement entity.internship.InternshipOpportunity.setSlots
 		throw new UnsupportedOperationException();
 	}
 

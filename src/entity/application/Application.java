@@ -1,6 +1,6 @@
 package entity.application;
-
 import entity.internship.InternshipOpportunity;
+
 import entity.user.Student;
 
 public class Application {

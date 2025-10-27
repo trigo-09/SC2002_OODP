@@ -34,7 +34,8 @@ public class Student extends User {
 	 * @param year
 	 * @param major
 	 */
-	protected Student(String name, String id, String pass, int year, string major) {
+	protected Student(String name, String id, String pass, int year, String major) {
+        super(name, id, pass);
 		// TODO - implement Student.Student
 		throw new UnsupportedOperationException();
 	}
