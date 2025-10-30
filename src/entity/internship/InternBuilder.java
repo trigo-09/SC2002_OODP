@@ -12,7 +12,7 @@ public class InternBuilder {
 														 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots,
 														 InternStatus status, CompanyRep createdBy){
 		InternshipOpportunity internshipOpportunity = new InternshipOpportunity(id, companyName, title, description, level, preferredMajors, openingDate,
-				closingDate, numOfSlots, status, createdBy);
+				closingDate, numOfSlots,createdBy);
 		return internshipOpportunity;
 
 	}

@@ -26,7 +26,7 @@ public class InternshipOpportunity implements Serializable {
 
 	public InternshipOpportunity(String id, String companyName, String title, String description, InternshipLevel level,
 								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots,
-								 InternStatus status, CompanyRep createdBy){
+								 CompanyRep createdBy){
 		this.id = id;
 		this.companyName = companyName;
 		this.title = title;
@@ -37,7 +37,7 @@ public class InternshipOpportunity implements Serializable {
 		this.closingDate = closingDate;
 		this.numOfSlots = numOfSlots;
 		this.appslots = new ArrayList<>();
-		this.status = status;
+		this.status = InternStatus.PENDING;
 		this.visibility = false;
 		this.createdBy = createdBy;
 		this.approvedslots = new ArrayList<>();
