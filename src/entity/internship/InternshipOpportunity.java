@@ -35,7 +35,7 @@ public class InternshipOpportunity implements Serializable {
 		this.preferredMajors = preferredMajors;
 		this.openingDate = openingDate;
 		this.closingDate = closingDate;
-		this.numOfSlots = 0;
+		this.numOfSlots = numOfSlots;
 		this.appslots = new ArrayList<>();
 		this.status = status;
 		this.visibility = false;
@@ -48,7 +48,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 	/**
 	 *
-	 * @param id
+	 * @param id unique internship id
 	 */
 	public void setID(String id){
 		this.id = id;
@@ -60,7 +60,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param companyName
+	 * @param companyName internship's company name
 	 */
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
@@ -72,7 +72,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param title
+	 * @param title internship's title
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -84,7 +84,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param description
+	 * @param description internship's description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -96,7 +96,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param level
+	 * @param level internship's level
 	 */
 	public void setLevel(InternshipLevel level) {
 		this.level = level;
@@ -108,7 +108,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param preferredMajors
+	 * @param preferredMajors internship's preferred majors
 	 */
 	public void setPreferredMajors(String preferredMajors) {
 		this.preferredMajors = preferredMajors;
@@ -120,7 +120,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param openingDate
+	 * @param openingDate internship's opening date
 	 */
 	public void setOpeningDate(LocalDate openingDate) {
 		this.openingDate = openingDate;
@@ -132,7 +132,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param closingDate
+	 * @param closingDate internship's opening date
 	 */
 	public void setClosingDate(LocalDate closingDate) {
 		this.closingDate = closingDate;
@@ -144,7 +144,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 *
-	 * @param numOfSlots
+	 * @param numOfSlots number of available slots
 	 */
 	public void setNumOfSlots(int numOfSlots){
 		this.numOfSlots = numOfSlots;
@@ -156,7 +156,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param slots
+	 * @param slots internship applicationss
 	 */
 	public void setSlots(List<Application> slots) {
 		this.appslots = slots;
@@ -169,10 +169,10 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 *
-	 * @param state
+	 * @param status internship's status
 	 */
-	public void setStatus(InternStatus state) {
-		this.status = state;
+	public void setStatus(InternStatus status) {
+		this.status = status;
 	}
 
 	public Boolean getVisibility() {
@@ -182,7 +182,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param visibility
+	 * @param visibility internship's visibility
 	 */
 	public void setVisibility(Boolean visibility) {
 		this.visibility = visibility;
@@ -193,7 +193,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 	/**
 	 *
-	 * @param creator
+	 * @param creator the comanyrep that created the internship
 	 */
 	public void setCreatedBy(CompanyRep creator){
 		this.createdBy = creator;
@@ -204,7 +204,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 	/**
 	 *
-	 * @param approvedslots
+	 * @param approvedslots approved applications
 	 */
 	public void setApprovedslots(List<Application> approvedslots){
 		this.approvedslots=approvedslots;
