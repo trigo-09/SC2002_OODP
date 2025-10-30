@@ -1,13 +1,15 @@
 package entity.internship;
 import entity.application.Application;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import entity.user.CompanyRep;
 
 import java.util.*;
 
-public class InternshipOpportunity {
+public class InternshipOpportunity implements Serializable {
 
-	Collection<Application> submission;
+	private String id;
 	private String companyName;
 	private String title;
 	private String description;
@@ -15,38 +17,53 @@ public class InternshipOpportunity {
 	private String preferredMajors;
 	private LocalDate openingDate;
 	private LocalDate closingDate;
+	private int numOfSlots;
 	private List<Application> appslots;
 	private InternStatus status;
 	private Boolean visibility;
 	private CompanyRep createdBy;
-	private String id;
-	private List<Application> approvedslot;
+	private List<Application> approvedslots;
 
+	public InternshipOpportunity(String id, String companyName, String title, String description, InternshipLevel level,
+								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots,
+								 InternStatus status, CompanyRep createdBy){
+		this.id = id;
+		this.companyName = companyName;
+		this.title = title;
+		this.description = description;
+		this.level = level;
+		this.preferredMajors = preferredMajors;
+		this.openingDate = openingDate;
+		this.closingDate = closingDate;
+		this.numOfSlots = 0;
+		this.appslots = new ArrayList<>();
+		this.status = status;
+		this.visibility = false;
+		this.createdBy = createdBy;
+		this.approvedslots = new ArrayList<>();
+	}
+
+	public String getID(){
+		return this.id;
+	}
 	/**
-	 * 
-	 * @param state
+	 *
+	 * @param id
 	 */
-	public void setStatus(InternStatus state) {
-		this.status = state;
+	public void setID(String id){
+		this.id = id;
 	}
 
-	public void isVisibile() {
-		// TODO - implement entity.internship.InternshipOpportunity.isVisibile
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCompanyName() {
-		// TODO - implement entity.internship.InternshipOpportunity.getCompanyName
-		throw new UnsupportedOperationException();
+	public String getCompanyName() {
+		return this.companyName;
 	}
 
 	/**
 	 * 
 	 * @param companyName
 	 */
-	public void setCompanyName(int companyName) {
-		// TODO - implement entity.internship.InternshipOpportunity.setCompanyName
-		throw new UnsupportedOperationException();
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public String getTitle() {
@@ -121,9 +138,20 @@ public class InternshipOpportunity {
 		this.closingDate = closingDate;
 	}
 
+	public int getNumOfSlots(){
+		return this.numOfSlots;
+	}
+
+	/**
+	 *
+	 * @param numOfSlots
+	 */
+	public void setNumOfSlots(int numOfSlots){
+		this.numOfSlots = numOfSlots;
+	}
+
 	public List<Application> getSlots() {
-		// TODO - implement entity.internship.InternshipOpportunity.getSlots
-		throw new UnsupportedOperationException();
+		return this.appslots;
 	}
 
 	/**
@@ -131,17 +159,26 @@ public class InternshipOpportunity {
 	 * @param slots
 	 */
 	public void setSlots(List<Application> slots) {
-		// TODO - implement entity.internship.InternshipOpportunity.setSlots
-		throw new UnsupportedOperationException();
+		this.appslots = slots;
 	}
+
 
 	public InternStatus getStatus() {
 		return this.status;
 	}
 
+	/**
+	 *
+	 * @param state
+	 */
+	public void setStatus(InternStatus state) {
+		this.status = state;
+	}
+
 	public Boolean getVisibility() {
 		return this.visibility;
 	}
+
 
 	/**
 	 * 
@@ -154,5 +191,26 @@ public class InternshipOpportunity {
 	public CompanyRep getCreatedBy() {
 		return this.createdBy;
 	}
+	/**
+	 *
+	 * @param creator
+	 */
+	public void setCreatedBy(CompanyRep creator){
+		this.createdBy = creator;
+	}
+
+	public List<Application>  getApprovedSlots(){
+		return this.approvedslots;
+	}
+	/**
+	 *
+	 * @param approvedslots
+	 */
+	public void setApprovedslots(List<Application> approvedslots){
+		this.approvedslots=approvedslots;
+	}
+
+
+
 
 }

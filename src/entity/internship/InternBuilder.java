@@ -8,14 +8,13 @@ import java.util.*;
 
 public class InternBuilder {
 
-	private LocalDate closingDate;
-	private int companyName;
-	private CompanyRep createdBy;
-	private String description;
-	private InternshipLevel level;
-	private LocalDate openingDate;
-	private String preferredMajors;
-	private List<Application> slots;
-	private String title;
+	public static InternshipOpportunity createInternship(String id, String companyName, String title, String description, InternshipLevel level,
+														 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots,
+														 InternStatus status, CompanyRep createdBy){
+		InternshipOpportunity internshipOpportunity = new InternshipOpportunity(id, companyName, title, description, level, preferredMajors, openingDate,
+				closingDate, numOfSlots, status, createdBy);
+		return internshipOpportunity;
+
+	}
 
 }
