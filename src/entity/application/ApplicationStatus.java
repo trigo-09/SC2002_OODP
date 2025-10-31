@@ -2,8 +2,8 @@ package entity.application;
 
 public enum ApplicationStatus {
     PENDING,
-    SUCCESSFUL,
-	UNSUCCESSFUL,
+    APPROVED,
+    REJECTED,
     ACCEPTED,
     WITHDRAWN
 }

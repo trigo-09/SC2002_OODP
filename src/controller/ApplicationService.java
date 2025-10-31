@@ -59,7 +59,7 @@ public class ApplicationService {
         applications.stream()
                 .filter(app -> Objects.equals(app.getStudentId(), student.getId()))
                 .filter(app -> app != application)
-                .filter(app -> app.getStatus() == ApplicationStatus.PENDING || app.getStatus() == ApplicationStatus.SUCCESSFUL)
+                .filter(app -> app.getStatus() == ApplicationStatus.PENDING || app.getStatus() == ApplicationStatus.APPROVED)
                 .forEach(app -> app.changeApplicationStatus(ApplicationStatus.WITHDRAWN));
     }
 
@@ -77,9 +77,9 @@ public class ApplicationService {
     // method for company rep to process applications
     public void reviewApplication(Application application, boolean approve) {
         if (approve) {
-            application.changeApplicationStatus(ApplicationStatus.SUCCESSFUL);
+            application.changeApplicationStatus(ApplicationStatus.APPROVED);
         } else {
-            application.changeApplicationStatus(ApplicationStatus.UNSUCCESSFUL);
+            application.changeApplicationStatus(ApplicationStatus.REJECTED);
         }
     }
 

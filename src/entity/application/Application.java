@@ -1,8 +1,5 @@
 package entity.application;
-import entity.internship.InternshipOpportunity;
 import java.io.Serializable;
-
-import entity.user.Student;
 
 public class Application implements Serializable {
 
@@ -34,10 +31,10 @@ public class Application implements Serializable {
 	// check valid status transition
 	public boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
 		return switch (current) {
-			case PENDING -> next == ApplicationStatus.SUCCESSFUL || next == ApplicationStatus.UNSUCCESSFUL || next == ApplicationStatus.WITHDRAWN;
-			case SUCCESSFUL -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;
+			case PENDING -> next == ApplicationStatus.APPROVED || next == ApplicationStatus.REJECTED || next == ApplicationStatus.WITHDRAWN;
+			case APPROVED -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;
 			case ACCEPTED -> next == ApplicationStatus.WITHDRAWN;
-			case UNSUCCESSFUL, WITHDRAWN -> false;
+			case REJECTED, WITHDRAWN -> false;
 			default -> false;
 		};
 	}
