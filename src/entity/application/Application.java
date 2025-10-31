@@ -19,27 +19,23 @@ public class Application {
     public String getInternshipId() { return internshipId; }
     public ApplicationStatus getStatus() { return status; }
 
-	// Methods to change application status
-	public void accept() {
-		if (this.status != ApplicationStatus.PENDING) {
-			throw new IllegalStateException("Only pending applications can be accepted.");
+	// Changing application status
+	public void changeApplicationStatus(ApplicationStatus newStatus) {
+		if (!validStatusTransition(this.status, newStatus)) {
+			throw new IllegalStateException("Invalid status transition from " + this.status + " to " + newStatus);
 		}
-		this.status = ApplicationStatus.APPROVED;
+		this.status = newStatus;
 	}
 
-	public void reject() {
-		if (this.status != ApplicationStatus.PENDING) {
-			throw new IllegalStateException("Only pending applications can be rejected.");
-		}
-		this.status = ApplicationStatus.REJECTED;
+	// check valid status transition
+	public boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
+		return switch (current) {
+			case PENDING -> next == ApplicationStatus.SUCCESSFUL || next == ApplicationStatus.UNSUCCESSFUL || next == ApplicationStatus.WITHDRAWN;
+			case SUCCESSFUL -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;
+			case ACCEPTED -> next == ApplicationStatus.WITHDRAWN;
+			case UNSUCCESSFUL, WITHDRAWN -> false;
+			default -> false;
+		};
 	}
-
-	public void withdraw() {
-		if (this.status == ApplicationStatus.REJECTED) {
-			throw new IllegalStateException("Only pending or accepted applications can be withdrawn.");
-		}
-		this.status = ApplicationStatus.WITHDRAWN;
-	}
-
 }
 
