@@ -1,6 +1,6 @@
 package entity.user;
 
-import entity.application.Application;
+import entity.request.Application;
 
 import java.util.*;
 

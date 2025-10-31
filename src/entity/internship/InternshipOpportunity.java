@@ -1,5 +1,5 @@
 package entity.internship;
-import entity.application.Application;
+import entity.request.Application;
 
 import java.io.Serializable;
 import java.time.LocalDate;
