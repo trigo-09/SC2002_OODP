@@ -1,8 +1,7 @@
 package entity.internship;
 import entity.application.Application;
-import java.time.LocalDate;
 import entity.user.CompanyRep;
-
+import java.time.LocalDate;
 import java.util.*;
 
 public class InternshipOpportunity {
@@ -30,7 +29,7 @@ public class InternshipOpportunity {
 		this.status = state;
 	}
 
-	public void isVisibile() {
+	public boolean isVisible() {
 		// TODO - implement entity.internship.InternshipOpportunity.isVisibile
 		throw new UnsupportedOperationException();
 	}
