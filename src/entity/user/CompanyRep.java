@@ -18,14 +18,13 @@ public class CompanyRep extends User {
      * @param company
      * @param department
      * @param position
-     * @param status
      */
-    public CompanyRep(String name, String id, String pass, String company, String department, String position, RepStatus status) {
+    public CompanyRep(String name, String id, String pass, String company, String department, String position) {
         super(name, id, pass);
         this.department = department;
         this.companyName = company;
         this.position = position;
-        this.status = status;
+        this.status = RepStatus.PENDING;
 //        throw new UnsupportedOperationException();
     }
 
@@ -83,5 +82,11 @@ public class CompanyRep extends User {
 	public void setStatus(RepStatus status) {
         this.status = status;
 	}
+    public List<InternshipOpportunity> getInternships() {
+        return internships;
+    }
+    public void addInternship(InternshipOpportunity internship) {
+        this.internships.add(internship);
+    }
 
 }
