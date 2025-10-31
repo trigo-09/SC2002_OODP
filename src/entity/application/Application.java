@@ -3,20 +3,20 @@ package entity.application;
 public class Application {
 
 	// Attributes
-	private final String studentID;
-	private final String internshipID;
+	private final String studentId;
+	private final String internshipId;
 	private ApplicationStatus status;
 
 	// Constructor
-	public Application(String studentID, String internshipID) {
-		this.studentID = studentID;
-		this.internshipID = internshipID;
+	public Application(String studentId, String internshipId) {
+		this.studentId = studentId;
+		this.internshipId = internshipId;
 		this.status = ApplicationStatus.PENDING;
 	}
 
 	// Getter methods
-	public String getStudentId() { return studentID; }
-    public String getInternshipId() { return internshipID; }
+	public String getStudentId() { return studentId; }
+    public String getInternshipId() { return internshipId; }
     public ApplicationStatus getStatus() { return status; }
 
 	// Methods to change application status
