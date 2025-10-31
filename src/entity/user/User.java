@@ -14,6 +14,10 @@ public abstract class User {
      */
     protected User(String name, String id, String pass) {
         // TODO - implement User.User
+        this.name = name;
+        this.id = id;
+        this.hashedPassword = pass;
+
         throw new UnsupportedOperationException();
     }
 
@@ -32,11 +36,13 @@ public abstract class User {
 
 	public String getID() {
 		// TODO - implement User.getID
+        return this.id;
 		throw new UnsupportedOperationException();
 	}
 
 	public String getUserName() {
 		// TODO - implement User.getUserName
+        return this.name;
 		throw new UnsupportedOperationException();
 	}
 

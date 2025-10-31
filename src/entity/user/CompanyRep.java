@@ -22,55 +22,58 @@ public class CompanyRep extends User {
      */
     public CompanyRep(String name, String id, String pass, String company, String department, String position, RepStatus status) {
         super(name, id, pass);
-        // TODO - implement CompanyRep.CompanyRep
-        throw new UnsupportedOperationException();
+        this.department = department;
+        this.companyName = company;
+        this.position = position;
+        this.status = status;
+//        throw new UnsupportedOperationException();
     }
 
-	public void getDepartment() {
-		// TODO - implement CompanyRep.getDepartment
-		throw new UnsupportedOperationException();
+	public String getDepartment() {
+        return department;
+//		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * 
 	 * @param department
 	 */
-	public void setDepartment(int department) {
-		// TODO - implement CompanyRep.setDepartment
-		throw new UnsupportedOperationException();
+	public void setDepartment(String department) {
+        this.department = department;
+//		throw new UnsupportedOperationException();
 	}
 
-	public void getCompanyName() {
-		// TODO - implement CompanyRep.getCompanyName
-		throw new UnsupportedOperationException();
+	public String getCompanyName() {
+        return companyName;
+//		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * 
 	 * @param companyName
 	 */
-	public void setCompanyName(int companyName) {
-		// TODO - implement CompanyRep.setCompanyName
-		throw new UnsupportedOperationException();
+	public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+//		throw new UnsupportedOperationException();
 	}
 
-	public void getPosition() {
-		// TODO - implement CompanyRep.getPosition
-		throw new UnsupportedOperationException();
+	public String getPosition() {
+        return position;
+//		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * 
 	 * @param position
 	 */
-	public void setPosition(int position) {
-		// TODO - implement CompanyRep.setPosition
-		throw new UnsupportedOperationException();
+	public void setPosition(String position) {
+        this.position = position;
+//		throw new UnsupportedOperationException();
 	}
 
 
 	public RepStatus getStatus() {
-		return this.status;
+        return this.status;
 	}
 
 	/**
@@ -78,7 +81,7 @@ public class CompanyRep extends User {
 	 * @param status
 	 */
 	public void setStatus(RepStatus status) {
-		this.status = status;
+        this.status = status;
 	}
 
 }
