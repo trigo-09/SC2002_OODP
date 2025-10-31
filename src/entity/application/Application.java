@@ -1,9 +1,10 @@
 package entity.application;
 import entity.internship.InternshipOpportunity;
+import java.io.Serializable;
 
 import entity.user.Student;
 
-public class Application {
+public class Application implements Serializable {
 
 	Student applicant;
 	InternshipOpportunity opportunity;

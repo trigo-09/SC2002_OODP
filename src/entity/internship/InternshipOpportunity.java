@@ -1,11 +1,13 @@
 package entity.internship;
 import entity.application.Application;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import entity.user.CompanyRep;
 
 import java.util.*;
 
-public class InternshipOpportunity {
+public class InternshipOpportunity implements Serializable {
 
 	Collection<Application> submission;
 	private String companyName;
