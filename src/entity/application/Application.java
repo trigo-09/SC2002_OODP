@@ -1,6 +1,10 @@
 package entity.application;
+import entity.internship.InternshipOpportunity;
+import java.io.Serializable;
 
-public class Application {
+import entity.user.Student;
+
+public class Application implements Serializable {
 
 	// Attributes
 	private final String studentId;
