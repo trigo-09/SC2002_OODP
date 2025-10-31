@@ -30,7 +30,7 @@ public abstract class User {
         this.hashedPassword = pass;
     }
 
-	public String getID() {
+	public String getId() {
 		// TODO - implement User.getID
 		throw new UnsupportedOperationException();
 	}
