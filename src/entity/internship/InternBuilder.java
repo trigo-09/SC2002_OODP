@@ -1,20 +1,90 @@
 package entity.internship;
 
-import entity.application.Application;
 import entity.user.CompanyRep;
 import java.time.LocalDate;
 
-import java.util.*;
-
 public class InternBuilder {
+	private String id;
+	private String companyName;
+	private String title;
+	private String description;
+	private InternshipLevel level;
+	private String preferredMajors;
+	private LocalDate openingDate;
+	private LocalDate closingDate;
+	private int numOfSlots;
+	private InternStatus status;
+	private CompanyRep createdBy;
 
-	public static InternshipOpportunity createInternship(String id, String companyName, String title, String description, InternshipLevel level,
-														 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots,
-														  CompanyRep createdBy){
-		InternshipOpportunity internshipOpportunity = new InternshipOpportunity(id, companyName, title, description, level, preferredMajors, openingDate,
-				closingDate, numOfSlots,createdBy);
-		return internshipOpportunity;
-
+	public InternBuilder id(String id){
+		this.id = id;
+		return this;
 	}
+
+	public InternBuilder companyName(String companyName){
+		this.companyName = companyName;
+		return this;
+	}
+
+	public InternBuilder title(String title){
+		this.title =  title;
+		return this;
+	}
+
+	public InternBuilder description(String description){
+		this.description = description;
+		return this;
+	}
+
+	public InternBuilder level(InternshipLevel level){
+		this.level = level;
+		return this;
+	}
+
+	public InternBuilder preferredMajors(String preferredMajors){
+		this.preferredMajors = preferredMajors;
+		return this;
+	}
+
+	public InternBuilder openingDate(LocalDate openingDate){
+		this.openingDate = openingDate;
+		return this;
+	}
+
+	public InternBuilder closingDate(LocalDate closingDate){
+		this.closingDate = closingDate;
+		return this;
+	}
+
+	public InternBuilder numOfSlots(int numOfSlots){
+		this.numOfSlots = numOfSlots;
+		return this;
+	}
+
+	public InternBuilder status(InternStatus status){
+		this.status = status;
+		return this;
+	}
+
+	public InternBuilder createdBy(CompanyRep createdBy){
+		this.createdBy = createdBy;
+		return this;
+	}
+
+	public  InternshipOpportunity build(){
+		return new InternshipOpportunity(
+				id,
+				companyName,
+				title,
+				description,
+				level,
+				preferredMajors,
+				openingDate,
+				closingDate,
+				numOfSlots,
+				createdBy
+		);
+	}
+
 
 }
