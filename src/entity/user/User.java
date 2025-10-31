@@ -37,13 +37,13 @@ public abstract class User {
 	public String getID() {
 		// TODO - implement User.getID
         return this.id;
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 	public String getUserName() {
 		// TODO - implement User.getUserName
         return this.name;
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 
