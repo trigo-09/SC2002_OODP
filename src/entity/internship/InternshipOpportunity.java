@@ -52,7 +52,7 @@ public class InternshipOpportunity {
 		return this.title;
 	}
 
-	public String getID() {
+	public String getId() {
 		return this.id;
 	}
 
