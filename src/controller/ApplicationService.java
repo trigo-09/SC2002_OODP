@@ -2,17 +2,18 @@ package controller;
 
 import entity.application.*;
 import entity.internship.InternshipOpportunity;
+import entity.request.*;
+import controller.database.*;
 import entity.user.Student;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class ApplicationService {
 
-    private final SystemRepository systemRepository;
+    private final IResposistory systemRepository;
     private static final int MAX_ACTIVE_APPLICATIONS = 3;
 
-    public ApplicationService(SystemRepository systemRepository) {
+    public ApplicationService(IResposistory systemRepository) {
         this.systemRepository = systemRepository;
     }
 

@@ -7,7 +7,7 @@ import util.FilterCriteria;
 
 import java.util.List;
 
-public class ApplicationService1 {
+public class ApplicationService_VP {
 
 	/**
 	 * 

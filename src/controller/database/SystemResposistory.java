@@ -1,6 +1,7 @@
 package controller.database;
 
 import java.util.*;
+import entity.request.*;
 import entity.user.*;
 import entity.internship.InternshipOpportunity;
 import entity.application.Application;
@@ -15,6 +16,9 @@ public class SystemResposistory implements IResposistory {
 	private final Map<String, CompanyRep> approvedReps = new HashMap<>();
 	private final List<InternshipOpportunity> internships = new ArrayList<>();
 	private final List<Application> applications = new ArrayList<>();
+    private final List<WithdrawalRequest> withdrawalRequests = new ArrayList<>();
+    private final List<RegistrationRequest> registrationRequests = new ArrayList<>();
+    private final List<InternshipVetRequest> internshipVetRequests = new ArrayList<>();
 
 	/**
 	 * 
@@ -52,7 +56,58 @@ public class SystemResposistory implements IResposistory {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
+    /**
+     *
+     * @param withdrawalRequest
+     */
+    public void addWithdrawalRequest(WithdrawalRequest withdrawalRequest) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @param registrationRequest
+     */
+    public void addRegistrationRequest(RegistrationRequest registrationRequest) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @param internshipVetRequest
+     */
+    public void addInternshipVetRequest(InternshipVetRequest internshipVetRequest) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @param withdrawalRequest
+     */
+    @Override
+    public void removeWithdrawalRequest(WithdrawalRequest withdrawalRequest) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @param internshipVetRequest
+     */
+    @Override
+    public void removeInternshipVetRequest(InternshipVetRequest internshipVetRequest) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @param registrationRequest
+     */
+    @Override
+    public void removeRegistrationRequest(RegistrationRequest registrationRequest) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
 	 * 
 	 * @param studentId
 	 */
@@ -111,6 +166,12 @@ public class SystemResposistory implements IResposistory {
 	public Map<String, Student> getStudents() {
 		return this.students;
 	}
+
+    public List<InternshipVetRequest> getInternshipVetRequests() {return this.internshipVetRequests;}
+
+    public List<RegistrationRequest> getRegistrationRequests() {return this.registrationRequests;}
+
+    public List<WithdrawalRequest> getWithdrawalRequests() {return this.withdrawalRequests;}
 
 	/**
 	 * 

@@ -1,4 +1,4 @@
-package entity.application;
+package entity.request;
 
 public enum WithdrawalDecision {
     PENDING,

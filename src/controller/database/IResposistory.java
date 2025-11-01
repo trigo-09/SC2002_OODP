@@ -2,6 +2,7 @@ package controller.database;
 
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
+import entity.request.*;
 import entity.user.*;
 import java.util.*;
 public interface IResposistory {
@@ -29,6 +30,44 @@ public interface IResposistory {
 	 * @param student
 	 */
 	void addStudent(Student student);
+
+    /**
+     *
+     * @param withdrawalRequest
+     */
+    public void addWithdrawalRequest(WithdrawalRequest withdrawalRequest);
+
+
+    /**
+     *
+     * @param registrationRequest
+     */
+    public void addRegistrationRequest(RegistrationRequest registrationRequest);
+
+
+    /**
+     *
+     * @param internshipVetRequest
+     */
+    public void addInternshipVetRequest(InternshipVetRequest internshipVetRequest);
+
+    /**
+     *
+     * @param withdrawalRequest
+     */
+    public void removeWithdrawalRequest(WithdrawalRequest withdrawalRequest);
+
+    /**
+     *
+     * @param registrationRequest
+     */
+    public void removeRegistrationRequest(RegistrationRequest registrationRequest);
+
+    /**
+     *
+     * @param internshipVetRequest
+     */
+    public void removeInternshipVetRequest(InternshipVetRequest internshipVetRequest);
 
 	/**
 	 * 
@@ -65,6 +104,12 @@ public interface IResposistory {
 	Map<String, CompanyRep> getPendingReps();
 
 	Map<String, Student> getStudents();
+
+    List<InternshipVetRequest> getInternshipVetRequests();
+
+    List<RegistrationRequest> getRegistrationRequests();
+
+    List<WithdrawalRequest> getWithdrawalRequests();
 
 	/**
 	 * 
