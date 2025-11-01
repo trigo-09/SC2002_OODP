@@ -16,6 +16,10 @@ public abstract class User implements Serializable {
      */
     protected User(String name, String id, String pass) {
         // TODO - implement User.User
+        this.name = name;
+        this.id = id;
+        this.hashedPassword = pass;
+
         throw new UnsupportedOperationException();
     }
 
@@ -34,12 +38,14 @@ public abstract class User implements Serializable {
 
 	public String getID() {
 		// TODO - implement User.getID
-		throw new UnsupportedOperationException();
+        return this.id;
+		//throw new UnsupportedOperationException();
 	}
 
 	public String getUserName() {
 		// TODO - implement User.getUserName
-		throw new UnsupportedOperationException();
+        return this.name;
+		//throw new UnsupportedOperationException();
 	}
 
 
