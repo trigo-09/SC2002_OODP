@@ -1,6 +1,5 @@
 package controller.service;
 
-import entity.*;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
@@ -8,7 +7,7 @@ import util.FilterCriteria;
 
 import java.util.List;
 
-public class ApplicationService {
+public class ApplicationService1 {
 
 	/**
 	 * 
