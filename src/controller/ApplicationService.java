@@ -1,7 +1,6 @@
 package controller;
 
 import entity.application.*;
-import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ApplicationService {
         // check active applications
         long count = applications.stream()
                 .filter(app -> Objects.equals(app.getStudentId(), student.getId()))
-                .filter(app -> app.getStatus() == ApplicationStatus.PENDING || app.getStatus() == ApplicationStatus.SUCCESSFUL)
+                .filter(app -> app.getStatus() == ApplicationStatus.PENDING || app.getStatus() == ApplicationStatus.REJECTED)
                 .count();
 
         if (count >= MAX_ACTIVE_APPLICATIONS) {
@@ -44,14 +43,10 @@ public class ApplicationService {
     // eligibility method
     public boolean isEligible(Student student, InternshipOpportunity internship) {
         // Internship must be visible
-        if (!internship.isVisible()) {
-            return false;
-        }
+        if (!internship.isVisible()) {return false;}
 
         // Students year must match the internship level
-        if (student.getYear() < 3 && internship.getLevel() != InternshipLevel.BASIC) {
-            return false;
-        }
+        if (!internship.getLevel().isEligible(student.getYear())) {return false;}
 
         // Major must match (unless internship accepts "Any")
         String preferredMajors = internship.getPreferredMajors();
@@ -62,7 +57,6 @@ public class ApplicationService {
         // Passed all checks
         return true;
     }
-
 
     // method for student to accept application
     public void acceptApplication(Student student, Application application) {
