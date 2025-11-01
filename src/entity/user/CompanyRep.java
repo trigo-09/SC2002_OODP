@@ -24,6 +24,7 @@ public class CompanyRep extends User {
         this.department = department;
         this.companyName = company;
         this.position = position;
+        internships = new ArrayList<>();
         this.status = RepStatus.PENDING;
 //        throw new UnsupportedOperationException();
     }
@@ -82,9 +83,16 @@ public class CompanyRep extends User {
 	public void setStatus(RepStatus status) {
         this.status = status;
 	}
+
+
     public List<InternshipOpportunity> getInternships() {
         return internships;
     }
+
+    /**
+     *
+     * @param internship
+     */
     public void addInternship(InternshipOpportunity internship) {
         this.internships.add(internship);
     }
