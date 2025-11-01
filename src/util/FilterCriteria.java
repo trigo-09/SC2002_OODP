@@ -12,4 +12,43 @@ public class FilterCriteria {
 	private InternshipLevel level;
 	private LocalDate closingDate;
 
+    public FilterCriteria(InternStatus status, String preferredMajor, InternshipLevel level, LocalDate closingDate) {
+        this.status = status == null ? InternStatus.APPROVED : status;
+        this.preferredMajor = preferredMajor == null ? "" : preferredMajor;
+        this.level = level == null ? InternshipLevel.BASIC : level;
+        this.closingDate = closingDate == null ? LocalDate.now() : closingDate;
+
+    }
+
+    public InternStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(InternStatus status) {
+        this.status = status;
+    }
+
+    public String getPreferredMajor() {
+        return preferredMajor;
+    }
+
+    public void setPreferredMajor(String preferredMajor) {
+        this.preferredMajor = preferredMajor;
+    }
+
+    public InternshipLevel getLevel() {
+        return level;
+    }
+
+    public void setLevel(InternshipLevel level) {
+        this.level = level;
+    }
+
+    public LocalDate getClosingDate() {
+        return closingDate;
+    }
+
+    public void setClosingDate(LocalDate closingDate) {
+        this.closingDate = closingDate;
+    }
 }
