@@ -36,7 +36,7 @@ public abstract class User implements Serializable {
         this.hashedPassword = pass;
     }
 
-	public String getID() {
+	public String getId() {
 		// TODO - implement User.getID
         return this.id;
 		//throw new UnsupportedOperationException();

@@ -4,7 +4,7 @@ import entity.application.Application;
 import java.io.Serializable;
 import java.time.LocalDate;
 import entity.user.CompanyRep;
-
+import java.time.LocalDate;
 import java.util.*;
 
 public class InternshipOpportunity implements Serializable {
@@ -32,7 +32,7 @@ public class InternshipOpportunity implements Serializable {
 		this.status = state;
 	}
 
-	public void isVisibile() {
+	public boolean isVisible() {
 		// TODO - implement entity.internship.InternshipOpportunity.isVisibile
 		throw new UnsupportedOperationException();
 	}
@@ -53,6 +53,10 @@ public class InternshipOpportunity implements Serializable {
 
 	public String getTitle() {
 		return this.title;
+	}
+
+	public String getId() {
+		return this.id;
 	}
 
 	/**

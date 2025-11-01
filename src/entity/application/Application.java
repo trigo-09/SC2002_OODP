@@ -1,25 +1,42 @@
 package entity.application;
-import entity.internship.InternshipOpportunity;
 import java.io.Serializable;
-
-import entity.user.Student;
 
 public class Application implements Serializable {
 
-	Student applicant;
-	InternshipOpportunity opportunity;
-	public String studentID;
-	public String internshipID;
-	public ApplicationStatus status;
+	// Attributes
+	private final String studentId;
+	private final String internshipId;
+	private ApplicationStatus status;
 
-	public void accept() {
-		// TODO - implement Application.accept
-		throw new UnsupportedOperationException();
+	// Constructor
+	public Application(String studentId, String internshipId) {
+		this.studentId = studentId;
+		this.internshipId = internshipId;
+		this.status = ApplicationStatus.PENDING;
 	}
 
-	public void withdraw() {
-		// TODO - implement Application.withdraw
-		throw new UnsupportedOperationException();
+	// Getter methods
+	public String getStudentId() { return studentId; }
+    public String getInternshipId() { return internshipId; }
+    public ApplicationStatus getStatus() { return status; }
+
+	// Changing application status
+	public void changeApplicationStatus(ApplicationStatus newStatus) {
+		if (!validStatusTransition(this.status, newStatus)) {
+			throw new IllegalStateException("Invalid status transition from " + this.status + " to " + newStatus);
+		}
+		this.status = newStatus;
 	}
 
+	// check valid status transition
+	public boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
+		return switch (current) {
+			case PENDING -> next == ApplicationStatus.APPROVED || next == ApplicationStatus.REJECTED || next == ApplicationStatus.WITHDRAWN;
+			case APPROVED -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;
+			case ACCEPTED -> next == ApplicationStatus.WITHDRAWN;
+			case REJECTED, WITHDRAWN -> false;
+			default -> false;
+		};
+	}
 }
+
