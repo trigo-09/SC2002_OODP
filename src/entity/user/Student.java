@@ -62,7 +62,7 @@ public class Student extends User {
 	public void rejectApp() {
 		// TODO - implement Student.rejectApp
         if (app.status == ApplicationStatus.APPROVED) {
-            app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
+            app.changeApplicationStatus(ApplicationStatus.REJECTED);
         }
 	}
 
