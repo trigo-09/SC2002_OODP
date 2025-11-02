@@ -1,12 +1,13 @@
 package entity.user;
 
 import entity.application.Application;
+import entity.application.ApplicationStatus;
 
 import java.util.*;
 
 public class Student extends User {
 
-	Collection<Application> applications;
+	ArrayList<Application> applications;
 	private int year;
 	private String major;
 
@@ -34,20 +35,35 @@ public class Student extends User {
 	 * @param year
 	 * @param major
 	 */
-	protected Student(String name, String id, String pass, int year, String major) {
+	public Student(String name, String id, String pass, int year, String major) {
         super(name, id, pass);
 		// TODO - implement Student.Student
-		throw new UnsupportedOperationException();
+		this.year = year;
+        this.major = major;
 	}
 
-	public void acceptApp() {
+    //Added function to add application to student profile
+    public void addApp(Application app) {
+        // adds application only if it doesn't already exist
+        if (!applications.contains(app)) {
+            applications.add(app);
+        }
+    }
+
+	public void acceptApp(Application app) {
 		// TODO - implement Student.acceptApp
-		throw new UnsupportedOperationException();
+        if (app.status == ApplicationStatus.APPROVED) {
+            app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
+            }
+        }
+
 	}
 
 	public void rejectApp() {
 		// TODO - implement Student.rejectApp
-		throw new UnsupportedOperationException();
+        if (app.status == ApplicationStatus.APPROVED) {
+            app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
+        }
 	}
 
 }
