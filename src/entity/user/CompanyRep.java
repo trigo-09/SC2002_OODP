@@ -23,49 +23,51 @@ public class CompanyRep extends User {
     public CompanyRep(String name, String id, String pass, String company, String department, String position, RepStatus status) {
         super(name, id, pass);
         // TODO - implement CompanyRep.CompanyRep
-        throw new UnsupportedOperationException();
+        this.companyName = company;
+        this.department = department;
+        this.status = status;
     }
 
-	public void getDepartment() {
+	public String getDepartment() {
 		// TODO - implement CompanyRep.getDepartment
-		throw new UnsupportedOperationException();
+		return this.department;
 	}
 
 	/**
 	 * 
 	 * @param department
 	 */
-	public void setDepartment(int department) {
-		// TODO - implement CompanyRep.setDepartment
-		throw new UnsupportedOperationException();
+	public void setDepartment(String department) {
+
+		this.department = department;
 	}
 
-	public void getCompanyName() {
-		// TODO - implement CompanyRep.getCompanyName
-		throw new UnsupportedOperationException();
+	public String getCompanyName() {
+
+		return companyName;
 	}
 
 	/**
 	 * 
 	 * @param companyName
 	 */
-	public void setCompanyName(int companyName) {
-		// TODO - implement CompanyRep.setCompanyName
-		throw new UnsupportedOperationException();
+	public void setCompanyName(String companyName) {
+
+		this.companyName = companyName;
 	}
 
-	public void getPosition() {
-		// TODO - implement CompanyRep.getPosition
-		throw new UnsupportedOperationException();
+	public String getPosition() {
+
+		return position;
 	}
 
 	/**
 	 * 
 	 * @param position
 	 */
-	public void setPosition(int position) {
-		// TODO - implement CompanyRep.setPosition
-		throw new UnsupportedOperationException();
+	public void setPosition(String position) {
+
+		this.position = position;
 	}
 
 
