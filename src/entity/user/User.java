@@ -14,7 +14,9 @@ public abstract class User {
      */
     protected User(String name, String id, String pass) {
         // TODO - implement User.User
-        throw new UnsupportedOperationException();
+        this.name = name;
+        this.id = id;
+        this.hashedPassword = String.valueOf(pass.hashCode());
     }
 
 
@@ -27,17 +29,18 @@ public abstract class User {
      * @param pass
      */
     protected void setHashedPassword(String pass) {
-        this.hashedPassword = pass;
+        this.hashedPassword = String.valueOf(pass.hashCode());
     }
 
 	public String getID() {
 		// TODO - implement User.getID
-		throw new UnsupportedOperationException();
+        return this.id;
+
 	}
 
 	public String getUserName() {
 		// TODO - implement User.getUserName
-		throw new UnsupportedOperationException();
+		return this.name;
 	}
 
 
