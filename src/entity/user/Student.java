@@ -60,9 +60,9 @@ public class Student extends User {
 	}
 
 	public void rejectApp() {
-		// TODO - implement Student.rejectApp
+		// TODO - implement Student.withdrawApp
         if (app.status == ApplicationStatus.APPROVED) {
-            app.changeApplicationStatus(ApplicationStatus.REJECTED);
+            app.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
         }
 	}
 
