@@ -1,5 +1,6 @@
 package entity.user;
 import entity.application.Application;
+import entity.application.ApplicationStatus;
 
 import java.util.*;
 
@@ -42,13 +43,15 @@ public class Student extends User {
 	}
 
 	public void acceptApp(Application app) {
+        app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
 		// TODO - implement Student.acceptApp
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
-	public void rejectApp(Application app) {
+	public void withdrawApp(Application app) { // this only happen after the request is accepted by rep
+        app.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
 		// TODO - implement Student.rejectApp
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 }
