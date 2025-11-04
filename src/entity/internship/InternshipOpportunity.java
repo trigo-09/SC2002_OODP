@@ -209,6 +209,9 @@ public class InternshipOpportunity implements Serializable {
 	public void setApprovedslots(List<Application> approvedslots){
 		this.approvedslots=approvedslots;
 	}
+    public void addApprovedapplication(Application application){
+        this.approvedslots.add(application);
+    }
 
 
 
