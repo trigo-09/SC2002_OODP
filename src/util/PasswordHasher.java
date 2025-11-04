@@ -1,7 +1,6 @@
 package util;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
-import java.util.List;
 
 /**
  * Helps to hash password and verify them using the SHA3-256 algorithm
