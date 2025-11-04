@@ -17,7 +17,7 @@ public class WithdrawalRequest {
         public Application getApplication() {return application;}
         public String getReason() {return reason;}
         public WithdrawalDecision getDecision() { return decision; }
-        public void setDecision(WithdrawalDecision decision) { this.decision = decision; }
+        public void setDecision(WithdrawalDecision decision) { this.decision = decision; } //rmbr to call student withdraw if accepted
         public String getStudentId() { return application.getStudentId(); }
     }
 
