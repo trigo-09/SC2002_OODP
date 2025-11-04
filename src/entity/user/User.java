@@ -43,5 +43,9 @@ public abstract class User {
 		return this.name;
 	}
 
+    public String getId() {
+        return this.id;
+    }
+
 
 }
