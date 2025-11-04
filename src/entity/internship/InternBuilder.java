@@ -61,11 +61,6 @@ public class InternBuilder {
 		return this;
 	}
 
-	public InternBuilder status(InternStatus status){
-		this.status = status;
-		return this;
-	}
-
 	public InternBuilder createdBy(CompanyRep createdBy){
 		this.createdBy = createdBy;
 		return this;
@@ -82,6 +77,7 @@ public class InternBuilder {
 				openingDate,
 				closingDate,
 				numOfSlots,
+                status,
 				createdBy
 		);
 	}

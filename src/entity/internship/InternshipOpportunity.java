@@ -1,8 +1,9 @@
 package entity.internship;
-import entity.request.Application;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import entity.application.Application;
 import entity.user.CompanyRep;
 
 import java.util.*;
