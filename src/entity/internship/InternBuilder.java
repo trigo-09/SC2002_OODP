@@ -13,7 +13,7 @@ public class InternBuilder {
 	private LocalDate openingDate;
 	private LocalDate closingDate;
 	private int numOfSlots;
-	private InternStatus status;
+	private InternStatus status = InternStatus.PENDING;
 	private CompanyRep createdBy;
 
 	public InternBuilder id(String id){
