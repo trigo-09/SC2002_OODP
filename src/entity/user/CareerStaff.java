@@ -14,8 +14,7 @@ public class CareerStaff extends User {
      */
     public CareerStaff(String name, String id, String pass, String department) {
         super(name, id, pass);
-        // TODO - implement CareerStaff.CareerStaff
-        throw new UnsupportedOperationException();
+        this.staffDepartment = department;
     }
 
 	public String getStaffDepartment() {
