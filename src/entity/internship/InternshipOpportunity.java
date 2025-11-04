@@ -1,15 +1,16 @@
 package entity.internship;
-import entity.application.Application;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import entity.application.Application;
 import entity.user.CompanyRep;
-import java.time.LocalDate;
+
 import java.util.*;
 
 public class InternshipOpportunity implements Serializable {
 
-	Collection<Application> submission;
+	private String id;
 	private String companyName;
 	private String title;
 	private String description;
@@ -17,51 +18,62 @@ public class InternshipOpportunity implements Serializable {
 	private String preferredMajors;
 	private LocalDate openingDate;
 	private LocalDate closingDate;
+	private int numOfSlots;
 	private List<Application> appslots;
 	private InternStatus status;
 	private Boolean visibility;
 	private CompanyRep createdBy;
-	private String id;
-	private List<Application> approvedslot;
+	private List<Application> approvedslots;
+
+	public InternshipOpportunity(String id, String companyName, String title, String description, InternshipLevel level,
+								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots, InternStatus status,
+								 CompanyRep createdBy){
+		this.id = id;
+		this.companyName = companyName;
+		this.title = title;
+		this.description = description;
+		this.level = level;
+		this.preferredMajors = preferredMajors;
+		this.openingDate = openingDate;
+		this.closingDate = closingDate;
+		this.numOfSlots = numOfSlots;
+		this.appslots = new ArrayList<>();
+		this.status = status;
+		this.visibility = false;
+		this.createdBy = createdBy;
+		this.approvedslots = new ArrayList<>();
+	}
+
+	public String getID(){
+		return this.id;
+	}
+	/**
+	 *
+	 * @param id unique internship id
+	 */
+	public void setID(String id){
+		this.id = id;
+	}
+
+	public String getCompanyName() {
+		return this.companyName;
+	}
 
 	/**
 	 * 
-	 * @param state
+	 * @param companyName internship's company name
 	 */
-	public void setStatus(InternStatus state) {
-		this.status = state;
-	}
-
-	public boolean isVisible() {
-		// TODO - implement entity.internship.InternshipOpportunity.isVisibile
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCompanyName() {
-		// TODO - implement entity.internship.InternshipOpportunity.getCompanyName
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param companyName
-	 */
-	public void setCompanyName(int companyName) {
-		// TODO - implement entity.internship.InternshipOpportunity.setCompanyName
-		throw new UnsupportedOperationException();
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public String getTitle() {
 		return this.title;
 	}
 
-	public String getId() {
-		return this.id;
-	}
-
 	/**
 	 * 
-	 * @param title
+	 * @param title internship's title
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -73,7 +85,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param description
+	 * @param description internship's description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -85,7 +97,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param level
+	 * @param level internship's level
 	 */
 	public void setLevel(InternshipLevel level) {
 		this.level = level;
@@ -97,7 +109,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param preferredMajors
+	 * @param preferredMajors internship's preferred majors
 	 */
 	public void setPreferredMajors(String preferredMajors) {
 		this.preferredMajors = preferredMajors;
@@ -109,7 +121,7 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param openingDate
+	 * @param openingDate internship's opening date
 	 */
 	public void setOpeningDate(LocalDate openingDate) {
 		this.openingDate = openingDate;
@@ -121,37 +133,57 @@ public class InternshipOpportunity implements Serializable {
 
 	/**
 	 * 
-	 * @param closingDate
+	 * @param closingDate internship's opening date
 	 */
 	public void setClosingDate(LocalDate closingDate) {
 		this.closingDate = closingDate;
 	}
 
+	public int getNumOfSlots(){
+		return this.numOfSlots;
+	}
+
+	/**
+	 *
+	 * @param numOfSlots number of available slots
+	 */
+	public void setNumOfSlots(int numOfSlots){
+		this.numOfSlots = numOfSlots;
+	}
+
 	public List<Application> getSlots() {
-		// TODO - implement entity.internship.InternshipOpportunity.getSlots
-		throw new UnsupportedOperationException();
+		return this.appslots;
 	}
 
 	/**
 	 * 
-	 * @param slots
+	 * @param slots internship applicationss
 	 */
 	public void setSlots(List<Application> slots) {
-		// TODO - implement entity.internship.InternshipOpportunity.setSlots
-		throw new UnsupportedOperationException();
+		this.appslots = slots;
 	}
+
 
 	public InternStatus getStatus() {
 		return this.status;
+	}
+
+	/**
+	 *
+	 * @param status internship's status
+	 */
+	public void setStatus(InternStatus status) {
+		this.status = status;
 	}
 
 	public Boolean getVisibility() {
 		return this.visibility;
 	}
 
+
 	/**
 	 * 
-	 * @param visibility
+	 * @param visibility internship's visibility
 	 */
 	public void setVisibility(Boolean visibility) {
 		this.visibility = visibility;
@@ -160,5 +192,29 @@ public class InternshipOpportunity implements Serializable {
 	public CompanyRep getCreatedBy() {
 		return this.createdBy;
 	}
+	/**
+	 *
+	 * @param creator the comanyrep that created the internship
+	 */
+	public void setCreatedBy(CompanyRep creator){
+		this.createdBy = creator;
+	}
+
+	public List<Application>  getApprovedSlots(){
+		return this.approvedslots;
+	}
+	/**
+	 *
+	 * @param approvedslots approved applications
+	 */
+	public void setApprovedslots(List<Application> approvedslots){
+		this.approvedslots=approvedslots;
+	}
+    public void addApprovedapplication(Application application){
+        this.approvedslots.add(application);
+    }
+
+
+
 
 }
