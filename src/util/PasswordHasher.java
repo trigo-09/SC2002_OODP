@@ -36,8 +36,8 @@ public class PasswordHasher {
 	 * @param hashpassword
 	 */
 	public boolean verify(String password, String hashpassword) {
-		// TODO - implement PasswordHasher.verify
-		throw new UnsupportedOperationException();
+        return hash(password).equals(hashpassword);
 	}
+
 
 }
