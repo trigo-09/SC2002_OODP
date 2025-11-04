@@ -1,12 +1,12 @@
 package entity.user;
-
 import entity.application.Application;
+import entity.application.ApplicationStatus;
 
 import java.util.*;
 
 public class Student extends User {
 
-	Collection<Application> applications;
+	List<Application> applications;
 	private int year;
 	private String major;
 
@@ -36,18 +36,22 @@ public class Student extends User {
 	 */
 	protected Student(String name, String id, String pass, int year, String major) {
         super(name, id, pass);
+        this.year = year;
+        this.major = major;
 		// TODO - implement Student.Student
-		throw new UnsupportedOperationException();
+//		throw new UnsupportedOperationException();
 	}
 
-	public void acceptApp() {
+	public void acceptApp(Application app) {
+        app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
 		// TODO - implement Student.acceptApp
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
-	public void rejectApp() {
+	public void withdrawApp(Application app) { // this only happen after the request is accepted by rep
+        app.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
 		// TODO - implement Student.rejectApp
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 }

@@ -1,8 +1,6 @@
 package entity.user;
 
-import java.io.Serializable;
-
-public abstract class User implements Serializable {
+public abstract class User {
 
 	private String name;
 	private String id;
@@ -19,8 +17,6 @@ public abstract class User implements Serializable {
         this.name = name;
         this.id = id;
         this.hashedPassword = pass;
-
-        throw new UnsupportedOperationException();
     }
 
 
@@ -36,17 +32,20 @@ public abstract class User implements Serializable {
         this.hashedPassword = pass;
     }
 
-	public String getId() {
+	public String getID() {
 		// TODO - implement User.getID
         return this.id;
-		//throw new UnsupportedOperationException();
+
 	}
 
 	public String getUserName() {
 		// TODO - implement User.getUserName
-        return this.name;
-		//throw new UnsupportedOperationException();
+		return this.name;
 	}
+
+    public String getId() {
+        return this.id;
+    }
 
 
 }
