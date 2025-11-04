@@ -16,7 +16,7 @@ public abstract class User {
         // TODO - implement User.User
         this.name = name;
         this.id = id;
-        this.hashedPassword = String.valueOf(pass.hashCode());
+        this.hashedPassword = pass;
     }
 
 
@@ -29,7 +29,7 @@ public abstract class User {
      * @param pass
      */
     protected void setHashedPassword(String pass) {
-        this.hashedPassword = String.valueOf(pass.hashCode());
+        this.hashedPassword = pass;
     }
 
 	public String getID() {
