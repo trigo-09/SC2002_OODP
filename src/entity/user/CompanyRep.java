@@ -18,19 +18,20 @@ public class CompanyRep extends User {
      * @param company
      * @param department
      * @param position
-     * @param status
      */
-    public CompanyRep(String name, String id, String pass, String company, String department, String position, RepStatus status) {
+    public CompanyRep(String name, String id, String pass, String company, String department, String position) {
         super(name, id, pass);
-        // TODO - implement CompanyRep.CompanyRep
-        this.companyName = company;
         this.department = department;
-        this.status = status;
+        this.companyName = company;
+        this.position = position;
+        internships = new ArrayList<>();
+        this.status = RepStatus.PENDING;
+//        throw new UnsupportedOperationException();
     }
 
 	public String getDepartment() {
-		// TODO - implement CompanyRep.getDepartment
-		return this.department;
+        return department;
+//		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -38,13 +39,13 @@ public class CompanyRep extends User {
 	 * @param department
 	 */
 	public void setDepartment(String department) {
-
-		this.department = department;
+        this.department = department;
+//		throw new UnsupportedOperationException();
 	}
 
 	public String getCompanyName() {
-
-		return companyName;
+        return companyName;
+//		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -52,13 +53,13 @@ public class CompanyRep extends User {
 	 * @param companyName
 	 */
 	public void setCompanyName(String companyName) {
-
-		this.companyName = companyName;
+        this.companyName = companyName;
+//		throw new UnsupportedOperationException();
 	}
 
 	public String getPosition() {
-
-		return position;
+        return position;
+//		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -66,13 +67,13 @@ public class CompanyRep extends User {
 	 * @param position
 	 */
 	public void setPosition(String position) {
-
-		this.position = position;
+        this.position = position;
+//		throw new UnsupportedOperationException();
 	}
 
 
 	public RepStatus getStatus() {
-		return this.status;
+        return this.status;
 	}
 
 	/**
@@ -80,7 +81,20 @@ public class CompanyRep extends User {
 	 * @param status
 	 */
 	public void setStatus(RepStatus status) {
-		this.status = status;
+        this.status = status;
 	}
+
+
+    public List<InternshipOpportunity> getInternships() {
+        return internships;
+    }
+
+    /**
+     *
+     * @param internship
+     */
+    public void addInternship(InternshipOpportunity internship) {
+        this.internships.add(internship);
+    }
 
 }

@@ -1,11 +1,13 @@
 package entity.internship;
 import entity.application.Application;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import entity.user.CompanyRep;
-
+import java.time.LocalDate;
 import java.util.*;
 
-public class InternshipOpportunity {
+public class InternshipOpportunity implements Serializable {
 
 	Collection<Application> submission;
 	private String companyName;
@@ -30,7 +32,7 @@ public class InternshipOpportunity {
 		this.status = state;
 	}
 
-	public void isVisibile() {
+	public boolean isVisible() {
 		// TODO - implement entity.internship.InternshipOpportunity.isVisibile
 		throw new UnsupportedOperationException();
 	}
@@ -51,6 +53,10 @@ public class InternshipOpportunity {
 
 	public String getTitle() {
 		return this.title;
+	}
+
+	public String getId() {
+		return this.id;
 	}
 
 	/**
