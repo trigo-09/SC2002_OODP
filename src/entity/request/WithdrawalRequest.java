@@ -6,18 +6,18 @@ public class WithdrawalRequest {
 
         private final Application application;
         private final String reason;
-        private WithdrawalDecision decision;
+        private RequestDecision decision;
 
         public WithdrawalRequest(Application application, String reason) {
             this.application = application;
             this.reason = reason;
-            this.decision = WithdrawalDecision.PENDING;
+            this.decision = RequestDecision.PENDING;
         }
 
         public Application getApplication() {return application;}
         public String getReason() {return reason;}
-        public WithdrawalDecision getDecision() { return decision; }
-        public void setDecision(WithdrawalDecision decision) { this.decision = decision; } //rmbr to call student withdraw if accepted
+        public RequestDecision getDecision() { return decision; }
+        public void setDecision(RequestDecision decision) { this.decision = decision; } //rmbr to call student withdraw if accepted
         public String getStudentId() { return application.getStudentId(); }
     }
 

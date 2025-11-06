@@ -1,6 +1,6 @@
 package entity.request;
 
-public enum WithdrawalDecision {
+public enum RequestDecision {
     PENDING,
     APPROVED,
     REJECTED
