@@ -47,10 +47,8 @@ public class Student extends User {
 		//throw new UnsupportedOperationException();
 	}
 
-	public void withdrawApp(Application app) { // this only happen after the request is accepted by rep
-        app.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
-		// TODO - implement Student.rejectApp
-		//throw new UnsupportedOperationException();
+	public void withdrawApp(Application app) {// this only happen after the request is accepted by rep
+       applications.remove(app);
 	}
 
     public List<Application> getApplications() {
