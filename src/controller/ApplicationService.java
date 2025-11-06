@@ -44,7 +44,7 @@ public class ApplicationService {
     // eligibility method
     public boolean isEligible(Student student, InternshipOpportunity internship) {
         // Internship must be visible
-        if (!internship.isVisible()) {return false;}
+        if (!internship.getVisibility()) {return false;}
 
         // Students year must match the internship level
         if (!internship.getLevel().isEligible(student.getYear())) {return false;}
