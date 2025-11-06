@@ -13,31 +13,28 @@ public abstract class Request implements Serializable {
     public Request(String id, User requester){
         this.id = id;
         this.requester = requester;
-//        this.status = status;
+        this.status = RequestDecision.PENDING;
     }
 
     public String getId(){
         return this.id;
     }
 
-    public void setId(String id){
-        this.id = id;
-    }
 
     public User getRequester(){
         return this.requester;
     }
 
-    public void setRequester(User requester){
-        this.requester = requester;
+
+    public RequestDecision getStatus(){
+        return this.status;
     }
-//
-//    public RequestStatus getStatus(){
-//        return this.status;
-//    }
-//
-//    public void setStatus(RequestStatus status){
-//        this.status = status;
-//    }
+
+    public void approve(){
+        this.status = RequestDecision.APPROVED;
+    }
+    public void reject(){
+        this.status = RequestDecision.REJECTED;
+    }
 
 }
