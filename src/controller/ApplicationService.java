@@ -95,7 +95,7 @@ public class ApplicationService {
     // method for career staff to process withdrawals
     public void processWithdrawal(WithdrawalRequest request, boolean approve) {
         if (approve) {
-            request.setDecision(RequestDecision.APPROVED);
+            request.approve();
             request.getApplication().changeApplicationStatus(ApplicationStatus.WITHDRAWN);
         } else {request.setDecision(RequestDecision.REJECTED);}
         systemRepository.removeWithdrawalRequest(request);
