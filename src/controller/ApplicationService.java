@@ -97,7 +97,7 @@ public class ApplicationService {
         if (approve) {
             request.approve();
             request.getApplication().changeApplicationStatus(ApplicationStatus.WITHDRAWN);
-        } else {request.setDecision(RequestDecision.REJECTED);}
+        } else {request.reject();}
         systemRepository.removeWithdrawalRequest(request);
     }
 
