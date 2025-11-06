@@ -1,5 +1,7 @@
 package controller.service;
 
+import controller.ApplicationService;
+import controller.database.IResposistory;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.CareerStaff;
@@ -8,6 +10,12 @@ import entity.user.Student;
 import entity.request.*;
 
 public class RequestService {
+
+    private final IResposistory repo;
+    private ApplicationService lol;
+    public RequestService(IResposistory repo) {
+        this.repo = repo;
+    }
 
 	/**
 	 * 
@@ -22,14 +30,23 @@ public class RequestService {
 
 	/**
 	 * 
-	 * @param staff
 	 * @param req
-	 * @param approve
 	 */
-	public void processWithdrawalRequest(CareerStaff staff, WithdrawalRequest req, boolean approve) {
-		// TODO - implement RequestService.processWithdrawalRequest
-		throw new UnsupportedOperationException();
+	public void acceptWithdrawalRequest( WithdrawalRequest req) {
+        req.approve();
+        lol.processWithdrawal(req.getApplication(),true);
+        repo.deleteRequest(req);
 	}
+
+    /**
+     *
+     * @param req
+     */
+    public void rejectWithdrawalRequest( WithdrawalRequest req) {
+        req.reject();
+        lol.processWithdrawal(req.getApplication(),false);
+        repo.deleteRequest(req);
+    }
 
 	/**
 	 * 

@@ -117,4 +117,5 @@ public interface IResposistory {
 	 */
 	void registerCompanyRep(CompanyRep rep);
 
+    void deleteRequest(Request request);
 }

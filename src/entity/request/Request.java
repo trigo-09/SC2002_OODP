@@ -8,7 +8,7 @@ public abstract class Request implements Serializable {
 
     private String id;
     private User requester;
-    private RequestDecision status;
+    protected RequestDecision status;
 
     public Request(String id, User requester){
         this.id = id;

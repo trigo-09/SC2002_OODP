@@ -93,12 +93,10 @@ public class ApplicationService {
     }
 
     // method for career staff to process withdrawals
-    public void processWithdrawal(WithdrawalRequest request, boolean approve) {
+    public void processWithdrawal(Application application, boolean approve) {
         if (approve) {
-            request.approve();
-            request.getApplication().changeApplicationStatus(ApplicationStatus.WITHDRAWN);
-        } else {request.reject();}
-        systemRepository.removeWithdrawalRequest(request);
+            application.changeApplicationStatus(ApplicationStatus.APPROVED);
+        }
     }
 
     // ---- helper methods --- \\

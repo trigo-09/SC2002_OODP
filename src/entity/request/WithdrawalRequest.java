@@ -1,6 +1,7 @@
 package entity.request;
 
 import entity.application.Application;
+import entity.application.ApplicationStatus;
 import entity.user.User;
 
 public class WithdrawalRequest extends Request {
@@ -16,5 +17,14 @@ public class WithdrawalRequest extends Request {
 
         public Application getApplication() {return application;}
         public String getReason() {return reason;}
+
+        public void approve() {
+            super.getRequester().addNotification("Application has been approved");
+        }
+
+        public void reject() {
+            super.getRequester().addNotification("Application has been rejected");
+        }
+
     }
 
