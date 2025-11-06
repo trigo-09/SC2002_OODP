@@ -30,11 +30,8 @@ public abstract class Request implements Serializable {
         return this.status;
     }
 
-    public void approve(){
-        this.status = RequestDecision.APPROVED;
-    }
-    public void reject(){
-        this.status = RequestDecision.REJECTED;
-    }
+    public abstract void approve();
+
+    public abstract void reject();
 
 }
