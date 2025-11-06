@@ -76,7 +76,7 @@ public class ApplicationService {
     public WithdrawalRequest requestWithdrawal(Student student, Application application, String reason) {
         verifyOwnership(student, application);
         if (application.validStatusTransition(application.getStatus(), ApplicationStatus.WITHDRAWN)) {
-            WithdrawalRequest request = new WithdrawalRequest(application, reason);
+            WithdrawalRequest request = new WithdrawalRequest(application, reason,student,"");
             systemRepository.addWithdrawalRequest(request);
             return request;
         }
