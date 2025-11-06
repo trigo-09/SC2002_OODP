@@ -42,9 +42,8 @@ public class Student extends User {
 //		throw new UnsupportedOperationException();
 	}
 
-	public void acceptApp(Application app) {
-        app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
-		// TODO - implement Student.acceptApp
+	public void createApp(Application app) {
+        applications.add(app);
 		//throw new UnsupportedOperationException();
 	}
 
