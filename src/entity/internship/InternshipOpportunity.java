@@ -44,14 +44,14 @@ public class InternshipOpportunity implements Serializable {
 		this.approvedslots = new ArrayList<>();
 	}
 
-	public String getID(){
+	public String getId(){
 		return this.id;
 	}
 	/**
 	 *
 	 * @param id unique internship id
 	 */
-	public void setID(String id){
+	public void setId(String id){
 		this.id = id;
 	}
 
