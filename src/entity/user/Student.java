@@ -53,4 +53,12 @@ public class Student extends User {
 		//throw new UnsupportedOperationException();
 	}
 
+    public List<Application> getApplications() {
+        return applications;
+    }
+    public int getNumOfApplications() {
+        return applications.size();
+    }
+
+
 }
