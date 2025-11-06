@@ -173,6 +173,10 @@ public class SystemResposistory implements IResposistory {
 
     public List<WithdrawalRequest> getWithdrawalRequests() {return this.withdrawalRequests;}
 
+    public void deleteRequest(Request request) {
+        throw new UnsupportedOperationException(); // to be implemented
+    }
+
 	/**
 	 * 
 	 * @param rep
