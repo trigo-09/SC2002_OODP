@@ -18,6 +18,6 @@ public class RegistrationRequest extends Request {
        company.addNotification("Account has been approved");
    }
    public void reject() {
-       this.status = RequestDecision.REJECTED;
+       company.addNotification("Account has been rejected");
    }
 }
