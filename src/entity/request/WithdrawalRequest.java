@@ -9,8 +9,8 @@ public class WithdrawalRequest extends Request {
         private final Application application;
         private final String reason;
 
-        public WithdrawalRequest(Application application, String reason, User requester,String id) {
-            super(id,requester);
+        public WithdrawalRequest(Application application, String reason, String requesterId) {
+            super(requesterId);
             this.application = application;
             this.reason = reason;
         }
