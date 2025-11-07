@@ -14,7 +14,7 @@ public class InternBuilder {
 	private LocalDate closingDate;
 	private int numOfSlots;
 	private InternStatus status = InternStatus.PENDING;
-	private CompanyRep createdBy;
+	private String createdBy;
 
 	public InternBuilder id(String id){
 		this.id = id;
