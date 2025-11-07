@@ -42,7 +42,7 @@ public class Student extends User {
 //		throw new UnsupportedOperationException();
 	}
 
-	public void createApp(Application app) {
+	public void addApplication(Application app) {
         applications.add(app);
 		//throw new UnsupportedOperationException();
 	}
