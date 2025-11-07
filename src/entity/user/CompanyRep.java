@@ -102,7 +102,7 @@ public class CompanyRep extends User {
      * Only internship that are pending,approved and filled need to be count
      *
      */
-    public int getNumberOfInternships() {
+    public int getNumOfInternships() {
         return (int)internships.stream()
                 .filter(internship-> internship.getStatus() != InternStatus.REJECTED)
                 .count();
