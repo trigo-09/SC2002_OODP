@@ -159,8 +159,8 @@ public class InternshipOpportunity implements Serializable {
 	 * 
 	 * @param slots internship applicationss
 	 */
-	public void setSlots(List<Application> slots) {
-		this.appslots = slots;
+	public void setPendingApplications(List<Application> slots) {
+		this.pendingApplications = slots;
 	}
 
 
