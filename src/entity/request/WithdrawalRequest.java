@@ -3,7 +3,6 @@ package entity.request;
 import controller.database.IResposistory;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
-import entity.user.User;
 
 public class WithdrawalRequest extends Request {
 
