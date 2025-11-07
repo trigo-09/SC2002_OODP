@@ -47,8 +47,11 @@ public class Student extends User {
 		//throw new UnsupportedOperationException();
 	}
 
-	public void deleteApplication(Application app) {// this only happen after the request is accepted by rep
-       applications.remove(app);
+	public void withdrawApplication(String applicationId) {// this only happen after the request is accepted by rep
+        applications.stream()
+                .filter(app -> app.getApplicationId().equals(applicationId))
+                .findFirst()
+                .ifPresent(app -> app.changeApplicationStatus(ApplicationStatus.WITHDRAWN));
 	}
 
     public List<Application> getApplications() {
