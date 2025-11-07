@@ -1,6 +1,7 @@
 package controller.control.user;
 
 import controller.service.AuthenticationService;
+import entity.user.User;
 
 public class UserController {
 
