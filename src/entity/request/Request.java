@@ -9,10 +9,9 @@ public abstract class Request implements Serializable {
     private String requesterId;
     private String requestId;
 
-    public Request(String id, User requester){
-        this.id = id;
-        this.requester = requester;
-        this.status = RequestDecision.PENDING;
+    public Request(String requestId) {
+        this.requestId = UUID.randomUUID().toString();
+        this.requesterId = requestId;
     }
 
     public String getId(){
