@@ -97,4 +97,10 @@ public class CompanyRep extends User {
         this.internships.add(internship);
     }
 
+    public int getNumberOfInternships() {
+        return (int)internships.stream()
+                .filter(internship-> internship.getStatus() != InternStatus.REJECTED)
+                .count();
+    }
+
 }
