@@ -19,8 +19,8 @@ public abstract class Request implements Serializable {
     }
 
 
-    public User getRequester(){
-        return this.requester;
+    public String getRequesterId(){
+        return this.requesterId;
     }
 
 
