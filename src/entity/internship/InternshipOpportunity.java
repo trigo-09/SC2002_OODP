@@ -22,7 +22,7 @@ public class InternshipOpportunity implements Serializable {
 	private List<Application> pendingApplications; //think of using string id reference instead
 	private InternStatus status;
 	private Boolean visibility;
-	private CompanyRep createdBy;
+	private String createdBy;
 	private List<Application> approvedslots;
 
 	public InternshipOpportunity(String id,String companyName, String title, String description, InternshipLevel level,
