@@ -18,7 +18,7 @@ public class WithdrawalRequest extends Request {
         public Application getApplication() {return application;}
         public String getReason() {return reason;}
 
-        public void approve() {
+        public void approve(IResposistory repo) {
             application.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
             super.getRequester().addNotification("Application has been approved");
         }
