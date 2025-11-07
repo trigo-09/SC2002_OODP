@@ -151,8 +151,8 @@ public class InternshipOpportunity implements Serializable {
 		this.numOfSlots = numOfSlots;
 	}
 
-	public List<Application> getSlots() {
-		return this.appslots;
+	public List<Application> getPendingApplications() {
+		return this.pendingApplications;
 	}
 
 	/**
