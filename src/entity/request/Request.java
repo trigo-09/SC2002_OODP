@@ -24,9 +24,9 @@ public abstract class Request implements Serializable {
     }
 
 
-    public RequestDecision getStatus(){
-        return this.status;
-    }
+    public void approve(){
+        System.out.println("please code");
+    };
 
     public abstract void approve();
 
