@@ -47,7 +47,7 @@ public class Student extends User {
 		//throw new UnsupportedOperationException();
 	}
 
-	public void withdrawApp(Application app) {// this only happen after the request is accepted by rep
+	public void deleteApplication(Application app) {// this only happen after the request is accepted by rep
        applications.remove(app);
 	}
 
