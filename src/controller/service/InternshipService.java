@@ -1,30 +1,70 @@
 package controller.service;
+import java.time.LocalDate;
 import java.util.*;
 
-import entity.internship.InternStatus;
-import entity.internship.InternshipOpportunity;
+import controller.database.IResposistory;
+import entity.internship.*;
+import entity.user.CompanyRep;
 import entity.user.Student;
+import util.FilterCriteria;
 
 public class InternshipService {
 
+    private final IResposistory resposistory;
+    private final RequestService requestService;
+    private static final int MAX_ACTIVE_INTERNSHIPS = 5;
+
+    public InternshipService(IResposistory resposistory, RequestService requestService) {
+        this.resposistory = resposistory;
+        this.requestService = requestService;
+    }
+
 	/**
-	 * 
-	 * @param rep
-	 * @param data
+	 * @param title
+     * @param description
+     * @param level
+     * @param preferredMajors
+     * @param closingDate
+     * @param openingDate
+     * @param numOfSlots
+     * @param createdBy
+     * @param companyName
 	 */
-	public InternshipOpportunity createInternship(String rep, String data) {
-		// TODO - implement InternshipService.createInternship
-		throw new UnsupportedOperationException();
+
+	public InternshipOpportunity proposeInternship(String title,
+                                                   String description,
+                                                   InternshipLevel level,
+                                                   String preferredMajors,
+                                                   LocalDate openingDate,
+                                                   LocalDate closingDate,
+                                                   int numOfSlots,
+                                                   String createdBy,
+                                                   String companyName){
+        InternshipOpportunity internship = new InternBuilder()
+                .title(title)
+                .description(description)
+                .level(level)
+                .preferredMajors(preferredMajors)
+                .openingDate(openingDate)
+                .closingDate(closingDate)
+                .numOfSlots(numOfSlots)
+                .createdBy(createdBy)
+                .companyName(companyName)
+                .build();
+
+        requestService.createInternshipRequest(createdBy, internship);
+        resposistory.addInternship(createdBy, internship);
+        return internship;
 	}
 
 	/**
 	 * 
-	 * @param id
+	 * @param internshipId
 	 * @param visible
 	 */
-	public void setVisibility(String id, boolean visible) {
-		// TODO - implement InternshipService.setVisibility
-		throw new UnsupportedOperationException();
+	public void setVisibility(String internshipId, boolean visible) {
+        InternshipOpportunity internship = resposistory.findInternshipOpportunity(internshipId);
+        internship.setVisibility(visible);
 	}
 
 	/**
@@ -37,47 +77,52 @@ public class InternshipService {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<InternshipOpportunity> getAllInternship() {
-		// TODO - implement InternshipService.getAllInternship
-		throw new UnsupportedOperationException();
+	public List<InternshipOpportunity> getInternship(FilterCriteria filter) {
+        return resposistory.getAllInternships();
+        // to be filled -> might not even use the filter maybe
+	}
+
+	/**
+     *
+     * @param internshipId
+     */
+	public InternshipOpportunity findInternshipById(String internshipId) {
+        return resposistory.findInternshipOpportunity(internshipId);
 	}
 
 	/**
 	 * 
-	 * @param Id
+	 * @param s
+	 * @param internshipId
 	 */
-	public void findByID(String Id) {
-		// TODO - implement InternshipService.findByID
-		throw new UnsupportedOperationException();
+	public boolean isEligible(Student s, String internshipId) {
+        InternshipOpportunity i = findInternshipById(internshipId);
+        if (!i.getVisibility()) {return false;}
+
+        // Students year must match the internship level
+        if (!i.getLevel().isEligible(s.getYear())) {return false;}
+
+        // Major must match (unless internship accepts "Any")
+        String preferredMajors = i.getPreferredMajors();
+        if (!Objects.equals(preferredMajors, "Any") && !Objects.equals(preferredMajors, s.getMajor())) {
+            return false;
+        }
+        // Passed all checks
+        return true;
 	}
 
-	/**
-	 * 
-	 * @param student
-	 * @param intern
-	 */
-	public boolean isEligible(Student student, InternshipOpportunity intern) {
-		// TODO - implement InternshipService.isEligible
-		throw new UnsupportedOperationException();
-	}
+    public boolean isEligible(String repId) {
+        CompanyRep rep = (CompanyRep) resposistory.findUser(repId);
+        return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
+    }
+
 
 	/**
-	 * 
-	 * @param student
-	 * @param intern
-	 */
-	public boolean canApply(Student student, InternshipOpportunity intern) {
-		// TODO - implement InternshipService.canApply
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param Intern
-	 */
-	public boolean isFilled(InternshipOpportunity Intern) {
-		// TODO - implement InternshipService.isFilled
-		throw new UnsupportedOperationException();
+     *
+     * @param internshipId
+     */
+	public boolean isFilled(String internshipId) {
+        return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
 	}
 
 }
