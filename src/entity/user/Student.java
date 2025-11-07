@@ -58,7 +58,10 @@ public class Student extends User {
         return applications;
     }
     public int getNumOfApplications() {
-        return applications.size();
+        return (int)applications.stream()
+                .filter(application -> application.getStatus() == ApplicationStatus.WITHDRAWN)
+                .filter(application -> application.getStatus() != ApplicationStatus.REJECTED)
+                .count();
     }
 
 
