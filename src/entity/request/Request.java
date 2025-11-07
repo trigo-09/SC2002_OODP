@@ -15,7 +15,7 @@ public abstract class Request implements Serializable {
     }
 
     public String getId(){
-        return this.id;
+        return this.requestId;
     }
 
 
