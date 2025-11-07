@@ -28,8 +28,8 @@ public abstract class Request implements Serializable {
         System.out.println("please code");
     };
 
-    public abstract void approve();
-
-    public abstract void reject();
+    public void reject(){
+        System.out.println("please code");
+    };
 
 }
