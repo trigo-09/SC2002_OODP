@@ -19,7 +19,7 @@ public class InternshipOpportunity implements Serializable {
 	private LocalDate openingDate;
 	private LocalDate closingDate;
 	private int numOfSlots;
-	private List<Application> pendingApplications;
+	private List<Application> pendingApplications; //think of using string id reference instead
 	private InternStatus status;
 	private Boolean visibility;
 	private CompanyRep createdBy;
