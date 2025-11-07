@@ -20,7 +20,7 @@ public class WithdrawalRequest extends Request {
 
         public void approve(IResposistory repo) {
             application.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
-            super.getRequester().addNotification("Application has been approved");
+            repo.findUser(super.getRequesterId()).addNotification("Withdrawal request approved");
         }
 
         public void reject() {
