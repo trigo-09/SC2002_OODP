@@ -8,7 +8,7 @@ public abstract class User {
 	private String name;
 	private String id;
 	private String hashedPassword;
-    private final List<Notification> notifications = new ArrayList<>();
+    private final List<Notification> notifications;
 
     /**
      *
