@@ -20,6 +20,7 @@ public abstract class User {
         this.name = name;
         this.id = id;
         this.hashedPassword = pass;
+        notifications = new ArrayList<>();
     }
 
 
