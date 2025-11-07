@@ -6,9 +6,8 @@ import java.io.Serializable;
 
 public abstract class Request implements Serializable {
 
-    private String id;
-    private User requester;
-    protected RequestDecision status;
+    private String requesterId;
+    private String requestId;
 
     public Request(String id, User requester){
         this.id = id;
