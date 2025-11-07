@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class InternBuilder {
-	private String id;
+	private String id = UUID.randomUUID().toString();
 	private String companyName;
 	private String title;
 	private String description;
