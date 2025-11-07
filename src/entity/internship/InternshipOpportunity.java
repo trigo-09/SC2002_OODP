@@ -193,7 +193,7 @@ public class InternshipOpportunity implements Serializable {
 		this.visibility = visibility;
 	}
 
-	public CompanyRep getCreatedBy() {
+	public String getCreatedBy() {
 		return this.createdBy;
 	}
 	/**
