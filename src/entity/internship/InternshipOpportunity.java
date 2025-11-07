@@ -37,7 +37,7 @@ public class InternshipOpportunity implements Serializable {
 		this.openingDate = openingDate;
 		this.closingDate = closingDate;
 		this.numOfSlots = numOfSlots;
-		this.appslots = new ArrayList<>();
+		this.pendingApplications = new ArrayList<>();
 		this.status = status;
 		this.visibility = false;
 		this.createdBy = createdBy;
