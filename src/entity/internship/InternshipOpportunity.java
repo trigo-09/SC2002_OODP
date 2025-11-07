@@ -200,7 +200,7 @@ public class InternshipOpportunity implements Serializable {
 	 *
 	 * @param creator the comanyrep that created the internship
 	 */
-	public void setCreatedBy(CompanyRep creator){
+	public void setCreatedBy(String creator){
 		this.createdBy = creator;
 	}
 
