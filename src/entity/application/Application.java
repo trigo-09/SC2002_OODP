@@ -1,11 +1,13 @@
 package entity.application;
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Application implements Serializable {
 
 	// Attributes
 	private final String studentId;
 	private final String internshipId;
+    private final String applicationId;
 	private ApplicationStatus status;
 
 	// Constructor
@@ -13,6 +15,7 @@ public class Application implements Serializable {
 		this.studentId = studentId;
 		this.internshipId = internshipId;
 		this.status = ApplicationStatus.PENDING;
+        this.applicationId = UUID.randomUUID().toString();
 	}
 
 	// Getter methods
@@ -38,5 +41,7 @@ public class Application implements Serializable {
 			default -> false;
 		};
 	}
+
+    public String getApplicationId() { return applicationId; }
 }
 

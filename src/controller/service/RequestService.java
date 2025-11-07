@@ -12,7 +12,6 @@ import entity.request.*;
 public class RequestService {
 
     private final IResposistory repo;
-    private ApplicationService lol;
     public RequestService(IResposistory repo) {
         this.repo = repo;
     }
