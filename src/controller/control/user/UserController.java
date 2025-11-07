@@ -6,6 +6,11 @@ public class UserController {
 
 	private AuthenticationService auth;
 
+
+    public UserController(AuthenticationService auth) {
+        this.auth = auth;
+    }
+
 	/**
 	 * 
 	 * @param oldPass
