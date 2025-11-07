@@ -1,4 +1,5 @@
 package entity.user;
+import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import java.util.*;
 
