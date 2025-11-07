@@ -15,6 +15,7 @@ public class RegistrationRequest extends Request {
    public void approve() {
        this.status = RequestDecision.APPROVED;
        company.setStatus(RepStatus.REGISTERED);
+       company.addNotification("Account has been approved");
    }
    public void reject() {
        this.status = RequestDecision.REJECTED;
