@@ -61,7 +61,7 @@ public class InternBuilder {
 		return this;
 	}
 
-	public InternBuilder createdBy(CompanyRep createdBy){
+	public InternBuilder createdBy(String createdBy){
 		this.createdBy = createdBy;
 		return this;
 	}
