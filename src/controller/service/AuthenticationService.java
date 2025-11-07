@@ -1,39 +1,40 @@
 package controller.service;
 
+import controller.database.IResposistory;
 import entity.user.User;
 import util.PasswordHasher;
 
 public class AuthenticationService {
 
-	private final PasswordHasher hasher;
+    private final IResposistory resposistory;
 
 	/**
-	 * 
-	 * @param hasher
-	 */
-	public AuthenticationService(PasswordHasher hasher) {
-		// TODO - implement AuthenticationService.AuthenticationService
-		throw new UnsupportedOperationException();
+     *
+     * @param resposistory
+     */
+	public AuthenticationService(IResposistory resposistory) {
+        this.resposistory = resposistory;
 	}
 
 	/**
 	 * 
-	 * @param ID
+	 * @param userId
 	 * @param password
 	 */
-	public void authenticate(String ID, String password) {
-		// TODO - implement AuthenticationService.authenticate
-		throw new UnsupportedOperationException();
+	public boolean authenticate(String userId, String password) {
+        User user = resposistory.findUser(userId);
+        return PasswordHasher.verify(password,user.getHashedPassword());
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @param newpassword
-	 */
-	public void changePassword(User user, String newpassword) {
-		// TODO - implement AuthenticationService.changePassword
-		throw new UnsupportedOperationException();
+     *
+     * @param userId
+     * @param newpassword
+     */
+	public void changePassword(String userId,String newpassword) {
+		User user = resposistory.findUser(userId);
+        String newHashedPassword = PasswordHasher.hash(newpassword);
+        user.setHashedPassword(newHashedPassword);
 	}
 
 }
