@@ -1,6 +1,5 @@
 package entity.internship;
 
-import entity.user.CompanyRep;
 import java.time.LocalDate;
 import java.util.UUID;
 
