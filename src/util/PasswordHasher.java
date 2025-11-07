@@ -7,6 +7,8 @@ import java.security.MessageDigest;
  */
 public class PasswordHasher {
 
+    private PasswordHasher() {} // to prevent instantiation
+
     private static final String HASH_ALGORITHM = "SHA-256";
 
 	/**
@@ -14,7 +16,7 @@ public class PasswordHasher {
 	 * @param password
      * @return String
 	 */
-	public String hash(String password) {
+	public static String hash(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
             byte[] hashedPassword = md.digest(password.getBytes());
@@ -34,7 +36,7 @@ public class PasswordHasher {
 	 * @param password
 	 * @param hashpassword
 	 */
-	public boolean verify(String password, String hashpassword) {
+	public static boolean verify(String password, String hashpassword) {
         return hash(password).equals(hashpassword);
 	}
 
