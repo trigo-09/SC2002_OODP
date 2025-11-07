@@ -16,10 +16,6 @@ public class InternBuilder {
 	private InternStatus status = InternStatus.PENDING;
 	private String createdBy;
 
-	public InternBuilder id(String id){
-		this.id = id;
-		return this;
-	}
 
 	public InternBuilder companyName(String companyName){
 		this.companyName = companyName;
