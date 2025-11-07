@@ -31,7 +31,7 @@ public abstract class User {
      *
      * @param pass
      */
-    protected void setHashedPassword(String pass) {
+    public void setHashedPassword(String pass) {
         this.hashedPassword = pass;
     }
 
