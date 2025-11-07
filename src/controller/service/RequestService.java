@@ -1,12 +1,9 @@
 package controller.service;
 
-import controller.ApplicationService;
 import controller.database.IResposistory;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
-import entity.user.CareerStaff;
 import entity.user.CompanyRep;
-import entity.user.Student;
 import entity.request.*;
 
 public class RequestService {
@@ -17,34 +14,34 @@ public class RequestService {
     }
 
 	/**
-	 * 
-	 * @param s
-	 * @param app
-	 * @param reason
-	 */
-	public void createWithdrawalRequest(Student s, Application app, String reason) {
-		// TODO - implement RequestService.createWithdrawalRequest
-		throw new UnsupportedOperationException();
+     *
+     * @param studentId
+     * @param app
+     * @param reason
+     */
+	public void createWithdrawalRequest(String studentId, Application app, String reason) {
+        WithdrawalRequest request = new WithdrawalRequest(app,reason,studentId);
+		repo.addWithdrawalRequest(request);
 	}
 
 	/**
-	 * 
-	 * @param req
-	 */
-	public void acceptWithdrawalRequest( WithdrawalRequest req) {
-        req.approve();
-        lol.processWithdrawal(req.getApplication(),true);
-        repo.deleteRequest(req);
+     *
+     * @param requestId
+     */
+	public void acceptWithdrawalRequest(String requestId) {
+        WithdrawalRequest req = (WithdrawalRequest) repo.getRequest(requestId);
+        req.approve(repo);
+        repo.removeWithdrawalRequest(req.getId());
 	}
 
     /**
      *
-     * @param req
+     * @param requestId
      */
-    public void rejectWithdrawalRequest( WithdrawalRequest req) {
+    public void rejectWithdrawalRequest(String requestId) {
+        WithdrawalRequest req = (WithdrawalRequest) repo.getRequest(requestId);
         req.reject();
-        lol.processWithdrawal(req.getApplication(),false);
-        repo.deleteRequest(req);
+        repo.removeWithdrawalRequest(req.getId());
     }
 
 	/**
@@ -52,40 +49,55 @@ public class RequestService {
 	 * @param rep
 	 */
 	public void createRegistrationRequest(CompanyRep rep) {
-		// TODO - implement RequestService.createRegistrationRequest
-		throw new UnsupportedOperationException();
+        RegistrationRequest request = new RegistrationRequest(rep);
+        repo.addRegistrationRequest(request);
 	}
 
 	/**
 	 * 
-	 * @param staff
-	 * @param reg
-	 * @param approve
+	 * @param requestId
 	 */
-	public void processRegistrationRequest(CareerStaff staff, RegistrationRequest reg, boolean approve) {
-		// TODO - implement RequestService.processRegistrationRequest
-		throw new UnsupportedOperationException();
+	public void approveRegistrationRequest(String requestId) {
+        RegistrationRequest req = (RegistrationRequest) repo.getRequest(requestId);
+        req.approve();
+        repo.removeRegistrationRequest(req.getId());
+	}
+
+    public void rejectRegistrationRequest(String requestId) {
+        RegistrationRequest req = (RegistrationRequest) repo.getRequest(requestId);
+        req.reject();
+        repo.removeRegistrationRequest(req.getId());
+    }
+
+	/**
+	 * 
+	 * @param internship
+     * @param repId
+	 */
+	public void createInternshipRequest(String repId, InternshipOpportunity internship) {
+        InternshipVetRequest req = new InternshipVetRequest(internship,repId);
+        repo.addInternshipVetRequest(req);
 	}
 
 	/**
 	 * 
-	 * @param rep
-	 * @param I
+	 * @param requestId
 	 */
-	public void createInternshipRequest(CompanyRep rep, InternshipOpportunity I) {
-		// TODO - implement RequestService.createInternshipRequest
-		throw new UnsupportedOperationException();
+	public void approveInternshipRequest(String requestId) {
+        InternshipVetRequest req = (InternshipVetRequest) repo.getRequest(requestId);
+        req.approve();
+        repo.removeInternshipVetRequest(req.getId());
 	}
 
-	/**
-	 * 
-	 * @param staff
-	 * @param req
-	 * @param approve
-	 */
-	public void processInternshipRequest(CareerStaff staff, InternshipVetRequest req, boolean approve) {
-		// TODO - implement RequestService.processInternshipRequest
-		throw new UnsupportedOperationException();
-	}
+    public void rejectInternshipRequest(String requestId) {
+        InternshipVetRequest req = (InternshipVetRequest) repo.getRequest(requestId);
+        req.reject();
+        repo.removeInternshipVetRequest(req.getId());
+    }
+
+    public void viewRequest(String requestId) {
+        Request request = repo.getRequest(requestId);
+        // to be filled \\
+    }
 
 }
