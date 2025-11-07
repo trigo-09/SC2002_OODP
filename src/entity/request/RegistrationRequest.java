@@ -6,8 +6,8 @@ import entity.user.User;
 
 public class RegistrationRequest extends Request {
     private final CompanyRep company;
-   public RegistrationRequest(String id, CompanyRep companyRep) {
-       super(id, companyRep);
+   public RegistrationRequest(CompanyRep companyRep) {
+       super(companyRep.getId());
        this.company = companyRep;
 
    }
