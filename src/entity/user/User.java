@@ -35,10 +35,6 @@ public abstract class User {
         this.hashedPassword = pass;
     }
 
-	public String getID() {
-        return this.id;
-	}
-
 	public String getUserName() {
 		return this.name;
 	}
