@@ -23,8 +23,8 @@ public class WithdrawalRequest extends Request {
             repo.findUser(super.getRequesterId()).addNotification("Withdrawal request approved");
         }
 
-        public void reject() {
-            super.getRequester().addNotification("Application has been rejected");
+        public void reject(IResposistory repo) {
+            repo.findUser(super.getRequesterId()).addNotification("Withdrawal request has been rejected");
         }
 
     }
