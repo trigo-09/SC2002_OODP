@@ -163,6 +163,10 @@ public class InternshipOpportunity implements Serializable {
 		this.pendingApplications = slots;
 	}
 
+    public void addPendingApplication(Application slot){
+        this.pendingApplications.add(slot);
+    }
+
 
 	public InternStatus getStatus() {
 		return this.status;
