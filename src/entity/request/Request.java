@@ -3,6 +3,7 @@ package entity.request;
 import entity.user.User;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public abstract class Request implements Serializable {
 
