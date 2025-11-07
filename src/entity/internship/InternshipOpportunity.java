@@ -209,7 +209,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 	/**
 	 *
-	 * @param approvedslots approved applications
+	 * @param approvedslots approved pendingApplications
 	 */
 	public void setApprovedslots(List<Application> approvedslots){
 		this.approvedslots=approvedslots;
