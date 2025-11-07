@@ -25,7 +25,7 @@ public class InternshipOpportunity implements Serializable {
 	private CompanyRep createdBy;
 	private List<Application> approvedslots;
 
-	public InternshipOpportunity(String id, String companyName, String title, String description, InternshipLevel level,
+	public InternshipOpportunity(String id,String companyName, String title, String description, InternshipLevel level,
 								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots, InternStatus status,
 								 CompanyRep createdBy){
 		this.id = id;
