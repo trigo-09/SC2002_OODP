@@ -1,5 +1,6 @@
 package controller.database;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Stream;
