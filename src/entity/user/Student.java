@@ -58,6 +58,7 @@ public class Student extends User {
     public List<Application> getApplications() {
         return applications;
     }
+    
     public int getNumOfApplications() {
         return (int)applications.stream()
                 .filter(application -> application.getStatus() == ApplicationStatus.WITHDRAWN)
