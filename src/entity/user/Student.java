@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Student extends User {
 
-	List<Application> applications;
+	private final List<Application> applications;
 	private int year;
 	private String major;
 
