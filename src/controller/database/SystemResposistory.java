@@ -1,5 +1,6 @@
 package controller.database;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Stream;
 import entity.request.*;
@@ -8,7 +9,7 @@ import entity.internship.InternshipOpportunity;
 import entity.application.Application;
 
 
-public class SystemResposistory implements IResposistory {
+public class SystemResposistory implements IResposistory, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private final Map<String, Student> students = new HashMap<>();
