@@ -3,7 +3,7 @@ package entity.user;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class User {
+public abstract class User implements Serializable {
 
 	private String name;
 	private String id;
