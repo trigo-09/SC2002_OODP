@@ -38,6 +38,7 @@ public class Student extends User {
         super(name, id, pass);
         this.year = year;
         this.major = major;
+        this.applications = new ArrayList<>();
 		// TODO - implement Student.Student
 //		throw new UnsupportedOperationException();
 	}
