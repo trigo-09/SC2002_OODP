@@ -12,6 +12,7 @@ import entity.application.Application;
 
 public class SystemResposistory implements IResposistory, Serializable {
 
+    @Serial
 	private static final long serialVersionUID = 1L;
 	private final Map<String, Student> students = new HashMap<>();
 	private final Map<String, CareerStaff> careerStaff = new HashMap<>();
