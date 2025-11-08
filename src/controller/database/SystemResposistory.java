@@ -221,4 +221,8 @@ public class SystemResposistory implements IResposistory {
         pendingReps.put(rep.getId(), rep);
 	}
 
+   public List<InternshipOpportunity> getAllInternshipsByRep(String repId) {
+        return approvedReps.get(repId).getInternships();
+   }
+
 }
