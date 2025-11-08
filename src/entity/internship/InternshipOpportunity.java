@@ -10,7 +10,7 @@ import java.util.*;
 
 public class InternshipOpportunity implements Serializable {
 
-	private String id;
+	private final String id;
 	private String companyName;
 	private String title;
 	private String description;
