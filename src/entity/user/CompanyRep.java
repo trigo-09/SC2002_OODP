@@ -1,4 +1,5 @@
 package entity.user;
+import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import java.util.*;
 
@@ -95,6 +96,16 @@ public class CompanyRep extends User {
      */
     public void addInternship(InternshipOpportunity internship) {
         this.internships.add(internship);
+    }
+
+    /*
+     * Only internship that are pending,approved and filled need to be count
+     *
+     */
+    public int getNumOfInternships() {
+        return (int)internships.stream()
+                .filter(internship-> internship.getStatus() != InternStatus.REJECTED)
+                .count();
     }
 
 }

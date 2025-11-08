@@ -42,16 +42,27 @@ public class Student extends User {
 //		throw new UnsupportedOperationException();
 	}
 
-	public void acceptApp(Application app) {
-        app.changeApplicationStatus(ApplicationStatus.ACCEPTED);
-		// TODO - implement Student.acceptApp
+	public void addApplication(Application app) {
+        applications.add(app);
 		//throw new UnsupportedOperationException();
 	}
 
-	public void withdrawApp(Application app) { // this only happen after the request is accepted by rep
-        app.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
-		// TODO - implement Student.rejectApp
-		//throw new UnsupportedOperationException();
+	public void withdrawApplication(String applicationId) {// this only happen after the request is accepted by rep
+        applications.stream()
+                .filter(app -> app.getApplicationId().equals(applicationId))
+                .findFirst()
+                .ifPresent(app -> app.changeApplicationStatus(ApplicationStatus.WITHDRAWN));
 	}
+
+    public List<Application> getApplications() {
+        return applications;
+    }
+    public int getNumOfApplications() {
+        return (int)applications.stream()
+                .filter(application -> application.getStatus() == ApplicationStatus.WITHDRAWN)
+                .filter(application -> application.getStatus() != ApplicationStatus.REJECTED)
+                .count();
+    }
+
 
 }

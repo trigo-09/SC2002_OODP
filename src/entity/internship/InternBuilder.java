@@ -1,10 +1,10 @@
 package entity.internship;
 
-import entity.user.CompanyRep;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class InternBuilder {
-	private String id;
+	private String id = UUID.randomUUID().toString();
 	private String companyName;
 	private String title;
 	private String description;
@@ -14,12 +14,8 @@ public class InternBuilder {
 	private LocalDate closingDate;
 	private int numOfSlots;
 	private InternStatus status = InternStatus.PENDING;
-	private CompanyRep createdBy;
+	private String createdBy;
 
-	public InternBuilder id(String id){
-		this.id = id;
-		return this;
-	}
 
 	public InternBuilder companyName(String companyName){
 		this.companyName = companyName;
@@ -61,7 +57,7 @@ public class InternBuilder {
 		return this;
 	}
 
-	public InternBuilder createdBy(CompanyRep createdBy){
+	public InternBuilder createdBy(String createdBy){
 		this.createdBy = createdBy;
 		return this;
 	}
