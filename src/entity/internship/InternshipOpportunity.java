@@ -19,15 +19,15 @@ public class InternshipOpportunity implements Serializable {
 	private LocalDate openingDate;
 	private LocalDate closingDate;
 	private int numOfSlots;
-	private List<Application> appslots;
+	private List<Application> pendingApplications; //think of using string id reference instead
 	private InternStatus status;
 	private Boolean visibility;
-	private CompanyRep createdBy;
+	private String createdBy;
 	private List<Application> approvedslots;
 
-	public InternshipOpportunity(String id, String companyName, String title, String description, InternshipLevel level,
+	public InternshipOpportunity(String id,String companyName, String title, String description, InternshipLevel level,
 								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots, InternStatus status,
-								 CompanyRep createdBy){
+								 String createdBy){
 		this.id = id;
 		this.companyName = companyName;
 		this.title = title;
@@ -37,21 +37,21 @@ public class InternshipOpportunity implements Serializable {
 		this.openingDate = openingDate;
 		this.closingDate = closingDate;
 		this.numOfSlots = numOfSlots;
-		this.appslots = new ArrayList<>();
+		this.pendingApplications = new ArrayList<>();
 		this.status = status;
 		this.visibility = false;
 		this.createdBy = createdBy;
 		this.approvedslots = new ArrayList<>();
 	}
 
-	public String getID(){
+	public String getId(){
 		return this.id;
 	}
 	/**
 	 *
 	 * @param id unique internship id
 	 */
-	public void setID(String id){
+	public void setId(String id){
 		this.id = id;
 	}
 
@@ -151,17 +151,21 @@ public class InternshipOpportunity implements Serializable {
 		this.numOfSlots = numOfSlots;
 	}
 
-	public List<Application> getSlots() {
-		return this.appslots;
+	public List<Application> getPendingApplications() {
+		return this.pendingApplications;
 	}
 
 	/**
 	 * 
 	 * @param slots internship applicationss
 	 */
-	public void setSlots(List<Application> slots) {
-		this.appslots = slots;
+	public void setPendingApplications(List<Application> slots) {
+		this.pendingApplications = slots;
 	}
+
+    public void addPendingApplication(Application slot){
+        this.pendingApplications.add(slot);
+    }
 
 
 	public InternStatus getStatus() {
@@ -189,14 +193,14 @@ public class InternshipOpportunity implements Serializable {
 		this.visibility = visibility;
 	}
 
-	public CompanyRep getCreatedBy() {
+	public String getCreatedBy() {
 		return this.createdBy;
 	}
 	/**
 	 *
 	 * @param creator the comanyrep that created the internship
 	 */
-	public void setCreatedBy(CompanyRep creator){
+	public void setCreatedBy(String creator){
 		this.createdBy = creator;
 	}
 
@@ -205,7 +209,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 	/**
 	 *
-	 * @param approvedslots approved applications
+	 * @param approvedslots approved pendingApplications
 	 */
 	public void setApprovedslots(List<Application> approvedslots){
 		this.approvedslots=approvedslots;

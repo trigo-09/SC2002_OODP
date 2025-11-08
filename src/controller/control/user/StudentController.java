@@ -2,6 +2,7 @@ package controller.control.user;
 
 import java.util.*;
 
+import controller.service.AuthenticationService;
 import entity.application.Application;
 import entity.user.Student;
 import entity.internship.InternshipOpportunity;
@@ -11,6 +12,12 @@ public class StudentController extends UserController {
 
 	private Student student;
 	private FilterCriteria filter;
+
+    public StudentController(FilterCriteria filter, AuthenticationService auth, Student student) {
+        super(auth);
+        this.filter = filter;
+        this.student = student;
+    }
 
 	public List<InternshipOpportunity> ableToApply() {
 		// TODO - implement StudentController.ableToApply
@@ -28,14 +35,14 @@ public class StudentController extends UserController {
 
 	/**
 	 * 
-	 * @param internshipId
+	 * @param applicationId
 	 */
-	public void acceptPlacement(String internshipId) {
+	public void acceptPlacement(String applicationId) {
 		// TODO - implement StudentController.acceptPlacement
 		throw new UnsupportedOperationException();
 	}
 
-	public List<Application> myApps() {
+	public List<Application> myApplications() {
 		// TODO - implement StudentController.myApps
 		throw new UnsupportedOperationException();
 	}

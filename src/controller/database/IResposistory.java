@@ -8,10 +8,11 @@ import java.util.*;
 public interface IResposistory {
 
 	/**
-	 * 
-	 * @param app
-	 */
-	void addApplication(Application app);
+     *
+     * @param studentId
+     * @param app
+     */
+	void addApplication(String studentId,Application app);
 
 	/**
 	 * 
@@ -20,10 +21,11 @@ public interface IResposistory {
 	void addCareerStaff(CareerStaff staff);
 
 	/**
-	 * 
-	 * @param intern
-	 */
-	void addInternship(InternshipOpportunity intern);
+     *
+     * @param repId
+     * @param intern
+     */
+	void addInternship(String repId,InternshipOpportunity intern);
 
 	/**
 	 * 
@@ -53,39 +55,39 @@ public interface IResposistory {
 
     /**
      *
-     * @param withdrawalRequest
+     * @param requestId
      */
-    public void removeWithdrawalRequest(WithdrawalRequest withdrawalRequest);
+    public void removeWithdrawalRequest(String requestId);
 
     /**
      *
-     * @param registrationRequest
+     * @param requestId
      */
-    public void removeRegistrationRequest(RegistrationRequest registrationRequest);
+    public void removeRegistrationRequest(String requestId);
 
     /**
      *
-     * @param internshipVetRequest
+     * @param requestId
      */
-    public void removeInternshipVetRequest(InternshipVetRequest internshipVetRequest);
+    public void removeInternshipVetRequest(String requestId);
 
 	/**
 	 * 
 	 * @param studentId
 	 */
-	List<Application> appByStudent(String studentId);
+	List<Application> applicationByStudent(String studentId);
 
 	/**
 	 * 
 	 * @param internId
 	 */
-	List<InternshipOpportunity> appForInternship(String internId);
+	List<Application> applicationForInternship(String internId);
 
 	/**
 	 * 
 	 * @param repId
 	 */
-	CompanyRep approveCompanyRep(String repId);
+	void approveCompanyRep(String repId);
 
 	/**
 	 * 
@@ -93,28 +95,32 @@ public interface IResposistory {
 	 */
 	User findUser(String userId);
 
-	List<Application> getApplications();
+    Application findApplication(String applicationId);
+
+    InternshipOpportunity findInternshipOpportunity(String internshipId);
+
+	List<Application> getAllApplications();
 
 	Map<String, CompanyRep> getApprovedReps();
 
 	Map<String, CareerStaff> getCareerStaff();
 
-	List<InternshipOpportunity> getInternships();
+	List<InternshipOpportunity> getAllInternships();
 
 	Map<String, CompanyRep> getPendingReps();
 
 	Map<String, Student> getStudents();
 
-    List<InternshipVetRequest> getInternshipVetRequests();
+    public <T extends Request> List<T> getAllRequests(Class<T> type);
 
-    List<RegistrationRequest> getRegistrationRequests();
-
-    List<WithdrawalRequest> getWithdrawalRequests();
-
-	/**
+    /**
 	 * 
 	 * @param rep
 	 */
 	void registerCompanyRep(CompanyRep rep);
 
+
+    void deleteApplication(String studentId, String applicationId);
+
+    Request getRequest(String requestId);
 }

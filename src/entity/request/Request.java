@@ -1,43 +1,34 @@
 package entity.request;
 
-import entity.user.User;
-
 import java.io.Serializable;
+import java.util.UUID;
 
 public abstract class Request implements Serializable {
 
-    private String id;
-    private User requester;
-//    private RequestStatus status;    // i may or may not use the abstract i just KIV for now;) -mega
+    private String requesterId;
+    private String requestId;
 
-    public Request(String id, User requester){
-        this.id = id;
-        this.requester = requester;
-//        this.status = status;
+    public Request(String requestId) {
+        this.requestId = UUID.randomUUID().toString();
+        this.requesterId = requestId;
     }
 
     public String getId(){
-        return this.id;
+        return this.requestId;
     }
 
-    public void setId(String id){
-        this.id = id;
+
+    public String getRequesterId(){
+        return this.requesterId;
     }
 
-    public User getRequester(){
-        return this.requester;
-    }
 
-    public void setRequester(User requester){
-        this.requester = requester;
-    }
-//
-//    public RequestStatus getStatus(){
-//        return this.status;
-//    }
-//
-//    public void setStatus(RequestStatus status){
-//        this.status = status;
-//    }
+    public void approve(){
+        System.out.println("please code");
+    };
+
+    public void reject(){
+        System.out.println("please code");
+    };
 
 }

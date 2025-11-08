@@ -1,23 +1,31 @@
 package entity.request;
 
+import controller.database.IResposistory;
 import entity.application.Application;
+import entity.application.ApplicationStatus;
 
-public class WithdrawalRequest {
+public class WithdrawalRequest extends Request {
 
         private final Application application;
         private final String reason;
-        private WithdrawalDecision decision;
 
-        public WithdrawalRequest(Application application, String reason) {
+        public WithdrawalRequest(Application application, String reason, String requesterId) {
+            super(requesterId);
             this.application = application;
             this.reason = reason;
-            this.decision = WithdrawalDecision.PENDING;
         }
 
         public Application getApplication() {return application;}
         public String getReason() {return reason;}
-        public WithdrawalDecision getDecision() { return decision; }
-        public void setDecision(WithdrawalDecision decision) { this.decision = decision; } //rmbr to call student withdraw if accepted
-        public String getStudentId() { return application.getStudentId(); }
+
+        public void approve(IResposistory repo) {
+            application.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
+            repo.findUser(super.getRequesterId()).addNotification("Withdrawal request approved");
+        }
+
+        public void reject(IResposistory repo) {
+            repo.findUser(super.getRequesterId()).addNotification("Withdrawal request has been rejected");
+        }
+
     }
 
