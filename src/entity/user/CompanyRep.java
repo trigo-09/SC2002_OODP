@@ -9,7 +9,7 @@ public class CompanyRep extends User {
 	private String companyName;
 	private String position;
 	private RepStatus status;
-	private List<InternshipOpportunity> internships;
+	private final List<InternshipOpportunity> internships;
 
     /**
      *
