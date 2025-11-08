@@ -47,7 +47,7 @@ public class ApplicationService {
         // fetch updated application list and withdraw other pending or successful applications
         List<Application> applications = systemRepository.applicationByStudent(application.getStudentId());
         applications.stream()
-                .filter(app -> app.getStatus() == ApplicationStatus.ACCEPTED)
+                .filter(app -> app.getStatus() == ApplicationStatus.PENDING)
                 .forEach(app->app.changeApplicationStatus(ApplicationStatus.WITHDRAWN));
     }
 
