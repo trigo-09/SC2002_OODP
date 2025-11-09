@@ -84,7 +84,7 @@ public class InternshipService {
                 .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()))
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
                 .toList();
-	}
+}
 
 	/**
      *
