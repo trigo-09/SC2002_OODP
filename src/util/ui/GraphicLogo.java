@@ -1,5 +1,6 @@
 package util.ui;
 
+// reference for logo -> https://fsymbols.com/generators/carty/
 public class GraphicLogo {
     /**
      * to prevent instantiation
