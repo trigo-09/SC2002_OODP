@@ -8,4 +8,8 @@ public class AlreadyRegisteredException extends Exception {
     public AlreadyRegisteredException() {
         super("This user ID is already registered.");
     }
+
+    public AlreadyRegisteredException(String message) {
+        super(message);
+    }
 }
