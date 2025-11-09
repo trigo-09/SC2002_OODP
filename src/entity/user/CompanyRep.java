@@ -21,7 +21,7 @@ public class CompanyRep extends User {
      * @param position
      */
     public CompanyRep(String name, String id, String pass, String company, String department, String position) {
-        super(name, id, pass);
+        super(name, id, pass, UserRole.REP);
         this.department = department;
         this.companyName = company;
         this.position = position;
