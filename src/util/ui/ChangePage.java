@@ -9,6 +9,11 @@ import java.io.IOException;
 public class ChangePage {
 
     /**
+     * prevent instantiation
+     */
+    private ChangePage() {}
+
+    /**
      * Changes the console output screen to a new blank screen.
      * This is done using the appropriate command depending on the operating system.
      *
