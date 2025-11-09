@@ -14,8 +14,10 @@ public class SystemController {
     private final RequestService request;
 
 	public SystemController() {
-		// TODO - implement SystemController.SystemController
-		throw new UnsupportedOperationException();
+        dataManager = new SystemDataManager();
+        repo = dataManager.load();
+        auth = new AuthenticationService(repo);
+        request = new RequestService(repo);
 	}
 
 	public void start() {
