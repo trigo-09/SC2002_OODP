@@ -123,4 +123,6 @@ public interface IResposistory {
     void deleteApplication(String studentId, String applicationId);
 
     Request getRequest(String requestId);
+
+    List<InternshipOpportunity> getInternshipsByCompany(String companyName);
 }
