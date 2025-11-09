@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class User implements Serializable {
 
 	private String name;
-	private String id;
+	private final String id;
 	private String hashedPassword;
     private final List<Notification> notifications;
 
