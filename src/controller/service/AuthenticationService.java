@@ -23,7 +23,20 @@ public class AuthenticationService {
 	 */
 	public boolean authenticate(String userId, String password) {
         User user = resposistory.findUser(userId);
-        return PasswordHasher.verify(password,user.getHashedPassword());
+
+        if (user == null) {
+            throw new UserNotFoundException(userId);
+        }
+
+        if (resposistory.getPendingReps().containsKey(userId)) {
+            throw new RepNotApprovedException(userId);
+        }
+
+        if (!PasswordHasher.verify(password,user.getHashedPassword())){
+            throw new PasswordIncorrectException();
+        }
+
+        return user;
 	}
 
 	/**
