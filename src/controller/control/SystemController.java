@@ -21,8 +21,9 @@ public class SystemController {
 	}
 
 	public void start() {
-		// TODO - implement SystemController.start
-		throw new UnsupportedOperationException();
+        while (true) {
+            mainMenu();
+        }
 	}
 
 	public void mainMenu() {
