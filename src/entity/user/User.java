@@ -9,6 +9,7 @@ public abstract class User implements Serializable {
 	private String name;
 	private final String id;
 	private String hashedPassword;
+    private final UserRole role;
     private final List<Notification> notifications;
 
     /**
@@ -17,10 +18,11 @@ public abstract class User implements Serializable {
      * @param id
      * @param pass
      */
-    protected User(String name, String id, String pass) {
+    public User(String name, String id, String pass, UserRole role) {
         this.name = name;
         this.id = id;
         this.hashedPassword = pass;
+        this.role = role;
         notifications = new ArrayList<>();
     }
 
@@ -28,6 +30,10 @@ public abstract class User implements Serializable {
     public String getHashedPassword() {
 		return this.hashedPassword;
 	}
+
+    public UserRole getRole() {
+        return this.role;
+    }
 
     /**
      *
