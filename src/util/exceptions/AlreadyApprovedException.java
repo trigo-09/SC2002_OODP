@@ -1,11 +1,11 @@
 package util.exceptions;
 
-public class AlreadyRegisteredException extends Exception {
+public class AlreadyApprovedException extends AuthenticationException {
     /**
      * Constructs a new {@code AlreadyRegisteredException} with a default detail message.
      * The default message is "This user ID is already registered."
      */
-    public AlreadyRegisteredException() {
+    public AlreadyApprovedException() {
         super("This user ID is already registered.");
     }
 
@@ -14,7 +14,7 @@ public class AlreadyRegisteredException extends Exception {
      * @param message
      */
 
-    public AlreadyRegisteredException(String message) {
+    public AlreadyApprovedException(String message) {
         super(message);
     }
 }
