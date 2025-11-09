@@ -2,6 +2,8 @@ package controller.control.user;
 
 import java.util.*;
 
+import controller.service.ApplicationService;
+import controller.service.InternshipService;
 import controller.service.AuthenticationService;
 import entity.application.Application;
 import entity.user.Student;
@@ -12,16 +14,19 @@ public class StudentController extends UserController {
 
 	private Student student;
 	private FilterCriteria filter;
+    private final ApplicationService applicationService;
+    private final InternshipService internshipService;
 
-    public StudentController(FilterCriteria filter, AuthenticationService auth, Student student) {
+    public StudentController(FilterCriteria filter, AuthenticationService auth, ApplicationService applicationService, InternshipService internshipService, Student student) {
         super(auth);
         this.filter = filter;
         this.student = student;
+        this.applicationService = applicationService;
+        this.internshipService = internshipService;
     }
 
 	public List<InternshipOpportunity> ableToApply() {
-		// TODO - implement StudentController.ableToApply
-		throw new UnsupportedOperationException();
+        return internshipService.getEligibleInternships(student);
 	}
 
 	/**
@@ -29,8 +34,7 @@ public class StudentController extends UserController {
 	 * @param internshipId
 	 */
 	public void applyInternship(String internshipId) {
-		// TODO - implement StudentController.applyInternship
-		throw new UnsupportedOperationException();
+        applicationService.apply(student.getId(), internshipId);
 	}
 
 	/**
@@ -38,13 +42,15 @@ public class StudentController extends UserController {
 	 * @param applicationId
 	 */
 	public void acceptPlacement(String applicationId) {
-		// TODO - implement StudentController.acceptPlacement
-		throw new UnsupportedOperationException();
+        applicationService.acceptApplication(applicationId);
 	}
 
+    public void withdrawPlacement(String applicationId, String reason) {
+        applicationService.requestWithdrawal(applicationId, reason);
+    }
+
 	public List<Application> myApplications() {
-		// TODO - implement StudentController.myApps
-		throw new UnsupportedOperationException();
+        return student.getApplications();
 	}
 
 }

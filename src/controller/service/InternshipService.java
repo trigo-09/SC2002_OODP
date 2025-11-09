@@ -1,6 +1,7 @@
 package controller.service;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import controller.database.IResposistory;
 import entity.internship.*;
@@ -82,20 +83,27 @@ public class InternshipService {
         // to be filled -> might not even use the filter maybe
 	}
 
+    // Get the list of eligible internships that a student can apply for
+    public List<InternshipOpportunity> getEligibleInternships(Student s) {
+        List<InternshipOpportunity> allInternships = resposistory.getAllInternships();
+        return allInternships.stream().filter(internship -> isEligible(s, internship.getId())).collect(Collectors.toList());
+    }
+
 	/**
      *
      * @param internshipId
      */
 	public InternshipOpportunity findInternshipById(String internshipId) {
         return resposistory.findInternshipOpportunity(internshipId);
-	}
+    }
 
 	/**
-	 * 
+	 *
 	 * @param s
 	 * @param internshipId
 	 */
-	public boolean isEligible(Student s, String internshipId) {
+
+    public boolean isEligible(Student s, String internshipId) {
         InternshipOpportunity i = findInternshipById(internshipId);
         if (!i.getVisibility()) {return false;}
 
@@ -124,5 +132,4 @@ public class InternshipService {
 	public boolean isFilled(String internshipId) {
         return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
 	}
-
 }
