@@ -23,7 +23,7 @@ public class SystemDataManager {
             return (IResposistory) ois.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return new SystemResposistory(); // to be swapped with CSV loader
+            return CsvLoader.load(); // to be swapped with CSV loader
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("failed to load from .dat file", e);
         }
