@@ -26,9 +26,20 @@ public class SystemController {
 	}
 
 	public void mainMenu() {
-		// TODO - implement SystemController.mainMenu
-		throw new UnsupportedOperationException();
+        Welcome.welcome(this);
 	}
+
+    public void handleLogin(String userId, String password) throws AuthenticationException {
+            User user = auth.authenticate(userId,password);
+            switch (user.getRole()) {
+                case STUDENT -> new StudentController(auth,repo,request,(Student) user).launch();
+
+                case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch();
+
+                case REP -> new RepController(auth,repo,request,(CompanyRep) user).launch();
+            }
+        }
+
 
 	public void shutdown() {
         dataManager.save(repo);
