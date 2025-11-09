@@ -3,6 +3,10 @@ package controller.service;
 import controller.database.IResposistory;
 import entity.user.User;
 import util.PasswordHasher;
+import util.exceptions.AuthenticationException;
+import util.exceptions.PasswordIncorrectException;
+import util.exceptions.RepNotApprovedException;
+import util.exceptions.UserNotFoundException;
 
 public class AuthenticationService {
 
