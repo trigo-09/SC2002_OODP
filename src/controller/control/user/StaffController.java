@@ -2,6 +2,9 @@ package controller.control.user;
 
 import java.util.*;
 
+import controller.service.AuthenticationService;
+import controller.service.InternshipService;
+import controller.service.RequestService;
 import entity.internship.InternshipOpportunity;
 import entity.user.CareerStaff;
 import util.FilterCriteria;
@@ -9,15 +12,25 @@ import util.FilterCriteria;
 public class StaffController extends UserController {
 
 	private CareerStaff staff;
-	private FilterCriteria filter;
+	private final FilterCriteria filter;
+	private final RequestService requestService;
+	private final InternshipService internshipService;
+
+	public StaffController(FilterCriteria filter, AuthenticationService auth,RequestService requestService,
+						   InternshipService internshipService, CareerStaff staff){
+		super(auth);
+		this.staff = staff;
+		this.filter = filter;
+		this.requestService = requestService;
+		this.internshipService = internshipService;
+	}
 
 	/**
 	 * 
 	 * @param rep
 	 */
 	public void approveRep(String rep) {
-		// TODO - implement StaffController.approveRep
-		throw new UnsupportedOperationException();
+		requestService.approveRegistrationRequest(rep);
 	}
 
 	/**
@@ -25,8 +38,7 @@ public class StaffController extends UserController {
 	 * @param rep
 	 */
 	public void rejectRep(String rep) {
-		// TODO - implement StaffController.rejectRep
-		throw new UnsupportedOperationException();
+		requestService.rejectRegistrationRequest(rep);
 	}
 
 	/**
@@ -34,8 +46,7 @@ public class StaffController extends UserController {
 	 * @param intern
 	 */
 	public void approveInternship(String intern) {
-		// TODO - implement StaffController.approveInternship
-		throw new UnsupportedOperationException();
+		requestService.approveInternshipRequest(intern);
 	}
 
 	/**
@@ -43,8 +54,7 @@ public class StaffController extends UserController {
 	 * @param intern
 	 */
 	public void rejectInternship(String intern) {
-		// TODO - implement StaffController.rejectInternship
-		throw new UnsupportedOperationException();
+		requestService.rejectInternshipRequest(intern);
 	}
 
 	/**
@@ -52,8 +62,7 @@ public class StaffController extends UserController {
 	 * @param app
 	 */
 	public void approveWithdrawal(String app) {
-		// TODO - implement StaffController.approveWithdrawal
-		throw new UnsupportedOperationException();
+		requestService.acceptWithdrawalRequest(app);
 	}
 
 	/**
@@ -61,8 +70,7 @@ public class StaffController extends UserController {
 	 * @param app
 	 */
 	public void rejectWithdrawal(String app) {
-		// TODO - implement StaffController.rejectWithdrawal
-		throw new UnsupportedOperationException();
+		requestService.rejectWithdrawalRequest(app);
 	}
 
 	/**
@@ -70,8 +78,7 @@ public class StaffController extends UserController {
 	 * @param filter
 	 */
 	public List<InternshipOpportunity> generateReport(FilterCriteria filter) {
-		// TODO - implement StaffController.generateReport
-		throw new UnsupportedOperationException();
+		return internshipService.getInternship(filter);
 	}
 
 }
