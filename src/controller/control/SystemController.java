@@ -1,5 +1,7 @@
 package controller.control;
 
+import boundary.terminal.Exit;
+import boundary.terminal.Welcome;
 import controller.control.user.RepController;
 import controller.control.user.StaffController;
 import controller.control.user.StudentController;
