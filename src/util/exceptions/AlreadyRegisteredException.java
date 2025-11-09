@@ -9,6 +9,11 @@ public class AlreadyRegisteredException extends Exception {
         super("This user ID is already registered.");
     }
 
+    /**
+     *Constructs a new {@code AlreadyRegisteredException} with a message param
+     * @param message
+     */
+
     public AlreadyRegisteredException(String message) {
         super(message);
     }
