@@ -26,9 +26,9 @@ public class CsvLoader {
         return repListDirectory;
     }
 
-    public List<Student> studentLoader() throws IOException {
+    public SystemRepository loadtoRepo() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(studentList));
-        List<Student> students = new List<Student>;
+        SystemReposistory sysRepo = new SystemReposistory();
         int i = 0;
         while ((line = reader.readLine()) != null) {
             for (String value : line){
@@ -52,13 +52,9 @@ public class CsvLoader {
                 }
             }
             Student = new Student(name,id,"Password",year,major);
-            students.add(Student);
+            sysRepo.addStudent(Student);
         }
-        return students;
-    }
-    public List<CareerStaff> staffLoader() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(staffListDirectory));
-        List<CareerStaff> staffs = new List<CareerStaff>;
         int i = 0;
         while ((line = reader.readLine()) != null) {
             for (String value : line){
@@ -81,44 +77,8 @@ public class CsvLoader {
                 }
             }
             staff = new Staff(name,id,"Password",department);
-            staffs.add(staff);
+            sysRep.addCareerStaff(staff);
         }
-        return staffs;
-    }
-    public List<CompanyRep> repLoader() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(repListDirectory));
-        List<CompanyRep> reps = new List<CompanyRep>;
-        int i = 0;
-        while ((line = reader.readLine()) != null) {
-            for (String value : line){
-                i++
-                switch (i){
-                    case 1:
-                        String id = value;
-                        break;
-                    case 2:
-                        String name = value;
-                        break;
-                    case 3:
-                        String company = value;
-                        break;
-                    case 4:
-                        String department = value;
-                        break;
-                    case 5:
-                        String position = value;
-                        break;
-                    case 6:
-                        break;
-                    case 7:
-                        String status = value;
-                        i = 0;
-                        break;
-                }
-            }
-            rep = new CompanyRep(name,id,"Password",company,department,position);
-            reps.add(rep);
-        }
-        return reps;
+        return sysRepo;
     }
 }
