@@ -61,7 +61,7 @@ public class SystemController {
         /**
          * ensure the UserId is in valid format
          */
-        if (!userId.matches("^[A-Za-z0-9+_.-]+@(.+)$}")) {
+        if (!userId.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             throw new IllegalArgumentException("Invalid email format") ;
         }
 
