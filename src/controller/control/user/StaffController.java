@@ -2,6 +2,9 @@ package controller.control.user;
 
 import java.util.*;
 
+import controller.database.IResposistory;
+import controller.service.AuthenticationService;
+import controller.service.RequestService;
 import entity.internship.InternshipOpportunity;
 import entity.user.CareerStaff;
 import util.FilterCriteria;
@@ -9,7 +12,14 @@ import util.FilterCriteria;
 public class StaffController extends UserController {
 
 	private CareerStaff staff;
-	private FilterCriteria filter;
+    public StaffController(AuthenticationService authenticationService, IResposistory repo, RequestService request, CareerStaff staff) {
+        super(authenticationService,repo,request);
+        this.staff = staff;
+    }
+
+    public void launch(){
+        throw new  UnsupportedOperationException("Not supported yet.");
+    }
 
 	/**
 	 * 
