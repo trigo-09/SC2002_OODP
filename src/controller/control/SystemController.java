@@ -31,8 +31,29 @@ public class SystemController {
 	}
 
 	public void shutdown() {
-		// TODO - implement SystemController.shutdown
-		throw new UnsupportedOperationException();
+        dataManager.save(repo);
+        Exit.exit();
 	}
+
+
+    public void registerRep(String userId, String name, String Password, Map<String, String> attributes) throws AuthenticationException, IllegalArgumentException {
+        /**
+         * ensure the UserId is in valid format
+         */
+        if (!userId.matches("^[A-Za-z0-9+_.-]+@(.+)$}")) {
+            throw new IllegalArgumentException("Invalid email format") ;
+        }
+
+        if (repo.getApprovedReps().containsKey(userId)){
+            throw new AlreadyApprovedException("Account is already registered and approved");
+        }
+        if (repo.getPendingReps().containsKey(userId)){
+            throw new RepNotApprovedException("Registration pending approval. Please wait for staff confirmation");
+        }
+        User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
+        request.createRegistrationRequest((CompanyRep) user);
+        repo.registerCompanyRep((CompanyRep) user);
+        dataManager.saveUpdate(repo);
+    }
 
 }
