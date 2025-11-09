@@ -35,7 +35,7 @@ public class Student extends User {
 	 * @param major
 	 */
 	protected Student(String name, String id, String pass, int year, String major) {
-        super(name, id, pass);
+        super(name, id, pass,UserRole.STUDENT);
         this.year = year;
         this.major = major;
         this.applications = new ArrayList<>();
