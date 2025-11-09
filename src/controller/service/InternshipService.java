@@ -77,9 +77,13 @@ public class InternshipService {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<InternshipOpportunity> getInternship(FilterCriteria filter) {
-        return resposistory.getAllInternships();
-        // to be filled -> might not even use the filter maybe
+	public List<InternshipOpportunity> getFilteredInternship(FilterCriteria filter) {
+        return resposistory.getAllInternships().stream()
+                .filter(internship -> filter.getStatus() == null || filter.getStatus() == internship.getStatus())
+                .filter(internship -> filter.getPreferredMajor().isEmpty() ||filter.getPreferredMajor().equals(internship.getPreferredMajors()))
+                .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()))
+                .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
+                .toList();
 	}
 
 	/**
