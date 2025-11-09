@@ -1,4 +1,6 @@
 package entity.user;
+import util.PasswordHasher;
+
 import java.util.*;
 
 public class UserFactory {
@@ -10,11 +12,12 @@ public class UserFactory {
 	 * @param role
 	 * @param id
 	 * @param name
-	 * @param hashedPassword
+	 * @param Password
 	 * @param attributes
 	 */
-	public static User createUser(UserRole role, String id, String name, String hashedPassword, Map<String, String> attributes) {
+	public static User createUser(UserRole role, String id, String name, String Password, Map<String, String> attributes) {
         if(attributes == null || attributes.isEmpty()) {throw new IllegalArgumentException("attributes is null or empty");}
+        String hashedPassword = PasswordHasher.hash(Password);
         return switch(role) {
             case STUDENT -> {
                 int year = Integer.parseInt(attributes.get("year"));
