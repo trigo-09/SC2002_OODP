@@ -21,7 +21,7 @@ public class AuthenticationService {
 	 * @param userId
 	 * @param password
 	 */
-	public boolean authenticate(String userId, String password) {
+	public User authenticate(String userId, String password) throws AuthenticationException {
         User user = resposistory.findUser(userId);
 
         if (user == null) {
