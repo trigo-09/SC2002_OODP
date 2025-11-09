@@ -9,11 +9,9 @@ import controller.database.SystemDataManager;
 public class SystemController {
 
 	private final IResposistory repo;
-	private SystemDataManager dataManager;
-	private StudentController studentController;
-	private StaffController staffController;
-	private RepController repController;
-	private boolean isRunning = false;
+	private final SystemDataManager dataManager;
+    private final AuthenticationService auth;
+    private final RequestService request;
 
 	public SystemController() {
 		// TODO - implement SystemController.SystemController
