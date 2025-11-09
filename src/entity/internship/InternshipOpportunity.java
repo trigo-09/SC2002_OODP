@@ -47,13 +47,6 @@ public class InternshipOpportunity implements Serializable {
 	public String getId(){
 		return this.id;
 	}
-	/**
-	 *
-	 * @param id unique internship id
-	 */
-	public void setId(String id){
-		this.id = id;
-	}
 
 	public String getCompanyName() {
 		return this.companyName;
