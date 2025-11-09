@@ -46,12 +46,16 @@ public class AuthenticationService {
 	/**
      *
      * @param userId
-     * @param newpassword
+     * @param newPassword
      */
-	public void changePassword(String userId,String newpassword) {
+	public void changePassword(String userId,String oldPassword,String newPassword) throws AuthenticationException {
 		User user = resposistory.findUser(userId);
-        String newHashedPassword = PasswordHasher.hash(newpassword);
-        user.setHashedPassword(newHashedPassword);
+        if(user.getHashedPassword().equals(PasswordHasher.hash(oldPassword))) {
+            String newHashedPassword = PasswordHasher.hash(newPassword);
+            user.setHashedPassword(newHashedPassword);
+        } else  {
+            throw new PasswordIncorrectException();
+        }
 	}
 
 }
