@@ -5,6 +5,7 @@ import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
 import entity.request.*;
+import java.util.List;
 
 public class RequestService {
 
