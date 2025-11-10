@@ -19,6 +19,9 @@ public class FilterCriteria {
         this.closingDate = closingDate == null ? LocalDate.now() : closingDate;
 
     }
+    public FilterCriteria() {
+        this(null,"",null,null);
+    }
 
     public InternStatus getStatus() {
         return status;

@@ -1,6 +1,8 @@
 package entity.internship;
 
-public enum InternStatus {
+import java.io.Serializable;
+
+public enum InternStatus implements Serializable {
 	PENDING,
 	APPROVED,
 	REJECTED,

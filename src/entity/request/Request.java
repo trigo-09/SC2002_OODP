@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public abstract class Request implements Serializable {
 
-    private String requesterId;
-    private String requestId;
+    private final String requesterId;
+    private final String requestId;
 
     public Request(String requestId) {
         this.requestId = UUID.randomUUID().toString();

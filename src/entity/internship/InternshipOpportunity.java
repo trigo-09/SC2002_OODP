@@ -1,13 +1,16 @@
 package entity.internship;
 
-import entity.application.Application;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import entity.application.Application;
+
+
 import java.util.*;
 
 public class InternshipOpportunity implements Serializable {
 
-	private String id;
+	private final String id;
 	private String companyName;
 	private String title;
 	private String description;
@@ -43,13 +46,6 @@ public class InternshipOpportunity implements Serializable {
 
 	public String getId(){
 		return this.id;
-	}
-	/**
-	 *
-	 * @param id unique internship id
-	 */
-	public void setId(String id){
-		this.id = id;
 	}
 
 	public String getCompanyName() {

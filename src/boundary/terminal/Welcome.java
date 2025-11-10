@@ -1,0 +1,35 @@
+package boundary.terminal;
+
+import controller.control.SystemController;
+import util.exceptions.PageBackException;
+import util.io.InputHelper;
+import util.ui.ChangePage;
+import util.ui.GraphicLogo;
+import util.ui.UIHelper;
+
+public class Welcome {
+    public static void welcome(SystemController controller) {
+        ChangePage.changePage();
+        System.out.println(GraphicLogo.WELCOME_LOGO);
+        System.out.println("Welcome to Internship Placement Management System!\n");
+        System.out.println(GraphicLogo.SEPARATOR);
+        System.out.println("Please enter your choice to continue");
+        UIHelper.printMenuItem(1,"Login");
+        UIHelper.printMenuItem(2,"Register");
+        UIHelper.printMenuItem(3,"Exit");
+        System.out.print("Enter your choice (1-3): ");
+        try {
+            while (true) {
+                int choice = InputHelper.readInt();
+                switch (choice) {
+                    case 1 -> LoginPageUI.login(controller);
+                    case 2 -> LoginPageUI.register(controller);
+                    case 3 -> controller.shutdown();
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        } catch (PageBackException e) {
+            welcome(controller);
+        }
+    }
+}

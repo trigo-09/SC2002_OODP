@@ -1,13 +1,15 @@
 package entity.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class User {
+public abstract class User implements Serializable {
 
 	private String name;
-	private String id;
+	private final String id;
 	private String hashedPassword;
+    private final UserRole role;
     private final List<Notification> notifications;
 
     /**
@@ -16,10 +18,11 @@ public abstract class User {
      * @param id
      * @param pass
      */
-    protected User(String name, String id, String pass) {
+    public User(String name, String id, String pass, UserRole role) {
         this.name = name;
         this.id = id;
         this.hashedPassword = pass;
+        this.role = role;
         notifications = new ArrayList<>();
     }
 
@@ -27,6 +30,10 @@ public abstract class User {
     public String getHashedPassword() {
 		return this.hashedPassword;
 	}
+
+    public UserRole getRole() {
+        return this.role;
+    }
 
     /**
      *

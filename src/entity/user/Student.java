@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Student extends User {
 
-	List<Application> applications;
+	private final List<Application> applications;
 	private int year;
 	private String major;
 
@@ -35,9 +35,10 @@ public class Student extends User {
 	 * @param major
 	 */
 	protected Student(String name, String id, String pass, int year, String major) {
-        super(name, id, pass);
+        super(name, id, pass,UserRole.STUDENT);
         this.year = year;
         this.major = major;
+        this.applications = new ArrayList<>();
 		// TODO - implement Student.Student
 //		throw new UnsupportedOperationException();
 	}
@@ -57,10 +58,10 @@ public class Student extends User {
     public List<Application> getApplications() {
         return applications;
     }
+
     public int getNumOfApplications() {
         return (int)applications.stream()
-                .filter(application -> application.getStatus() == ApplicationStatus.WITHDRAWN)
-                .filter(application -> application.getStatus() != ApplicationStatus.REJECTED)
+                .filter(application -> application.getStatus() != ApplicationStatus.WITHDRAWN && application.getStatus() != ApplicationStatus.REJECTED)
                 .count();
     }
 
