@@ -69,7 +69,12 @@ public class SystemController {
             throw new AlreadyApprovedException("Account is already registered and approved");
         }
         if (repo.getPendingReps().containsKey(userId)){
-            throw new RepNotApprovedException("Registration pending approval. Please wait for staff confirmation");
+            if (repo.getPendingReps().get(userId).getStatus() == RepStatus.REJECTED){
+                throw new RepNotApprovedException(userId);
+            }
+            else {
+                throw new RepPendingApprovalException(userId);
+            }
         }
         User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
         request.createRegistrationRequest((CompanyRep) user);
