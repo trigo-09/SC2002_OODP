@@ -16,11 +16,9 @@ public class InternshipVetRequest extends Request {
 
     public void approve(IRepository repo) {
         internship.setStatus(InternStatus.APPROVED);
-        repo.findUser(super.getRequesterId()).addNotification("Internship is approved");
     }
 
     public void reject(IRepository repo) {
         internship.setStatus(InternStatus.REJECTED);
-        repo.findUser(super.getRequesterId()).addNotification("Internship is rejected");
     }
 }
