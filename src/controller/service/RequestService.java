@@ -1,6 +1,6 @@
 package controller.service;
 
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
@@ -8,8 +8,8 @@ import entity.request.*;
 
 public class RequestService {
 
-    private final IResposistory repo;
-    public RequestService(IResposistory repo) {
+    private final IRepository repo;
+    public RequestService(IRepository repo) {
         this.repo = repo;
     }
 

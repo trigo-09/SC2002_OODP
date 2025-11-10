@@ -16,7 +16,7 @@ public class CsvLoader {
 
     public CsvLoader(IRepository sysRepo) {
         this.sysRepo = sysRepo;
-        this.directoryPath = "";
+        this.directoryPath = "SC2002_OODP/data";
     }
     /**
      * Load all CSV files from a directory and populate the SystemRepository.
@@ -65,9 +65,9 @@ public class CsvLoader {
             String[] headerParts = header.split(",");
             String headerLine = String.join(",", headerParts).toLowerCase();
 
-            if (headerLine.contains("studentid")) {
+            if (headerLine.contains("StudentID")) {
                 loadStudents(reader);
-            } else if (headerLine.contains("staffid")) {
+            } else if (headerLine.contains("StaffID")) {
                 loadStaff(reader);
             } else {
                 System.err.println("[WARN] Unrecognized file type for: " + file);
@@ -128,7 +128,7 @@ public class CsvLoader {
 
                 String id = values[0].trim();
                 String name = values[1].trim();
-                String department = values[3].trim(); // skip Role (index 2), ignore Email (index 4)
+                String department = values[3].trim(); // skip Role and ignore Email
 
                 Map<String, String> attr = new HashMap<>();
                 attr.put("department", department);

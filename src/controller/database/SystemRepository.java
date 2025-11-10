@@ -8,11 +8,9 @@ import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.request.*;
 import entity.user.*;
-import java.util.*;
-import java.util.stream.Stream;
 
 
-public class SystemResposistory implements IResposistory, Serializable {
+public class SystemRepository implements IRepository, Serializable {
 
     @Serial
 	private static final long serialVersionUID = 1L;

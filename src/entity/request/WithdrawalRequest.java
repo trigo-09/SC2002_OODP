@@ -1,6 +1,6 @@
 package entity.request;
 
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
 
@@ -18,12 +18,12 @@ public class WithdrawalRequest extends Request {
         public Application getApplication() {return application;}
         public String getReason() {return reason;}
 
-        public void approve(IResposistory repo) {
+        public void approve(IRepository repo) {
             application.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
             repo.findUser(super.getRequesterId()).addNotification("Withdrawal request approved");
         }
 
-        public void reject(IResposistory repo) {
+        public void reject(IRepository repo) {
             repo.findUser(super.getRequesterId()).addNotification("Withdrawal request has been rejected");
         }
 

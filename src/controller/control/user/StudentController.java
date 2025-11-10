@@ -2,7 +2,7 @@ package controller.control.user;
 
 import java.util.*;
 
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.service.AuthenticationService;
 import controller.service.RequestService;
 import entity.application.Application;
@@ -14,7 +14,7 @@ public class StudentController extends UserController {
 
 	private Student student;
 
-    public StudentController(AuthenticationService auth, IResposistory repo, RequestService request, Student student) {
+    public StudentController(AuthenticationService auth, IRepository repo, RequestService request, Student student) {
         super(auth, repo,request);
         this.student = student;
     }

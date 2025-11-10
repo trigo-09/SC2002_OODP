@@ -1,6 +1,6 @@
 package controller.service;
 
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import entity.user.User;
 import util.PasswordHasher;
 import util.exceptions.AuthenticationException;
@@ -10,13 +10,13 @@ import util.exceptions.UserNotFoundException;
 
 public class AuthenticationService {
 
-    private final IResposistory resposistory;
+    private final IRepository resposistory;
 
 	/**
      *
      * @param resposistory
      */
-	public AuthenticationService(IResposistory resposistory) {
+	public AuthenticationService(IRepository resposistory) {
         this.resposistory = resposistory;
 	}
 

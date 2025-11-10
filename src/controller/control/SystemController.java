@@ -5,7 +5,7 @@ import boundary.terminal.Welcome;
 import controller.control.user.RepController;
 import controller.control.user.StaffController;
 import controller.control.user.StudentController;
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.database.SystemDataManager;
 import controller.service.AuthenticationService;
 import controller.service.RequestService;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class SystemController {
 
-	private final IResposistory repo;
+	private final IRepository repo;
 	private final SystemDataManager dataManager;
     private final AuthenticationService auth;
     private final RequestService request;
