@@ -1,15 +1,21 @@
 package controller.control.user;
 
-import java.util.*;
-
+import controller.service.AuthenticationService;
 import entity.internship.InternshipOpportunity;
 import entity.user.CareerStaff;
+import java.util.*;
 import util.FilterCriteria;
 
 public class StaffController extends UserController {
 
 	private CareerStaff staff;
 	private FilterCriteria filter;
+
+	public StaffController(CareerStaff staff, AuthenticationService auth, FilterCriteria filter) {
+		super(auth);
+		this.staff = staff;
+		this.filter = filter;
+	}
 
 	/**
 	 * 

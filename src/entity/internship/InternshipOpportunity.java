@@ -1,11 +1,8 @@
 package entity.internship;
 
+import entity.application.Application;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-import entity.application.Application;
-import entity.user.CompanyRep;
-
 import java.util.*;
 
 public class InternshipOpportunity implements Serializable {
@@ -152,7 +149,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 
 	public List<Application> getPendingApplications() {
-		return this.pendingApplications;
+		return new ArrayList<>(this.pendingApplications);
 	}
 
 	/**
