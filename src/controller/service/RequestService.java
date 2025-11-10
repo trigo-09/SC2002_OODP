@@ -60,6 +60,7 @@ public class RequestService {
 	public void approveRegistrationRequest(String requestId) {
         RegistrationRequest req = (RegistrationRequest) repo.getRequest(requestId);
         req.approve();
+        repo.approveCompanyRep(req.getId());
         repo.removeRegistrationRequest(req.getId());
 	}
 
