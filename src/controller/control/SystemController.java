@@ -5,7 +5,7 @@ import boundary.terminal.Welcome;
 import controller.control.user.RepController;
 import controller.control.user.StaffController;
 import controller.control.user.StudentController;
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.database.SystemDataManager;
 import controller.service.AuthenticationService;
 import controller.service.RequestService;
@@ -13,11 +13,13 @@ import entity.user.*;
 import util.exceptions.AlreadyApprovedException;
 import util.exceptions.AuthenticationException;
 import util.exceptions.RepNotApprovedException;
+import util.exceptions.RepPendingApprovalException;
+
 import java.util.Map;
 
 public class SystemController {
 
-	private final IResposistory repo;
+	private final IRepository repo;
 	private final SystemDataManager dataManager;
     private final AuthenticationService auth;
     private final RequestService request;
@@ -46,7 +48,7 @@ public class SystemController {
 
                 case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch();
 
-                case REP -> new RepController(auth,repo,request,(CompanyRep) user).launch();
+                case REP -> new RepController(auth,repo,request,(CompanyRep) user);
             }
         }
 
@@ -69,7 +71,12 @@ public class SystemController {
             throw new AlreadyApprovedException("Account is already registered and approved");
         }
         if (repo.getPendingReps().containsKey(userId)){
-            throw new RepNotApprovedException("Registration pending approval. Please wait for staff confirmation");
+            if (repo.getPendingReps().get(userId).getStatus() == RepStatus.REJECTED){
+                throw new RepNotApprovedException(userId);
+            }
+            else {
+                throw new RepPendingApprovalException(userId);
+            }
         }
         User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
         request.createRegistrationRequest((CompanyRep) user);

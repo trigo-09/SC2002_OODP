@@ -26,11 +26,12 @@ public class ChangePage {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 // Unix-like systems
-                System.out.print("\033[H\033[2J");
+                System.out.print("\u001b[H\u001b[2J");
                 System.out.flush();
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("\n".repeat(50));
+            Thread.currentThread().interrupt();
         }
     }
 }

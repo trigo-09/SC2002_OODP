@@ -9,13 +9,13 @@ import java.util.*;
 
 public class ApplicationService {
 
-    private final IResposistory systemRepository;
+    private final IRepository systemRepository;
     private final InternshipService internshipService;
     private final RequestService requestService;
     private static final int MAX_ACTIVE_APPLICATIONS = 3;
 
 
-    public ApplicationService(IResposistory systemRepository, InternshipService internshipService, RequestService requestService) {
+    public ApplicationService(IRepository systemRepository, InternshipService internshipService, RequestService requestService) {
         this.systemRepository = systemRepository;
         this.internshipService = internshipService;
         this.requestService = requestService;

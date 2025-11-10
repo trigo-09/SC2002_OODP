@@ -1,8 +1,10 @@
 package controller.control.user;
 
+import controller.database.IRepository;
 import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
 import controller.service.InternshipService;
+import controller.service.RequestService;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
@@ -14,20 +16,15 @@ import util.FilterCriteria;
 public class RepController extends UserController {
 
 	private final CompanyRep rep;
-	private final FilterCriteria filter;
 	private final ApplicationService applicationService;
 	private final InternshipService internshipService;
 
-	public RepController(CompanyRep rep, 
-						AuthenticationService auth, 
-						FilterCriteria filter, 
-						ApplicationService applicationService, 
-						InternshipService internshipService) {
-		super(auth);
+	public RepController(AuthenticationService auth,
+                         IRepository repository, RequestService requestService,CompanyRep rep){
+		super(auth,repository,requestService);
 		this.rep = rep;
-		this.filter = filter;
-		this.applicationService = applicationService;
-		this.internshipService = internshipService;
+		this.internshipService = new InternshipService(repository, requestService);
+        this.applicationService = new ApplicationService(repository,internshipService,requestService);
 	}
 
 	public InternshipOpportunity createInternship(String title,
@@ -59,7 +56,6 @@ public class RepController extends UserController {
 
 	/**
 	 * 
-	 * @param rep
 	 */
 	public List<InternshipOpportunity> getInternships() {
 		return internshipService.getInternshipsByCompany(rep.getCompanyName());
