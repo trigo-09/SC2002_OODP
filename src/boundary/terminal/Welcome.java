@@ -11,7 +11,7 @@ public class Welcome {
     public static void welcome(SystemController controller) {
         ChangePage.changePage();
         System.out.println(GraphicLogo.WELCOME_LOGO);
-        System.out.println("Welcome to Internship Placement Management System!\n");
+        System.out.println("\nWelcome to Internship Placement Management System!");
         System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Please enter your choice to continue");
         UIHelper.printMenuItem(1,"Login");
