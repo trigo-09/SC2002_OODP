@@ -1,20 +1,20 @@
 package boundary.viewer;
 
 import entity.Displayable;
-import entity.internship.InternshipOpportunity;
 
 import java.util.List;
 import java.util.Objects;
 
 // Student, Requests, InternshipOpportunity, Application
 public class DisplayableViewer {
-    public static <T extends Displayable> void displaySingleInternship(T displayable){
+    public static <T extends Displayable> void displaySingle(T displayable, int index){
         System.out.println(displayable.getSplitter());
-        System.out.println(displayable.getString());
+        System.out.printf("[%d]\n%s", index, displayable.getString());
         System.out.println(displayable.getSplitter());
     }
 
-    public static <T extends Displayable> void displayListInternship(List<T> displayableList){
+
+    public static <T extends Displayable> void displayList(List<T> displayableList){
         if (Objects.isNull(displayableList) || displayableList.isEmpty()){
             System.out.println("Nothing is found");
             return;
