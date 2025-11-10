@@ -122,6 +122,9 @@ public class InternshipService {
         CompanyRep rep = (CompanyRep) resposistory.findUser(repId);
         return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
     }
+    public boolean isEligible(CompanyRep rep) {
+        return repository.getInternshipsByCompany(rep.getCompanyName()).size() < MAX_ACTIVE_INTERNSHIPS;
+    }
 
 
 	/**
