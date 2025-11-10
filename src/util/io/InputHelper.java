@@ -7,7 +7,7 @@ public class InputHelper {
     public static int readInt() {
         try {
             return new Scanner(System.in).nextInt();
-        }catch (Exception e){
+        }catch (NumberFormatException e){
             System.out.println("Invalid input");
             System.out.println("Please enter a valid integer");
             return readInt();
