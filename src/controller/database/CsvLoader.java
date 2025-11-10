@@ -16,7 +16,7 @@ public class CsvLoader {
 
     public CsvLoader(IRepository sysRepo) {
         this.sysRepo = sysRepo;
-        this.directoryPath = "SC2002_OODP/data";
+        this.directoryPath = "/Users/mega/IdeaProjects/SC2002_OODP/data";
     }
     /**
      * Load all CSV files from a directory and populate the SystemRepository.
