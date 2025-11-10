@@ -2,8 +2,8 @@ package boundary;
 
 import controller.control.user.RepController;
 import entity.application.Application;
+import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -46,13 +46,20 @@ public class RepMenuUI {
         System.out.print("Description: ");
         String description = sc.nextLine().trim();
 
-        String level;
+        InternshipLevel level;
         while (true) {
             System.out.print("Level (Basic / Intermediate / Advanced): ");
-            level = sc.nextLine().trim();
-            if (level.equalsIgnoreCase("Basic")
-                || level.equalsIgnoreCase("Intermediate")
-                || level.equalsIgnoreCase("Advanced")) break;
+            String input = sc.nextLine().trim();
+            if (input.equalsIgnoreCase("Basic")) {
+                level = InternshipLevel.BASIC;
+                break;
+            } else if (input.equalsIgnoreCase("Intermediate")) {
+                level = InternshipLevel.INTERMEDIATE;
+                break;
+            } else if (input.equalsIgnoreCase("Advanced")) {
+                level = InternshipLevel.ADVANCED;
+                break;
+            }
             System.out.println("Invalid level. Please type Basic, Intermediate, or Advanced.");
         }
 
@@ -75,7 +82,8 @@ public class RepMenuUI {
             System.out.println("Slots must be between 1 and 10. Try again.");
         }
 
-        try {repController.createInternship(
+        try {
+            repController.createInternship(
                 title,
                 description,
                 level,
@@ -166,7 +174,7 @@ public class RepMenuUI {
         }
     }
 
-    // --- HELPER METHODS --- \\
+    // --- HELPER METHODS ---
     private int readIntSafe() {
         while (true) {
             String in = sc.nextLine().trim();
