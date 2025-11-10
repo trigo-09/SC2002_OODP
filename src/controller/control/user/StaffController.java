@@ -78,7 +78,7 @@ public class StaffController extends UserController {
 	 * @param filter
 	 */
 	public List<InternshipOpportunity> generateReport(FilterCriteria filter) {
-		return internshipService.getInternship(filter);
+		return internshipService.getFilteredInternship(filter);
 	}
 
 }

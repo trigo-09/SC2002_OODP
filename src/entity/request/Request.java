@@ -1,9 +1,11 @@
 package entity.request;
 
+import entity.Displayable;
+
 import java.io.Serializable;
 import java.util.UUID;
 
-public abstract class Request implements Serializable {
+public abstract class Request implements Serializable, Displayable {
 
     private final String requesterId;
     private final String requestId;

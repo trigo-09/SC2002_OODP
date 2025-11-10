@@ -1,8 +1,10 @@
 package entity.application;
+import entity.Displayable;
+
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Application implements Serializable {
+public class Application implements Serializable, Displayable {
 
 	// Attributes
 	private final String studentId;
@@ -43,5 +45,25 @@ public class Application implements Serializable {
 	}
 
     public String getApplicationId() { return applicationId; }
+
+	@Override
+	public String getSplitter() {
+		return "----------------------------------";
+	}
+
+	public String getString() {
+		return String.format(
+				"Application ID: %s%n" +
+						"Student ID: %s%n" +
+						"Internship ID: %s%n" +
+						"Status: %s",
+				applicationId,
+				studentId,
+				internshipId,
+				status
+		);
+	}
+
+
 }
 

@@ -17,4 +17,27 @@ public class RegistrationRequest extends Request {
    public void reject() {
        companyRep.addNotification("Account has been rejected");
    }
+
+    @Override
+    public String getSplitter() {
+        return "----------------------------------";
+    }
+
+    @Override
+    public String getString() {
+        return String.format(
+                "Request Type: Company Representative Registration%n" +
+                        "Request ID: %s%n" +
+                        "Requester ID: %s%n" +
+                        "Representative Name: %s%n" +
+                        "Company Name: %s%n" +
+                        "Current Status: %s%n",
+                getId(),
+                getRequesterId(),
+                companyRep.getUserName(),
+                companyRep.getCompanyName(),
+                companyRep.getStatus()
+        );
+    }
+
 }
