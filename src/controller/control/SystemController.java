@@ -8,6 +8,7 @@ import controller.control.user.StudentController;
 import controller.database.IRepository;
 import controller.database.SystemDataManager;
 import controller.service.AuthenticationService;
+import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.user.*;
 import util.exceptions.AlreadyApprovedException;
@@ -46,7 +47,7 @@ public class SystemController {
             switch (user.getRole()) {
                 case STUDENT -> new StudentController(auth,repo,request,(Student) user).launch();
 
-                case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch();
+                case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch(this); //idk how to do the logout without passing in sys controller
 
                 case REP -> new RepController(auth,repo,request,(CompanyRep) user);
             }

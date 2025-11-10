@@ -2,27 +2,33 @@ package controller.control.user;
 
 import java.util.*;
 
+import boundary.StaffUI;
+import controller.control.SystemController;
+import controller.database.IRepository;
 import controller.service.AuthenticationService;
 import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.internship.InternshipOpportunity;
+import entity.request.InternshipVetRequest;
+import entity.request.RegistrationRequest;
+import entity.request.WithdrawalRequest;
 import entity.user.CareerStaff;
 import util.FilterCriteria;
 
 public class StaffController extends UserController {
 
 	private CareerStaff staff;
-	private final FilterCriteria filter;
-	private final RequestService requestService;
 	private final InternshipService internshipService;
 
-	public StaffController(FilterCriteria filter, AuthenticationService auth,RequestService requestService,
-						   InternshipService internshipService, CareerStaff staff){
-		super(auth);
+	public StaffController(AuthenticationService auth, IRepository reposistory, RequestService requestService,  CareerStaff staff){
+		super(auth, reposistory, requestService);
 		this.staff = staff;
-		this.filter = filter;
-		this.requestService = requestService;
-		this.internshipService = internshipService;
+		this.internshipService = new InternshipService(reposistory, requestService);
+	}
+
+	public void launch(SystemController systemController){
+		StaffUI  staffUI = new StaffUI(systemController, this);
+		staffUI.menuLoop();
 	}
 
 	/**
@@ -30,7 +36,7 @@ public class StaffController extends UserController {
 	 * @param rep
 	 */
 	public void approveRep(String rep) {
-		requestService.approveRegistrationRequest(rep);
+		getRequest().approveRegistrationRequest(rep); // this returns the requestservice
 	}
 
 	/**
@@ -38,7 +44,7 @@ public class StaffController extends UserController {
 	 * @param rep
 	 */
 	public void rejectRep(String rep) {
-		requestService.rejectRegistrationRequest(rep);
+		getRequest().rejectRegistrationRequest(rep);
 	}
 
 	/**
@@ -46,7 +52,7 @@ public class StaffController extends UserController {
 	 * @param intern
 	 */
 	public void approveInternship(String intern) {
-		requestService.approveInternshipRequest(intern);
+		getRequest().approveInternshipRequest(intern);
 	}
 
 	/**
@@ -54,7 +60,7 @@ public class StaffController extends UserController {
 	 * @param intern
 	 */
 	public void rejectInternship(String intern) {
-		requestService.rejectInternshipRequest(intern);
+		getRequest().rejectInternshipRequest(intern);
 	}
 
 	/**
@@ -62,7 +68,7 @@ public class StaffController extends UserController {
 	 * @param app
 	 */
 	public void approveWithdrawal(String app) {
-		requestService.acceptWithdrawalRequest(app);
+		getRequest().acceptWithdrawalRequest(app);
 	}
 
 	/**
@@ -70,15 +76,31 @@ public class StaffController extends UserController {
 	 * @param app
 	 */
 	public void rejectWithdrawal(String app) {
-		requestService.rejectWithdrawalRequest(app);
+		getRequest().rejectWithdrawalRequest(app);
 	}
 
 	/**
 	 * 
 	 * @param filter
 	 */
-	public List<InternshipOpportunity> generateReport(FilterCriteria filter) {
+	public List<InternshipOpportunity> viewInternshipsFiltered(FilterCriteria filter) {
 		return internshipService.getFilteredInternship(filter);
+	}
+
+	public List<RegistrationRequest> viewPendingReg(){
+		return getRequest().getPendingRegistration();
+	}
+
+	public List<InternshipVetRequest> viewPendingInternshipVet(){
+		return getRequest().getPendingInternshipVet();
+	}
+
+	public List<WithdrawalRequest> viewPendingWithdrawal(){
+		return getRequest().getPendingWithdrawal();
+	}
+
+	public CareerStaff getStaff(){
+		return this.staff;
 	}
 
 }
