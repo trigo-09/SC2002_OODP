@@ -1,0 +1,142 @@
+
+import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import entity.internship.InternStatus;
+import entity.internship.InternshipLevel;
+import util.FilterCriteria;
+
+public class FilterUI {
+    public static FilterCriteria main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        FilterCriteria filter = new FilterCriteria(null, null, null, null);
+        boolean quitCondition = false;
+        do {
+            System.out.println("What would you like to do?\n1.Check Filter Criteria\n2.Update Internship status\n3.Update preferred major\n4.Update internship level\n5.Update closing date\n6.Quit\n");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Displaying Current Filter Criteria");
+                    System.out.println("Status: " + filter.getStatus() + "\n");
+                    System.out.println("Preferred Major: " + filter.getPreferredMajor() + "\n");
+                    System.out.println("Level: " + filter.getLevel() + "\n");
+                    System.out.println("Closing Date" + filter.getClosingDate() + "\n");
+                    break;
+                case 2:
+                    System.out.println("Set new status filter\n" +
+                            "1.PENDING,\n" +
+                            "2.APPROVED,\n" +
+                            "3.REJECTED,\n" +
+                            "4.FILLED\n");
+                    int statusChoice = sc.nextInt();
+                    boolean statusQuitCondition = false;
+                    do {
+                        switch (statusChoice) {
+                            case 1:
+                                filter.setStatus(InternStatus.PENDING);
+                                statusQuitCondition = true;
+                                break;
+                            case 2:
+                                filter.setStatus(InternStatus.APPROVED);
+                                statusQuitCondition = true;
+                                break;
+                            case 3:
+                                filter.setStatus(InternStatus.REJECTED);
+                                statusQuitCondition = true;
+                                break;
+                            case 4:
+                                filter.setStatus(InternStatus.FILLED);
+                                statusQuitCondition = true;
+                                break;
+                            default:
+                                System.out.println("""
+                                        Invalid choice. Please input a valid choice
+                                        1.PENDING,
+                                        2.APPROVED,
+                                        3.REJECTED,
+                                        4.FILLED
+                                        """);
+                                statusChoice = sc.nextInt();
+                        }
+                    } while (!statusQuitCondition);
+                    System.out.println("Filter updated\n" +
+                            "New Status: " + filter.getStatus() + "\n");
+                    break;
+                case 3:
+                    System.out.println("Set new preferred major filter");
+                    String majorChoice = sc.next();
+                    filter.setPreferredMajor(majorChoice);
+                    System.out.println("Filter updated\n" +
+                            "New Preferred Major: " + filter.getPreferredMajor() + "\n");
+                    break;
+                case 4:
+                    System.out.println("""
+                            Set new internship level filter
+                            1.BASIC,
+                            2.INTERMEDIATE,
+                            3.ADVANCED;""");
+                    int levelChoice = sc.nextInt();
+                    boolean levelQuitCondition = false;
+                    do {
+                        switch (levelChoice) {
+                            case 1:
+                                filter.setLevel(InternshipLevel.BASIC);
+                                levelQuitCondition = true;
+                                break;
+                            case 2:
+                                filter.setLevel(InternshipLevel.INTERMEDIATE);
+                                levelQuitCondition = true;
+                                break;
+                            case 3:
+                                filter.setLevel(InternshipLevel.ADVANCED);
+                                levelQuitCondition = true;
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please input a valid choice");
+                                levelChoice = sc.nextInt();
+                                break;
+                        }
+                    } while (!levelQuitCondition);
+                    System.out.println("Filter updated\n" +
+                            "New Level: " + filter.getLevel() + "\n");
+                    break;
+                case 5:
+                    System.out.println("Set new Closing Date\n");
+                    int month = -1;
+                    int day = -1;
+                    int year = -1;
+                    do {
+                        System.out.println("Set Month: ");
+                        month = sc.nextInt();
+                        if (0 >= month || month >= 12){
+                            System.out.println("Invalid month number. Please input a valid month");
+                        }
+                    }while (0 >= month || month >= 12);
+
+                    do {
+                        System.out.println("Set Day: ");
+                        day = sc.nextInt();
+                        if (0 >= day || day > 31){
+                            System.out.println("Invalid day number. Please input a valid day");
+                        }
+                    }while  (0 >= day || day > 31);
+
+                    do {
+                        System.out.println("Set Year: ");
+                        year = sc.nextInt();
+                    }while (year <= -1);
+                    String dateString = month+"/"+day+"/"+year;
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                    LocalDate parsedDate = LocalDate.parse(dateString, formatter);
+                    filter.setClosingDate(parsedDate);
+                    break;
+                case 6:
+                    System.out.println("Quitting Filter UI");
+                    quitCondition = true;
+                    break;
+            }
+
+        } while (!quitCondition);
+        return filter;
+    }
+}
