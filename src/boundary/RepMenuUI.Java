@@ -1,0 +1,191 @@
+package boundary;
+
+import controller.control.user.RepController;
+import entity.application.Application;
+import entity.internship.InternshipOpportunity;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Scanner;
+
+public class RepMenuUI {
+    private final RepController repController;
+    private final Scanner sc;
+    private static final DateTimeFormatter DMY = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    public RepMenuUI(RepController repController, Scanner sc) {
+        this.repController = repController;
+        this.sc = sc;
+    }
+
+    public void displayMenu() {
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println("\n=== Company Representative Menu ===");
+            System.out.println("1) Create Internship Opportunity");
+            System.out.println("2) Manage Your Internship Opportunities");
+            System.out.println("0) Logout");
+            System.out.print("Enter your choice: ");
+            choice = readIntSafe();
+
+            switch (choice) {
+                case 1 -> createInternshipUI();
+                case 2 -> manageInternshipsUI();
+                case 0 -> System.out.println("Logging out...");
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private void createInternshipUI() {
+        System.out.println("=== Create Internship Opportunity ===");
+        System.out.print("Title: ");
+        String title = sc.nextLine().trim();
+        System.out.print("Description: ");
+        String description = sc.nextLine().trim();
+
+        String level;
+        while (true) {
+            System.out.print("Level (Basic / Intermediate / Advanced): ");
+            level = sc.nextLine().trim();
+            if (level.equalsIgnoreCase("Basic")
+                || level.equalsIgnoreCase("Intermediate")
+                || level.equalsIgnoreCase("Advanced")) break;
+            System.out.println("Invalid level. Please type Basic, Intermediate, or Advanced.");
+        }
+
+        System.out.print("Preferred Major or 'Any': ");
+        String preferredMajor = sc.nextLine().trim();
+
+        LocalDate openingDate = readDate("Opening Date (DD-MM-YYYY): ");
+        LocalDate closingDate;
+        while (true) {
+            closingDate = readDate("Closing Date (DD-MM-YYYY): ");
+            if (!closingDate.isBefore(openingDate)) break;
+            System.out.println("Closing date cannot be before opening date. Please try again.");
+        }
+
+        int numOfSlots;
+        while (true) {
+            System.out.print("Number of Slots (1..10): ");
+            numOfSlots = readIntSafe();
+            if (numOfSlots >= 1 && numOfSlots <= 10) break;
+            System.out.println("Slots must be between 1 and 10. Try again.");
+        }
+
+        try {repController.createInternship(
+                title,
+                description,
+                level,
+                preferredMajor,
+                openingDate,
+                closingDate,
+                numOfSlots
+        );
+        System.out.println("Internship opportunity created successfully.");
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+            System.out.println("Error creating internship: " + e.getMessage());
+        }
+        pause();
+    }
+    private void manageInternshipsUI() {
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println("=== Your Internship Opportunities ===");
+            List<InternshipOpportunity> internships = repController.getInternships();
+            if (internships.isEmpty()) {
+                System.out.println("(No opportunities yet)");
+            } else {
+                internships.forEach(i -> System.out.println("- " + i));
+            }
+
+            System.out.println("Actions:");
+            System.out.println("0) Back to Main Menu");
+            System.out.println("1) Set Internship Visibility");
+            System.out.println("2) Manage Applications for an Internship");
+            System.out.print("Enter your choice: ");
+            choice = readIntSafe();
+
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter Internship ID: ");
+                    String internshipId = sc.nextLine().trim();
+                    System.out.print("Set visibility (1 = visible, 0 = hidden): ");
+                    int visChoice = readIntSafe();
+                    boolean visibility = (visChoice == 1);
+                    try {
+                        repController.toggleVisibility(internshipId, visibility);
+                        System.out.println("Internship visibility updated to " + (visibility ? "VISIBLE" : "HIDDEN") + ".");
+                    } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+                        System.out.println("Error updating internship visibility: " + e.getMessage());
+                    }
+                    pause();
+                }
+                case 2 -> {
+                    System.out.print("Enter Internship ID to manage applications: ");
+                    String internId = sc.nextLine().trim();
+                    try {
+                        List<Application> applications = repController.getApplications(internId);
+                        if (applications.isEmpty()) {
+                            System.out.println("(No applications yet)");
+                            pause();
+                            continue;
+                        } else {
+                            applications.forEach(a -> System.out.println("- " + a));
+                        }
+                        pause();
+                    } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+                        System.out.println("Error retrieving applications: " + e.getMessage());
+                    }
+                    System.out.print("1: Accept or Reject an Application, 0: back: ");
+                    int appChoice = readIntSafe();
+                    if (appChoice == 1) {
+                        System.out.print("Enter Application ID: ");
+                        String appId = sc.nextLine().trim();
+                        System.out.print("Accept (1) or Reject (0) the application? ");
+                        int decision = readIntSafe();
+                        try {
+                            if (decision == 1) {
+                                repController.approveApp(appId);
+                                System.out.println("Application accepted.");
+                            } else {
+                                repController.rejectApp(appId);
+                                System.out.println("Application rejected.");
+                            }
+                        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+                            System.out.println("Error approving/rejecting application: " + e.getMessage());
+                        }
+                        pause();
+                    }
+                }
+                case 0 -> System.out.println("Returning to main menu...");
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    // --- HELPER METHODS --- \\
+    private int readIntSafe() {
+        while (true) {
+            String in = sc.nextLine().trim();
+            try { return Integer.parseInt(in); }
+            catch (NumberFormatException e) { System.out.print("Please enter a number: "); }
+        }
+    }
+
+    private LocalDate readDate(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String in = sc.nextLine().trim();
+            try { return LocalDate.parse(in, DMY); }
+            catch (DateTimeParseException e) { System.out.println("Invalid date, use DD-MM-YYYY."); }
+        }
+    }
+
+    private void pause() {
+        System.out.print("Press Enter to continue...");
+        sc.nextLine();
+    }
+}
