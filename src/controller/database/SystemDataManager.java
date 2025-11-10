@@ -1,6 +1,8 @@
 package controller.database;
 
 
+import entity.user.Student;
+
 import java.io.*;
 
 public class SystemDataManager {
@@ -17,13 +19,14 @@ public class SystemDataManager {
     }
 
 
-	public IResposistory load() {
+	public IRepository load() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
-            return (IResposistory) ois.readObject();
+            return (IRepository) ois.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return CsvLoader.load(); // to be swapped with CSV loader
+            IRepository repo = new SystemRepository();
+            return new CsvLoader(repo).load(); // to be swapped with CSV loader
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("failed to load from .dat file", e);
         }
@@ -34,7 +37,7 @@ public class SystemDataManager {
 	 * 
 	 * @param repo
 	 */
-	public void save(IResposistory repo) {
+	public void save(IRepository repo) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
             oos.writeObject(repo);
@@ -43,7 +46,7 @@ public class SystemDataManager {
         }
 	}
 
-    public void saveUpdate(IResposistory repo) {
+    public void saveUpdate(IRepository repo) {
         save(repo);
     }
 

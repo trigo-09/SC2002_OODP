@@ -6,11 +6,10 @@ import java.util.List;
 
 public abstract class User implements Serializable {
 
-	private String name;
-	private final String id;
-	private String hashedPassword;
+    private String name;
+    private final String id;
+    private String hashedPassword;
     private final UserRole role;
-    private final List<Notification> notifications;
 
     /**
      *
@@ -23,13 +22,12 @@ public abstract class User implements Serializable {
         this.id = id;
         this.hashedPassword = pass;
         this.role = role;
-        notifications = new ArrayList<>();
     }
 
 
     public String getHashedPassword() {
-		return this.hashedPassword;
-	}
+        return this.hashedPassword;
+    }
 
     public UserRole getRole() {
         return this.role;
@@ -43,30 +41,12 @@ public abstract class User implements Serializable {
         this.hashedPassword = pass;
     }
 
-	public String getUserName() {
-		return this.name;
-	}
+    public String getUserName() {
+        return this.name;
+    }
 
     public String getId() {
         return this.id;
     }
-
-    public void addNotification(String message) {
-        notifications.add(new Notification(message));
-    }
-
-    public List<Notification> getNotifications() {
-        return notifications;
-    }
-
-//    public void showUnreadNotifications() {
-//        for (Notification n : notifications) {
-//            if (!n.isRead()) {
-//                System.out.println(n);
-//                n.markAsRead();
-//            }
-//        }
-//    }
-//          shld be under boundary
 
 }

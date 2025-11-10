@@ -1,5 +1,5 @@
 package controller.service;
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import entity.internship.*;
 import entity.user.CompanyRep;
 import entity.user.Student;
@@ -9,11 +9,11 @@ import util.FilterCriteria;
 
 public class InternshipService {
 
-    private final IResposistory resposistory;
+    private final IRepository resposistory;
     private final RequestService requestService;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
-    public InternshipService(IResposistory resposistory, RequestService requestService) {
+    public InternshipService(IRepository resposistory, RequestService requestService) {
         this.resposistory = resposistory;
         this.requestService = requestService;
     }
