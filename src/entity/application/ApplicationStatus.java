@@ -1,6 +1,8 @@
 package entity.application;
 
-public enum ApplicationStatus {
+import java.io.Serializable;
+
+public enum ApplicationStatus implements Serializable {
     PENDING, //once created
     APPROVED, // application accepte by rep
     REJECTED, // application rejected by rep

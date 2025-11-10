@@ -2,21 +2,25 @@ package controller.control.user;
 
 import java.util.*;
 
+import controller.database.IResposistory;
 import controller.service.AuthenticationService;
+import controller.service.RequestService;
 import entity.application.Application;
 import entity.user.Student;
 import entity.internship.InternshipOpportunity;
-import util.FilterCriteria;
+
 
 public class StudentController extends UserController {
 
 	private Student student;
-	private FilterCriteria filter;
 
-    public StudentController(FilterCriteria filter, AuthenticationService auth, Student student) {
-        super(auth);
-        this.filter = filter;
+    public StudentController(AuthenticationService auth, IResposistory repo, RequestService request, Student student) {
+        super(auth, repo,request);
         this.student = student;
+    }
+
+    public void launch(){
+        throw new  UnsupportedOperationException("Not supported yet.");
     }
 
 	public List<InternshipOpportunity> ableToApply() {
