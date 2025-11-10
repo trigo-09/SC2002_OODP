@@ -40,7 +40,7 @@ public class RequestService {
      */
     public void rejectWithdrawalRequest(String requestId) {
         WithdrawalRequest req = (WithdrawalRequest) repo.getRequest(requestId);
-        req.reject(repo);
+        req.reject();
         repo.removeWithdrawalRequest(req.getId());
     }
 
