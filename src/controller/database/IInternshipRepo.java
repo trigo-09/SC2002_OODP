@@ -18,7 +18,7 @@ public interface IInternshipRepo {
     /**
      *
      * @param companyName
-     * 
+     *
      */
 
     List<InternshipOpportunity> getInternshipsByCompany(String companyName);
