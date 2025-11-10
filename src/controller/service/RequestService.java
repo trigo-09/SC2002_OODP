@@ -101,4 +101,20 @@ public class RequestService {
         // to be filled \\
     }
 
+    public List<Request> viewAllRequests() {
+        return repo.getAllRequests(Request.class);
+    }
+
+    public List<WithdrawalRequest> viewAllWithdrawalRequests() {
+        return repo.getAllRequests(WithdrawalRequest.class);
+    }
+
+    public List<RegistrationRequest> viewAllRegistrationRequests() {
+        return repo.getAllRequests(RegistrationRequest.class);
+    }
+
+    public List<InternshipVetRequest> viewAllInternshipVetRequests() {
+        return repo.getAllRequests(InternshipVetRequest.class);
+    }
+
 }
