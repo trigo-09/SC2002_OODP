@@ -1,4 +1,4 @@
-package boundary;
+package boundary.userui;
 
 import controller.control.user.RepController;
 import entity.application.Application;
