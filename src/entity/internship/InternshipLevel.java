@@ -1,6 +1,8 @@
 package entity.internship;
 
-public enum InternshipLevel {
+import java.io.Serializable;
+
+public enum InternshipLevel implements Serializable {
 	BASIC,
 	INTERMEDIATE,
 	ADVANCED;

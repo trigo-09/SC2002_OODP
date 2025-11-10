@@ -13,7 +13,7 @@ public class CareerStaff extends User {
      * @param department
      */
     public CareerStaff(String name, String id, String pass, String department) {
-        super(name, id, pass);
+        super(name, id, pass, UserRole.STAFF);
         this.staffDepartment = department;
     }
 
