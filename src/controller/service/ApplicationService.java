@@ -1,8 +1,8 @@
 package controller.service;
 
 
-import entity.application.*;
 import controller.database.*;
+import entity.application.*;
 import entity.user.Student;
 import java.util.*;
 
@@ -61,7 +61,8 @@ public class ApplicationService {
     }
 
     // method for company rep to process applications
-    public void reviewApplication(String appId, boolean approve) {
+    public void reviewApplication(String repId, String appId, boolean approve) {
+        
         Application application = systemRepository.findApplication(appId);
         if (approve) {
             application.changeApplicationStatus(ApplicationStatus.APPROVED);
@@ -69,9 +70,6 @@ public class ApplicationService {
             application.changeApplicationStatus(ApplicationStatus.REJECTED);
         }
     }
-
-
-
 
    // HELPER METHOD\\
     private boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {

@@ -1,11 +1,11 @@
 package controller.database;
 
-import java.util.*;
-import java.util.stream.Stream;
+import entity.application.Application;
+import entity.internship.InternshipOpportunity;
 import entity.request.*;
 import entity.user.*;
-import entity.internship.InternshipOpportunity;
-import entity.application.Application;
+import java.util.*;
+import java.util.stream.Stream;
 
 
 public class SystemResposistory implements IResposistory {
@@ -220,5 +220,12 @@ public class SystemResposistory implements IResposistory {
 	public void registerCompanyRep(CompanyRep rep) {
         pendingReps.put(rep.getId(), rep);
 	}
+    @Override
+    public List<InternshipOpportunity> getInternshipsByCompany(String companyName) {
+        return approvedReps.values().stream()
+                .filter(rep -> rep.getCompanyName().equals(companyName))
+                .flatMap(rep -> rep.getInternships().stream())
+                .toList();
+    }
 
 }
