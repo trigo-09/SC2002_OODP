@@ -230,6 +230,8 @@ public class SystemRepository implements IRepository, Serializable {
 	public void registerCompanyRep(CompanyRep rep) {
         pendingReps.put(rep.getId(), rep);
 	}
+
+
     @Override
     public List<InternshipOpportunity> getInternshipsByCompany(String companyName) {
         return approvedReps.values().stream()

@@ -40,5 +40,11 @@ public interface IRepository extends IApplicationRepo,IRequestRepo,IInternshipRe
      *
      * @param rep
      */
+    void approveCompanyRep(CompanyRep rep);
+
+    /**
+     *
+     * @param rep
+     */
     void registerCompanyRep(CompanyRep rep);
 }

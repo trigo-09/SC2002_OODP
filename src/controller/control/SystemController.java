@@ -13,6 +13,8 @@ import entity.user.*;
 import util.exceptions.AlreadyApprovedException;
 import util.exceptions.AuthenticationException;
 import util.exceptions.RepNotApprovedException;
+import util.exceptions.RepPendingApprovalException;
+
 import java.util.Map;
 
 public class SystemController {
@@ -46,7 +48,7 @@ public class SystemController {
 
                 case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch();
 
-                case REP -> new RepController(auth,repo,request,(CompanyRep) user).launch();
+                case REP -> new RepController(auth,repo,request,(CompanyRep) user);
             }
         }
 
