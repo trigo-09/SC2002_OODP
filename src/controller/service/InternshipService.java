@@ -9,12 +9,12 @@ import util.FilterCriteria;
 
 public class InternshipService {
 
-    private final IRepository resposistory;
+    private final IRepository repository;
     private final RequestService requestService;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
-    public InternshipService(IRepository resposistory, RequestService requestService) {
-        this.resposistory = resposistory;
+    public InternshipService(IRepository repository, RequestService requestService) {
+        this.repository = repository;
         this.requestService = requestService;
     }
 
@@ -52,7 +52,7 @@ public class InternshipService {
                 .build();
 
         requestService.createInternshipRequest(createdBy, internship);
-        resposistory.addInternship(createdBy, internship);
+        repository.addInternship(createdBy, internship);
         return internship;
 	}
 
@@ -62,7 +62,7 @@ public class InternshipService {
 	 * @param visible
 	 */
 	public void setVisibility(String internshipId, boolean visible) {
-        InternshipOpportunity internship = resposistory.findInternshipOpportunity(internshipId);
+        InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
         internship.setVisibility(visible);
 	}
 
@@ -77,7 +77,7 @@ public class InternshipService {
 	}
 
 	public List<InternshipOpportunity> getFilteredInternship(FilterCriteria filter) {
-        return resposistory.getAllInternships().stream()
+        return repository.getAllInternships().stream()
                 .filter(internship -> filter.getStatus() == null || filter.getStatus() == internship.getStatus())
                 .filter(internship -> filter.getPreferredMajor().isEmpty() ||filter.getPreferredMajor().equals(internship.getPreferredMajors()))
                 .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()))
@@ -86,7 +86,7 @@ public class InternshipService {
 }
 
         public List<InternshipOpportunity> getInternshipsByCompany(String companyName){
-        return resposistory.getInternshipsByCompany(companyName);
+        return repository.getInternshipsByCompany(companyName);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class InternshipService {
      * @param internshipId
      */
 	public InternshipOpportunity findInternshipById(String internshipId) {
-        return resposistory.findInternshipOpportunity(internshipId);
+        return repository.findInternshipOpportunity(internshipId);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class InternshipService {
 	}
 
     public boolean isEligible(String repId) {
-        CompanyRep rep = (CompanyRep) resposistory.findUser(repId);
+        CompanyRep rep = (CompanyRep) repository.findUser(repId);
         return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
     }
     public boolean isEligible(CompanyRep rep) {
