@@ -87,7 +87,7 @@ public class CompanyRep extends User {
 
 
     public List<InternshipOpportunity> getInternships() {
-        return internships;
+        return new ArrayList<>(internships);
     }
 
     /**

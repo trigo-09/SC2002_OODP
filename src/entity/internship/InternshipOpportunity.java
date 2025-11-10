@@ -145,7 +145,7 @@ public class InternshipOpportunity implements Serializable {
 	}
 
 	public List<Application> getPendingApplications() {
-		return this.pendingApplications;
+		return new ArrayList<>(this.pendingApplications);
 	}
 
 	/**

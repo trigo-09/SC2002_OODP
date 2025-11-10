@@ -1,11 +1,10 @@
 package controller.service;
-import java.time.LocalDate;
-import java.util.*;
-
 import controller.database.IResposistory;
 import entity.internship.*;
 import entity.user.CompanyRep;
 import entity.user.Student;
+import java.time.LocalDate;
+import java.util.*;
 import util.FilterCriteria;
 
 public class InternshipService {
@@ -85,6 +84,10 @@ public class InternshipService {
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
                 .toList();
 }
+
+        public List<InternshipOpportunity> getInternshipsByCompany(String companyName){
+        return resposistory.getInternshipsByCompany(companyName);
+	}
 
 	/**
      *
