@@ -5,7 +5,7 @@ import entity.internship.InternshipOpportunity;
 import entity.request.*;
 import entity.user.*;
 import java.util.*;
-public interface IResposistory {
+public interface IRepository {
 
 	/**
      *

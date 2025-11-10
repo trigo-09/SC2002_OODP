@@ -8,7 +8,7 @@ import entity.internship.InternshipOpportunity;
 import entity.application.Application;
 
 
-public class SystemResposistory implements IResposistory {
+public class SystemRepository implements IRepository {
 
 	private static final long serialVersionUID = 1L;
 	private final Map<String, Student> students = new HashMap<>();
