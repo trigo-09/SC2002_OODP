@@ -65,9 +65,9 @@ public class CsvLoader {
             String[] headerParts = header.split(",");
             String headerLine = String.join(",", headerParts).toLowerCase();
 
-            if (headerLine.contains("StudentID")) {
+            if (headerLine.contains("studentid")) {
                 loadStudents(reader);
-            } else if (headerLine.contains("StaffID")) {
+            } else if (headerLine.contains("staffid")) {
                 loadStaff(reader);
             } else {
                 System.err.println("[WARN] Unrecognized file type for: " + file);
