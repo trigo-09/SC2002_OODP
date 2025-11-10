@@ -140,6 +140,13 @@ public class SystemRepository implements IRepository, Serializable {
 
 	}
 
+    public void approveCompanyRep(CompanyRep rep) {
+        if(rep != null) {
+            pendingReps.remove(rep.getId());
+            approvedReps.put(rep.getId(), rep);
+        }
+    }
+
     public Request getRequest(String requestId) {
         return requests.get(requestId);
     }
