@@ -2,7 +2,6 @@ package controller.service;
 
 import controller.database.IRepository;
 import entity.application.Application;
-import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
 import entity.request.*;
