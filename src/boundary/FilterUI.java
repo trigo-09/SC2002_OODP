@@ -76,8 +76,7 @@ public class FilterUI {
     }
 
     private static void updateClosingDate(FilterCriteria filter) {
-        System.out.print("Enter closing date (yyyy-MM-dd) or 0 to clear: ");
-        String dateInput = InputHelper.readString();
+        String dateInput = AttributeGetter.getString("Enter closing date (yyyy-MM-dd) or 0 to clear: ");
         if (dateInput.equals("0")) {
             filter.setClosingDate(null);
         } else {
