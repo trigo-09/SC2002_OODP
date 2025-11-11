@@ -1,5 +1,7 @@
 # Project files
 /.idea/
+.vscode/
+
 # Compiled class file
 *.class
 
