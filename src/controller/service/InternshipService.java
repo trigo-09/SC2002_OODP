@@ -123,7 +123,7 @@ public class InternshipService {
         return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
     }
     public boolean isEligible(CompanyRep rep) {
-        return repository.getInternshipsByCompany(rep.getCompanyName()).size() < MAX_ACTIVE_INTERNSHIPS;
+        return repository.getInternshipsByCompany(rep.getCompanyName()).stream().filter(i->i.getStatus() != InternStatus.REJECTED).count() < MAX_ACTIVE_INTERNSHIPS;
     }
 
 
