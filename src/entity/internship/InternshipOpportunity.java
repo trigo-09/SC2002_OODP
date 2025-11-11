@@ -20,7 +20,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 	private LocalDate openingDate;
 	private LocalDate closingDate;
 	private int numOfSlots;
-	private List<Application> pendingApplications; //think of using string id reference instead
+	private List<Application> pendingApplications;
 	private InternStatus status;
 	private Boolean visibility;
 	private String createdBy;
@@ -209,6 +209,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.approvedslots=approvedslots;
 	}
     public void addApprovedapplication(Application application){
+        this.pendingApplications.remove(application);
         this.approvedslots.add(application);
     }
 

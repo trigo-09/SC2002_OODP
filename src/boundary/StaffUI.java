@@ -103,10 +103,18 @@ public class StaffUI {
             System.out.print("Enter 0 to Reject, 1 to Approve: ");
             choice2 = InputHelper.readInt();
             if (choice2 == 1) {
-                staffController.approveInternship(choice1.getId());
+                try {
+                    staffController.approveInternship(choice1.getId());
+                }catch (Exception e){
+                    System.out.println("ERROR: " + e.getMessage());
+                }
                 break;
             } else if (choice2 == 0) {
-                staffController.rejectInternship(choice1.getId());
+                try {
+                    staffController.rejectInternship(choice1.getId());
+                }catch (Exception e){
+                    System.out.println("ERROR: " + e.getMessage());
+                }
                 break;
             } else {
                 System.out.println("Please Enter 0 to Reject or 1 to Approve");
@@ -139,10 +147,18 @@ public class StaffUI {
         System.out.print("Enter 0 to Reject, 1 to Approve: ");
         int choice2 = InputHelper.readInt();
         if (choice2 == 1){
-            staffController.approveRep(choice1.getId());
+            try {
+                staffController.approveRep(choice1.getId());
+            }catch (Exception e){
+                System.out.println("ERROR: " + e.getMessage());
+            }
         }
         else if (choice2 == 0){
-            staffController.rejectRep(choice1.getId());
+            try {
+                staffController.rejectRep(choice1.getId());
+            }catch (Exception e){
+                System.out.println("ERROR: " + e.getMessage());
+            }
         }
         else{
             System.out.println("Please Enter 0 to Reject or 1 to Approve");
@@ -174,10 +190,18 @@ public class StaffUI {
         System.out.print("Enter 0 to Reject, 1 to Approve: ");
         int choice2 = InputHelper.readInt();
         if (choice2 == 1){
-            staffController.approveWithdrawal(choice1.getId());
+            try {
+                staffController.approveWithdrawal(choice1.getId());
+            }catch (Exception e){
+                System.out.println("ERROR: " + e.getMessage());
+            }
         }
         else if (choice2 == 0){
-            staffController.rejectWithdrawal(choice1.getId());
+            try {
+                staffController.rejectWithdrawal(choice1.getId());
+            }catch (Exception e){
+                System.out.println("ERROR: " + e.getMessage());
+            }
         }
         else{
             System.out.println("Please Enter 0 to Reject or 1 to Approve");

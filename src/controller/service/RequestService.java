@@ -5,6 +5,9 @@ import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
 import entity.request.*;
+import util.exceptions.ObjectNotFoundException;
+import util.exceptions.PasswordIncorrectException;
+
 import java.util.List;
 
 
@@ -21,7 +24,13 @@ public class RequestService {
      * @param app
      * @param reason
      */
-	public void createWithdrawalRequest(String studentId, Application app, String reason) {
+	public void createWithdrawalRequest(String studentId, Application app, String reason) throws ObjectNotFoundException{
+        if(repo.findApplication(app.getApplicationId())==null){
+            throw new ObjectNotFoundException("Application not found");
+        }
+        if(!app.getStudentId().equals(studentId)){
+            throw new SecurityException("Cannot create withdrawal request for other student");
+        }
         WithdrawalRequest request = new WithdrawalRequest(app,reason,studentId);
 		repo.addWithdrawalRequest(request);
 	}
@@ -30,8 +39,11 @@ public class RequestService {
      *
      * @param requestId
      */
-	public void acceptWithdrawalRequest(String requestId) {
+	public void acceptWithdrawalRequest(String requestId) throws ObjectNotFoundException{
         WithdrawalRequest req = (WithdrawalRequest) repo.getRequest(requestId);
+        if(req==null){
+            throw new ObjectNotFoundException("Invalid requestId, Request not found");
+        }
         req.approve();
         repo.removeWithdrawalRequest(req.getId());
 	}
@@ -40,8 +52,11 @@ public class RequestService {
      *
      * @param requestId
      */
-    public void rejectWithdrawalRequest(String requestId) {
+    public void rejectWithdrawalRequest(String requestId) throws ObjectNotFoundException {
         WithdrawalRequest req = (WithdrawalRequest) repo.getRequest(requestId);
+        if(req==null){
+            throw new ObjectNotFoundException("Invalid requestId, Request not found");
+        }
         req.reject();
         repo.removeWithdrawalRequest(req.getId());
     }
@@ -59,15 +74,21 @@ public class RequestService {
 	 * 
 	 * @param requestId
 	 */
-	public void approveRegistrationRequest(String requestId) {
+	public void approveRegistrationRequest(String requestId) throws ObjectNotFoundException{
         RegistrationRequest req = (RegistrationRequest) repo.getRequest(requestId);
+        if(req==null){
+            throw new ObjectNotFoundException("Invalid requestId, Request not found");
+        }
         req.approve();
         repo.approveCompanyRep(req.getId());
         repo.removeRegistrationRequest(req.getId());
 	}
 
-    public void rejectRegistrationRequest(String requestId) {
+    public void rejectRegistrationRequest(String requestId) throws ObjectNotFoundException {
         RegistrationRequest req = (RegistrationRequest) repo.getRequest(requestId);
+        if(req==null){
+            throw new ObjectNotFoundException("Invalid requestId, Request not found");
+        }
         req.reject();
         repo.removeRegistrationRequest(req.getId());
     }
@@ -86,14 +107,20 @@ public class RequestService {
 	 * 
 	 * @param requestId
 	 */
-	public void approveInternshipRequest(String requestId) {
+	public void approveInternshipRequest(String requestId) throws ObjectNotFoundException{
         InternshipVetRequest req = (InternshipVetRequest) repo.getRequest(requestId);
+        if(req==null){
+            throw new ObjectNotFoundException("Invalid requestId, Request not found");
+        }
         req.approve();
         repo.removeInternshipVetRequest(req.getId());
 	}
 
-    public void rejectInternshipRequest(String requestId) {
+    public void rejectInternshipRequest(String requestId) throws ObjectNotFoundException{
         InternshipVetRequest req = (InternshipVetRequest) repo.getRequest(requestId);
+        if(req==null){
+            throw new ObjectNotFoundException("Invalid requestId, Request not found");
+        }
         req.reject();
         repo.removeInternshipVetRequest(req.getId());
     }
