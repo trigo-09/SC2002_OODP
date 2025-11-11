@@ -14,8 +14,8 @@ import util.ui.UIHelper;
 import java.time.LocalDate;
 
 public class StudentUI {
-    private StudentController studentController;
-    private SystemController systemController;
+    private final StudentController studentController;
+    private final SystemController systemController;
 
     public StudentUI(SystemController systemController, StudentController studentController) {
         this.systemController = systemController;
