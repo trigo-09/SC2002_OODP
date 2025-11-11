@@ -139,18 +139,6 @@ public class RequestService {
         return repo.getAllRequests(Request.class);
     }
 
-    public List<WithdrawalRequest> viewAllWithdrawalRequests() {
-        return repo.getAllRequests(WithdrawalRequest.class);
-    }
-
-    public List<RegistrationRequest> viewAllRegistrationRequests() {
-        return repo.getAllRequests(RegistrationRequest.class);
-    }
-
-    public List<InternshipVetRequest> viewAllInternshipVetRequests() {
-        return repo.getAllRequests(InternshipVetRequest.class);
-    }
-
     public List<RegistrationRequest> getPendingRegistration(){
         return repo.getAllRequests(RegistrationRequest.class);
     }
