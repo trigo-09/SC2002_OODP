@@ -45,7 +45,7 @@ public class UserController {
 
     public FilterCriteria getFilter() {return filter;}
     public AuthenticationService getAuth() {return auth;}
-    public IRepository getRespo() {return repo;}
+    public IRepository getRepo() {return repo;}
     public RequestService getRequest() {return request;}
 
 }

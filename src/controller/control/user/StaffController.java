@@ -18,11 +18,9 @@ public class StaffController extends UserController {
 
 	private final CareerStaff staff;
 	private final InternshipService internshipService;
-	private final IRepository repo;
 
 	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
 		super(auth, repository, requestService);
-		this.repo = repository;
 		this.staff = staff;
 		this.internshipService = new InternshipService(repository, requestService);
 	}
@@ -85,7 +83,7 @@ public class StaffController extends UserController {
 	 * @param filter
 	 */
 	public List<InternshipOpportunity> viewInternshipsFiltered(FilterCriteria filter) {
-		List<InternshipOpportunity> internships = repo.getAllInternships();
+		List<InternshipOpportunity> internships = getRepo().getAllInternships();
 		return internshipService.getFilteredInternship(internships, filter);
 	}
 

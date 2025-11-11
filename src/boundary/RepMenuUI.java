@@ -56,9 +56,9 @@ public class RepMenuUI {
     private void createInternshipUI() {
         System.out.println("=== Create Internship Opportunity ===");
         System.out.print("Title: ");
-        String title = InputHelper.readLine().trim();
+        String title = InputHelper.readLine();
         System.out.print("Description: ");
-        String description = InputHelper.readLine().trim();
+        String description = InputHelper.readLine();
 
         InternshipLevel level;
 
@@ -66,7 +66,7 @@ public class RepMenuUI {
         // Convert user input to InternshipLevel enum
         while (true) {
             System.out.print("Level (Basic / Intermediate / Advanced): ");
-            String input = InputHelper.readLine().trim();
+            String input = InputHelper.readLine();
             if (input.equalsIgnoreCase("Basic")) {
                 level = InternshipLevel.BASIC;
                 break;
@@ -82,7 +82,7 @@ public class RepMenuUI {
         
         // Currently only supports a single preferred major input (or 'Any')
         System.out.print("Preferred Major or 'Any': ");
-        String preferredMajor = InputHelper.readLine().trim();
+        String preferredMajor = InputHelper.readLine();
         
         LocalDate openingDate = readDate("Opening Date (DD-MM-YYYY): ");
         LocalDate closingDate;
@@ -146,7 +146,7 @@ public class RepMenuUI {
             switch (choice) {
                 case 1 -> {
                     System.out.print("Enter Internship ID: ");
-                    String internshipId = InputHelper.readLine().trim();
+                    String internshipId = InputHelper.readLine();
                     System.out.print("Set visibility (1 = visible, 0 = hidden): ");
                     int visChoice = readIntSafe();
                     boolean visibility = (visChoice == 1);
@@ -162,7 +162,7 @@ public class RepMenuUI {
 
                 case 2 -> {
                     System.out.print("Enter Internship ID to manage applications: ");
-                    String internId = InputHelper.readLine().trim();
+                    String internId = InputHelper.readLine();
 
                     try {
                         List<Application> applications = repController.getApplications(internId);
@@ -183,7 +183,7 @@ public class RepMenuUI {
 
                     if (appChoice == 1) {
                         System.out.print("Enter Application ID: ");
-                        String appId = InputHelper.readLine().trim();
+                        String appId = InputHelper.readLine();
                         System.out.print("Accept (1) or Reject (0) the application? ");
                         int decision = readIntSafe();
 
@@ -214,7 +214,7 @@ public class RepMenuUI {
      */
     private int readIntSafe() {
         while (true) {
-            String in = InputHelper.readLine().trim();
+            String in = InputHelper.readLine();
             try { return Integer.parseInt(in); }
             catch (NumberFormatException e) { System.out.print("Please enter a number: "); }
         }
@@ -228,7 +228,7 @@ public class RepMenuUI {
     private LocalDate readDate(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String in = InputHelper.readLine().trim();
+            String in = InputHelper.readLine();
             try { return LocalDate.parse(in, DMY); }
             catch (DateTimeParseException e) { System.out.println("Invalid date, use DD-MM-YYYY."); }
         }

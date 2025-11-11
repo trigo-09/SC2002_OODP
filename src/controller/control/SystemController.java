@@ -39,14 +39,14 @@ public class SystemController {
 	}
 
 	public void start() {
+        Scanner scanner = new Scanner(System.in);
+        InputHelper.init(scanner);
         while (true) {
             mainMenu();
         }
 	}
 
 	public void mainMenu() {
-        Scanner scanner = new Scanner(System.in);
-        InputHelper.init(scanner);
         Welcome.welcome(this);
 	}
 
