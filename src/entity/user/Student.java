@@ -68,7 +68,7 @@ public class Student extends User implements Displayable {
 
 	@Override
 	public String getSplitter(){
-		return "----------------------------------";
+		return Displayable.SPLITTER;
 	}
 
 	@Override
