@@ -7,15 +7,16 @@ import controller.control.user.StaffController;
 import controller.control.user.StudentController;
 import controller.database.IRepository;
 import controller.database.SystemDataManager;
+import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
+import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.user.*;
+import java.util.Map;
 import util.exceptions.AlreadyApprovedException;
 import util.exceptions.AuthenticationException;
 import util.exceptions.RepNotApprovedException;
 import util.exceptions.RepPendingApprovalException;
-
-import java.util.Map;
 
 public class SystemController {
 
@@ -23,12 +24,16 @@ public class SystemController {
 	private final SystemDataManager dataManager;
     private final AuthenticationService auth;
     private final RequestService request;
+    private final InternshipService internshipService;
+    private final ApplicationService applicationService;
 
 	public SystemController() {
         dataManager = new SystemDataManager();
         repo = dataManager.load();
         auth = new AuthenticationService(repo);
         request = new RequestService(repo);
+        internshipService = new InternshipService(repo, request);
+        applicationService = new ApplicationService(repo, internshipService, request);
 	}
 
 	public void start() {
@@ -48,7 +53,8 @@ public class SystemController {
 
                 case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch();
 
-                case REP -> new RepController(auth,repo,request,(CompanyRep) user);
+                case REP ->  new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch(scanner);
+                    
             }
         }
 

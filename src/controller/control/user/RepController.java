@@ -1,5 +1,6 @@
 package controller.control.user;
 
+import boundary.RepMenuUI;
 import controller.database.IRepository;
 import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
@@ -10,23 +11,61 @@ import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
 import java.time.LocalDate;
-import java.util.*;
-import util.FilterCriteria;
+import java.util.List;
+import java.util.Scanner;
 
+
+ /**
+  * Controller for company representatives.
+  * Acts as a middle layer between the UI and the service layer,
+  * allowing representatives to create, view, and manage internship opportunities and applications.
+  */
 public class RepController extends UserController {
 
 	private final CompanyRep rep;
 	private final ApplicationService applicationService;
 	private final InternshipService internshipService;
 
+	 /**
+	  * Constructs a representative controller bound to a specific company representative.
+	  *
+	  * @param auth           		authentication service for login verification
+	  * @param repository     		shared repository for data persistence
+	  * @param requestService 		shared request service for handling requests
+	  * @param rep            		the company representative associated with this controller
+	  * @param internshipService 	shared service for managing internships
+	  * @param applicationService 	shared service for managing applications
+	  */
 	public RepController(AuthenticationService auth,
-                         IRepository repository, RequestService requestService,CompanyRep rep){
+                         IRepository repository, 
+						 RequestService requestService,
+						 CompanyRep rep, 
+						 InternshipService internshipService, 
+						 ApplicationService applicationService) {
 		super(auth,repository,requestService);
 		this.rep = rep;
-		this.internshipService = new InternshipService(repository, requestService);
-        this.applicationService = new ApplicationService(repository,internshipService,requestService);
+		this.internshipService = internshipService;
+        this.applicationService = applicationService;
 	}
 
+	public void launch(Scanner scanner) {
+    	new RepMenuUI(this, scanner).displayMenu();
+	}
+
+	/**
+	 * Creates a new internship opportunity on behalf of the company representative.
+	 *
+     * @param title           internship title
+     * @param description     internship description
+     * @param level           required internship level (Basic / Intermediate / Advanced)
+     * @param preferredMajors comma-separated preferred majors or "Any"
+     * @param openingDate     date when applications open
+     * @param closingDate     date when applications close
+     * @param numOfSlots      number of available slots (1–10)
+     * @return                the created InternshipOpportunity entity
+     * @throws IllegalStateException    if the representative has reached the internship limit
+     * @throws IllegalArgumentException if any provided field is invalid
+     */
 	public InternshipOpportunity createInternship(String title,
                                                   String description,
                                                   InternshipLevel level,
@@ -39,43 +78,57 @@ public class RepController extends UserController {
 	
 
 	/**
-	 * 
-	 * @param internshipid
-	 */
-	public void toggleVisibility(String internshipid, boolean visibility) {
-		internshipService.setVisibility(internshipid, visibility);
+     * Updates the visibility of an internship opportunity.
+     *
+     * @param internshipId unique ID of the internship
+     * @param visibility   true to make visible, false to hide
+     * @throws SecurityException        if the internship does not belong to this representative
+     * @throws IllegalArgumentException if the internship ID is invalid
+     * @throws IllegalStateException    if visibility cannot be changed due to current state
+     */
+	public void toggleVisibility(String internshipId, boolean visibility) {
+		internshipService.setVisibility(internshipId, visibility);
 	}
 
 	/**
-	 * 
-	 * @param internshipId
-	 */
+     * Retrieves all pending applications for a given internship.
+     *
+     * @param internshipId unique ID of the internship
+     * @return list of pending {@link Application} objects
+     * @throws IllegalArgumentException if the internship ID is invalid
+     * @throws SecurityException        if the internship does not belong to this representative
+     */
 	public List<Application> getApplications(String internshipId) {
 		return internshipService.findInternshipById(internshipId).getPendingApplications();
 	}
 
 	/**
-	 * 
+	 * Retrieves all internship opportunities for the company representative.
+	 * @return list of {@link InternshipOpportunity} objects
 	 */
 	public List<InternshipOpportunity> getInternships() {
 		return internshipService.getInternshipsByCompany(rep.getCompanyName());
 	}
 
-
 	/**
-	 * 
-	 * @param appId
+	 * Approves an internship application.
+	 * @param appId application ID
+	 * @throws IllegalArgumentException if the application ID is invalid
+	 * @throws SecurityException        if the application does not belong to this representative
+	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
 	public void approveApp(String appId) {
 		applicationService.reviewApplication(rep.getId(),appId, true);
 	}
 
 	/**
-	 * 
-	 * @param appid
+	 * Rejects an internship application.
+	 * @param appId application ID
+	 * @throws IllegalArgumentException if the application ID is invalid
+	 * @throws SecurityException        if the application does not belong to this representative
+	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void rejectApp(String appid) {
-		applicationService.reviewApplication(rep.getId(), appid, false);
+	public void rejectApp(String appId) {
+		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
-
 }

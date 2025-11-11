@@ -2,15 +2,24 @@ package entity.application;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * Represents a student's application for a specific internship opportunity.
+ * Each application has a unique ID, links to a student and an internship, and tracks its review status.
+ */
+
 public class Application implements Serializable {
 
-	// Attributes
 	private final String studentId;
 	private final String internshipId;
     private final String applicationId;
 	private ApplicationStatus status;
 
-	// Constructor
+	/**
+	 * Constructs a new Application with PENDING status.
+	 *
+	 * @param studentId    ID of the student applying
+	 * @param internshipId ID of the internship opportunity
+	 */
 	public Application(String studentId, String internshipId) {
 		this.studentId = studentId;
 		this.internshipId = internshipId;
@@ -18,12 +27,40 @@ public class Application implements Serializable {
         this.applicationId = UUID.randomUUID().toString();
 	}
 
-	// Getter methods
+	/**
+ 	 * Returns the unique ID of the student who submitted this application.
+ 	 *
+ 	 * @return the student ID
+ 	 */
 	public String getStudentId() { return studentId; }
-    public String getInternshipId() { return internshipId; }
-    public ApplicationStatus getStatus() { return status; }
 
-	// Changing application status
+	/**
+ 	 * Returns the unique ID of the internship opportunity that this application was submitted for.
+ 	 *
+ 	 * @return the internship ID
+ 	 */
+	public String getInternshipId() { return internshipId; }
+
+	/**
+ 	 * Returns the unique ID of this application.
+ 	 *
+ 	 * @return the application ID
+ 	 */
+	public String getApplicationId() { return applicationId; }
+
+	/**
+ 	 * Returns the current review status of this application.
+	 *
+	 * @return the current {@link ApplicationStatus} of this application
+	 */
+	public ApplicationStatus getStatus() { return status; }
+
+
+	/**
+	 * Changes the status of this application to the specified new status.
+	 * @param newStatus the new status to set
+	 * @throws IllegalStateException if the status transition is invalid
+	 */
 	public void changeApplicationStatus(ApplicationStatus newStatus) {
 		if (!validStatusTransition(this.status, newStatus)) {
 			throw new IllegalStateException("Invalid status transition from " + this.status + " to " + newStatus);
@@ -31,8 +68,13 @@ public class Application implements Serializable {
 		this.status = newStatus;
 	}
 
-	// check valid status transition
-	public boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
+	/**
+	 * Helper method to validate status transitions.
+	 * @param current the current status
+	 * @param next the desired new status
+	 * @return true if the transition is valid, false otherwise
+	 */
+	private boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
 		return switch (current) {
 			case PENDING -> next == ApplicationStatus.APPROVED || next == ApplicationStatus.REJECTED || next == ApplicationStatus.WITHDRAWN;
 			case APPROVED -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;
@@ -41,7 +83,19 @@ public class Application implements Serializable {
 			default -> false;
 		};
 	}
-
-    public String getApplicationId() { return applicationId; }
+	/**
+	 * Returns a string representation of this application, including
+	 * its ID, student ID, internship ID, and current status.
+	 *
+	 * @return a human-readable string representation of this application
+	 */
+	@Override
+	public String toString() {
+    	return "Application{" +
+			"id='" + applicationId + '\'' +
+			", student='" + studentId + '\'' +
+			", internship='" + internshipId + '\'' +
+			", status=" + status +
+			'}';
+	}
 }
-
