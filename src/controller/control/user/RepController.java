@@ -15,7 +15,6 @@ import util.exceptions.ObjectNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 
  /**
@@ -51,8 +50,8 @@ public class RepController extends UserController {
         this.applicationService = applicationService;
 	}
 
-	public void launch(Scanner scanner) {
-    	new RepMenuUI(this, scanner).displayMenu();
+	public void launch() {
+    	new RepMenuUI(this).displayMenu();
 	}
 
 	/**

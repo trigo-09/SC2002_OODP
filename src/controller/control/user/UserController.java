@@ -11,15 +11,15 @@ public class UserController {
 
 	private AuthenticationService auth;
     private FilterCriteria filter;
-    private IRepository respo;
+    private IRepository repo;
     private RequestService request;
 
 
 
-    public UserController(AuthenticationService auth, IRepository respo, RequestService request) {
+    public UserController(AuthenticationService auth, IRepository repo, RequestService request) {
         filter = new FilterCriteria();
         this.auth = auth;
-        this.respo = respo;
+        this.repo = repo;
         this.request = request;
     }
 
@@ -45,7 +45,7 @@ public class UserController {
 
     public FilterCriteria getFilter() {return filter;}
     public AuthenticationService getAuth() {return auth;}
-    public IRepository getRespo() {return respo;}
+    public IRepository getRepo() {return repo;}
     public RequestService getRequest() {return request;}
 
 }

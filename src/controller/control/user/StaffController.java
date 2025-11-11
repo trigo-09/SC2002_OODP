@@ -1,7 +1,5 @@
 package controller.control.user;
 
-import java.util.*;
-
 import boundary.StaffUI;
 import controller.control.SystemController;
 import controller.database.IRepository;
@@ -13,11 +11,12 @@ import entity.request.InternshipVetRequest;
 import entity.request.RegistrationRequest;
 import entity.request.WithdrawalRequest;
 import entity.user.CareerStaff;
+import java.util.*;
 import util.FilterCriteria;
 
 public class StaffController extends UserController {
 
-	private CareerStaff staff;
+	private final CareerStaff staff;
 	private final InternshipService internshipService;
 
 	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
@@ -84,7 +83,8 @@ public class StaffController extends UserController {
 	 * @param filter
 	 */
 	public List<InternshipOpportunity> viewInternshipsFiltered(FilterCriteria filter) {
-		return internshipService.getFilteredInternship(filter);
+		List<InternshipOpportunity> internships = getRepo().getAllInternships();
+		return internshipService.getFilteredInternship(internships, filter);
 	}
 
 	public List<RegistrationRequest> viewPendingReg(){

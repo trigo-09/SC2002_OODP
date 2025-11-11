@@ -11,25 +11,22 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Scanner;
+import util.io.InputHelper;
 
  /**
   * Console menu for company representatives to create and manage internship opportunities.
   */
 public class RepMenuUI {
     private final RepController repController;
-    private final Scanner sc;
     private static final DateTimeFormatter DMY = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
      /**
-      * Creates a representative menu bound to the given controller and shared input scanner.
+      * Creates a representative menu bound to the given controller.
       *
       * @param repController controller handling representative operations
-      * @param sc            shared Scanner for user input (not closed here)
       */
-    public RepMenuUI(RepController repController, Scanner sc) {
+    public RepMenuUI(RepController repController) {
         this.repController = repController;
-        this.sc = sc;
     }
     /**
      * Display the main menu and handle user actions until logout is chosen.
@@ -62,9 +59,9 @@ public class RepMenuUI {
     private void createInternshipUI() {
         System.out.println("=== Create Internship Opportunity ===");
         System.out.print("Title: ");
-        String title = sc.nextLine().trim();
+        String title = InputHelper.readLine();
         System.out.print("Description: ");
-        String description = sc.nextLine().trim();
+        String description = InputHelper.readLine();
 
         InternshipLevel level;
 
@@ -72,7 +69,7 @@ public class RepMenuUI {
         // Convert user input to InternshipLevel enum
         while (true) {
             System.out.print("Level (Basic / Intermediate / Advanced): ");
-            String input = sc.nextLine().trim();
+            String input = InputHelper.readLine();
             if (input.equalsIgnoreCase("Basic")) {
                 level = InternshipLevel.BASIC;
                 break;
@@ -88,7 +85,7 @@ public class RepMenuUI {
         
         // Currently only supports a single preferred major input (or 'Any')
         System.out.print("Preferred Major or 'Any': ");
-        String preferredMajor = sc.nextLine().trim();
+        String preferredMajor = InputHelper.readLine();
         
         LocalDate openingDate = readDate("Opening Date (DD-MM-YYYY): ");
         LocalDate closingDate;
@@ -152,7 +149,7 @@ public class RepMenuUI {
             switch (choice) {
                 case 1 -> {
                     System.out.print("Enter Internship ID: ");
-                    String internshipId = sc.nextLine().trim();
+                    String internshipId = InputHelper.readLine();
                     System.out.print("Set visibility (1 = visible, 0 = hidden): ");
                     int visChoice = readIntSafe();
                     boolean visibility = (visChoice == 1);
@@ -168,7 +165,7 @@ public class RepMenuUI {
 
                 case 2 -> {
                     System.out.print("Enter Internship ID to manage applications: ");
-                    String internId = sc.nextLine().trim();
+                    String internId = InputHelper.readLine();
 
                     try {
                         List<Application> applications = repController.getApplications(internId);
@@ -189,7 +186,7 @@ public class RepMenuUI {
 
                     if (appChoice == 1) {
                         System.out.print("Enter Application ID: ");
-                        String appId = sc.nextLine().trim();
+                        String appId = InputHelper.readLine();
                         System.out.print("Accept (1) or Reject (0) the application? ");
                         int decision = readIntSafe();
 
@@ -220,7 +217,7 @@ public class RepMenuUI {
      */
     private int readIntSafe() {
         while (true) {
-            String in = sc.nextLine().trim();
+            String in = InputHelper.readLine();
             try { return Integer.parseInt(in); }
             catch (NumberFormatException e) { System.out.print("Please enter a number: "); }
         }
@@ -234,7 +231,7 @@ public class RepMenuUI {
     private LocalDate readDate(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String in = sc.nextLine().trim();
+            String in = InputHelper.readLine();
             try { return LocalDate.parse(in, DMY); }
             catch (DateTimeParseException e) { System.out.println("Invalid date, use DD-MM-YYYY."); }
         }
@@ -246,6 +243,6 @@ public class RepMenuUI {
      */
     private void pause() {
         System.out.print("Press Enter to continue...");
-        sc.nextLine();
+        InputHelper.readLine();
     }
 }
