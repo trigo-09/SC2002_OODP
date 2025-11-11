@@ -7,7 +7,7 @@ import entity.user.User;
 import util.FilterCriteria;
 import util.exceptions.AuthenticationException;
 
-public class UserController {
+public abstract class UserController {
 
 	private final AuthenticationService auth;
     private final FilterCriteria filter;

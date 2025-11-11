@@ -68,15 +68,6 @@ public class InternshipService {
         internship.setVisibility(visible);
 	}
 
-	/**
-	 * 
-	 * @param id
-	 * @param status
-	 */
-	public void updateStatus(String id, InternStatus status) {
-		// TODO - implement InternshipService.updateStatus
-		throw new UnsupportedOperationException();
-	}
 
 	public List<InternshipOpportunity> getFilteredInternship(List<InternshipOpportunity> internList, FilterCriteria filter) {
         return internList.stream()
@@ -119,12 +110,9 @@ public class InternshipService {
 
         // Major must match (unless internship accepts "Any")
         String preferredMajors = i.getPreferredMajors();
-        if (!Objects.equals(preferredMajors, "Any") && !Objects.equals(preferredMajors, s.getMajor())) {
-            return false;
-        }
+        return Objects.equals(preferredMajors, "Any") || Objects.equals(preferredMajors, s.getMajor());
         // Passed all checks
-        return true;
-	}
+    }
 
     public boolean isEligible(String repId) {
         CompanyRep rep = (CompanyRep) repository.findUser(repId);
