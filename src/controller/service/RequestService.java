@@ -135,7 +135,7 @@ public class RequestService {
        repo.removeInternshipVetRequest(request.getId());
     }
 
-    public List<Request> viewAllRequests() {
+    public List<Request> getAllRequests() {
         return repo.getAllRequests(Request.class);
     }
 
