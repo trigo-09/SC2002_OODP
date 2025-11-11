@@ -8,7 +8,6 @@ import entity.user.CompanyRep;
 import entity.request.*;
 import java.util.List;
 
-import java.util.List;
 
 public class RequestService {
 
