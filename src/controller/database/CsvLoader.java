@@ -1,6 +1,8 @@
 package controller.database;
 
 import entity.user.*;
+import util.FindDataDirectory;
+
 import java.io.*;
 import java.util.*;
 
@@ -16,7 +18,7 @@ public class CsvLoader {
 
     public CsvLoader(IRepository sysRepo) {
         this.sysRepo = sysRepo;
-        this.directoryPath = "SC2002_OODP/data/";
+        this.directoryPath = FindDataDirectory.findDataDirectory().toString();
     }
     /**
      * Load all CSV files from a directory and populate the SystemRepository.
@@ -32,16 +34,16 @@ public class CsvLoader {
 
         File[] csvFiles = dir.listFiles((d, name) -> name.toLowerCase().endsWith(".csv"));
         if (csvFiles == null || csvFiles.length == 0) {
-            System.err.println("No CSV files found in directory: " + directoryPath);
+            System.err.println("No CSV files found: " + directoryPath);
             return sysRepo;
         }
 
         for (File file : csvFiles) {
-            System.out.println("[INFO] Processing file: " + file.getName());
+            System.out.println("Process file: " + file.getName());
             loadSingleFile(file);
         }
 
-        System.out.println("[INFO] Directory load complete. "
+        System.out.println("Dir loaded"
                 + sysRepo.getStudents().size() + " students, "
                 + sysRepo.getCareerStaff().size() + " staff, "
                 + sysRepo.getPendingReps().size() + " reps loaded.");
@@ -70,14 +72,14 @@ public class CsvLoader {
             } else if (headerLine.contains("staffid")) {
                 loadStaff(reader);
             } else {
-                System.err.println("[WARN] Unrecognized file type for: " + file);
+                System.err.println("Unrecognised file: " + file);
             }
 
         } catch (IOException e) {
-            System.err.println("[ERROR] Failed to read file: " + file);
+            System.err.println("error failed to read file: " + file);
             e.printStackTrace();
         } catch (Exception e) {
-            System.err.println("[ERROR] Unexpected error while loading file: " + e.getMessage());
+            System.err.println("error: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -107,9 +109,9 @@ public class CsvLoader {
                 Student student = (Student) UserFactory.createUser(UserRole.STUDENT, id, name, "password", attr);
                 sysRepo.addStudent(student);
             } catch (NumberFormatException e) {
-                System.err.println("[WARN] Invalid year format at line " + lineCount);
+                System.err.println("Invalid year format at line " + lineCount);
             } catch (Exception e) {
-                System.err.println("[WARN] Skipping bad student entry at line " + lineCount + ": " + e.getMessage());
+                System.err.println("Skipped line " + lineCount + ": " + e.getMessage());
             }
         }
     }
@@ -136,10 +138,8 @@ public class CsvLoader {
                 CareerStaff staff = (CareerStaff) UserFactory.createUser(UserRole.STAFF, id, name, "password", attr);
                 sysRepo.addCareerStaff(staff);
             } catch (Exception e) {
-                System.err.println("Skipping bad staff entry at line " + lineCount + ": " + e.getMessage());
+                System.err.println("Skipping line " + lineCount + ": " + e.getMessage());
             }
         }
     }
-
-
 }
