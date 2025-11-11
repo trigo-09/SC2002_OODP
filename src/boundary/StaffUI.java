@@ -12,6 +12,7 @@ import entity.request.WithdrawalRequest;
 import util.FilterCriteria;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
+import util.ui.ChangePage;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +28,7 @@ public class StaffUI {
     }
 
     public void menuLoop() {
+        ChangePage.changePage();
         boolean stay = true;
         while (stay) {
             System.out.println();
@@ -71,6 +73,7 @@ public class StaffUI {
     }
 
     public void ApproveRejectInternshipVet(){
+        ChangePage.changePage();
         System.out.println("All Internship Vetting Request");
         List<InternshipVetRequest> pendingInternships = staffController.viewPendingInternshipVet();
         if (pendingInternships.isEmpty()){
@@ -107,6 +110,7 @@ public class StaffUI {
     }
 
     public void ApproveRejectRep(){
+        ChangePage.changePage();
         System.out.println("All Rep Registration Request");
         List<RegistrationRequest> pendingReg = staffController.viewPendingReg();
         if (pendingReg.isEmpty()){
@@ -141,6 +145,7 @@ public class StaffUI {
     }
 
     public void ApproveRejectWithdrawal(){
+        ChangePage.changePage();
         System.out.println("All Withdrawal Requests");
         List<WithdrawalRequest> pendingWithdrawal = staffController.viewPendingWithdrawal();
         if (pendingWithdrawal.isEmpty()){
@@ -176,24 +181,29 @@ public class StaffUI {
 
 
     public void ViewFilteredInternships(){
+        ChangePage.changePage();
         System.out.println("All Internships(Filtered)");
         List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
         DisplayableViewer.displayList(filteredList);
     }
 
     public void ViewPendingReps(){
+        ChangePage.changePage();
         System.out.println("Pending Rep Registration Requests");
         List<RegistrationRequest> pendingReg = staffController.viewPendingReg();
         DisplayableViewer.displayList(pendingReg);
     }
 
     public void ViewPendingInternships(){
+        ChangePage.changePage();
+        System.out.println("Pending Internship Vetting Requests");
         List<InternshipVetRequest> pendingInternships = staffController.viewPendingInternshipVet();
         DisplayableViewer.displayList(pendingInternships);
     }
 
 
     private void ViewPendingWithdrawals(){
+        ChangePage.changePage();
         System.out.println("Pending Withdrawal Requests");
         List<WithdrawalRequest> pendingWithdrawal = staffController.viewPendingWithdrawal();
         DisplayableViewer.displayList(pendingWithdrawal);
@@ -201,6 +211,7 @@ public class StaffUI {
 
 
     private void handleChangePassword(){
+        ChangePage.changePage();
         String oldPass = AttributeGetter.getPassword("Enter old password: ");
         String newPass = AttributeGetter.getPassword("Enter new password: ");
         String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
@@ -215,6 +226,7 @@ public class StaffUI {
 
 
     public void UpdateFilter(){
+        ChangePage.changePage();
         System.out.println("Update Filter Criteria");
         FilterCriteria filter = staffController.getFilter();
 
