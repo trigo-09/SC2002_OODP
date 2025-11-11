@@ -4,7 +4,7 @@ import java.util.*;
 
 import boundary.StudentUI;
 import controller.control.SystemController;
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.service.ApplicationService;
 import controller.service.InternshipService;
 import controller.service.AuthenticationService;
@@ -20,7 +20,7 @@ public class StudentController extends UserController {
     private ApplicationService applicationService;
     private InternshipService internshipService;
 
-    public StudentController(AuthenticationService auth, IResposistory respo, RequestService request, Student student) {
+    public StudentController(AuthenticationService auth, IRepository respo, RequestService request, Student student) {
         super(auth, respo, request);
         this.student = student;
         InternshipService internshipService = new InternshipService(respo, request);
