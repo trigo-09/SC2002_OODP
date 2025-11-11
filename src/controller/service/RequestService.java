@@ -130,6 +130,11 @@ public class RequestService {
         // to be filled \\
     }
 
+    public void deleteInternshipRequest(String internshipId) {
+       Request request = getPendingInternshipVet().stream().filter(i-> i.getInternship().getId().equals(internshipId)).findFirst().get();
+       repo.removeInternshipVetRequest(request.getId());
+    }
+
     public List<Request> viewAllRequests() {
         return repo.getAllRequests(Request.class);
     }
