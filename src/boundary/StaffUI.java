@@ -239,7 +239,7 @@ public class StaffUI {
         System.out.println(" - Status                 : " + filter.getStatus());
         System.out.println(" - Preferred Major        : " + filter.getPreferredMajor());
         System.out.println(" - Level                  : " + filter.getLevel());
-        System.out.println(" - Closing Date         : " + filter.getClosingDate());
+        System.out.println(" - Closing Date          : " + filter.getClosingDate());
         System.out.println();
 
         String statusRaw = AttributeGetter.getString("Status (PENDING / APPROVED / REJECTED / FILLED) [or CLEAR]: ");
