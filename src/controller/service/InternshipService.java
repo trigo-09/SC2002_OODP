@@ -72,8 +72,8 @@ public class InternshipService {
 
 	/**
 	 * 
-	 * @param id
-	 * @param status
+	 * @param internship
+	 *
 	 */
 	private boolean ableToEditInternship(InternshipOpportunity internship){
         return internship.getStatus() == InternStatus.PENDING;
