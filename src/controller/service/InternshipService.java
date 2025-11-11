@@ -17,20 +17,19 @@ public class InternshipService {
         this.resposistory = resposistory;
         this.requestService = requestService;
     }
+    /**
+    * @param title
+    * @param description
+    * @param level
+    * @param preferredMajors
+    * @param closingDate
+    * @param openingDate
+    * @param numOfSlots
+    * @param createdBy
+    * @param companyName
+    */
 
-	/**
-	 * @param title
-     * @param description
-     * @param level
-     * @param preferredMajors
-     * @param closingDate
-     * @param openingDate
-     * @param numOfSlots
-     * @param createdBy
-     * @param companyName
-	 */
-
-	public InternshipOpportunity proposeInternship(String title,
+    public InternshipOpportunity proposeInternship(String title,
                                                    String description,
                                                    InternshipLevel level,
                                                    String preferredMajors,
@@ -90,46 +89,47 @@ public class InternshipService {
 	}
 
 	/**
-     *
-     * @param internshipId
-     */
+        *
+        * @param internshipId
+        */
 	public InternshipOpportunity findInternshipById(String internshipId) {
         return resposistory.findInternshipOpportunity(internshipId);
 	}
 
 	/**
-	 * 
-	 * @param s
-	 * @param internshipId
+	 * Checks if a student is eligible to apply for an internship.
+	 * @param s The student applying
+	 * @param internshipId The internship to apply for
 	 */
 	public boolean isEligible(Student s, String internshipId) {
-        InternshipOpportunity i = findInternshipById(internshipId);
-        if (!i.getVisibility()) {return false;}
+                InternshipOpportunity i = findInternshipById(internshipId);
+                if (!i.getVisibility()) {return false;}
 
-        // Students year must match the internship level
-        if (!i.getLevel().isEligible(s.getYear())) {return false;}
+                // Students year must match the internship level
+                if (!i.getLevel().isEligible(s.getYear())) {return false;}
 
-        // Major must match (unless internship accepts "Any")
-        String preferredMajors = i.getPreferredMajors();
-        if (!Objects.equals(preferredMajors, "Any") && !Objects.equals(preferredMajors, s.getMajor())) {
-            return false;
-        }
-        // Passed all checks
-        return true;
+                // Major must match (unless internship accepts "Any")
+                String preferredMajors = i.getPreferredMajors();
+                if (!Objects.equals(preferredMajors, "Any") && !Objects.equals(preferredMajors, s.getMajor())) {
+                return false;
+                }
+
+                // Passed all checks
+                return true;
 	}
 
-    public boolean isEligible(String repId) {
-        CompanyRep rep = (CompanyRep) resposistory.findUser(repId);
-        return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
-    }
+        public boolean isEligible(String repId) {
+                CompanyRep rep = (CompanyRep) resposistory.findUser(repId);
+                return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
+        }
 
 
 	/**
-     *
-     * @param internshipId
-     */
+        *
+        * @param internshipId
+        */
 	public boolean isFilled(String internshipId) {
-        return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
+                return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
 	}
 
 }

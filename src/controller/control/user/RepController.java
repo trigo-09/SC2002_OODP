@@ -109,6 +109,7 @@ public class RepController extends UserController {
 	 * @param appId application ID
 	 * @throws IllegalArgumentException if the application ID is invalid
 	 * @throws SecurityException        if the application does not belong to this representative
+	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
 	public void approveApp(String appId) {
 		applicationService.reviewApplication(rep.getId(),appId, true);
@@ -119,6 +120,7 @@ public class RepController extends UserController {
 	 * @param appId application ID
 	 * @throws IllegalArgumentException if the application ID is invalid
 	 * @throws SecurityException        if the application does not belong to this representative
+	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
 	public void rejectApp(String appId) {
 		applicationService.reviewApplication(rep.getId(), appId, false);
