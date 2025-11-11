@@ -39,7 +39,6 @@ public class WithdrawalRequest extends Request {
                 getId(),
                 getRequesterId(),
                 application.getApplicationId(),
-                application.getInternshipId(),
                 application.getStatus()
         );
     }
