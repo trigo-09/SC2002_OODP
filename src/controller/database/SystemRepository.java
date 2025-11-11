@@ -8,11 +8,9 @@ import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.request.*;
 import entity.user.*;
-import java.util.*;
-import java.util.stream.Stream;
 
 
-public class SystemResposistory implements IResposistory, Serializable {
+public class SystemRepository implements IRepository, Serializable {
 
     @Serial
 	private static final long serialVersionUID = 1L;
@@ -28,8 +26,8 @@ public class SystemResposistory implements IResposistory, Serializable {
      * add application to both student and internship object
 	 */
 	public void addApplication(String studentId,Application app) {
-        students.get(studentId).addApplication(app);
-        findInternshipOpportunity(app.getInternshipId()).addPendingApplication(app);
+        students.get(studentId.toLowerCase()).addApplication(app);
+        findInternshipOpportunity(app.getInternshipId().toLowerCase()).addPendingApplication(app);
 	}
 
 	/**
@@ -37,7 +35,7 @@ public class SystemResposistory implements IResposistory, Serializable {
 	 * @param staff
 	 */
 	public void addCareerStaff(CareerStaff staff) {
-        careerStaff.put(staff.getId(), staff);
+        careerStaff.put(staff.getId().toLowerCase(), staff);
 	}
 
 	/**
@@ -45,7 +43,7 @@ public class SystemResposistory implements IResposistory, Serializable {
 	 * @param intern
 	 */
 	public void addInternship(String repId,InternshipOpportunity intern) {
-        approvedReps.get(repId).addInternship(intern);
+        approvedReps.get(repId.toLowerCase()).addInternship(intern);
 	}
 
 	/**
@@ -53,7 +51,7 @@ public class SystemResposistory implements IResposistory, Serializable {
 	 * @param student
 	 */
 	public void addStudent(Student student) {
-        students.put(student.getId(), student);
+        students.put(student.getId().toLowerCase(), student);
 	}
 
     /**
@@ -61,7 +59,7 @@ public class SystemResposistory implements IResposistory, Serializable {
      * @param withdrawalRequest
      */
     public void addWithdrawalRequest(WithdrawalRequest withdrawalRequest) {
-        requests.put(withdrawalRequest.getId(), withdrawalRequest);
+        requests.put(withdrawalRequest.getId().toLowerCase(), withdrawalRequest);
     }
 
     /**
@@ -69,7 +67,7 @@ public class SystemResposistory implements IResposistory, Serializable {
      * @param registrationRequest
      */
     public void addRegistrationRequest(RegistrationRequest registrationRequest) {
-        requests.put(registrationRequest.getId(), registrationRequest);
+        requests.put(registrationRequest.getId().toLowerCase(), registrationRequest);
     }
 
     /**
@@ -77,7 +75,7 @@ public class SystemResposistory implements IResposistory, Serializable {
      * @param internshipVetRequest
      */
     public void addInternshipVetRequest(InternshipVetRequest internshipVetRequest) {
-        requests.put(internshipVetRequest.getId(), internshipVetRequest);
+        requests.put(internshipVetRequest.getId().toLowerCase(), internshipVetRequest);
     }
 
     /**
@@ -86,7 +84,7 @@ public class SystemResposistory implements IResposistory, Serializable {
      */
     @Override
     public void removeWithdrawalRequest(String requestId) {
-        requests.remove(requestId);
+        requests.remove(requestId.toLowerCase());
     }
 
     /**
@@ -95,7 +93,7 @@ public class SystemResposistory implements IResposistory, Serializable {
      */
     @Override
     public void removeInternshipVetRequest(String requestId) {
-        requests.remove(requestId);
+        requests.remove(requestId.toLowerCase());
     }
 
     /**
@@ -104,7 +102,7 @@ public class SystemResposistory implements IResposistory, Serializable {
      */
     @Override
     public void removeRegistrationRequest(String requestId) {
-        requests.remove(requestId);
+        requests.remove(requestId.toLowerCase());
     }
 
     /**
@@ -112,7 +110,7 @@ public class SystemResposistory implements IResposistory, Serializable {
 	 * @param studentId
 	 */
 	public List<Application> applicationByStudent(String studentId) {
-        Student student = students.get(studentId);
+        Student student = students.get(studentId.toLowerCase());
         return (student != null) ? student.getApplications() : new ArrayList<>();
 	}
 
@@ -123,7 +121,7 @@ public class SystemResposistory implements IResposistory, Serializable {
 	public List<Application> applicationForInternship(String internId) {
         return approvedReps.values().stream()
                 .flatMap(rep -> rep.getInternships().stream())
-                .filter(internship -> internship.getId().equals(internId))
+                .filter(internship -> internship.getId().equals(internId.toLowerCase()))
                 .findFirst()
                 .map(InternshipOpportunity::getPendingApplications)
                 .orElseGet(Collections::emptyList);
@@ -134,7 +132,7 @@ public class SystemResposistory implements IResposistory, Serializable {
 	 * @param repId
 	 */
 	public void approveCompanyRep(String repId) {
-        CompanyRep rep = pendingReps.get(repId);
+        CompanyRep rep = pendingReps.get(repId.toLowerCase());
         if (rep != null) {
             pendingReps.remove(repId);
             approvedReps.put(repId, rep);
@@ -142,8 +140,15 @@ public class SystemResposistory implements IResposistory, Serializable {
 
 	}
 
+    public void approveCompanyRep(CompanyRep rep) {
+        if(rep != null) {
+            pendingReps.remove(rep.getId().toLowerCase());
+            approvedReps.put(rep.getId().toLowerCase(), rep);
+        }
+    }
+
     public Request getRequest(String requestId) {
-        return requests.get(requestId);
+        return requests.get(requestId.toLowerCase());
     }
 
 	/**
@@ -153,7 +158,7 @@ public class SystemResposistory implements IResposistory, Serializable {
     // might change it
 	public User findUser(String userId) {
         return Stream.of(students, careerStaff, approvedReps, pendingReps)
-                .map(m -> m.get(userId))
+                .map(m -> m.get(userId.toLowerCase()))
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElse(null);
@@ -162,7 +167,7 @@ public class SystemResposistory implements IResposistory, Serializable {
     public InternshipOpportunity findInternshipOpportunity(String internshipId) {
         return approvedReps.values().stream()
                 .flatMap(c -> c.getInternships().stream())
-                .filter(intern -> intern.getId().equals(internshipId))
+                .filter(intern -> intern.getId().equals(internshipId.toLowerCase()))
                 .findFirst()
                 .orElse(null);
     }
@@ -170,7 +175,7 @@ public class SystemResposistory implements IResposistory, Serializable {
     public Application findApplication(String applicationId) {
         return students.values().stream()
                 .flatMap(s -> s.getApplications().stream())
-                .filter(app -> app.getApplicationId().equals(applicationId))
+                .filter(app -> app.getApplicationId().equals(applicationId.toLowerCase()))
                 .findFirst()
                 .orElse(null);
     }
@@ -212,8 +217,8 @@ public class SystemResposistory implements IResposistory, Serializable {
     }
 
     public void deleteApplication(String studentId, String applicationId) {
-        Optional.ofNullable(students.get(studentId))
-                .ifPresent(student -> student.withdrawApplication(applicationId));
+        Optional.ofNullable(students.get(studentId.toLowerCase()))
+                .ifPresent(student -> student.withdrawApplication(applicationId.toLowerCase()));
     }
 
 
@@ -223,8 +228,10 @@ public class SystemResposistory implements IResposistory, Serializable {
 	 * @param rep
 	 */
 	public void registerCompanyRep(CompanyRep rep) {
-        pendingReps.put(rep.getId(), rep);
+        pendingReps.put(rep.getId().toLowerCase(), rep);
 	}
+
+
     @Override
     public List<InternshipOpportunity> getInternshipsByCompany(String companyName) {
         return approvedReps.values().stream()
@@ -234,7 +241,7 @@ public class SystemResposistory implements IResposistory, Serializable {
     }
 
    public List<InternshipOpportunity> getAllInternshipsByRep(String repId) {
-        return approvedReps.get(repId).getInternships();
+        return approvedReps.get(repId.toLowerCase()).getInternships();
    }
 
 }

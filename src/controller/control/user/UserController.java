@@ -1,23 +1,22 @@
 package controller.control.user;
 
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.service.AuthenticationService;
 import controller.service.RequestService;
 import entity.user.User;
 import util.FilterCriteria;
 import util.exceptions.AuthenticationException;
-import util.exceptions.PasswordIncorrectException;
 
 public class UserController {
 
 	private AuthenticationService auth;
     private FilterCriteria filter;
-    private IResposistory respo;
+    private IRepository respo;
     private RequestService request;
 
 
 
-    public UserController(AuthenticationService auth, IResposistory respo, RequestService request) {
+    public UserController(AuthenticationService auth, IRepository respo, RequestService request) {
         filter = new FilterCriteria();
         this.auth = auth;
         this.respo = respo;
@@ -46,7 +45,7 @@ public class UserController {
 
     public FilterCriteria getFilter() {return filter;}
     public AuthenticationService getAuth() {return auth;}
-    public IResposistory getRespo() {return respo;}
+    public IRepository getRespo() {return respo;}
     public RequestService getRequest() {return request;}
 
 }

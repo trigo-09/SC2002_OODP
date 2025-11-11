@@ -1,21 +1,19 @@
 package controller.service;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import entity.internship.*;
 import entity.user.CompanyRep;
 import entity.user.Student;
+import java.time.LocalDate;
+import java.util.*;
 import util.FilterCriteria;
 
 public class InternshipService {
 
-    private final IResposistory resposistory;
+    private final IRepository resposistory;
     private final RequestService requestService;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
-    public InternshipService(IResposistory resposistory, RequestService requestService) {
+    public InternshipService(IRepository resposistory, RequestService requestService) {
         this.resposistory = resposistory;
         this.requestService = requestService;
     }
@@ -103,15 +101,14 @@ public class InternshipService {
      */
 	public InternshipOpportunity findInternshipById(String internshipId) {
         return resposistory.findInternshipOpportunity(internshipId);
-    }
+	}
 
 	/**
-	 *
+	 * 
 	 * @param s
 	 * @param internshipId
 	 */
-
-    public boolean isEligible(Student s, String internshipId) {
+	public boolean isEligible(Student s, String internshipId) {
         InternshipOpportunity i = findInternshipById(internshipId);
         if (!i.getVisibility()) {return false;}
 
@@ -140,4 +137,5 @@ public class InternshipService {
 	public boolean isFilled(String internshipId) {
         return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
 	}
+
 }

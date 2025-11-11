@@ -12,9 +12,12 @@ public class RegistrationRequest extends Request {
 
    public void approve() {
        companyRep.setStatus(RepStatus.REGISTERED);
-       companyRep.addNotification("Account has been approved");
    }
    public void reject() {
-       companyRep.addNotification("Account has been rejected");
+       companyRep.setStatus(RepStatus.REJECTED);
+   }
+
+   public CompanyRep getCompanyRep() {
+       return companyRep;
    }
 }

@@ -2,7 +2,7 @@ package controller.control.user;
 
 import java.util.*;
 
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.service.AuthenticationService;
 import controller.service.RequestService;
 import entity.internship.InternshipOpportunity;
@@ -12,7 +12,7 @@ import util.FilterCriteria;
 public class StaffController extends UserController {
 
 	private CareerStaff staff;
-    public StaffController(AuthenticationService authenticationService, IResposistory repo, RequestService request, CareerStaff staff) {
+    public StaffController(AuthenticationService authenticationService, IRepository repo, RequestService request, CareerStaff staff) {
         super(authenticationService,repo,request);
         this.staff = staff;
     }

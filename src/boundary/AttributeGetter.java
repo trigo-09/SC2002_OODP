@@ -12,10 +12,21 @@ public class AttributeGetter {
         return input.nextLine();
     }
 
+    public static String getUserId(String msg){
+        Scanner input = new Scanner(System.in);
+        System.out.print(msg);
+        return input.nextLine();
+    }
+
     public static String getPassword(){
         System.out.print("Enter your password: ");
         return InputHelper.passwordReader();
     }
+    public static String getPassword(String msg){
+        System.out.print(msg);
+        return InputHelper.passwordReader();
+    }
+
 
     public static String getName(){
         Scanner input = new Scanner(System.in);
