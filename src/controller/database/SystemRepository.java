@@ -1,13 +1,13 @@
 package controller.database;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.*;
-import java.util.stream.Stream;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.request.*;
 import entity.user.*;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Stream;
 
 
 public class SystemRepository implements IRepository, Serializable {
@@ -172,13 +172,21 @@ public class SystemRepository implements IRepository, Serializable {
                 .orElse(null);
     }
 
+    /**
+     * Finds an application by its ID.
+     * @param applicationId unique ID of the application
+     * @return the {@link Application} object
+     * @throws IllegalArgumentException if the application is not found
+     */
+    @Override
     public Application findApplication(String applicationId) {
         return students.values().stream()
-                .flatMap(s -> s.getApplications().stream())
-                .filter(app -> app.getApplicationId().equals(applicationId.toLowerCase()))
-                .findFirst()
-                .orElse(null);
+            .flatMap(s -> s.getApplications().stream())
+            .filter(app -> app.getApplicationId().equalsIgnoreCase(applicationId))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Application not found: " + applicationId));
     }
+
 
 	public List<Application> getAllApplications() {
         return students.values().stream()

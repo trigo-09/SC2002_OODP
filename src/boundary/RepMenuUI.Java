@@ -10,16 +10,28 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+ /**
+  * Console menu for company representatives to create and manage internship opportunities.
+  */
 public class RepMenuUI {
     private final RepController repController;
     private final Scanner sc;
     private static final DateTimeFormatter DMY = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+     /**
+      * Creates a representative menu bound to the given controller and shared input scanner.
+      *
+      * @param repController controller handling representative operations
+      * @param sc            shared Scanner for user input (not closed here)
+      */
     public RepMenuUI(RepController repController, Scanner sc) {
         this.repController = repController;
         this.sc = sc;
     }
-
+    /**
+     * Display the main menu and handle user actions until logout is chosen.
+     * All business-rule and authorization errors are caught and shown to the user.
+     */
     public void displayMenu() {
         int choice = -1;
         while (choice != 0) {
@@ -39,6 +51,11 @@ public class RepMenuUI {
         }
     }
 
+     /**
+      * Prompt the user for internship fields (title, description, level, majors, dates, slots),
+      * validate inputs (e.g., closing date ≥ opening date, slots between 1 and 10), and create the opportunity.
+      * Business-rule violations (e.g., max postings reached) are caught and shown.
+      */
     private void createInternshipUI() {
         System.out.println("=== Create Internship Opportunity ===");
         System.out.print("Title: ");
@@ -47,6 +64,9 @@ public class RepMenuUI {
         String description = sc.nextLine().trim();
 
         InternshipLevel level;
+
+        // Re-prompt until valid level is entered
+        // Convert user input to InternshipLevel enum
         while (true) {
             System.out.print("Level (Basic / Intermediate / Advanced): ");
             String input = sc.nextLine().trim();
@@ -62,12 +82,15 @@ public class RepMenuUI {
             }
             System.out.println("Invalid level. Please type Basic, Intermediate, or Advanced.");
         }
-
+        
+        // Currently only supports a single preferred major input (or 'Any')
         System.out.print("Preferred Major or 'Any': ");
         String preferredMajor = sc.nextLine().trim();
-
+        
         LocalDate openingDate = readDate("Opening Date (DD-MM-YYYY): ");
         LocalDate closingDate;
+
+        // Re-prompt until closing date is after opening date
         while (true) {
             closingDate = readDate("Closing Date (DD-MM-YYYY): ");
             if (!closingDate.isBefore(openingDate)) break;
@@ -75,6 +98,8 @@ public class RepMenuUI {
         }
 
         int numOfSlots;
+
+        // Re-prompt until valid number of slots is entered
         while (true) {
             System.out.print("Number of Slots (1..10): ");
             numOfSlots = readIntSafe();
@@ -98,6 +123,11 @@ public class RepMenuUI {
         }
         pause();
     }
+
+     /**
+      * List the representative's internships and allow actions such as toggling visibility
+      * and listing and accepting/rejecting applications. Errors are caught and shown.
+      */
     private void manageInternshipsUI() {
         int choice = -1;
         while (choice != 0) {
@@ -123,6 +153,7 @@ public class RepMenuUI {
                     System.out.print("Set visibility (1 = visible, 0 = hidden): ");
                     int visChoice = readIntSafe();
                     boolean visibility = (visChoice == 1);
+
                     try {
                         repController.toggleVisibility(internshipId, visibility);
                         System.out.println("Internship visibility updated to " + (visibility ? "VISIBLE" : "HIDDEN") + ".");
@@ -131,9 +162,11 @@ public class RepMenuUI {
                     }
                     pause();
                 }
+
                 case 2 -> {
                     System.out.print("Enter Internship ID to manage applications: ");
                     String internId = sc.nextLine().trim();
+
                     try {
                         List<Application> applications = repController.getApplications(internId);
                         if (applications.isEmpty()) {
@@ -147,13 +180,16 @@ public class RepMenuUI {
                     } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
                         System.out.println("Error retrieving applications: " + e.getMessage());
                     }
+
                     System.out.print("1: Accept or Reject an Application, 0: back: ");
                     int appChoice = readIntSafe();
+
                     if (appChoice == 1) {
                         System.out.print("Enter Application ID: ");
                         String appId = sc.nextLine().trim();
                         System.out.print("Accept (1) or Reject (0) the application? ");
                         int decision = readIntSafe();
+
                         try {
                             if (decision == 1) {
                                 repController.approveApp(appId);
@@ -174,7 +210,11 @@ public class RepMenuUI {
         }
     }
 
-    // --- HELPER METHODS ---
+
+    /**
+     * Reads an integer from user input safely, reprompting on invalid input.
+     * @return The integer input by the user.
+     */
     private int readIntSafe() {
         while (true) {
             String in = sc.nextLine().trim();
@@ -183,6 +223,11 @@ public class RepMenuUI {
         }
     }
 
+    /**
+     * Reads a date from user input in DD-MM-YYYY format, reprompting on invalid input.
+     * @param prompt The prompt message to display.
+     * @return The LocalDate input by the user.
+     */
     private LocalDate readDate(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -192,6 +237,10 @@ public class RepMenuUI {
         }
     }
 
+    /**
+     * Pauses execution until the user presses Enter.
+     * This is useful for allowing the user to read messages before continuing.
+     */
     private void pause() {
         System.out.print("Press Enter to continue...");
         sc.nextLine();
