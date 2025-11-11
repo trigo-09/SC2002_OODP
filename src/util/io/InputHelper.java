@@ -3,7 +3,7 @@ package util.io;
 import java.util.Scanner;
 
 public class InputHelper {
-    private static Scanner sc;
+    private static Scanner sc = new Scanner(System.in);
 
     public static void init(Scanner shared) { sc = shared; }
 
