@@ -2,9 +2,13 @@ package controller.control.user;
 
 import java.util.*;
 
+import boundary.StudentUI;
+import controller.control.SystemController;
+import controller.database.IResposistory;
 import controller.service.ApplicationService;
 import controller.service.InternshipService;
 import controller.service.AuthenticationService;
+import controller.service.RequestService;
 import entity.application.Application;
 import entity.user.Student;
 import entity.internship.InternshipOpportunity;
@@ -13,20 +17,24 @@ import util.FilterCriteria;
 public class StudentController extends UserController {
 
 	private Student student;
-	private FilterCriteria filter;
-    private final ApplicationService applicationService;
-    private final InternshipService internshipService;
+    private ApplicationService applicationService;
+    private InternshipService internshipService;
 
-    public StudentController(FilterCriteria filter, AuthenticationService auth, ApplicationService applicationService, InternshipService internshipService, Student student) {
-        super(auth);
-        this.filter = filter;
+    public StudentController(AuthenticationService auth, IResposistory respo, RequestService request, Student student) {
+        super(auth, respo, request);
         this.student = student;
-        this.applicationService = applicationService;
-        this.internshipService = internshipService;
+        InternshipService internshipService = new InternshipService(respo, request);
+        ApplicationService applicationService = new ApplicationService(respo, internshipService, request);
     }
 
-	public List<InternshipOpportunity> ableToApply() {
-        return internshipService.getEligibleInternships(student);
+    public void launch(SystemController systemController) {
+        StudentUI studentUI = new StudentUI(systemController, this);
+        studentUI.menu();
+    }
+
+	public List<InternshipOpportunity> viewFilteredInternships(FilterCriteria filter) {
+        List <InternshipOpportunity> eligibleInternships = internshipService.getEligibleInternships(student);
+        return internshipService.getFilteredInternship(eligibleInternships, filter);
 	}
 
 	/**
@@ -53,4 +61,7 @@ public class StudentController extends UserController {
         return student.getApplications();
 	}
 
+    public Student getStudent(){
+        return student;
+    }
 }

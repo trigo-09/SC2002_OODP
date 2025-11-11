@@ -80,16 +80,16 @@ public class InternshipService {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<InternshipOpportunity> getFilteredInternship(FilterCriteria filter) {
-        return resposistory.getAllInternships().stream()
+	public List<InternshipOpportunity> getFilteredInternship(List<InternshipOpportunity> internList, FilterCriteria filter) {
+        return internList.stream()
                 .filter(internship -> filter.getStatus() == null || filter.getStatus() == internship.getStatus())
                 .filter(internship -> filter.getPreferredMajor().isEmpty() ||filter.getPreferredMajor().equals(internship.getPreferredMajors()))
                 .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()))
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
                 .toList();
-}
+    }
 
-        public List<InternshipOpportunity> getInternshipsByCompany(String companyName){
+    public List<InternshipOpportunity> getInternshipsByCompany(String companyName){
         return resposistory.getInternshipsByCompany(companyName);
 	}
 
