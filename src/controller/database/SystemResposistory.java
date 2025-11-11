@@ -1,5 +1,9 @@
 package controller.database;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Stream;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.request.*;
@@ -8,8 +12,9 @@ import java.util.*;
 import java.util.stream.Stream;
 
 
-public class SystemResposistory implements IResposistory {
+public class SystemResposistory implements IResposistory, Serializable {
 
+    @Serial
 	private static final long serialVersionUID = 1L;
 	private final Map<String, Student> students = new HashMap<>();
 	private final Map<String, CareerStaff> careerStaff = new HashMap<>();
@@ -227,5 +232,9 @@ public class SystemResposistory implements IResposistory {
                 .flatMap(rep -> rep.getInternships().stream())
                 .toList();
     }
+
+   public List<InternshipOpportunity> getAllInternshipsByRep(String repId) {
+        return approvedReps.get(repId).getInternships();
+   }
 
 }
