@@ -1,5 +1,6 @@
 package controller.control.user;
 
+import boundary.RepMenuUI;
 import controller.database.IRepository;
 import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
@@ -11,6 +12,7 @@ import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 
 
  /**
@@ -44,6 +46,10 @@ public class RepController extends UserController {
 		this.rep = rep;
 		this.internshipService = internshipService;
         this.applicationService = applicationService;
+	}
+
+	public void launch(Scanner scanner) {
+    	new RepMenuUI(this, scanner).displayMenu();
 	}
 
 	/**
