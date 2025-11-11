@@ -85,28 +85,33 @@ public class StaffUI {
             DisplayableViewer.displaySingle(pendingInternships.get(i), i+1);
         }
 
-        System.out.println("Choose the index of the internship");
-        int index = InputHelper.readInt();
-        if (index < 1 || index > pendingInternships.size()){
-            System.out.println("Invalid Choice"); // need error catching
-            return;
+        int index = -1;
+        while (true) {
+            System.out.println("Choose the index of the internship");
+            index = InputHelper.readInt();
+            if (index >= 1 && index <= pendingInternships.size()) {
+                break;
+            } else {
+                System.out.println("Invalid Choice. Please enter a valid index.");
+            }
         }
 
         InternshipVetRequest choice1 = pendingInternships.get(index - 1);
 
-        System.out.print("Enter 0 to Reject, 1 to Approve: ");
-        int choice2 = InputHelper.readInt();
-        if (choice2 == 1){
-            staffController.approveInternship(choice1.getId());
+        int choice2 = -1;
+        while (true) {
+            System.out.print("Enter 0 to Reject, 1 to Approve: ");
+            choice2 = InputHelper.readInt();
+            if (choice2 == 1) {
+                staffController.approveInternship(choice1.getId());
+                break;
+            } else if (choice2 == 0) {
+                staffController.rejectInternship(choice1.getId());
+                break;
+            } else {
+                System.out.println("Please Enter 0 to Reject or 1 to Approve");
+            }
         }
-        else if (choice2 == 0){
-            staffController.rejectInternship(choice1.getId());
-        }
-        else{
-            System.out.println("Please Enter 0 to Reject or 1 to Approve");
-        }
-
-
     }
 
     public void ApproveRejectRep(){
