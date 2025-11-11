@@ -75,10 +75,30 @@ public class InternshipService {
 	 * @param id
 	 * @param status
 	 */
-	public void updateStatus(String id, InternStatus status) {
-		// TODO - implement InternshipService.updateStatus
-		throw new UnsupportedOperationException();
-	}
+	private boolean ableToEditInternship(InternshipOpportunity internship){
+        return internship.getStatus() == InternStatus.PENDING;
+    }
+
+    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException {
+        InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
+        if(internship == null){throw new ObjectNotFoundException("Internship not found");}
+        if(!ableToEditInternship(internship)){throw new SecurityException("Internship can not be edited");}
+        internship.setTitle(title);
+        internship.setDescription(description);
+        internship.setPreferredMajors(preferredMajors);
+        internship.setOpeningDate(openingDate);
+        internship.setClosingDate(closingDate);
+        internship.setNumOfSlots(slot);
+        internship.setLevel(level);
+    }
+
+
+    public void removeInternship(CompanyRep rep,String internshipId)  {
+        boolean removed =rep.getInternships().removeIf(i->i.getId().equals(internshipId) && i.getStatus() != InternStatus.PENDING && i.getStatus() != InternStatus.FILLED );
+        if(!removed){
+            throw new SecurityException("Unable to remove internship");
+        }
+    }
 
 	public List<InternshipOpportunity> getFilteredInternship(List<InternshipOpportunity> internList, FilterCriteria filter) {
         return internList.stream()
