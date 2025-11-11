@@ -122,7 +122,7 @@ public class FilterUI {
                         if (0 >= month || month >= 12){
                             System.out.println("Invalid month number. Please input a valid month");
                         }
-                    }while (0 >= month || month >= 12);
+                    }while (0 >= month || month > 12);
 
                     do {
                         System.out.println("Set Day: ");
@@ -137,7 +137,7 @@ public class FilterUI {
                         System.out.println("Set Year: ");
                         year = sc.nextInt();
                         sc.nextLine();
-                    }while (year <= -1);
+                    }while (year <= 0);
                     String dateString = month+"/"+day+"/"+year;
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                     LocalDate parsedDate = LocalDate.parse(dateString, formatter);
