@@ -20,7 +20,7 @@ import java.util.List;
 public class StaffUI {
 
     private SystemController systemController;
-    private StaffController staffController; //filter criteria is in the staff controller
+    private StaffController staffController;
 
     public StaffUI(SystemController systemController, StaffController staffController){
         this.systemController = systemController;
