@@ -3,12 +3,13 @@ package entity.internship;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import entity.Displayable;
 import entity.application.Application;
 
 
 import java.util.*;
 
-public class InternshipOpportunity implements Serializable {
+public class InternshipOpportunity implements Serializable, Displayable {
 
 	private final String id;
 	private String companyName;
@@ -211,7 +212,42 @@ public class InternshipOpportunity implements Serializable {
         this.approvedslots.add(application);
     }
 
+	@Override
+	public String getSplitter() {
+		return "----------------------------------";
+	}
 
+	@Override
+	public String getString() {
+		int approved = (approvedslots == null) ? 0 : approvedslots.size();
+		int pending = (pendingApplications == null) ? 0 : pendingApplications.size();
+		int open = Math.max(0, numOfSlots - approved);
 
-
+		return String.format(
+				"Internship ID: %s%n" +
+						"Title: %s%n" +
+						"Company: %s%n" +
+						"Level: %s%n" +
+						"Preferred Majors: %s%n" +
+						"Opening Date: %s%n" +
+						"Closing Date: %s%n" +
+						"Status: %s%n" +
+						"Visibility: %s%n" +
+						"Slots: %d total | %d approved | %d pending | %d open%n" +
+						"Created By: %s%n" +
+						"Description: %s",
+				id,
+				title,
+				companyName,
+				level,
+				preferredMajors,
+				openingDate,
+				closingDate,
+				status,
+				(visibility != null && visibility) ? "Public" : "Hidden",
+				numOfSlots, approved, pending, open,
+				createdBy,
+				description
+		);
+	}
 }

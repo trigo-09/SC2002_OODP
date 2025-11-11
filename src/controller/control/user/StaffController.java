@@ -2,32 +2,41 @@ package controller.control.user;
 
 import java.util.*;
 
+import boundary.StaffUI;
+import controller.control.SystemController;
 import controller.database.IRepository;
 import controller.service.AuthenticationService;
+import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.internship.InternshipOpportunity;
+import entity.request.InternshipVetRequest;
+import entity.request.RegistrationRequest;
+import entity.request.WithdrawalRequest;
 import entity.user.CareerStaff;
 import util.FilterCriteria;
 
 public class StaffController extends UserController {
 
 	private CareerStaff staff;
-    public StaffController(AuthenticationService authenticationService, IRepository repo, RequestService request, CareerStaff staff) {
-        super(authenticationService,repo,request);
-        this.staff = staff;
-    }
+	private final InternshipService internshipService;
 
-    public void launch(){
-        throw new  UnsupportedOperationException("Not supported yet.");
-    }
+	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
+		super(auth, repository, requestService);
+		this.staff = staff;
+		this.internshipService = new InternshipService(repository, requestService);
+	}
+
+	public void launch(SystemController systemController){
+		StaffUI  staffUI = new StaffUI(systemController, this);
+		staffUI.menuLoop();
+	}
 
 	/**
 	 * 
 	 * @param rep
 	 */
 	public void approveRep(String rep) {
-		// TODO - implement StaffController.approveRep
-		throw new UnsupportedOperationException();
+		getRequest().approveRegistrationRequest(rep); // this returns the requestservice
 	}
 
 	/**
@@ -35,8 +44,7 @@ public class StaffController extends UserController {
 	 * @param rep
 	 */
 	public void rejectRep(String rep) {
-		// TODO - implement StaffController.rejectRep
-		throw new UnsupportedOperationException();
+		getRequest().rejectRegistrationRequest(rep);
 	}
 
 	/**
@@ -44,8 +52,7 @@ public class StaffController extends UserController {
 	 * @param intern
 	 */
 	public void approveInternship(String intern) {
-		// TODO - implement StaffController.approveInternship
-		throw new UnsupportedOperationException();
+		getRequest().approveInternshipRequest(intern);
 	}
 
 	/**
@@ -53,8 +60,7 @@ public class StaffController extends UserController {
 	 * @param intern
 	 */
 	public void rejectInternship(String intern) {
-		// TODO - implement StaffController.rejectInternship
-		throw new UnsupportedOperationException();
+		getRequest().rejectInternshipRequest(intern);
 	}
 
 	/**
@@ -62,8 +68,7 @@ public class StaffController extends UserController {
 	 * @param app
 	 */
 	public void approveWithdrawal(String app) {
-		// TODO - implement StaffController.approveWithdrawal
-		throw new UnsupportedOperationException();
+		getRequest().acceptWithdrawalRequest(app);
 	}
 
 	/**
@@ -71,17 +76,31 @@ public class StaffController extends UserController {
 	 * @param app
 	 */
 	public void rejectWithdrawal(String app) {
-		// TODO - implement StaffController.rejectWithdrawal
-		throw new UnsupportedOperationException();
+		getRequest().rejectWithdrawalRequest(app);
 	}
 
 	/**
 	 * 
 	 * @param filter
 	 */
-	public List<InternshipOpportunity> generateReport(FilterCriteria filter) {
-		// TODO - implement StaffController.generateReport
-		throw new UnsupportedOperationException();
+	public List<InternshipOpportunity> viewInternshipsFiltered(FilterCriteria filter) {
+		return internshipService.getFilteredInternship(filter);
+	}
+
+	public List<RegistrationRequest> viewPendingReg(){
+		return getRequest().getPendingRegistration();
+	}
+
+	public List<InternshipVetRequest> viewPendingInternshipVet(){
+		return getRequest().getPendingInternshipVet();
+	}
+
+	public List<WithdrawalRequest> viewPendingWithdrawal(){
+		return getRequest().getPendingWithdrawal();
+	}
+
+	public CareerStaff getStaff(){
+		return this.staff;
 	}
 
 }

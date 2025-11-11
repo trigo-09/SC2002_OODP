@@ -1,4 +1,6 @@
 package entity.application;
+import entity.Displayable;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -7,11 +9,11 @@ import java.util.UUID;
  * Each application has a unique ID, links to a student and an internship, and tracks its review status.
  */
 
-public class Application implements Serializable {
+public class Application implements Serializable, Displayable {
 
 	private final String studentId;
 	private final String internshipId;
-    private final String applicationId;
+  private final String applicationId;
 	private ApplicationStatus status;
 
 	/**
@@ -24,7 +26,7 @@ public class Application implements Serializable {
 		this.studentId = studentId;
 		this.internshipId = internshipId;
 		this.status = ApplicationStatus.PENDING;
-        this.applicationId = UUID.randomUUID().toString();
+    this.applicationId = UUID.randomUUID().toString();
 	}
 
 	/**
@@ -83,6 +85,27 @@ public class Application implements Serializable {
 			default -> false;
 		};
 	}
+
+	@Override
+	public String getSplitter() {
+		return "----------------------------------";
+	}
+
+	@Override
+	public String getString() {
+		return String.format(
+				"Application ID: %s%n" +
+						"Student ID: %s%n" +
+						"Internship ID: %s%n" +
+						"Status: %s",
+				applicationId,
+				studentId,
+				internshipId,
+				status
+		);
+	}
+
+
 	/**
 	 * Returns a string representation of this application, including
 	 * its ID, student ID, internship ID, and current status.

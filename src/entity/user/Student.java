@@ -1,10 +1,11 @@
 package entity.user;
+import entity.Displayable;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
 
 import java.util.*;
 
-public class Student extends User {
+public class Student extends User implements Displayable {
 
 	private final List<Application> applications;
 	private int year;
@@ -64,6 +65,26 @@ public class Student extends User {
                 .filter(application -> application.getStatus() != ApplicationStatus.WITHDRAWN && application.getStatus() != ApplicationStatus.REJECTED)
                 .count();
     }
+
+	@Override
+	public String getSplitter(){
+		return Displayable.SPLITTER;
+	}
+
+	@Override
+	public String getString() {
+		return String.format(
+				"Student ID: %s%n" +
+						"Name: %s%n" +
+						"Year: %d%n" +
+						"Major: %s%n",
+				getId(),
+				getUserName(),
+				year,
+				major
+		);
+	}
+
 
 
 }

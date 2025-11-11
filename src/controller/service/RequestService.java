@@ -7,6 +7,7 @@ import entity.user.CompanyRep;
 import entity.request.*;
 import java.util.List;
 
+
 public class RequestService {
 
     private final IRepository repo;
@@ -116,6 +117,18 @@ public class RequestService {
 
     public List<InternshipVetRequest> viewAllInternshipVetRequests() {
         return repo.getAllRequests(InternshipVetRequest.class);
+    }
+
+    public List<RegistrationRequest> getPendingRegistration(){
+        return repo.getAllRequests(RegistrationRequest.class);
+    }
+
+    public List<InternshipVetRequest> getPendingInternshipVet(){
+        return repo.getAllRequests(InternshipVetRequest.class);
+    }
+
+    public List<WithdrawalRequest> getPendingWithdrawal(){
+        return repo.getAllRequests(WithdrawalRequest.class);
     }
 
 }

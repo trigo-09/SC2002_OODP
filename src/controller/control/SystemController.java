@@ -51,7 +51,7 @@ public class SystemController {
             switch (user.getRole()) {
                 case STUDENT -> new StudentController(auth,repo,request,(Student) user).launch(this);
 
-                case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch();
+                case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch(this); // Pass SystemController instance to enable logout functionality from StaffController
 
                 case REP ->  new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch(scanner);
                     

@@ -23,5 +23,25 @@ public class WithdrawalRequest extends Request {
         }
 
 
+    @Override
+    public String getSplitter() {
+        return "----------------------------------";
     }
+
+    @Override
+    public String getString() {
+        return String.format(
+                "Request Type: Withdrawal%n" +
+                        "Request ID: %s%n" +
+                        "Requester ID: %s%n" +
+                        "Application ID: %s%n" +
+                        "Current Application Status: %s%n",
+                getId(),
+                getRequesterId(),
+                application.getApplicationId(),
+                application.getStatus()
+        );
+    }
+
+}
 
