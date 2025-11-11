@@ -12,6 +12,8 @@ import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
 import util.FilterCriteria;
+import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
 
 public class StudentController extends UserController {
 
@@ -40,20 +42,19 @@ public class StudentController extends UserController {
 	 * 
 	 * @param internshipId
 	 */
-	public void applyInternship(String internshipId) {
+	public void applyInternship(String internshipId)  throws IllegalArgumentException, SecurityException, MaxExceedException {
         applicationService.apply(student.getId(), internshipId);
 	}
-
 	/**
 	 * 
 	 * @param applicationId
 	 */
 	public void acceptPlacement(String applicationId) {
-        applicationService.acceptApplication(student.getId(), applicationId);
+        applicationService.acceptApplication(student.getId(),applicationId);
 	}
 
-    public void withdrawPlacement(String applicationId, String reason) {
-        applicationService.requestWithdrawal(student.getId(), applicationId, reason);
+    public void withdrawPlacement(String applicationId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException {
+        applicationService.requestWithdrawal(student.getId(),applicationId, reason);
     }
 
 	public List<Application> myApplications() {

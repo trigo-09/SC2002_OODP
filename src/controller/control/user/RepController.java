@@ -10,6 +10,9 @@ import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
+import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -71,7 +74,7 @@ public class RepController extends UserController {
                                                   String preferredMajors,
                                                   LocalDate openingDate,
                                                   LocalDate closingDate,
-                                                  int numOfSlots) {
+                                                  int numOfSlots) throws MaxExceedException {
         return internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
     }
 	
@@ -116,7 +119,7 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void approveApp(String appId) {
+	public void approveApp(String appId) throws ObjectNotFoundException {
 		applicationService.reviewApplication(rep.getId(),appId, true);
 	}
 
@@ -127,7 +130,7 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void rejectApp(String appId) {
+	public void rejectApp(String appId) throws ObjectNotFoundException {
 		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
 }

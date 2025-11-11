@@ -7,15 +7,16 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import util.FilterCriteria;
+import util.exceptions.MaxExceedException;
 
 public class InternshipService {
 
-    private final IRepository resposistory;
+    private final IRepository repository;
     private final RequestService requestService;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
-    public InternshipService(IRepository resposistory, RequestService requestService) {
-        this.resposistory = resposistory;
+    public InternshipService(IRepository repository, RequestService requestService) {
+        this.repository = repository;
         this.requestService = requestService;
     }
     /**
@@ -30,7 +31,7 @@ public class InternshipService {
     * @param companyName
     */
 
-    public InternshipOpportunity proposeInternship(String title,
+    public InternshipOpportunity proposeInternship (String title,
                                                    String description,
                                                    InternshipLevel level,
                                                    String preferredMajors,
@@ -38,7 +39,10 @@ public class InternshipService {
                                                    LocalDate closingDate,
                                                    int numOfSlots,
                                                    String createdBy,
-                                                   String companyName){
+                                                   String companyName) throws MaxExceedException {
+        if(!isEligibleToCreateInternship(createdBy)){
+            throw new MaxExceedException("Max number of Internship created");
+        }
         InternshipOpportunity internship = new InternBuilder()
                 .title(title)
                 .description(description)
@@ -52,7 +56,7 @@ public class InternshipService {
                 .build();
 
         requestService.createInternshipRequest(createdBy, internship);
-        resposistory.addInternship(createdBy, internship);
+        repository.addInternship(createdBy, internship);
         return internship;
 	}
 
@@ -62,7 +66,7 @@ public class InternshipService {
 	 * @param visible
 	 */
 	public void setVisibility(String internshipId, boolean visible) {
-        InternshipOpportunity internship = resposistory.findInternshipOpportunity(internshipId);
+        InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
         internship.setVisibility(visible);
 	}
 
@@ -86,12 +90,12 @@ public class InternshipService {
     }
 
     public List<InternshipOpportunity> getInternshipsByCompany(String companyName){
-        return resposistory.getInternshipsByCompany(companyName);
+        return repository.getInternshipsByCompany(companyName);
 	}
 
     // Get the list of eligible internships that a student can apply for
     public List<InternshipOpportunity> getEligibleInternships(Student s) {
-        List<InternshipOpportunity> allInternships = resposistory.getAllInternships();
+        List<InternshipOpportunity> allInternships = repository.getAllInternships();
         return allInternships.stream().filter(internship -> isEligible(s, internship.getId())).collect(Collectors.toList());
     }
 
@@ -100,7 +104,7 @@ public class InternshipService {
         * @param internshipId
         */
 	public InternshipOpportunity findInternshipById(String internshipId) {
-        return resposistory.findInternshipOpportunity(internshipId);
+        return repository.findInternshipOpportunity(internshipId);
 	}
 
 	/**
@@ -125,9 +129,9 @@ public class InternshipService {
                 return true;
 	}
 
-        public boolean isEligible(String repId) {
-                CompanyRep rep = (CompanyRep) resposistory.findUser(repId);
-                return rep.getNumOfInternships() <  MAX_ACTIVE_INTERNSHIPS;
+        public boolean isEligibleToCreateInternship(String repId) {
+                CompanyRep rep = (CompanyRep) repository.findUser(repId);
+                return repository.getInternshipsByCompany(rep.getCompanyName()).stream().filter(internshipOpportunity -> internshipOpportunity.getStatus() != InternStatus.REJECTED).count() <  MAX_ACTIVE_INTERNSHIPS;
         }
 
 

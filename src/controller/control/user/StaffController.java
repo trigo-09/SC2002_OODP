@@ -34,7 +34,7 @@ public class StaffController extends UserController {
 	 * 
 	 * @param rep
 	 */
-	public void approveRep(String rep) {
+	public void approveRep(String rep) throws Exception {
 		getRequest().approveRegistrationRequest(rep); // this returns the requestservice
 	}
 
@@ -42,7 +42,7 @@ public class StaffController extends UserController {
 	 * 
 	 * @param rep
 	 */
-	public void rejectRep(String rep) {
+	public void rejectRep(String rep) throws Exception {
 		getRequest().rejectRegistrationRequest(rep);
 	}
 
@@ -50,7 +50,7 @@ public class StaffController extends UserController {
 	 * 
 	 * @param intern
 	 */
-	public void approveInternship(String intern) {
+	public void approveInternship(String intern) throws Exception {
 		getRequest().approveInternshipRequest(intern);
 	}
 
@@ -58,7 +58,7 @@ public class StaffController extends UserController {
 	 * 
 	 * @param intern
 	 */
-	public void rejectInternship(String intern) {
+	public void rejectInternship(String intern) throws Exception {
 		getRequest().rejectInternshipRequest(intern);
 	}
 
@@ -66,7 +66,7 @@ public class StaffController extends UserController {
 	 * 
 	 * @param app
 	 */
-	public void approveWithdrawal(String app) {
+	public void approveWithdrawal(String app) throws Exception {
 		getRequest().acceptWithdrawalRequest(app);
 	}
 
@@ -74,7 +74,7 @@ public class StaffController extends UserController {
 	 * 
 	 * @param app
 	 */
-	public void rejectWithdrawal(String app) {
+	public void rejectWithdrawal(String app) throws Exception {
 		getRequest().rejectWithdrawalRequest(app);
 	}
 

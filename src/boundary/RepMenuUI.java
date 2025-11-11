@@ -4,6 +4,9 @@ import controller.control.user.RepController;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
+import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -115,7 +118,7 @@ public class RepMenuUI {
                 numOfSlots
         );
         System.out.println("Internship opportunity created successfully.");
-        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException | MaxExceedException e) {
             System.out.println("Error creating internship: " + e.getMessage());
         }
         pause();
@@ -195,7 +198,7 @@ public class RepMenuUI {
                                 repController.rejectApp(appId);
                                 System.out.println("Application rejected.");
                             }
-                        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+                        } catch (ObjectNotFoundException | IllegalStateException | SecurityException e) {
                             System.out.println("Error approving/rejecting application: " + e.getMessage());
                         }
                         pause();

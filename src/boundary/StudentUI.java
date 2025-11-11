@@ -81,7 +81,12 @@ public class StudentUI {
         }
 
         InternshipOpportunity internship = internshipList.get(index-1);
-        studentController.applyInternship(internship.getId());
+        try {
+            studentController.applyInternship(internship.getId());
+        }catch (Exception e){
+            System.out.println("ERROR: "+e.getMessage());
+        }
+        return;
     }
 
     private void handleViewApplications(){
@@ -130,7 +135,12 @@ public class StudentUI {
         String reason = AttributeGetter.getString("Please enter your reason for withdrawal.");
 
         Application app = appList.get(index-1);
-        studentController.withdrawPlacement(app.getApplicationId(), reason);
+        try {
+            studentController.withdrawPlacement(app.getApplicationId(), reason);
+        }catch (Exception e){
+            System.out.println("ERROR: "+e.getMessage());
+        }
+        return;
     }
 
     private void handleChangePass(){
