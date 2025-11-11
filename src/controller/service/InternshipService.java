@@ -5,6 +5,8 @@ import entity.user.CompanyRep;
 import entity.user.Student;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import util.FilterCriteria;
 
 public class InternshipService {
@@ -91,7 +93,7 @@ public class InternshipService {
 
     // Get the list of eligible internships that a student can apply for
     public List<InternshipOpportunity> getEligibleInternships(Student s) {
-        List<InternshipOpportunity> allInternships = resposistory.getAllInternships();
+        List<InternshipOpportunity> allInternships = repository.getAllInternships();
         return allInternships.stream().filter(internship -> isEligible(s, internship.getId())).collect(Collectors.toList());
     }
 
