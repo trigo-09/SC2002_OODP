@@ -7,9 +7,17 @@ import entity.internship.InternshipLevel;
 import util.FilterCriteria;
 
 public class FilterUI {
-    public static void main(String[] args, FilterCriteria filter) {
+    private FilterCriteria filter;
+    
+    public FilterUI(FilterCriteria filter) {
+        this.filter = filter;
+    }
+    
+    public void run(FilterCriteria filter) {
         Scanner sc = new Scanner(System.in);
-        filter = filter == null ? new FilterCriteria(null,null,null,null) : filter;
+        if (filter == null) {
+            filter = new FilterCriteria(null, null, null, null);
+        }
         boolean quitCondition = false;
         do {
             System.out.println("What would you like to do?\n1.Check Filter Criteria\n2.Update Internship status\n3.Update preferred major\n4.Update internship level\n5.Update closing date\n6.Quit\n");
@@ -57,6 +65,7 @@ public class FilterUI {
                                         4.FILLED
                                         """);
                                 statusChoice = sc.nextInt();
+                                sc.nextLine();
                         }
                     } while (!statusQuitCondition);
                     System.out.println("Filter updated\n" +
@@ -76,6 +85,7 @@ public class FilterUI {
                             2.INTERMEDIATE,
                             3.ADVANCED;""");
                     int levelChoice = sc.nextInt();
+                    sc.nextLine();
                     boolean levelQuitCondition = false;
                     do {
                         switch (levelChoice) {
@@ -108,6 +118,7 @@ public class FilterUI {
                     do {
                         System.out.println("Set Month: ");
                         month = sc.nextInt();
+                        sc.nextLine();
                         if (0 >= month || month >= 12){
                             System.out.println("Invalid month number. Please input a valid month");
                         }
@@ -116,6 +127,7 @@ public class FilterUI {
                     do {
                         System.out.println("Set Day: ");
                         day = sc.nextInt();
+                        sc.nextLine();
                         if (0 >= day || day > 31){
                             System.out.println("Invalid day number. Please input a valid day");
                         }
@@ -124,6 +136,7 @@ public class FilterUI {
                     do {
                         System.out.println("Set Year: ");
                         year = sc.nextInt();
+                        sc.nextLine();
                     }while (year <= -1);
                     String dateString = month+"/"+day+"/"+year;
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
