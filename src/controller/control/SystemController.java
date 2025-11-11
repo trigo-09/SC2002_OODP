@@ -13,10 +13,12 @@ import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.user.*;
 import java.util.Map;
+import java.util.Scanner;
 import util.exceptions.AlreadyApprovedException;
 import util.exceptions.AuthenticationException;
 import util.exceptions.RepNotApprovedException;
 import util.exceptions.RepPendingApprovalException;
+import util.io.InputHelper;
 
 public class SystemController {
 
@@ -43,6 +45,8 @@ public class SystemController {
 	}
 
 	public void mainMenu() {
+        Scanner scanner = new Scanner(System.in);
+        InputHelper.init(scanner);
         Welcome.welcome(this);
 	}
 
@@ -53,7 +57,7 @@ public class SystemController {
 
                 case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch(this); // Pass SystemController instance to enable logout functionality from StaffController
 
-                case REP ->  new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch(scanner);
+                case REP ->  new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch();
                     
             }
         }

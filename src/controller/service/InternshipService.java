@@ -5,6 +5,7 @@ import entity.user.CompanyRep;
 import entity.user.Student;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 import util.FilterCriteria;
 
 public class InternshipService {

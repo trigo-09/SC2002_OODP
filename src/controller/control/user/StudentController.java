@@ -1,30 +1,29 @@
 package controller.control.user;
 
-import java.util.*;
-
 import boundary.StudentUI;
 import controller.control.SystemController;
-import controller.database.IResposistory;
+import controller.database.IRepository;
 import controller.service.ApplicationService;
-import controller.service.InternshipService;
 import controller.service.AuthenticationService;
+import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.application.Application;
-import entity.user.Student;
 import entity.internship.InternshipOpportunity;
+import entity.user.Student;
+import java.util.*;
 import util.FilterCriteria;
 
 public class StudentController extends UserController {
 
-	private Student student;
-    private ApplicationService applicationService;
-    private InternshipService internshipService;
+	private final Student student;
+    private final ApplicationService applicationService;
+    private final InternshipService internshipService;
 
-    public StudentController(AuthenticationService auth, IResposistory respo, RequestService request, Student student) {
-        super(auth, respo, request);
+    public StudentController(AuthenticationService auth, IRepository repo, RequestService request, Student student) {
+        super(auth, repo, request);
         this.student = student;
-        InternshipService internshipService = new InternshipService(respo, request);
-        ApplicationService applicationService = new ApplicationService(respo, internshipService, request);
+        internshipService = new InternshipService(repo, request);
+        applicationService = new ApplicationService(repo, internshipService, request);
     }
 
     public void launch(SystemController systemController) {
@@ -50,11 +49,11 @@ public class StudentController extends UserController {
 	 * @param applicationId
 	 */
 	public void acceptPlacement(String applicationId) {
-        applicationService.acceptApplication(applicationId);
+        applicationService.acceptApplication(student.getId(), applicationId);
 	}
 
     public void withdrawPlacement(String applicationId, String reason) {
-        applicationService.requestWithdrawal(applicationId, reason);
+        applicationService.requestWithdrawal(student.getId(), applicationId, reason);
     }
 
 	public List<Application> myApplications() {

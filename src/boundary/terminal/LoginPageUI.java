@@ -3,15 +3,13 @@ package boundary.terminal;
 
 import boundary.AttributeGetter;
 import controller.control.SystemController;
-import util.exceptions.AuthenticationException;
-import util.exceptions.PageBackException;
-import util.ui.ChangePage;
-import util.ui.GraphicLogo;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
+import util.exceptions.AuthenticationException;
+import util.exceptions.PageBackException;
+import util.io.InputHelper;
+import util.ui.ChangePage;
 
 public class LoginPageUI {
     /**
@@ -22,7 +20,6 @@ public class LoginPageUI {
      */
     public static void login(SystemController controller) throws PageBackException {
         ChangePage.changePage();
-        Scanner sc = new Scanner(System.in);
         int count = 0;
         System.out.println("Please enter your credentials");
         while (true) {
@@ -32,7 +29,7 @@ public class LoginPageUI {
             if (userId.isEmpty() || password.isEmpty()) {
                 if (count > 1 ) {
                     System.out.println("\nEnter [b] to go back, or any other key to try again.");
-                    String choice = sc.nextLine();
+                    String choice = InputHelper.readLine();
                     if (choice.equalsIgnoreCase("b")) {
                         throw new PageBackException(); // signal upper controller to go back
                     } else{
@@ -53,7 +50,7 @@ public class LoginPageUI {
             }
 
             System.out.println("\nEnter [b] to go back, or any other key to try again.");
-            String choice = sc.nextLine();
+            String choice = InputHelper.readLine();
             if (choice.equalsIgnoreCase("b")) {
                 throw new PageBackException(); // signal upper controller to go back
             } else{
@@ -65,7 +62,6 @@ public class LoginPageUI {
 
     public static void register(SystemController controller) throws PageBackException  {
         ChangePage.changePage();
-        Scanner sc = new Scanner(System.in);
         System.out.println("Please fill in the relevant information");
         int count = 0;
         while (true) {
@@ -79,7 +75,7 @@ public class LoginPageUI {
             if(company.isEmpty() || department.isEmpty() || position.isEmpty() || userId.isEmpty() || password.isEmpty() || name.isEmpty() ) {
                 if (count > 1 ) {
                     System.out.println("\nEnter [b] to go back, or any other key to try again.");
-                    String choice = sc.nextLine();
+                    String choice = InputHelper.readLine();
                     if (choice.equalsIgnoreCase("b")) {
                         throw new PageBackException(); // signal upper controller to go back
                     } else{
@@ -111,7 +107,7 @@ public class LoginPageUI {
             }catch (AuthenticationException | IllegalArgumentException e){
                 System.out.println("Registration failed: "+e.getMessage());
                 System.out.println("\nEnter [b] to go back, or any other key to retry.");
-                String choice = sc.nextLine();
+                String choice = InputHelper.readLine();
                 if (choice.equalsIgnoreCase("b")) {
                     throw new PageBackException();
                 }else {

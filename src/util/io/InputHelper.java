@@ -1,12 +1,19 @@
 package util.io;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputHelper {
+    private static Scanner sc;
+
+    public static void init(Scanner shared) { sc = shared; }
+
+    public static String readLine() {
+        return sc.nextLine().trim();
+    }
+
     public static int readInt() {
         try {
-            return new Scanner(System.in).nextInt();
+            return sc.nextInt();
         }catch (Exception e){
             System.out.println("Invalid input");
             System.out.println("Please enter a valid integer");
@@ -17,7 +24,7 @@ public class InputHelper {
     public static String passwordReader() {
         String password;
         if (System.console() == null) {
-            password = new Scanner(System.in).nextLine();
+            password = sc.nextLine();
         } else {
             password = new String(System.console().readPassword());
         }

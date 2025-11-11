@@ -29,7 +29,6 @@ public class Welcome {
                 }
             }
         } catch (PageBackException e) {
-            welcome(controller);
         }
     }
 }

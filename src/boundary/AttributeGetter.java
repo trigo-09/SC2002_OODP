@@ -2,20 +2,16 @@ package boundary;
 
 import util.io.InputHelper;
 
-import java.util.Scanner;
-
 public class AttributeGetter {
 
     public static String getUserId(){
-        Scanner input = new Scanner(System.in);
         System.out.print("Enter your user ID: ");
-        return input.nextLine();
+        return InputHelper.readLine();
     }
 
     public static String getUserId(String msg){
-        Scanner input = new Scanner(System.in);
         System.out.print(msg);
-        return input.nextLine();
+        return InputHelper.readLine();
     }
 
     public static String getPassword(){
@@ -29,14 +25,13 @@ public class AttributeGetter {
 
 
     public static String getName(){
-        Scanner input = new Scanner(System.in);
         System.out.print("Enter your name: ");
-        return input.nextLine();
+        return InputHelper.readLine();
     }
 
     public static String getString(String msg){
         System.out.print(msg);
-        return new Scanner(System.in).nextLine();
+        return InputHelper.readLine();
     }
 
     // to add more

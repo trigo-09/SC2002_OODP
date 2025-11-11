@@ -1,17 +1,18 @@
 package boundary;
 
-import java.util.*;
-import controller.control.user.StudentController;
+import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
+import controller.control.user.StudentController;
 import entity.application.Application;
 import entity.internship.InternStatus;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
+import java.time.LocalDate;
+import java.util.*;
 import util.FilterCriteria;
 import util.io.InputHelper;
 import util.ui.ChangePage;
 import util.ui.UIHelper;
-import java.time.LocalDate;
 
 public class StudentUI {
     private final StudentController studentController;
@@ -81,13 +82,12 @@ public class StudentUI {
 
         InternshipOpportunity internship = internshipList.get(index-1);
         studentController.applyInternship(internship.getId());
-        return;
     }
 
     private void handleViewApplications(){
         System.out.println("Your Internship Applications");
         List<Application> appList = studentController.myApplications();
-        DisplayeableViewer.displayList(appList);
+        DisplayableViewer.displayList(appList);
     }
 
     private void handleAcceptance(){
@@ -109,7 +109,6 @@ public class StudentUI {
 
         Application app = appList.get(index-1);
         studentController.acceptPlacement(app.getApplicationId());
-        return;
     }
 
     private void handleWithdrawal(){
@@ -132,7 +131,6 @@ public class StudentUI {
 
         Application app = appList.get(index-1);
         studentController.withdrawPlacement(app.getApplicationId(), reason);
-        return;
     }
 
     private void handleChangePass(){
