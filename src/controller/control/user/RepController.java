@@ -139,4 +139,8 @@ public class RepController extends UserController {
         internshipService.removeInternship(rep, internshipId);
         request.deleteInternshipRequest(internshipId);
     }
+
+    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException, SecurityException {
+        internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
+    }
 }
