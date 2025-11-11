@@ -134,4 +134,9 @@ public class RepController extends UserController {
 	public void rejectApp(String appId) throws ObjectNotFoundException {
 		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
+
+    public void deleteInternship(String internshipId) {
+        internshipService.removeInternship(rep, internshipId);
+        request.deleteInternshipRequest(internshipId);
+    }
 }
