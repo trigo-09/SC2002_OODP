@@ -91,6 +91,7 @@ public class Application implements Serializable, Displayable {
 		return "----------------------------------";
 	}
 
+	@Override
 	public String getString() {
 		return String.format(
 				"Application ID: %s%n" +
