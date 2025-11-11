@@ -20,10 +20,10 @@ public class StaffController extends UserController {
 	private CareerStaff staff;
 	private final InternshipService internshipService;
 
-	public StaffController(AuthenticationService auth, IRepository reposistory, RequestService requestService,  CareerStaff staff){
-		super(auth, reposistory, requestService);
+	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
+		super(auth, repository, requestService);
 		this.staff = staff;
-		this.internshipService = new InternshipService(reposistory, requestService);
+		this.internshipService = new InternshipService(repository, requestService);
 	}
 
 	public void launch(SystemController systemController){
