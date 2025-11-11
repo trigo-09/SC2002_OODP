@@ -209,6 +209,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.approvedslots=approvedslots;
 	}
     public void addApprovedapplication(Application application){
+        this.pendingApplications.remove(application);
         this.approvedslots.add(application);
     }
 
