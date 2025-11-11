@@ -4,6 +4,9 @@ import controller.database.*;
 import entity.application.*;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
+import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
+
 import java.util.List;
 
 /**
@@ -37,7 +40,7 @@ public class ApplicationService {
      * @throws IllegalStateException if the student is not eligible, internship is filled, or max applications reached
      * @throws IllegalArgumentException if the internship ID is invalid
      */
-    public Application apply(String studentId, String internshipId) {
+    public Application apply(String studentId, String internshipId) throws MaxExceedException {
         if (systemRepository.findInternshipOpportunity(internshipId) == null) {
             throw new IllegalArgumentException("Invalid internship ID: " + internshipId);
         }
@@ -51,7 +54,7 @@ public class ApplicationService {
             throw new IllegalStateException("Student is not eligible to apply for this internship.");
         }
         else if (user.getNumOfApplications() >= MAX_ACTIVE_APPLICATIONS) {
-            throw new IllegalStateException("Student already has " + MAX_ACTIVE_APPLICATIONS + " active applications");
+            throw new MaxExceedException("Student already has " + MAX_ACTIVE_APPLICATIONS + " active applications");
         }
         else if (internshipService.isFilled(internshipId)) {
             throw new IllegalStateException("Internship is already filled.");
@@ -106,11 +109,11 @@ public class ApplicationService {
      * @throws IllegalStateException    if the application is not in a withdrawable state
      * @throws SecurityException        if the application does not belong to the student
      */
-    public void requestWithdrawal(String studentId, String appId, String reason) {
+    public void requestWithdrawal(String studentId, String appId, String reason) throws ObjectNotFoundException {
         Application application = systemRepository.findApplication(appId);
         // Ensure application exists
         if (application == null) {
-            throw new IllegalArgumentException("Invalid application ID: " + appId);
+            throw new ObjectNotFoundException("Invalid application ID: " + appId);
         }
         // Security check: ensure the application belongs to the student
         if (!application.getStudentId().equalsIgnoreCase(studentId)) {
@@ -133,17 +136,17 @@ public class ApplicationService {
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */
-    public void reviewApplication(String repId, String appId, boolean approve) {
+    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException {
 
         Application application = systemRepository.findApplication(appId);
         // Ensure application exists
         if (application == null) {
-        throw new IllegalArgumentException("Invalid application ID: " + appId);
+        throw new ObjectNotFoundException("Invalid application ID: " + appId);
     }
         InternshipOpportunity internship = internshipService.findInternshipById(application.getInternshipId());
         // Ensure internship exists
         if (internship == null) {
-            throw new IllegalArgumentException("Invalid internship ID associated with application: " + application.getInternshipId());
+            throw new ObjectNotFoundException("Invalid internship ID associated with application: " + application.getInternshipId());
         }
         // Ensure the application has not been reviewed already
         if (application.getStatus() != ApplicationStatus.PENDING) {
