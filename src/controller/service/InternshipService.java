@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import util.FilterCriteria;
 import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
 
 public class InternshipService {
 
