@@ -9,10 +9,10 @@ import util.exceptions.AuthenticationException;
 
 public class UserController {
 
-	private AuthenticationService auth;
-    private FilterCriteria filter;
-    private IRepository repo;
-    private RequestService request;
+	protected AuthenticationService auth;
+    protected FilterCriteria filter;
+    protected IRepository repo;
+    protected RequestService request;
 
 
 

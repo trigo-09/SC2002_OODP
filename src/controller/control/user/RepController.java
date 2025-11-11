@@ -133,4 +133,13 @@ public class RepController extends UserController {
 	public void rejectApp(String appId) throws ObjectNotFoundException {
 		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
+
+    public void deleteInternship(String internshipId) {
+        internshipService.removeInternship(rep, internshipId);
+        request.deleteInternshipRequest(internshipId);
+    }
+
+    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException, SecurityException {
+        internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
+    }
 }

@@ -125,25 +125,14 @@ public class RequestService {
         repo.removeInternshipVetRequest(req.getId());
     }
 
-    public void viewRequest(String requestId) {
-        Request request = repo.getRequest(requestId);
-        // to be filled \\
+
+    public void deleteInternshipRequest(String internshipId) {
+       Request request = getPendingInternshipVet().stream().filter(i-> i.getInternship().getId().equals(internshipId)).findFirst().get();
+       repo.removeInternshipVetRequest(request.getId());
     }
 
-    public List<Request> viewAllRequests() {
+    public List<Request> getAllRequests() {
         return repo.getAllRequests(Request.class);
-    }
-
-    public List<WithdrawalRequest> viewAllWithdrawalRequests() {
-        return repo.getAllRequests(WithdrawalRequest.class);
-    }
-
-    public List<RegistrationRequest> viewAllRegistrationRequests() {
-        return repo.getAllRequests(RegistrationRequest.class);
-    }
-
-    public List<InternshipVetRequest> viewAllInternshipVetRequests() {
-        return repo.getAllRequests(InternshipVetRequest.class);
     }
 
     public List<RegistrationRequest> getPendingRegistration(){
