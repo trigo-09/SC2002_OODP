@@ -71,7 +71,6 @@ public class LoginPageUI {
     public static void register(SystemController controller) throws PageBackException  {
         ChangePage.changePage();
         System.out.println("Please fill in the relevant information");
-        InputHelper.readLine();
         int count = 0;
         while (true) {
             String name = AttributeGetter.getName();
