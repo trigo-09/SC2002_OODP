@@ -174,13 +174,6 @@ public class ApplicationService {
 
     }
 
-    public void removeApplicationInInternship(String applicationId) throws ObjectNotFoundException {
-        Application application = systemRepository.findApplication(applicationId);
-        if (application == null) {
-            throw new ObjectNotFoundException("Invalid application ID: " + applicationId);
-        }
-        internshipService.removeApplicationFromInternship(application);
-    }
 
     public Application findApplication(String applicationId) {
         Application application = systemRepository.findApplication(applicationId);
