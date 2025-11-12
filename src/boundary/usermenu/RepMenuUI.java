@@ -1,5 +1,6 @@
 package boundary.usermenu;
 
+import controller.control.SystemController;
 import controller.control.user.RepController;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
@@ -21,8 +22,9 @@ public class RepMenuUI {
       *
       * @param repController controller handling representative operations
       */
-    public RepMenuUI(RepController repController) {
+    public RepMenuUI(RepController repController, SystemController systemController) {
         this.repController = repController;
+        this.systemController = systemController;
     }
     /**
      * Display the main menu and handle user actions until logout is chosen.
