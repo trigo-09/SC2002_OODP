@@ -21,11 +21,11 @@ public class StaffController extends UserController {
 	private final InternshipService internshipService;
     private final ApplicationService applicationService;
 
-	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
+	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,InternshipService internshipService, ApplicationService applicationService , CareerStaff staff){
 		super(auth, repository, requestService);
 		this.staff = staff;
-		this.internshipService = new InternshipService(repository);
-        this.applicationService = new ApplicationService(repository);
+		this.internshipService = internshipService;
+        this.applicationService = applicationService;
 
 	}
 

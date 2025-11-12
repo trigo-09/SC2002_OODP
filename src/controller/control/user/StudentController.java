@@ -22,11 +22,11 @@ public class StudentController extends UserController {
     private final ApplicationService applicationService;
     private final InternshipService internshipService;
 
-    public StudentController(AuthenticationService auth, IRepository repo, RequestService request, Student student) {
+    public StudentController(AuthenticationService auth, IRepository repo, RequestService request, InternshipService internshipService, ApplicationService applicationService ,Student student) {
         super(auth, repo, request);
         this.student = student;
-        internshipService = new InternshipService(repo);
-        applicationService = new ApplicationService(repo);
+        this.internshipService = internshipService;
+        this.applicationService = applicationService;
     }
 
     public void launch(SystemController systemController) {
