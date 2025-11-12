@@ -68,7 +68,7 @@ public class InternshipService {
 	 * @param visible
 	 */
 	public void setVisibility(String internshipId, boolean visible) {
-        InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
+        InternshipOpportunity internship = findInternshipById(internshipId);
         internship.setVisibility(visible);
 	}
 
@@ -82,7 +82,7 @@ public class InternshipService {
     }
 
     public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException {
-        InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
+        InternshipOpportunity internship = findInternshipById(internshipId);
         if(internship == null){throw new ObjectNotFoundException("Internship not found");}
         if(!ableToEditInternship(internship)){throw new SecurityException("Internship can not be edited");}
         internship.setTitle(title);
@@ -163,12 +163,12 @@ public class InternshipService {
     }
 
     public void addApplicationToInternship(Application app) {
-        InternshipOpportunity internshipOpportunity = repository.findInternshipOpportunity(app.getInternshipId());
+        InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         internshipOpportunity.addPendingApplication(app);
     }
 
     public void removeApplicationFromInternship(Application app) {
-        InternshipOpportunity internshipOpportunity = repository.findInternshipOpportunity(app.getInternshipId());
+        InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         internshipOpportunity.addPendingApplication(app);
     }
 
