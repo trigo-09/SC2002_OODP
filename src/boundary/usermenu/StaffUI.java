@@ -18,8 +18,8 @@ import java.util.List;
 
 public class StaffUI {
 
-    private SystemController systemController;
-    private StaffController staffController;
+    private final SystemController systemController;
+    private final StaffController staffController;
 
     public StaffUI(SystemController systemController, StaffController staffController){
         this.systemController = systemController;
