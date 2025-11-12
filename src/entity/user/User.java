@@ -11,7 +11,7 @@ public abstract class User implements Serializable {
     private final UserRole role;
 
     /**
-     *
+     * Contructor of User abstract class
      * @param name
      * @param id
      * @param pass
