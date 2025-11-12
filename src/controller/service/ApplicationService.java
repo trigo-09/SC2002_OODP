@@ -136,6 +136,7 @@ public class ApplicationService {
      * @throws IllegalArgumentException if the application ID is invalid
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
+     * @throws MaxExceedException       if the internship slots has be filled
      */
     public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException, MaxExceedException {
 
