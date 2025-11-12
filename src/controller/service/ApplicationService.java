@@ -174,6 +174,14 @@ public class ApplicationService {
 
     }
 
+    public void removeApplicationInInternship(String applicationId) throws ObjectNotFoundException {
+        Application application = systemRepository.findApplication(applicationId);
+        if (application == null) {
+            throw new ObjectNotFoundException("Invalid application ID: " + applicationId);
+        }
+        internshipService.removeApplicationFromInternship(application);
+    }
+
     /**
 	 * Helper method to validate status transitions.
 	 * @param current the current status
