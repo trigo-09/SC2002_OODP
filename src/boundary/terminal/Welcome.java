@@ -5,7 +5,6 @@ import util.exceptions.PageBackException;
 import util.io.InputHelper;
 import util.ui.ChangePage;
 import util.ui.GraphicLogo;
-import util.ui.UIHelper;
 
 public class Welcome {
     public static void welcome(SystemController controller) {
