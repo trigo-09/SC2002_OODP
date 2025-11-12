@@ -3,6 +3,7 @@ package controller.control.user;
 import boundary.StaffUI;
 import controller.control.SystemController;
 import controller.database.IRepository;
+import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
 import controller.service.InternshipService;
 import controller.service.RequestService;
@@ -18,11 +19,14 @@ public class StaffController extends UserController {
 
 	private final CareerStaff staff;
 	private final InternshipService internshipService;
+    private final ApplicationService applicationService;
 
 	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
 		super(auth, repository, requestService);
 		this.staff = staff;
 		this.internshipService = new InternshipService(repository, requestService);
+        this.applicationService = new ApplicationService(repository,internshipService,requestService);
+
 	}
 
 	public void launch(SystemController systemController){
@@ -68,6 +72,7 @@ public class StaffController extends UserController {
 	 */
 	public void approveWithdrawal(String app) throws Exception {
 		getRequest().acceptWithdrawalRequest(app);
+        internshipService.removeApplicationFromInternship(applicationService.findApplication(app));
 	}
 
 	/**

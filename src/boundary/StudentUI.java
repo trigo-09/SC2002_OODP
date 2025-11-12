@@ -12,7 +12,6 @@ import java.util.*;
 import util.FilterCriteria;
 import util.io.InputHelper;
 import util.ui.ChangePage;
-import util.ui.UIHelper;
 
 public class StudentUI {
     private final StudentController studentController;
@@ -28,14 +27,14 @@ public class StudentUI {
         boolean stay = true;
         while (stay){
             System.out.println("\n=== Student Menu ===");
-            UIHelper.printMenuItem(1,"View / filter Eligible Internships");
-            UIHelper.printMenuItem(2,"Apply for Internship");
-            UIHelper.printMenuItem(3,"View Applications");
-            UIHelper.printMenuItem(4,"Accept Internship Placement");
-            UIHelper.printMenuItem(5,"Withdraw Internship Placement");
-            UIHelper.printMenuItem(6,"Change Password");
-            UIHelper.printMenuItem(7,"Change Filter Setting");
-            UIHelper.printMenuItem(8,"Logout");
+            InputHelper.printMenuItem(1,"View / filter Eligible Internships");
+            InputHelper.printMenuItem(2,"Apply for Internship");
+            InputHelper.printMenuItem(3,"View Applications");
+            InputHelper.printMenuItem(4,"Accept Internship Placement");
+            InputHelper.printMenuItem(5,"Withdraw Internship Placement");
+            InputHelper.printMenuItem(6,"Change Password");
+            InputHelper.printMenuItem(7,"Change Filter Setting");
+            InputHelper.printMenuItem(8,"Logout");
             System.out.print("Enter your choice (1-8): ");
 
             int choice = InputHelper.readInt();
@@ -162,12 +161,12 @@ public class StudentUI {
 
         System.out.println("Current Filter Criteria: ");
         System.out.println("- Status: " + filter.getStatus());
-        System.out.println("- Preferred Major: " + filter.getPreferredMajor());
         System.out.println("- Level:  " + filter.getLevel());
         System.out.println("- Closing Date: " + filter.getClosingDate());
         System.out.println();
 
-        String statusRaw = AttributeGetter.getString("Status (PENDING/APPROVED/REJECTED/FILLED) [or CLEAR]: ");
+        // i feel like student shld not be able to filter by status as they shld only see wats avail to them which is pending and filled
+        String statusRaw = AttributeGetter.getString("Status (PENDING/FILLED) [or CLEAR]: ");
         if (!statusRaw.isBlank()){
             String input = statusRaw.trim().toUpperCase();
             if (input.equals("CLEAR")){
@@ -184,17 +183,7 @@ public class StudentUI {
             }
         }
 
-        String majorRaw = AttributeGetter.getString("Preferred Major contains [or CLEAR]: ");
-        if (!majorRaw.isBlank()){
-            String input = majorRaw.trim();
-            if (input.equals("CLEAR")){
-                filter.setPreferredMajor(null);
-                System.out.println("-> Preferred major filter cleared");
-            }
-            else{
-                filter.setPreferredMajor(input);
-            }
-        }
+    
 
         String levelRaw = AttributeGetter.getString("Level contains [or CLEAR]: ");
         if (!levelRaw.isBlank()){

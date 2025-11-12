@@ -31,8 +31,14 @@ public class InputHelper {
         return password;
     }
 
-    public static void pause() {
-        System.out.print("Press Enter to continue...");
-        readLine();
-    }
+        /**
+         * to maintain formating
+         */
+        private static final String SPACE = "    ";
+
+        public static void printMenuItem(int num, String label) {
+            System.out.println(SPACE + num + ". " + label);
+        }
+
+
 }

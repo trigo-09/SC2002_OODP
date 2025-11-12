@@ -43,7 +43,8 @@ public class StudentController extends UserController {
 	 * @param internshipId
 	 */
 	public void applyInternship(String internshipId)  throws IllegalArgumentException, SecurityException, MaxExceedException {
-        applicationService.apply(student.getId(), internshipId);
+         Application app =applicationService.apply(student.getId(), internshipId);
+         internshipService.addApplicationToInternship(app);
 	}
 	/**
 	 * 

@@ -2,6 +2,7 @@ package controller.service;
 
 import controller.database.*;
 import entity.application.*;
+import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import util.exceptions.MaxExceedException;
@@ -80,7 +81,7 @@ public class ApplicationService {
      * 
      */
     public void acceptApplication(String studentId, String applicationId) {
-        Application application = systemRepository.findApplication(applicationId);
+        Application application = findApplication(applicationId);
         // Ensure application exists
         if (application == null) {
             throw new IllegalArgumentException("Invalid application ID: " + applicationId);
@@ -110,7 +111,7 @@ public class ApplicationService {
      * @throws SecurityException        if the application does not belong to the student
      */
     public void requestWithdrawal(String studentId, String appId, String reason) throws ObjectNotFoundException {
-        Application application = systemRepository.findApplication(appId);
+        Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
             throw new ObjectNotFoundException("Invalid application ID: " + appId);
@@ -135,10 +136,11 @@ public class ApplicationService {
      * @throws IllegalArgumentException if the application ID is invalid
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
+     * @throws MaxExceedException       if the internship slots has be filled
      */
-    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException {
+    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException, MaxExceedException {
 
-        Application application = systemRepository.findApplication(appId);
+        Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
         throw new ObjectNotFoundException("Invalid application ID: " + appId);
@@ -157,12 +159,26 @@ public class ApplicationService {
         if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
             throw new SecurityException("You can only review applications for your own internships.");
         }
+        if (approve) {
+            if (internshipService.isFilled(application.getInternshipId())) {
+                throw new MaxExceedException("Max number of approved slot have be filles");
+            }
 
-        // Apply the decision
-        application.changeApplicationStatus(
-            approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED
-        );
-    }   
+            // Add application to approved slot
+            internship.addApprovedapplication(application);
+            application.changeApplicationStatus(ApplicationStatus.APPROVED);
+            if (internship.getNumOfFilledSlots() == internship.getNumOfSlots()) {
+                internship.setStatus(InternStatus.FILLED);
+            }
+        }else {application.changeApplicationStatus(ApplicationStatus.REJECTED);}
+
+    }
+
+
+    public Application findApplication(String applicationId) {
+        Application application = systemRepository.findApplication(applicationId);
+        return application;
+    }
 
     /**
 	 * Helper method to validate status transitions.

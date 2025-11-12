@@ -119,7 +119,7 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void approveApp(String appId) throws ObjectNotFoundException {
+	public void approveApp(String appId) throws ObjectNotFoundException,MaxExceedException {
 		applicationService.reviewApplication(rep.getId(),appId, true);
 	}
 
@@ -130,7 +130,7 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void rejectApp(String appId) throws ObjectNotFoundException {
+	public void rejectApp(String appId) throws ObjectNotFoundException, MaxExceedException {
 		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
 
