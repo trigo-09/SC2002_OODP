@@ -60,7 +60,11 @@ public class StaffUI {
                     System.out.println("Logging out...");
                     systemController.mainMenu(); // return to Welcome screen
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> {
+                    System.out.println("Invalid choice. Please try again.");
+                InputHelper.pause();
+                throw new PageBackException();
+                }
             }
         } catch (PageBackException e) {
             menuLoop();
