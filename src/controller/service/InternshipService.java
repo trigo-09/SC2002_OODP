@@ -1,6 +1,7 @@
 package controller.service;
 import controller.database.IRepository;
 import entity.application.Application;
+import entity.application.ApplicationStatus;
 import entity.internship.*;
 import entity.user.CompanyRep;
 import entity.user.Student;
