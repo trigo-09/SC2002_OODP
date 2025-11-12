@@ -21,13 +21,9 @@ public class RegistrationRequest extends Request {
        return companyRep;
    }
 
-    @Override
-    public String getSplitter() {
-        return "----------------------------------";
-    }
 
     @Override
-    public String getString() {
+    public String toString() {
         return String.format(
                 "Request Type: Company Representative Registration%n" +
                         "Request ID: %s%n" +
