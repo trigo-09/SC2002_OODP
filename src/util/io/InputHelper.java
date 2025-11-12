@@ -40,5 +40,5 @@ public class InputHelper {
             System.out.println(SPACE + num + ". " + label);
         }
 
-    
+
 }
