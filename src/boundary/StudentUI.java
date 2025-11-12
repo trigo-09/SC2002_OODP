@@ -28,14 +28,14 @@ public class StudentUI {
         boolean stay = true;
         while (stay){
             System.out.println("\n=== Student Menu ===");
-            UIHelper.printMenuItem(1,"View / filter Eligible Internships");
-            UIHelper.printMenuItem(2,"Apply for Internship");
-            UIHelper.printMenuItem(3,"View Applications");
-            UIHelper.printMenuItem(4,"Accept Internship Placement");
-            UIHelper.printMenuItem(5,"Withdraw Internship Placement");
-            UIHelper.printMenuItem(6,"Change Password");
-            UIHelper.printMenuItem(7,"Change Filter Setting");
-            UIHelper.printMenuItem(8,"Logout");
+            InputHelper.printMenuItem(1,"View / filter Eligible Internships");
+            InputHelper.printMenuItem(2,"Apply for Internship");
+            InputHelper.printMenuItem(3,"View Applications");
+            InputHelper.printMenuItem(4,"Accept Internship Placement");
+            InputHelper.printMenuItem(5,"Withdraw Internship Placement");
+            InputHelper.printMenuItem(6,"Change Password");
+            InputHelper.printMenuItem(7,"Change Filter Setting");
+            InputHelper.printMenuItem(8,"Logout");
             System.out.print("Enter your choice (1-8): ");
 
             int choice = InputHelper.readInt();
