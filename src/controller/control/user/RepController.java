@@ -75,7 +75,8 @@ public class RepController extends UserController {
                                                   LocalDate openingDate,
                                                   LocalDate closingDate,
                                                   int numOfSlots) throws MaxExceedException {
-        return internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
+        InternshipOpportunity internship =internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
+        request.createInternshipRequest(rep.getId(), internship);
     }
 	
 
