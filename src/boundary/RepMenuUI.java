@@ -4,13 +4,11 @@ import controller.control.user.RepController;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
-import util.exceptions.MaxExceedException;
-import util.exceptions.ObjectNotFoundException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import util.exceptions.*;
 import util.io.InputHelper;
 
  /**
@@ -18,7 +16,6 @@ import util.io.InputHelper;
   */
 public class RepMenuUI {
     private final RepController repController;
-    private static final DateTimeFormatter DMY = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
      /**
       * Creates a representative menu bound to the given controller.
@@ -38,13 +35,15 @@ public class RepMenuUI {
             System.out.println("\n=== Company Representative Menu ===");
             System.out.println("1) Create Internship Opportunity");
             System.out.println("2) Manage Your Internship Opportunities");
+            System.out.println("3) Change Password");
             System.out.println("0) Logout");
             System.out.print("Enter your choice: ");
-            choice = readIntSafe();
+            choice = InputHelper.readInt();
 
             switch (choice) {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI();
+                case 3 -> changePasswordUI();
                 case 0 -> System.out.println("Logging out...");
                 default -> System.out.println("Invalid choice. Please try again.");
             }
@@ -63,48 +62,48 @@ public class RepMenuUI {
         System.out.print("Description: ");
         String description = InputHelper.readLine();
 
-        InternshipLevel level;
-
+        System.out.print("Level (Basic / Intermediate / Advanced): ");
         // Re-prompt until valid level is entered
         // Convert user input to InternshipLevel enum
-        while (true) {
-            System.out.print("Level (Basic / Intermediate / Advanced): ");
-            String input = InputHelper.readLine();
-            if (input.equalsIgnoreCase("Basic")) {
-                level = InternshipLevel.BASIC;
+        InternshipLevel level;
+        while(true) {
+            try {
+                level = repController.parseLevel(InputHelper.readLine(), false);
                 break;
-            } else if (input.equalsIgnoreCase("Intermediate")) {
-                level = InternshipLevel.INTERMEDIATE;
-                break;
-            } else if (input.equalsIgnoreCase("Advanced")) {
-                level = InternshipLevel.ADVANCED;
-                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error parsing internship level: " + e.getMessage());
+                System.out.print("Please try again: ");
             }
-            System.out.println("Invalid level. Please type Basic, Intermediate, or Advanced.");
         }
         
         // Currently only supports a single preferred major input (or 'Any')
         System.out.print("Preferred Major or 'Any': ");
         String preferredMajor = InputHelper.readLine();
         
-        LocalDate openingDate = readDate("Opening Date (DD-MM-YYYY): ");
-        LocalDate closingDate;
+        System.out.println("Enter Opening Date (DD-MM-YYYY):");
+        LocalDate openingDate = InputHelper.readDate();
+        System.out.print("Enter Closing Date (DD-MM-YYYY): ");
 
         // Re-prompt until closing date is after opening date
+        LocalDate closingDate;
         while (true) {
-            closingDate = readDate("Closing Date (DD-MM-YYYY): ");
+            closingDate = InputHelper.readDate();
             if (!closingDate.isBefore(openingDate)) break;
             System.out.println("Closing date cannot be before opening date. Please try again.");
         }
 
-        int numOfSlots;
-
         // Re-prompt until valid number of slots is entered
-        while (true) {
+        int numOfSlots;
+        while(true) {
             System.out.print("Number of Slots (1..10): ");
-            numOfSlots = readIntSafe();
-            if (numOfSlots >= 1 && numOfSlots <= 10) break;
-            System.out.println("Slots must be between 1 and 10. Try again.");
+            numOfSlots = InputHelper.readInt();
+            try {
+                repController.checkValidSlots(numOfSlots, false);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Please try again: ");
+            }
         }
 
         try {
@@ -116,7 +115,7 @@ public class RepMenuUI {
                 openingDate,
                 closingDate,
                 numOfSlots
-        );
+            );
         System.out.println("Internship opportunity created successfully.");
         } catch (IllegalArgumentException | IllegalStateException | SecurityException | MaxExceedException e) {
             System.out.println("Error creating internship: " + e.getMessage());
@@ -142,98 +141,188 @@ public class RepMenuUI {
             System.out.println("Actions:");
             System.out.println("0) Back to Main Menu");
             System.out.println("1) Set Internship Visibility");
-            System.out.println("2) Manage Applications for an Internship");
-            System.out.print("Enter your choice: ");
-            choice = readIntSafe();
+            System.out.println("2) Edit Internship");
+            System.out.println("3) Manage Applications for an Internship");
+
+            while(true) {
+                System.out.print("Enter your choice: ");
+                choice = InputHelper.readInt();
+                if (internships.isEmpty() && (choice == 1 || choice == 2 || choice == 3)) {
+                    System.out.println("No internships available to manage. Please choose another option.");
+                    continue;
+                }
+                if (choice < 0 || choice > 3) {
+                    System.out.println("Invalid choice. Please try again.");
+                    continue;
+                }
+                break;
+            }
 
             switch (choice) {
-                case 1 -> {
-                    System.out.print("Enter Internship ID: ");
-                    String internshipId = InputHelper.readLine();
-                    System.out.print("Set visibility (1 = visible, 0 = hidden): ");
-                    int visChoice = readIntSafe();
-                    boolean visibility = (visChoice == 1);
-
-                    try {
-                        repController.toggleVisibility(internshipId, visibility);
-                        System.out.println("Internship visibility updated to " + (visibility ? "VISIBLE" : "HIDDEN") + ".");
-                    } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
-                        System.out.println("Error updating internship visibility: " + e.getMessage());
-                    }
-                    pause();
-                }
-
-                case 2 -> {
-                    System.out.print("Enter Internship ID to manage applications: ");
-                    String internId = InputHelper.readLine();
-
-                    try {
-                        List<Application> applications = repController.getApplications(internId);
-                        if (applications.isEmpty()) {
-                            System.out.println("(No applications yet)");
-                            pause();
-                            continue;
-                        } else {
-                            applications.forEach(a -> System.out.println("- " + a));
-                        }
-                        pause();
-                    } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
-                        System.out.println("Error retrieving applications: " + e.getMessage());
-                    }
-
-                    System.out.print("1: Accept or Reject an Application, 0: back: ");
-                    int appChoice = readIntSafe();
-
-                    if (appChoice == 1) {
-                        System.out.print("Enter Application ID: ");
-                        String appId = InputHelper.readLine();
-                        System.out.print("Accept (1) or Reject (0) the application? ");
-                        int decision = readIntSafe();
-
-                        try {
-                            if (decision == 1) {
-                                repController.approveApp(appId);
-                                System.out.println("Application accepted.");
-                            } else {
-                                repController.rejectApp(appId);
-                                System.out.println("Application rejected.");
-                            }
-                        } catch (ObjectNotFoundException | IllegalStateException | SecurityException | MaxExceedException e) {
-                            System.out.println("Error approving/rejecting application: " + e.getMessage());
-                        }
-                        pause();
-                    }
-                }
-                case 0 -> System.out.println("Returning to main menu...");
-                default -> System.out.println("Invalid choice. Please try again.");
+                case 1 ->   handleVisibility();
+                case 2 ->   handleEditInternship();
+                case 3 ->   handleApplications(); 
+                case 0 ->   System.out.println("Returning to main menu...");
+                default ->  System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
+    private void changePasswordUI() {
+        System.out.print("Enter your current password: ");
+        String currentPassword = InputHelper.readLine();
+        System.out.print("Enter your new password: ");
+        String newPassword = InputHelper.readLine();
+        System.out.print("Confirm your new password: ");
+        String confirmPassword = InputHelper.readLine();
 
-    /**
-     * Reads an integer from user input safely, reprompting on invalid input.
-     * @return The integer input by the user.
-     */
-    private int readIntSafe() {
-        while (true) {
-            String in = InputHelper.readLine();
-            try { return Integer.parseInt(in); }
-            catch (NumberFormatException e) { System.out.print("Please enter a number: "); }
+        try {
+            repController.changePassword(currentPassword, newPassword, repController.getRep(), confirmPassword);
+            System.out.println("Password changed successfully.");
+        } catch (IllegalArgumentException | AuthenticationException e) {
+            System.out.println("Error changing password: " + e.getMessage());
         }
+        pause();
     }
 
-    /**
-     * Reads a date from user input in DD-MM-YYYY format, reprompting on invalid input.
-     * @param prompt The prompt message to display.
-     * @return The LocalDate input by the user.
-     */
-    private LocalDate readDate(String prompt) {
+    private void handleVisibility() {
+        System.out.print("Enter Internship ID to change visibility: ");
+        String internId = InputHelper.readLine();
+        System.out.print("Set visibility to Visible (1) or Hidden (0): ");
+        int visChoice = InputHelper.readInt();
+        boolean visibility = visChoice == 1;
+
+        try {
+            repController.toggleVisibility(internId, visibility);
+            System.out.println("Internship visibility updated successfully.");
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+            System.out.println("Error updating visibility: " + e.getMessage());
+        }
+        pause();
+    }
+
+    private void handleEditInternship() {
+        System.out.print("Enter Internship ID to edit: ");
+        String internId = InputHelper.readLine();
+
+        // Check if internship exists before prompting for fields
+        try {repController.validateInternshipId(internId);}
+        catch (IllegalArgumentException | SecurityException e) {
+            System.out.println("Error: " + e.getMessage());
+            pause();
+            return;
+        }
+        System.out.println("Leave fields blank to keep current values.");
+        System.out.print("New Title: ");
+        String title = InputHelper.readLine();
+        if (title.isEmpty()) title = null;
+
+        System.out.print("New Description: ");
+        String description = InputHelper.readLine();
+        if (description.isEmpty()) description = null;
+
+        System.out.print("New Preferred Major: ");
+        String preferredMajor = InputHelper.readLine();
+        if (preferredMajor.isEmpty()) preferredMajor = null;
+
+        System.out.println("New Opening Date (DD-MM-YYYY):");
+        LocalDate openingDate = InputHelper.readOptionalDate();
+        System.out.print("New Closing Date (DD-MM-YYYY): ");
+        // Re-prompt until closing date is after opening date
+        LocalDate closingDate;
         while (true) {
-            System.out.print(prompt);
-            String in = InputHelper.readLine();
-            try { return LocalDate.parse(in, DMY); }
-            catch (DateTimeParseException e) { System.out.println("Invalid date, use DD-MM-YYYY."); }
+            closingDate = InputHelper.readOptionalDate();
+            if (closingDate != null && openingDate != null && closingDate.isBefore(openingDate)) {
+                System.out.println("Closing date cannot be before opening date. Please try again.");
+            } else {
+                break;
+            }
+        }
+
+        System.out.print("New Number of Slots: ");
+        // Re-prompt until valid number of slots is entered
+        Integer slots;
+        while(true) {
+            slots = InputHelper.readOptionalInt();
+            try {
+                repController.checkValidSlots(slots, true);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Please try again: ");
+            }
+        }
+
+        System.out.print("New Level (Basic / Intermediate / Advanced, leave blank to keep current): ");
+        // Re-prompt until valid level is entered
+        InternshipLevel level;
+        while(true) {
+            try {
+                level = repController.parseLevel(InputHelper.readLine(), true);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error parsing internship level: " + e.getMessage());
+                System.out.print("Please try again: ");
+            }
+        }
+
+        try {
+            repController.editInternship(
+                internId,
+                title,
+                description,
+                preferredMajor,
+                openingDate,
+                closingDate,
+                slots,
+                level
+            );
+            System.out.println("Internship updated successfully.");
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException | ObjectNotFoundException e) {
+            System.out.println("Error updating internship: " + e.getMessage());
+        }
+        pause();
+    }
+
+    private void handleApplications() {
+        System.out.print("Enter Internship ID to manage applications: ");
+        String internId = InputHelper.readLine();
+
+        try {
+            List<Application> applications = repController.getApplications(internId);
+            if (applications.isEmpty()) {
+                System.out.println("(No applications yet)");
+                pause();
+                return;
+            } else {
+                applications.forEach(a -> System.out.println("- " + a));
+            }
+            pause();
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+            System.out.println("Error retrieving applications: " + e.getMessage());
+        }
+
+        System.out.print("1: Accept or Reject an Application, 0: back: ");
+        int appChoice = InputHelper.readInt();
+
+        if (appChoice == 1) {
+            System.out.print("Enter Application ID: ");
+            String appId = InputHelper.readLine();
+            System.out.print("Accept (1) or Reject (0) the application? ");
+            int decision = InputHelper.readInt();
+
+            try {
+                if (decision == 1) {
+                    repController.approveApp(appId);
+                    System.out.println("Application accepted.");
+                } else {
+                    repController.rejectApp(appId);
+                    System.out.println("Application rejected.");
+                }
+            } catch (ObjectNotFoundException | IllegalStateException | SecurityException | MaxExceedException e) {
+                System.out.println("Error approving/rejecting application: " + e.getMessage());
+            }
+            pause();
         }
     }
 

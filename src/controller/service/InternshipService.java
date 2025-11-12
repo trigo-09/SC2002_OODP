@@ -79,17 +79,32 @@ public class InternshipService {
         return internship.getStatus() == InternStatus.PENDING;
     }
 
-    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException {
-        InternshipOpportunity internship = findInternshipById(internshipId);
-        if(internship == null){throw new ObjectNotFoundException("Internship not found");}
-        if(!ableToEditInternship(internship)){throw new SecurityException("Internship can not be edited");}
-        internship.setTitle(title);
-        internship.setDescription(description);
-        internship.setPreferredMajors(preferredMajors);
-        internship.setOpeningDate(openingDate);
-        internship.setClosingDate(closingDate);
-        internship.setNumOfSlots(slot);
-        internship.setLevel(level);
+    /**
+     * Edits an existing internship opportunity.
+     * @param internshipId Unique ID of the internship to edit
+     * @param title New title for the internship (null if not changing)
+     * @param description New description for the internship (null if not changing)
+     * @param preferredMajors New preferred majors for the internship (null if not changing)
+     * @param openingDate New opening date for the internship (null if not changing)
+     * @param closingDate New closing date for the internship (null if not changing)
+     * @param slot New number of slots for the internship (null if not changing)
+     * @param level New level for the internship (null if not changing)
+     * @throws ObjectNotFoundException if the internship with the given ID does not exist
+     * @throws SecurityException if the internship cannot be edited due to its current status
+     */
+    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate, Integer slot, InternshipLevel level) throws ObjectNotFoundException {
+        InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
+        if(internship == null) {throw new ObjectNotFoundException("Internship not found");}
+        if(!ableToEditInternship(internship)) {throw new SecurityException("Internship can not be edited");}
+        
+        // null options for fields that are not being edited / left blank
+        if (title != null)           internship.setTitle(title);
+        if (description != null)     internship.setDescription(description);
+        if (preferredMajors != null) internship.setPreferredMajors(preferredMajors);
+        if (openingDate != null)     internship.setOpeningDate(openingDate);
+        if (closingDate != null)     internship.setClosingDate(closingDate);
+        if (slot != null)            internship.setNumOfSlots(slot);
+        if (level != null)           internship.setLevel(level);
     }
 
 
@@ -199,4 +214,50 @@ public class InternshipService {
         return internship.getStatus() == InternStatus.FILLED;
     }
 
+        /**
+         * Parses a string to an InternshipLevel enum.
+         * Checks for valid input.
+         * @param s The string representation of the internship level
+         * @param allowNull Whether null values are allowed (for edit mode)
+         * @return The corresponding {@link InternshipLevel} enum
+         * @throws IllegalArgumentException if the input is invalid or null
+         */
+        public static InternshipLevel parseLevel(String s, boolean allowNull) {
+                if (s == null && allowNull) { return null; }
+                if (s == null) {throw new IllegalArgumentException("Level must be Basic / Intermediate / Advanced"); }
+                return switch (s.trim().toLowerCase()) {
+                        case "basic" -> InternshipLevel.BASIC;
+                        case "intermediate" -> InternshipLevel.INTERMEDIATE;
+                        case "advanced" -> InternshipLevel.ADVANCED;
+                        default -> throw new IllegalArgumentException("Level must be Basic / Intermediate / Advanced");
+                };
+        }
+
+        /**
+         * Validates the number of slots for an internship.
+         * @param slots The number of slots to validate
+         * @param allowNull Whether null values are allowed (for edit mode)
+         * @throws IllegalArgumentException if the number of slots is out of range or null when not allowed
+         */
+        public static void checkValidSlots(Integer slots, boolean allowNull) {
+                if (slots == null && allowNull) { return; } // left blank in edit mode, skip validation
+                if (slots == null) {
+                        throw new IllegalArgumentException("Slots must be between 1 and 10");
+                }
+                if (slots < 1 || slots > 10) {
+                        throw new IllegalArgumentException("Slots must be between 1 and 10");
+                }
+        }
+
+        /**
+         * Validates the opening and closing dates for an internship.
+         * @param opening Opening date of internship
+         * @param closing Closing date of internship
+         * @throws IllegalArgumentException if the closing date is before the opening date
+         */
+        public static void checkValidDates(LocalDate opening, LocalDate closing) {
+                if (opening != null && closing != null && closing.isBefore(opening)) {
+                        throw new IllegalArgumentException("Closing date cannot be before opening date");
+                }
+        }
 }

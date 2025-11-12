@@ -10,11 +10,10 @@ import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
-import util.exceptions.MaxExceedException;
-import util.exceptions.ObjectNotFoundException;
-
 import java.time.LocalDate;
 import java.util.List;
+import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
 
 
  /**
@@ -141,7 +140,7 @@ public class RepController extends UserController {
 	/**
 	 * Rejects an internship application.
 	 * @param appId application ID
-	 * @throws IllegalArgumentException if the application ID is invalid
+	 * @throws ObjectNotFoundException  if the application ID is invalid
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
@@ -150,11 +149,60 @@ public class RepController extends UserController {
 	}
 
     public void deleteInternship(String internshipId) {
-        internshipService.removeInternship(rep, internshipId);
+        internshipService.removeInternship(rep.getId(), internshipId);
         request.deleteInternshipRequest(internshipId);
     }
 
-    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException, SecurityException {
-        internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
+    public void editInternship(String internshipId,
+							   String title, 
+							   String description, 
+							   String preferredMajors, 
+							   LocalDate openingDate, 
+							   LocalDate closingDate,
+							   Integer slot, 
+							   InternshipLevel level) throws ObjectNotFoundException, SecurityException {
+		internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
     }
+
+	public CompanyRep getRep() {
+		return rep;
+	}
+
+	/**
+	 * Validates that the internship ID exists and belongs to the representative.
+	 * @param internshipId unique ID of the internship
+	 * @throws IllegalArgumentException if the internship ID is invalid
+	 * @throws SecurityException        if the internship does not belong to this representative
+	 */
+	public void validateInternshipId(String internshipId) {
+		InternshipOpportunity internship = internshipService.findInternshipById(internshipId);
+		if(internship == null) {
+			throw new IllegalArgumentException("Internship not found");
+		}
+		if(!internship.getCompanyName().equalsIgnoreCase(rep.getCompanyName())) {
+			throw new SecurityException("You do not have permission to manage this internship");
+		}
+	}
+
+	/**
+	 * Parses a string to an InternshipLevel enum.
+	 * Checks for valid input.
+	 * @param level The string representation of the internship level
+	 * @param allowNull Whether null values are allowed (for edit mode)
+	 * @return The corresponding {@link InternshipLevel} enum
+	 * @throws IllegalArgumentException if the input is invalid or null
+	 */
+	public InternshipLevel parseLevel(String level, boolean allowNull) {
+		return InternshipService.parseLevel(level, allowNull);
+	}
+
+	/**
+	 * Validates the number of slots for an internship.
+	 * @param slots The number of slots to validate
+	 * @param allowNull Whether null values are allowed (for edit mode)
+	 * @throws IllegalArgumentException if the number of slots is out of range or null when not allowed
+	 */
+	public void checkValidSlots(Integer slots, boolean allowNull) {
+		InternshipService.checkValidSlots(slots, allowNull);
+	}
 }

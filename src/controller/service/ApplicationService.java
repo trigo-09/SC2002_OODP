@@ -5,10 +5,9 @@ import entity.application.*;
 import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
+import java.util.List;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectNotFoundException;
-
-import java.util.List;
 
 /**
  * Service class for managing internship applications.
@@ -94,7 +93,7 @@ public class ApplicationService {
      * @param repId the ID of the company representative
      * @param appId the ID of the application to review
      * @param approve true to approve, false to reject
-     * @throws IllegalArgumentException if the application ID is invalid
+     * @throws ObjectNotFoundException  if the application ID is invalid
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */
@@ -103,16 +102,29 @@ public class ApplicationService {
         Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
-        throw new ObjectNotFoundException("Invalid application ID: " + appId);
-    }
+            throw new ObjectNotFoundException("Invalid application ID: " + appId);
+        }
+        InternshipOpportunity internship = internshipService.findInternshipById(application.getInternshipId());
+        // Ensure internship exists
+        if (internship == null) {
+            throw new ObjectNotFoundException("Invalid internship ID associated with application: " + application.getInternshipId());
+        }
         // Ensure the application has not been reviewed already
         if (application.getStatus() != ApplicationStatus.PENDING) {
             throw new IllegalStateException("This application has already been reviewed.");
         }
+        
+        // Security check: ensure the internship belongs to the representative
+        if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
+            throw new SecurityException("You can only review applications for your own internships.");
+        }
+        // Ensure number of available slots if approving
+        if (approve && internshipService.isFilled(internship.getId())) {
+            throw new IllegalStateException("Cannot approve application; internship is already filled.");
+        }
+        // Apply the decision  
         application.changeApplicationStatus(approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED);
-
     }
-
 
     public Application findApplication(String applicationId) {
         Application application = systemRepository.findApplication(applicationId);
