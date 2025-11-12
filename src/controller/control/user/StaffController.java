@@ -1,6 +1,6 @@
 package controller.control.user;
 
-import boundary.StaffUI;
+import boundary.usermenu.StaffUI;
 import controller.control.SystemController;
 import controller.database.IRepository;
 import controller.service.ApplicationService;

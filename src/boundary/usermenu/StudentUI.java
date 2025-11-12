@@ -1,5 +1,6 @@
-package boundary;
+package boundary.usermenu;
 
+import boundary.AttributeGetter;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StudentController;
@@ -10,7 +11,6 @@ import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
 import java.util.*;
 import util.FilterCriteria;
-import util.exceptions.AuthenticationException;
 import util.io.InputHelper;
 import util.ui.ChangePage;
 

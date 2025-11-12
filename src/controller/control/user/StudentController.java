@@ -1,6 +1,6 @@
 package controller.control.user;
 
-import boundary.StudentUI;
+import boundary.usermenu.StudentUI;
 import controller.control.SystemController;
 import controller.database.IRepository;
 import controller.service.ApplicationService;
@@ -13,7 +13,9 @@ import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
 import util.FilterCriteria;
+import util.exceptions.AlreadyApprovedException;
 import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectAlreadyExistsException;
 import util.exceptions.ObjectNotFoundException;
 
 public class StudentController extends UserController {
@@ -65,7 +67,7 @@ public class StudentController extends UserController {
 
 	}
 
-    public void withdrawPlacement(String appId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException {
+    public void withdrawPlacement(String appId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException, ObjectAlreadyExistsException, AlreadyApprovedException {
         Application application = applicationService.findApplication(appId);
         // Ensure application exists
         if (application == null) {

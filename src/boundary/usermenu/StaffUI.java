@@ -1,22 +1,19 @@
-package boundary;
+package boundary.usermenu;
 
+import boundary.AttributeGetter;
+import boundary.FilterUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StaffController;
-import entity.internship.InternStatus;
-import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.request.InternshipVetRequest;
 import entity.request.RegistrationRequest;
 import entity.request.Request;
 import entity.request.WithdrawalRequest;
-import util.FilterCriteria;import util.exceptions.AuthenticationException;
-import util.exceptions.ObjectNotFoundException;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
 import util.ui.ChangePage;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class StaffUI {

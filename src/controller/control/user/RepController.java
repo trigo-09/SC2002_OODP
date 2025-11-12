@@ -1,6 +1,6 @@
 package controller.control.user;
 
-import boundary.RepMenuUI;
+import boundary.usermenu.RepMenuUI;
 import controller.database.IRepository;
 import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
@@ -13,6 +13,7 @@ import entity.user.CompanyRep;
 import java.time.LocalDate;
 import java.util.List;
 import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectAlreadyExistsException;
 import util.exceptions.ObjectNotFoundException;
 
 
@@ -73,7 +74,7 @@ public class RepController extends UserController {
                                                   String preferredMajors,
                                                   LocalDate openingDate,
                                                   LocalDate closingDate,
-                                                  int numOfSlots) throws MaxExceedException {
+                                                  int numOfSlots) throws MaxExceedException, ObjectAlreadyExistsException{
         InternshipOpportunity internship =internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
         request.createInternshipRequest(rep.getId(), internship);
     }

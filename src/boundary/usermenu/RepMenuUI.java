@@ -1,12 +1,10 @@
-package boundary;
+package boundary.usermenu;
 
 import controller.control.user.RepController;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import util.exceptions.*;
 import util.io.InputHelper;
@@ -117,7 +115,7 @@ public class RepMenuUI {
                 numOfSlots
             );
         System.out.println("Internship opportunity created successfully.");
-        } catch (IllegalArgumentException | IllegalStateException | SecurityException | MaxExceedException e) {
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException | MaxExceedException | ObjectAlreadyExistsException e) {
             System.out.println("Error creating internship: " + e.getMessage());
         }
         pause();
@@ -179,7 +177,7 @@ public class RepMenuUI {
         try {
             repController.changePassword(currentPassword, newPassword, repController.getRep(), confirmPassword);
             System.out.println("Password changed successfully.");
-        } catch (IllegalArgumentException | AuthenticationException e) {
+        } catch (Exception e) {
             System.out.println("Error changing password: " + e.getMessage());
         }
         pause();
