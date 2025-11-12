@@ -156,10 +156,22 @@ public class InternshipService {
                 return true;
 	}
 
-        public boolean isEligibleToCreateInternship(String repId) {
-                CompanyRep rep = (CompanyRep) repository.findUser(repId);
-                return repository.getInternshipsByCompany(rep.getCompanyName()).stream().filter(internshipOpportunity -> internshipOpportunity.getStatus() != InternStatus.REJECTED).count() <  MAX_ACTIVE_INTERNSHIPS;
-        }
+    public boolean isEligibleToCreateInternship(String repId) {
+        CompanyRep rep = (CompanyRep) repository.findUser(repId);
+        return repository.getInternshipsByCompany(rep.getCompanyName()).stream().filter(internshipOpportunity -> internshipOpportunity.getStatus() != InternStatus.REJECTED).count() < MAX_ACTIVE_INTERNSHIPS;
+    }
+
+    public void addApplicationToInternship(Application app) {
+        InternshipOpportunity internshipOpportunity = repository.findInternshipOpportunity(app.getInternshipId());
+        internshipOpportunity.addPendingApplication(app);
+    }
+
+    public void removeApplicationFromInternship(Application app) {
+        InternshipOpportunity internshipOpportunity = repository.findInternshipOpportunity(app.getInternshipId());
+        internshipOpportunity.addPendingApplication(app);
+    }
+
+
 
 
 	/**
