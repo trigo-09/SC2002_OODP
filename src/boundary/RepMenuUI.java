@@ -95,6 +95,7 @@ public class RepMenuUI {
         // Re-prompt until valid number of slots is entered
         int numOfSlots;
         while(true) {
+            System.out.print("Number of Slots (1..10): ");
             numOfSlots = InputHelper.readInt();
             try {
                 repController.checkValidSlots(numOfSlots, false);
