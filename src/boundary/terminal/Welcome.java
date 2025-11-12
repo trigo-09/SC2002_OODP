@@ -39,7 +39,9 @@ public class Welcome {
                 case 2 -> {
                     try {
                         LoginPageUI.register(controller);
-                    }catch (PageBackException e) {}
+                    }catch (PageBackException e) {
+                        Welcome.welcome(controller);
+                    }
                 }
                 case 3 -> {
                     try {
