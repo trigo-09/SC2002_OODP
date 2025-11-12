@@ -72,7 +72,7 @@ public class SystemController {
      * @throws AuthenticationException if there are issue during authentication
      */
     public void handleLogin(String userId, String password) throws AuthenticationException {
-            User user = auth.authenticate(userId,password);
+        User user = auth.authenticate(userId,password);
             switch (user.getRole()) {
                 case STUDENT -> new StudentController(auth,repo,request,internshipService,applicationService,(Student) user).launch(this);
 
