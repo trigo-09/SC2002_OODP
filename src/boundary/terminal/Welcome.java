@@ -14,9 +14,9 @@ public class Welcome {
         System.out.println("\nWelcome to Internship Placement Management System!");
         System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Please enter your choice to continue");
-        UIHelper.printMenuItem(1,"Login");
-        UIHelper.printMenuItem(2,"Register");
-        UIHelper.printMenuItem(3,"Exit");
+        InputHelper.printMenuItem(1,"Login");
+        InputHelper.printMenuItem(2,"Register");
+        InputHelper.printMenuItem(3,"Exit");
         System.out.print("Enter your choice (1-3): ");
         try {
             while (true) {
