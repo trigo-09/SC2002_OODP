@@ -108,7 +108,18 @@ public class InternshipService {
     }
 
 
-    public void removeInternship(CompanyRep rep,String internshipId)  {
+    public void removeInternship(String repId,String internshipId) throws ObjectNotFoundException {
+        CompanyRep rep = (CompanyRep) repository.findUser(repId);
+        InternshipOpportunity internship = findInternshipById(internshipId);
+        if (internship == null) {
+            throw new ObjectNotFoundException("Internship not found");
+        }
+        if(!internship.getCompanyName().equals(rep.getCompanyName())) {
+            throw new SecurityException("Internship can not be removed");
+        }
+        if(internship.getStatus() == InternStatus.PENDING || internship.getStatus() == InternStatus.REJECTED) {
+            rep.removeInternship(internship);
+        }
         boolean removed =rep.getInternships().removeIf(i->i.getId().equals(internshipId) && i.getStatus() == InternStatus.PENDING && i.getStatus() == InternStatus.FILLED );
         if(!removed){
             throw new SecurityException("Unable to remove internship");
