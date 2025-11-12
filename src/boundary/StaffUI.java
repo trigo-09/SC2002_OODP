@@ -11,6 +11,7 @@ import entity.request.RegistrationRequest;
 import entity.request.Request;
 import entity.request.WithdrawalRequest;
 import util.FilterCriteria;
+import util.exceptions.AuthenticationException;
 import util.exceptions.ObjectNotFoundException;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
