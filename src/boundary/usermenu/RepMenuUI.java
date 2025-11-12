@@ -14,6 +14,7 @@ import util.io.InputHelper;
   */
 public class RepMenuUI {
     private final RepController repController;
+    private final SystemController systemController;
 
      /**
       * Creates a representative menu bound to the given controller.
