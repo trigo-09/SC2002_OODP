@@ -181,5 +181,8 @@ public class InternshipService {
 	public boolean isFilled(String internshipId) {
                 return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
 	}
+    public boolean isFilled(InternshipOpportunity internship) {
+        return internship.getStatus() == InternStatus.FILLED;
+    }
 
 }
