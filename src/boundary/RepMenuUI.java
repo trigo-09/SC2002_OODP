@@ -215,12 +215,15 @@ public class RepMenuUI {
         System.out.println("Leave fields blank to keep current values.");
         System.out.print("New Title: ");
         String title = InputHelper.readLine();
+        if (title.isEmpty()) title = null;
 
         System.out.print("New Description: ");
         String description = InputHelper.readLine();
+        if (description.isEmpty()) description = null;
 
         System.out.print("New Preferred Major: ");
         String preferredMajor = InputHelper.readLine();
+        if (preferredMajor.isEmpty()) preferredMajor = null;
 
         System.out.println("New Opening Date (DD-MM-YYYY):");
         LocalDate openingDate = InputHelper.readOptionalDate();
