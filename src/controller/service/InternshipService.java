@@ -241,6 +241,9 @@ public class InternshipService {
          */
         public static void checkValidSlots(Integer slots, boolean allowNull) {
                 if (slots == null && allowNull) { return; } // left blank in edit mode, skip validation
+                if (slots == null) {
+                        throw new IllegalArgumentException("Slots must be between 1 and 10");
+                }
                 if (slots < 1 || slots > 10) {
                         throw new IllegalArgumentException("Slots must be between 1 and 10");
                 }
