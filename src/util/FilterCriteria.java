@@ -11,16 +11,18 @@ public class FilterCriteria {
 	private String preferredMajor;
 	private InternshipLevel level;
 	private LocalDate closingDate;
+    private String companyName;
 
-    public FilterCriteria(InternStatus status, String preferredMajor, InternshipLevel level, LocalDate closingDate) {
+    public FilterCriteria(InternStatus status, String preferredMajor, InternshipLevel level, LocalDate closingDate, String companyName) {
         this.status = status == null ? InternStatus.APPROVED : status;
         this.preferredMajor = preferredMajor == null ? "" : preferredMajor;
         this.level = level == null ? InternshipLevel.BASIC : level;
         this.closingDate = closingDate == null ? LocalDate.now() : closingDate;
+        this.companyName = companyName == null ? "" : companyName;
 
     }
     public FilterCriteria() {
-        this(null,"",null,null);
+        this(null,null,null,null,null);
     }
 
     public InternStatus getStatus() {

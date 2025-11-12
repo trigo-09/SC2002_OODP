@@ -11,16 +11,16 @@ public class AttributeGetter {
 
     public static String getUserId(String msg){
         System.out.print(msg);
-        return InputHelper.readLine();
+        return InputHelper.readLine().trim();
     }
 
     public static String getPassword(){
         System.out.print("Enter your password: ");
-        return InputHelper.passwordReader();
+        return InputHelper.passwordReader().trim();
     }
     public static String getPassword(String msg){
         System.out.print(msg);
-        return InputHelper.passwordReader();
+        return InputHelper.passwordReader().trim();
     }
 
 

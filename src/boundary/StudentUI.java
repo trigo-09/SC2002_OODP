@@ -10,6 +10,7 @@ import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
 import java.util.*;
 import util.FilterCriteria;
+import util.exceptions.AuthenticationException;
 import util.io.InputHelper;
 import util.ui.ChangePage;
 
@@ -67,7 +68,7 @@ public class StudentUI {
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
 
         for (int i = 0; i<internshipList.size(); i++){
-            DisplayableViewer.displaySingle(internshipList.get(i), i+1);
+            DisplayableViewer.displaySingle(internshipList.get(i));
         }
 
         System.out.println("Choose the index of the internship you want to apply");
@@ -99,7 +100,7 @@ public class StudentUI {
         List<Application> appList = studentController.myApplications();
 
         for (int i = 0; i<appList.size(); i++){
-            DisplayableViewer.displaySingle(appList.get(i), i+1);
+            DisplayableViewer.displaySingle(appList.get(i));
         }
 
         System.out.println("Choose the index of the application you want to accept");
@@ -120,7 +121,7 @@ public class StudentUI {
         List<Application> appList = studentController.myApplications();
 
         for (int i = 0; i<appList.size(); i++){
-            DisplayableViewer.displaySingle(appList.get(i), i+1);
+            DisplayableViewer.displaySingle(appList.get(i));
         }
 
         System.out.println("Choose the index of the application you want to withdraw");
@@ -150,7 +151,7 @@ public class StudentUI {
         try{
             studentController.changePassword(oldPass, newPass, studentController.getStudent(),  confirmPass);
         }
-        catch (IllegalArgumentException e){
+        catch (Exception e){
             System.out.println("Error: " + e.getMessage());
         }
     }

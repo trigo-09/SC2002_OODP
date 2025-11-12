@@ -15,12 +15,10 @@ import util.exceptions.ObjectNotFoundException;
 public class InternshipService {
 
     private final IRepository repository;
-    private final RequestService requestService;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
-    public InternshipService(IRepository repository, RequestService requestService) {
+    public InternshipService(IRepository repository) {
         this.repository = repository;
-        this.requestService = requestService;
     }
     /**
     * @param title
@@ -58,7 +56,6 @@ public class InternshipService {
                 .companyName(companyName)
                 .build();
 
-        requestService.createInternshipRequest(createdBy, internship);
         repository.addInternship(createdBy, internship);
         return internship;
 	}
@@ -163,15 +160,26 @@ public class InternshipService {
         return repository.getInternshipsByCompany(rep.getCompanyName()).stream().filter(internshipOpportunity -> internshipOpportunity.getStatus() != InternStatus.REJECTED).count() < MAX_ACTIVE_INTERNSHIPS;
     }
 
-    public void addApplicationToInternship(Application app) {
+    public void addPendApplicationToInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         internshipOpportunity.addPendingApplication(app);
     }
 
+    public void addAcceptedApplicationToInternship(Application app) {
+        InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
+        internshipOpportunity.addApprovedapplication(app);
+        if(internshipOpportunity.getNumOfFilledSlots() == internshipOpportunity.getNumOfSlots()){
+            internshipOpportunity.setStatus(InternStatus.FILLED);
+        }
+    }
+
     public void removeApplicationFromInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
-        if(app.getStatus() == ApplicationStatus.APPROVED){
+        if(app.getStatus() == ApplicationStatus.ACCEPTED){
             internshipOpportunity.removeApprovedapplication(app);
+            if(isFilled(internshipOpportunity)){
+                internshipOpportunity.setStatus(InternStatus.APPROVED);
+            }
         }else {
             internshipOpportunity.removePendingApplication(app);
         }
