@@ -94,7 +94,7 @@ public class InternshipService {
 
 
     public void removeInternship(CompanyRep rep,String internshipId)  {
-        boolean removed =rep.getInternships().removeIf(i->i.getId().equals(internshipId) && i.getStatus() != InternStatus.PENDING && i.getStatus() != InternStatus.FILLED );
+        boolean removed =rep.getInternships().removeIf(i->i.getId().equals(internshipId) && i.getStatus() == InternStatus.PENDING && i.getStatus() == InternStatus.FILLED );
         if(!removed){
             throw new SecurityException("Unable to remove internship");
         }
