@@ -134,7 +134,7 @@ public class RepController extends UserController {
 	}
 
     public void deleteInternship(String internshipId) {
-        internshipService.removeInternship(rep, internshipId);
+        internshipService.removeInternship(rep.getId(), internshipId);
         request.deleteInternshipRequest(internshipId);
     }
 
