@@ -21,21 +21,32 @@ public class Welcome {
         System.out.println("\nWelcome to Internship Placement Management System!");
         System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Please enter your choice to continue");
-        InputHelper.printMenuItem(1,"Login");
-        InputHelper.printMenuItem(2,"Register");
-        InputHelper.printMenuItem(3,"Exit");
-        System.out.print("Enter your choice (1-3): ");
-        try {
-            while (true) {
-                int choice = InputHelper.readInt();
-                switch (choice) {
-                    case 1 -> LoginPageUI.login(controller);
-                    case 2 -> LoginPageUI.register(controller);
-                    case 3 -> controller.shutdown();
-                    default -> System.out.println("Invalid choice. Please try again.");
+        boolean run = true;
+        while (run) {
+            InputHelper.printMenuItem(1,"Login");
+            InputHelper.printMenuItem(2,"Register");
+            InputHelper.printMenuItem(3,"Exit");
+            System.out.print("Enter your choice (1-3): ");
+            int choice = InputHelper.readInt();
+            switch (choice) {
+                case 1 -> {
+                    try {
+                        LoginPageUI.login(controller);
+                    }catch (PageBackException e) {}
                 }
+                case 2 -> {
+                    try {
+                        LoginPageUI.register(controller);
+                    }catch (PageBackException e) {}
+                }
+                case 3 -> {
+                    try {
+                        controller.shutdown();
+                        run = false;
+                    }catch (PageBackException e) {}
+                }
+                default -> Welcome.welcome(controller);
             }
-        } catch (PageBackException e) {
         }
     }
 }
