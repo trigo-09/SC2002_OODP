@@ -138,11 +138,56 @@ public class RepController extends UserController {
         request.deleteInternshipRequest(internshipId);
     }
 
-    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException, SecurityException {
-        internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
+    public void editInternship(String internshipId,
+							   String title, 
+							   String description, 
+							   String preferredMajors, 
+							   LocalDate openingDate, 
+							   LocalDate closingDate,
+							   Integer slot, 
+							   InternshipLevel level) throws ObjectNotFoundException, SecurityException {
+		internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
     }
 
 	public CompanyRep getRep() {
 		return rep;
+	}
+
+	/**
+	 * Validates that the internship ID exists and belongs to the representative.
+	 * @param internshipId unique ID of the internship
+	 * @throws IllegalArgumentException if the internship ID is invalid
+	 * @throws SecurityException        if the internship does not belong to this representative
+	 */
+	public void validateInternshipId(String internshipId) {
+		InternshipOpportunity internship = internshipService.findInternshipById(internshipId);
+		if(internship == null) {
+			throw new IllegalArgumentException("Internship not found");
+		}
+		if(!internship.getCompanyName().equalsIgnoreCase(rep.getCompanyName())) {
+			throw new SecurityException("You do not have permission to manage this internship");
+		}
+	}
+
+	/**
+	 * Parses a string to an InternshipLevel enum.
+	 * Checks for valid input.
+	 * @param level The string representation of the internship level
+	 * @param allowNull Whether null values are allowed (for edit mode)
+	 * @return The corresponding {@link InternshipLevel} enum
+	 * @throws IllegalArgumentException if the input is invalid or null
+	 */
+	public InternshipLevel parseLevel(String level, boolean allowNull) {
+		return InternshipService.parseLevel(level, allowNull);
+	}
+
+	/**
+	 * Validates the number of slots for an internship.
+	 * @param slots The number of slots to validate
+	 * @param allowNull Whether null values are allowed (for edit mode)
+	 * @throws IllegalArgumentException if the number of slots is out of range or null when not allowed
+	 */
+	public void checkValidSlots(Integer slots, boolean allowNull) {
+		InternshipService.checkValidSlots(slots, allowNull);
 	}
 }
