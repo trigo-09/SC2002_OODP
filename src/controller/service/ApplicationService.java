@@ -140,8 +140,8 @@ public class ApplicationService {
         Application application = systemRepository.findApplication(appId);
         // Ensure application exists
         if (application == null) {
-        throw new ObjectNotFoundException("Invalid application ID: " + appId);
-    }
+            throw new ObjectNotFoundException("Invalid application ID: " + appId);
+        }
         InternshipOpportunity internship = internshipService.findInternshipById(application.getInternshipId());
         // Ensure internship exists
         if (internship == null) {
@@ -156,7 +156,10 @@ public class ApplicationService {
         if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
             throw new SecurityException("You can only review applications for your own internships.");
         }
-
+        // Ensure number of available slots if approving
+        if (approve && internshipService.isFilled(internship.getId())) {
+            throw new IllegalStateException("Cannot approve application; internship is already filled.");
+        }
         // Apply the decision
         application.changeApplicationStatus(
             approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED
