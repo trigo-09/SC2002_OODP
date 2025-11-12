@@ -23,6 +23,16 @@ public class StudentController extends UserController {
     private final ApplicationService applicationService;
     private final InternshipService internshipService;
 
+    /**
+     * Constructs student controller bound to a specific student
+     *
+     * @param auth                authentication service for login verification
+     * @param repo                shared repository for data persistence
+     * @param request             shared request service for handling requests
+     * @param internshipService   shared service for managing internships
+     * @param applicationService  shared service for managing applications
+     * @param student             the student representative associated with this controller
+     */
     public StudentController(AuthenticationService auth, IRepository repo, RequestService request, InternshipService internshipService, ApplicationService applicationService ,Student student) {
         super(auth, repo, request);
         this.student = student;
@@ -31,10 +41,22 @@ public class StudentController extends UserController {
         filter.setStatus(InternStatus.APPROVED);
     }
 
+    /**
+     * Launches the student UI interface after log in
+     *
+     * @param systemController       shared controller class which allows student to navigate back to main menu
+     */
     public void launch(SystemController systemController) {
         StudentUI studentUI = new StudentUI(systemController, this);
         studentUI.menu();
     }
+
+    /**
+     *  View all eligible internships with option to filter.
+     *
+     * @param filter  FilterCriteria object for filtering the internships
+     * @return        list of internships matching the filter criteria
+     */
 
 	public List<InternshipOpportunity> viewFilteredInternships(FilterCriteria filter) {
         List <InternshipOpportunity> eligibleInternships = internshipService.getEligibleInternships(student);
@@ -42,8 +64,11 @@ public class StudentController extends UserController {
 	}
 
 	/**
-	 * 
-	 * @param internshipId
+	 * Apply for an  internship.
+     *
+	 * @param internshipId                 Unique string id assigned to each Internship
+     * @throws IllegalArgumentException    if the internship ID is invalid
+     * @throws IllegalStateException       if the internship has already been filled or the student is not eligible to apply
 	 */
 	public void applyInternship(String internshipId)  throws IllegalArgumentException, SecurityException, MaxExceedException {
         if (internshipService.findInternshipById(internshipId) == null) {
@@ -58,15 +83,26 @@ public class StudentController extends UserController {
          Application app =applicationService.apply(student.getId(), internshipId);
          internshipService.addPendApplicationToInternship(app);
 	}
+
 	/**
+     * Accept an internship which has been offered to the student
 	 * 
-	 * @param applicationId
+	 * @param applicationId                 Unique string id assigned to each Application
 	 */
 	public void acceptPlacement(String applicationId) {
         applicationService.acceptApplication(student.getId(),applicationId);
 
 	}
 
+    /**
+     * Withdraw an application (can be pending/accepted)
+     *
+     * @param appId                         Unique string id assigned to each Application
+     * @param reason                        Reason provided by student for withdrawing
+     * @throws IllegalArgumentException     if inputs are not strings
+     * @throws SecurityException            if the application has already been withdrawn
+     * @throws ObjectNotFoundException      if the application id is invalid
+     */
     public void withdrawPlacement(String appId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException {
         Application application = applicationService.findApplication(appId);
         // Ensure application exists
@@ -85,7 +121,9 @@ public class StudentController extends UserController {
         }
     }
 
-
+    /**
+     * @return List of applications by a specific student
+     */
 	public List<Application> myApplications() {
         return student.getApplications();
 	}
