@@ -20,7 +20,7 @@ public class AttributeGetter {
     }
     public static String getPassword(String msg){
         System.out.print(msg);
-        return InputHelper.passwordReader();
+        return InputHelper.passwordReader().trim();
     }
 
 
