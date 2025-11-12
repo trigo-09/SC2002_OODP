@@ -4,10 +4,9 @@ import controller.database.*;
 import entity.application.*;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
+import java.util.List;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectNotFoundException;
-
-import java.util.List;
 
 /**
  * Service class for managing internship applications.
@@ -132,7 +131,7 @@ public class ApplicationService {
      * @param repId the ID of the company representative
      * @param appId the ID of the application to review
      * @param approve true to approve, false to reject
-     * @throws IllegalArgumentException if the application ID is invalid
+     * @throws ObjectNotFoundException  if the application ID is invalid
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */

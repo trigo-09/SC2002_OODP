@@ -10,11 +10,10 @@ import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
-import util.exceptions.MaxExceedException;
-import util.exceptions.ObjectNotFoundException;
-
 import java.time.LocalDate;
 import java.util.List;
+import util.exceptions.MaxExceedException;
+import util.exceptions.ObjectNotFoundException;
 
 
  /**
@@ -126,7 +125,7 @@ public class RepController extends UserController {
 	/**
 	 * Rejects an internship application.
 	 * @param appId application ID
-	 * @throws IllegalArgumentException if the application ID is invalid
+	 * @throws ObjectNotFoundException  if the application ID is invalid
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
@@ -142,4 +141,8 @@ public class RepController extends UserController {
     public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate,int slot, InternshipLevel level) throws ObjectNotFoundException, SecurityException {
         internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
     }
+
+	public CompanyRep getRep() {
+		return rep;
+	}
 }

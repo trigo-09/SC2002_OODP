@@ -4,13 +4,11 @@ import controller.control.user.RepController;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
-import util.exceptions.MaxExceedException;
-import util.exceptions.ObjectNotFoundException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import util.exceptions.*;
 import util.io.InputHelper;
 
  /**
@@ -38,6 +36,7 @@ public class RepMenuUI {
             System.out.println("\n=== Company Representative Menu ===");
             System.out.println("1) Create Internship Opportunity");
             System.out.println("2) Manage Your Internship Opportunities");
+            System.out.println("3) Change Password");
             System.out.println("0) Logout");
             System.out.print("Enter your choice: ");
             choice = readIntSafe();
@@ -45,6 +44,7 @@ public class RepMenuUI {
             switch (choice) {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI();
+                case 3 -> changePasswordUI();
                 case 0 -> System.out.println("Logging out...");
                 default -> System.out.println("Invalid choice. Please try again.");
             }
@@ -143,73 +143,105 @@ public class RepMenuUI {
             System.out.println("0) Back to Main Menu");
             System.out.println("1) Set Internship Visibility");
             System.out.println("2) Manage Applications for an Internship");
-            System.out.print("Enter your choice: ");
-            choice = readIntSafe();
+            
+
+            while(true) {
+                System.out.print("Enter your choice: ");
+                choice = readIntSafe();
+                if (internships.isEmpty() && (choice == 1 || choice == 2)) {
+                    System.out.println("No internships available to manage. Please choose another option.");
+                    continue;
+                }
+                if (choice < 0 || choice > 2) {
+                    System.out.println("Invalid choice. Please try again.");
+                    continue;
+                }
+                break;
+            }
 
             switch (choice) {
-                case 1 -> {
-                    System.out.print("Enter Internship ID: ");
-                    String internshipId = InputHelper.readLine();
-                    System.out.print("Set visibility (1 = visible, 0 = hidden): ");
-                    int visChoice = readIntSafe();
-                    boolean visibility = (visChoice == 1);
-
-                    try {
-                        repController.toggleVisibility(internshipId, visibility);
-                        System.out.println("Internship visibility updated to " + (visibility ? "VISIBLE" : "HIDDEN") + ".");
-                    } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
-                        System.out.println("Error updating internship visibility: " + e.getMessage());
-                    }
-                    pause();
-                }
-
-                case 2 -> {
-                    System.out.print("Enter Internship ID to manage applications: ");
-                    String internId = InputHelper.readLine();
-
-                    try {
-                        List<Application> applications = repController.getApplications(internId);
-                        if (applications.isEmpty()) {
-                            System.out.println("(No applications yet)");
-                            pause();
-                            continue;
-                        } else {
-                            applications.forEach(a -> System.out.println("- " + a));
-                        }
-                        pause();
-                    } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
-                        System.out.println("Error retrieving applications: " + e.getMessage());
-                    }
-
-                    System.out.print("1: Accept or Reject an Application, 0: back: ");
-                    int appChoice = readIntSafe();
-
-                    if (appChoice == 1) {
-                        System.out.print("Enter Application ID: ");
-                        String appId = InputHelper.readLine();
-                        System.out.print("Accept (1) or Reject (0) the application? ");
-                        int decision = readIntSafe();
-
-                        try {
-                            if (decision == 1) {
-                                repController.approveApp(appId);
-                                System.out.println("Application accepted.");
-                            } else {
-                                repController.rejectApp(appId);
-                                System.out.println("Application rejected.");
-                            }
-                        } catch (ObjectNotFoundException | IllegalStateException | SecurityException e) {
-                            System.out.println("Error approving/rejecting application: " + e.getMessage());
-                        }
-                        pause();
-                    }
-                }
-                case 0 -> System.out.println("Returning to main menu...");
-                default -> System.out.println("Invalid choice. Please try again.");
+                case 1 ->   handleVisibility(); 
+                case 2 ->   handleApplications(); 
+                case 0 ->   System.out.println("Returning to main menu...");
+                default ->  System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
+    private void changePasswordUI() {
+        System.out.print("Enter your current password: ");
+        String currentPassword = InputHelper.readLine();
+        System.out.print("Enter your new password: ");
+        String newPassword = InputHelper.readLine();
+        System.out.print("Confirm your new password: ");
+        String confirmPassword = InputHelper.readLine();
+
+        try {
+            repController.changePassword(currentPassword, newPassword, repController.getRep(), confirmPassword);
+            System.out.println("Password changed successfully.");
+        } catch (IllegalArgumentException | AuthenticationException e) {
+            System.out.println("Error changing password: " + e.getMessage());
+        }
+        pause();
+    }
+
+    private void handleVisibility() {
+        System.out.print("Enter Internship ID to change visibility: ");
+        String internId = InputHelper.readLine();
+        System.out.print("Set visibility to Visible (1) or Hidden (0): ");
+        int visChoice = readIntSafe();
+        boolean visibility = visChoice == 1;
+
+        try {
+            repController.toggleVisibility(internId, visibility);
+            System.out.println("Internship visibility updated successfully.");
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+            System.out.println("Error updating visibility: " + e.getMessage());
+        }
+        pause();
+    }
+
+    private void handleApplications() {
+        System.out.print("Enter Internship ID to manage applications: ");
+        String internId = InputHelper.readLine();
+
+        try {
+            List<Application> applications = repController.getApplications(internId);
+            if (applications.isEmpty()) {
+                System.out.println("(No applications yet)");
+                pause();
+                return;
+            } else {
+                applications.forEach(a -> System.out.println("- " + a));
+            }
+            pause();
+        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+            System.out.println("Error retrieving applications: " + e.getMessage());
+        }
+
+        System.out.print("1: Accept or Reject an Application, 0: back: ");
+        int appChoice = readIntSafe();
+
+        if (appChoice == 1) {
+            System.out.print("Enter Application ID: ");
+            String appId = InputHelper.readLine();
+            System.out.print("Accept (1) or Reject (0) the application? ");
+            int decision = readIntSafe();
+
+            try {
+                if (decision == 1) {
+                    repController.approveApp(appId);
+                    System.out.println("Application accepted.");
+                } else {
+                    repController.rejectApp(appId);
+                    System.out.println("Application rejected.");
+                }
+            } catch (ObjectNotFoundException | IllegalStateException | SecurityException e) {
+                System.out.println("Error approving/rejecting application: " + e.getMessage());
+            }
+            pause();
+        }
+    }
 
     /**
      * Reads an integer from user input safely, reprompting on invalid input.
