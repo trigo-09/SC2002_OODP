@@ -16,7 +16,7 @@ public class AttributeGetter {
 
     public static String getPassword(){
         System.out.print("Enter your password: ");
-        return InputHelper.passwordReader();
+        return InputHelper.passwordReader().trim();
     }
     public static String getPassword(String msg){
         System.out.print(msg);
