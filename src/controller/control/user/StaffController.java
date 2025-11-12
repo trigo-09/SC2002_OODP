@@ -72,7 +72,7 @@ public class StaffController extends UserController {
 	 */
 	public void approveWithdrawal(String app) throws Exception {
 		getRequest().acceptWithdrawalRequest(app);
-        internshipService.addApplicationToInternship(applicationService.findApplication(app));
+        internshipService.removeApplicationFromInternship(applicationService.findApplication(app));
 	}
 
 	/**
