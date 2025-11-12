@@ -9,6 +9,7 @@ import controller.service.InternshipService;
 import controller.service.RequestService;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
+import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
@@ -40,6 +41,7 @@ public class StudentController extends UserController {
         this.student = student;
         this.internshipService = internshipService;
         this.applicationService = applicationService;
+        filter.setStatus(InternStatus.APPROVED);
     }
 
     /**

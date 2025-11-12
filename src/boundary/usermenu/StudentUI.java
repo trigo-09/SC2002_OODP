@@ -11,6 +11,7 @@ import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
 import java.util.*;
 import util.FilterCriteria;
+import util.exceptions.PageBackException;
 import util.io.InputHelper;
 import util.io.ChangePage;
 
@@ -23,49 +24,63 @@ public class StudentUI {
         this.studentController = studentController;
     }
 
-    public void menu(){
+    public void menu() {
         ChangePage.changePage();
-        boolean stay = true;
-        while (stay){
-            System.out.println("\n=== Student Menu ===");
-            InputHelper.printMenuItem(1,"View / filter Eligible Internships");
-            InputHelper.printMenuItem(2,"Apply for Internship");
-            InputHelper.printMenuItem(3,"View Applications");
-            InputHelper.printMenuItem(4,"Accept Internship Placement");
-            InputHelper.printMenuItem(5,"Withdraw Internship Placement");
-            InputHelper.printMenuItem(6,"Change Password");
-            InputHelper.printMenuItem(7,"Change Filter Setting");
-            InputHelper.printMenuItem(8,"Logout");
-            System.out.print("Enter your choice (1-8): ");
 
-            int choice = InputHelper.readInt();
+        System.out.println("\n=== Student Menu ===");
+        InputHelper.printMenuItem(1, "View / filter Eligible Internships");
+        InputHelper.printMenuItem(2, "Apply for Internship");
+        InputHelper.printMenuItem(3, "View Applications");
+        InputHelper.printMenuItem(4, "Accept Internship Placement");
+        InputHelper.printMenuItem(5, "Withdraw Internship Placement");
+        InputHelper.printMenuItem(6, "Change Password");
+        InputHelper.printMenuItem(7, "Change Filter Setting");
+        InputHelper.printMenuItem(8, "Logout");
+        System.out.print("Enter your choice (1-8): ");
 
-            switch (choice){
-                case 1 -> handleViewInternships();
-                case 2 -> handleApplication();
-                case 3 -> handleViewApplications();
-                case 4 -> handleAcceptance();
-                case 5 -> handleWithdrawal();
-                case 6 -> handleChangePass();
-                case 7 -> handleChangeFilter();
-                case 8 -> {
-                    System.out.println("Logging out...");
-                    stay = false;
-                    systemController.mainMenu();
+        try {
+            while (true) {
+                int choice = InputHelper.readInt();
+                switch (choice) {
+                    case 1 -> handleViewInternships();
+                    case 2 -> handleApplication();
+                    case 3 -> handleViewApplications();
+                    case 4 -> handleAcceptance();
+                    case 5 -> handleWithdrawal();
+                    case 6 -> handleChangePass();
+                    case 7 -> handleChangeFilter();
+                    case 8 -> {
+                        System.out.println("Logging out...");
+                        systemController.mainMenu();
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
             }
+        }catch (PageBackException e){
+            menu();
         }
     }
-
     private void handleViewInternships(){
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
+        if (internshipList.isEmpty()) {
+            System.out.println("No internships found.");
+            InputHelper.pause();
+            throw new PageBackException();
+        }
         DisplayableViewer.displayList(internshipList);
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
     private void handleApplication(){
         System.out.println("Internship Application");
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
+
+        if  (internshipList.isEmpty()) {
+            System.out.println("No internships found.");
+            InputHelper.pause();
+            throw new PageBackException();
+        }
 
         for (int i = 0; i<internshipList.size(); i++){
             DisplayableViewer.displaySingle(internshipList.get(i));
@@ -77,7 +92,8 @@ public class StudentUI {
 
         if (index < 1 || index > internshipList.size()){
             System.out.println("Invalid index");
-            return;
+            InputHelper.pause();
+            throw new PageBackException();
         }
 
         InternshipOpportunity internship = internshipList.get(index-1);
@@ -86,18 +102,31 @@ public class StudentUI {
         }catch (Exception e){
             System.out.println("ERROR: "+e.getMessage());
         }
-        return;
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
     private void handleViewApplications(){
         System.out.println("Your Internship Applications");
         List<Application> appList = studentController.myApplications();
+        if (appList.isEmpty()) {
+            System.out.println("No applications found.");
+            InputHelper.pause();
+            throw new PageBackException();
+        }
         DisplayableViewer.displayList(appList);
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
     private void handleAcceptance(){
         System.out.println("Accept Internship Placement");
         List<Application> appList = studentController.myApplications();
+        if (appList.isEmpty()) {
+            System.out.println("No applications found.");
+            InputHelper.pause();
+            throw new PageBackException();
+        }
 
         for (int i = 0; i<appList.size(); i++){
             DisplayableViewer.displaySingle(appList.get(i));
@@ -109,10 +138,15 @@ public class StudentUI {
 
         if (index < 1 || index > appList.size()){
             System.out.println("Invalid index");
-            return;
+            InputHelper.pause();
+            throw new PageBackException();
         }
 
         Application app = appList.get(index-1);
+        studentController.acceptPlacement(app.getApplicationId());
+        System.out.println("Application has been accepted.");
+        InputHelper.pause();
+        throw new PageBackException();
         try {
             studentController.acceptPlacement(app.getApplicationId());
         }catch (Exception e){
@@ -125,6 +159,12 @@ public class StudentUI {
         System.out.println("Withdraw Internship Placement");
         List<Application> appList = studentController.myApplications();
 
+        if (appList.isEmpty()) {
+            System.out.println("No applications found.");
+            InputHelper.pause();
+            throw new PageBackException();
+        }
+
         for (int i = 0; i<appList.size(); i++){
             DisplayableViewer.displaySingle(appList.get(i));
         }
@@ -134,7 +174,8 @@ public class StudentUI {
 
         if (index < 1 || index > appList.size()){
             System.out.println("Invalid index");
-            return;
+            InputHelper.pause();
+            throw new PageBackException();
         }
 
         String reason = AttributeGetter.getString("Please enter your reason for withdrawal.");
@@ -145,7 +186,8 @@ public class StudentUI {
         }catch (Exception e){
             System.out.println("ERROR: "+e.getMessage());
         }
-        return;
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
     private void handleChangePass(){
@@ -159,6 +201,8 @@ public class StudentUI {
         catch (Exception e){
             System.out.println("Error: " + e.getMessage());
         }
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
     private void handleChangeFilter(){
@@ -166,30 +210,9 @@ public class StudentUI {
         FilterCriteria filter = studentController.getFilter();
 
         System.out.println("Current Filter Criteria: ");
-        System.out.println("- Status: " + filter.getStatus());
         System.out.println("- Level:  " + filter.getLevel());
         System.out.println("- Closing Date: " + filter.getClosingDate());
         System.out.println();
-
-        // i feel like student shld not be able to filter by status as they shld only see wats avail to them which is pending and filled
-        String statusRaw = AttributeGetter.getString("Status (PENDING/FILLED) [or CLEAR]: ");
-        if (!statusRaw.isBlank()){
-            String input = statusRaw.trim().toUpperCase();
-            if (input.equals("CLEAR")){
-                filter.setStatus(null);
-                System.out.println("-> Status filter cleared");
-            }
-            else{
-                try{
-                    InternStatus status = InternStatus.valueOf(input);
-                    filter.setStatus(status);
-                } catch(IllegalArgumentException e){
-                    System.out.println("!! Invalid status. Keeping previous");
-                }
-            }
-        }
-
-    
 
         String levelRaw = AttributeGetter.getString("Level contains [or CLEAR]: ");
         if (!levelRaw.isBlank()){
@@ -225,6 +248,8 @@ public class StudentUI {
         }
 
         System.out.println();
-        System.out.println("Filter updated. It will stay for this login session.");
+        System.out.println("Filter updated.");
+        InputHelper.pause();
+        throw new PageBackException();
     }
 }
