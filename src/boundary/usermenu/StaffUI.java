@@ -187,8 +187,6 @@ public class StaffUI {
 
             try {
                 staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
-                InputHelper.pause();
-                throw new PageBackException(); // return to main menu
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 boolean validChoice = false;
@@ -214,6 +212,8 @@ public class StaffUI {
                 }
             }
         }
+        InputHelper.pause();
+        throw new PageBackException(); // return to main menu
     }
 
 }
