@@ -15,12 +15,10 @@ import util.exceptions.ObjectNotFoundException;
 public class InternshipService {
 
     private final IRepository repository;
-    private final RequestService requestService;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
-    public InternshipService(IRepository repository, RequestService requestService) {
+    public InternshipService(IRepository repository) {
         this.repository = repository;
-        this.requestService = requestService;
     }
     /**
     * @param title
