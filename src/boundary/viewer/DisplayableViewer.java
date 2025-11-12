@@ -18,7 +18,7 @@ public class DisplayableViewer {
             System.out.println("Nothing is found");
             return;
         }
-        System.out.println(displayableList.getFirst().getSplitter());
+        System.out.println(displayableList.get(0).getSplitter());
         for (int i = 0; i < displayableList.size(); i++){
             System.out.printf("[%d]\n%s", i+1, displayableList.get(i));
             System.out.println(displayableList.get(i).getSplitter());
