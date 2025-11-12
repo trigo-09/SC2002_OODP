@@ -18,10 +18,13 @@ public class InputHelper {
 
     public static int readInt() {
         try {
-            return sc.nextInt();
-        }catch (Exception e){
+            int value = sc.nextInt();
+            sc.nextLine(); // consume the leftover newline
+            return value;
+        } catch (Exception e) {
             System.out.println("Invalid input");
             System.out.println("Please enter a valid integer");
+            sc.nextLine(); // clear bad input
             return readInt();
         }
     }
