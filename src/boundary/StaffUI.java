@@ -11,6 +11,7 @@ import entity.request.RegistrationRequest;
 import entity.request.Request;
 import entity.request.WithdrawalRequest;
 import util.FilterCriteria;
+import util.exceptions.AuthenticationException;
 import util.exceptions.ObjectNotFoundException;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
@@ -188,7 +189,7 @@ public class StaffUI {
 
         try {
             staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         InputHelper.pause();
