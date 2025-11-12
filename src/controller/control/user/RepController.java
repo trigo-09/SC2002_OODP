@@ -68,7 +68,7 @@ public class RepController extends UserController {
      * @throws IllegalStateException    if the representative has reached the internship limit
      * @throws IllegalArgumentException if any provided field is invalid
      */
-	public InternshipOpportunity createInternship(String title,
+	public void createInternship(String title,
                                                   String description,
                                                   InternshipLevel level,
                                                   String preferredMajors,
