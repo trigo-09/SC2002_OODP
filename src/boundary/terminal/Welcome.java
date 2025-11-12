@@ -47,7 +47,9 @@ public class Welcome {
                     try {
                         controller.shutdown();
                         run = false;
-                    }catch (PageBackException e) {}
+                    }catch (PageBackException e) {
+                        Welcome.welcome(controller);
+                    }
                 }
                 default -> Welcome.welcome(controller);
             }
