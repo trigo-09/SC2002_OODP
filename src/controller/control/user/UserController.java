@@ -30,7 +30,7 @@ public class UserController {
      * @param user
      * @param confirmPas
      * @throws Exception        throws exception when the confirmed pass do not match or the same password used again
-     * @throws AuthenticationException      throws exception when there is arror in auth.changePassword
+     * @throws AuthenticationException      throws exception when there is error in auth.changePassword
 	 */
 	public void changePassword(String oldPass, String newPass, User user, String confirmPas) throws Exception ,AuthenticationException {
         if (!newPass.equals(confirmPas)) {
