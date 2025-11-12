@@ -160,7 +160,7 @@ public class ApplicationService {
             throw new SecurityException("You can only review applications for your own internships.");
         }
         if (approve) {
-            if (internship.getStatus() == InternStatus.FILLED) {
+            if (internshipService.isFilled(application.getInternshipId())) {
                 throw new MaxExceedException("Max number of approved slot have be filles");
             }
 
