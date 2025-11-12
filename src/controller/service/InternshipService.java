@@ -58,7 +58,6 @@ public class InternshipService {
                 .companyName(companyName)
                 .build();
 
-        requestService.createInternshipRequest(createdBy, internship);
         repository.addInternship(createdBy, internship);
         return internship;
 	}
