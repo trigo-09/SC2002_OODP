@@ -17,21 +17,15 @@ import java.util.List;
 public class ApplicationService {
 
     private final IRepository systemRepository;
-    private final InternshipService internshipService;
-    private final RequestService requestService;
     private static final int MAX_ACTIVE_APPLICATIONS = 3;
 
     /**
      * Constructs the application service with required dependencies.
      *
      * @param systemRepository   shared repository for data persistence
-     * @param internshipService  shared service for managing internships
-     * @param requestService     shared service for handling requests
      */
-    public ApplicationService(IRepository systemRepository, InternshipService internshipService, RequestService requestService) {
+    public ApplicationService(IRepository systemRepository) {
         this.systemRepository = systemRepository;
-        this.internshipService = internshipService;
-        this.requestService = requestService;
     }
 
     /**
@@ -42,23 +36,14 @@ public class ApplicationService {
      * @throws IllegalArgumentException if the internship ID is invalid
      */
     public Application apply(String studentId, String internshipId) throws MaxExceedException {
-        if (systemRepository.findInternshipOpportunity(internshipId) == null) {
-            throw new IllegalArgumentException("Invalid internship ID: " + internshipId);
-        }
         // check eligibility
         Student user = (Student) systemRepository.findUser(studentId);
         if (user == null) throw new IllegalArgumentException("Invalid student ID: " + studentId);
         if (!(systemRepository.findUser(studentId) instanceof Student))
             throw new SecurityException("User is not a student: " + studentId);
 
-        if (!internshipService.isEligible(user, internshipId)) {
-            throw new IllegalStateException("Student is not eligible to apply for this internship.");
-        }
         else if (user.getNumOfApplications() >= MAX_ACTIVE_APPLICATIONS) {
             throw new MaxExceedException("Student already has " + MAX_ACTIVE_APPLICATIONS + " active applications");
-        }
-        else if (internshipService.isFilled(internshipId)) {
-            throw new IllegalStateException("Internship is already filled.");
         }
         else if (systemRepository.applicationByStudent(studentId).stream()
                 .anyMatch(app -> app.getInternshipId().equalsIgnoreCase(internshipId))) {
@@ -102,31 +87,7 @@ public class ApplicationService {
                 .forEach(app->app.changeApplicationStatus(ApplicationStatus.WITHDRAWN));
     }
 
-    /**
-     * Student can request withdrawal of an application.
-     * @param appId the ID of the application to withdraw
-     * @param reason the reason for withdrawal
-     * @throws IllegalArgumentException if the application ID is invalid
-     * @throws IllegalStateException    if the application is not in a withdrawable state
-     * @throws SecurityException        if the application does not belong to the student
-     */
-    public void requestWithdrawal(String studentId, String appId, String reason) throws ObjectNotFoundException {
-        Application application = findApplication(appId);
-        // Ensure application exists
-        if (application == null) {
-            throw new ObjectNotFoundException("Invalid application ID: " + appId);
-        }
-        // Security check: ensure the application belongs to the student
-        if (!application.getStudentId().equalsIgnoreCase(studentId)) {
-            throw new SecurityException("You can only withdraw your own applications.");
-        }
-        // Check if the application can be withdrawn
-        if (validStatusTransition(application.getStatus(), ApplicationStatus.WITHDRAWN)) {
-            requestService.createWithdrawalRequest(studentId, application, reason);
-        } else {
-            throw new IllegalStateException("Application is already " + application.getStatus() + " and cannot be withdrawn.");
-        }
-    }
+
 
     /**
      * Reviews an application submitted to an internship opportunity.
@@ -136,36 +97,19 @@ public class ApplicationService {
      * @throws IllegalArgumentException if the application ID is invalid
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
-     * @throws MaxExceedException       if the internship slots has be filled
      */
-    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException, MaxExceedException {
+    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException {
 
         Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
         throw new ObjectNotFoundException("Invalid application ID: " + appId);
     }
-        InternshipOpportunity internship = internshipService.findInternshipById(application.getInternshipId());
-        // Ensure internship exists
-        if (internship == null) {
-            throw new ObjectNotFoundException("Invalid internship ID associated with application: " + application.getInternshipId());
-        }
         // Ensure the application has not been reviewed already
         if (application.getStatus() != ApplicationStatus.PENDING) {
             throw new IllegalStateException("This application has already been reviewed.");
         }
-        
-        // Security check: ensure the internship belongs to the representative
-        if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
-            throw new SecurityException("You can only review applications for your own internships.");
-        }
-
-        if (approve) {
-            if (internshipService.isFilled(application.getInternshipId())) {
-                throw new MaxExceedException("Max number of approved slot have be filles");
-            }
-            application.changeApplicationStatus(ApplicationStatus.APPROVED);
-        }else {application.changeApplicationStatus(ApplicationStatus.REJECTED);}
+        application.changeApplicationStatus(approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED);
 
     }
 
@@ -181,7 +125,7 @@ public class ApplicationService {
 	 * @param next the desired new status
 	 * @return true if the transition is valid, false otherwise
 	 */
-    private boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
+    public boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
         return switch (current) {
             case PENDING -> next == ApplicationStatus.APPROVED || next == ApplicationStatus.REJECTED || next == ApplicationStatus.WITHDRAWN;
             case APPROVED -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;

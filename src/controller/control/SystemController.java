@@ -34,8 +34,8 @@ public class SystemController {
         repo = dataManager.load();
         auth = new AuthenticationService(repo);
         request = new RequestService(repo);
-        internshipService = new InternshipService(repo, request);
-        applicationService = new ApplicationService(repo, internshipService, request);
+        internshipService = new InternshipService(repo);
+        applicationService = new ApplicationService(repo);
 	}
 
 	public void start() {

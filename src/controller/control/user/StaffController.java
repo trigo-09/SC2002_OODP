@@ -24,8 +24,8 @@ public class StaffController extends UserController {
 	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,  CareerStaff staff){
 		super(auth, repository, requestService);
 		this.staff = staff;
-		this.internshipService = new InternshipService(repository, requestService);
-        this.applicationService = new ApplicationService(repository,internshipService,requestService);
+		this.internshipService = new InternshipService(repository);
+        this.applicationService = new ApplicationService(repository);
 
 	}
 
