@@ -23,12 +23,7 @@ public class InternshipVetRequest extends Request {
     }
 
     @Override
-    public String getSplitter() {
-        return "----------------------------------";
-    }
-
-    @Override
-    public String getString() {
+    public String toString() {
         return String.format(
                 "Request Type: Internship Vetting%n" +
                         "Request ID: %s%n" +

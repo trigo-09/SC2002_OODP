@@ -214,12 +214,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
     }
 
 	@Override
-	public String getSplitter() {
-		return "----------------------------------";
-	}
-
-	@Override
-	public String getString() {
+	public String toString() {
 		int approved = (approvedslots == null) ? 0 : approvedslots.size();
 		int pending = (pendingApplications == null) ? 0 : pendingApplications.size();
 		int open = Math.max(0, numOfSlots - approved);

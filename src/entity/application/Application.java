@@ -87,12 +87,7 @@ public class Application implements Serializable, Displayable {
 	}
 
 	@Override
-	public String getSplitter() {
-		return "----------------------------------";
-	}
-
-	@Override
-	public String getString() {
+	public String toString() {
 		return String.format(
 				"Application ID: %s%n" +
 						"Student ID: %s%n" +
@@ -103,22 +98,5 @@ public class Application implements Serializable, Displayable {
 				internshipId,
 				status
 		);
-	}
-
-
-	/**
-	 * Returns a string representation of this application, including
-	 * its ID, student ID, internship ID, and current status.
-	 *
-	 * @return a human-readable string representation of this application
-	 */
-	@Override
-	public String toString() {
-    	return "Application{" +
-			"id='" + applicationId + '\'' +
-			", student='" + studentId + '\'' +
-			", internship='" + internshipId + '\'' +
-			", status=" + status +
-			'}';
 	}
 }

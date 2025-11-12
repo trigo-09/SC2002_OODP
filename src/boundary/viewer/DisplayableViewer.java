@@ -7,9 +7,9 @@ import java.util.Objects;
 
 // Student, Requests, InternshipOpportunity, Application
 public class DisplayableViewer {
-    public static <T extends Displayable> void displaySingle(T displayable, int index) {
+    public static <T extends Displayable> void displaySingle(T displayable) {
         System.out.println(displayable.getSplitter());
-        System.out.printf("[%d]\n%s", index, displayable.getString());
+        System.out.printf("%s", displayable);
         System.out.println(displayable.getSplitter());
     }
 
@@ -19,9 +19,9 @@ public class DisplayableViewer {
             return;
         }
         System.out.println(displayableList.getFirst().getSplitter());
-        for (Displayable i : displayableList){
-            System.out.println(i.getString());
-            System.out.println(i.getSplitter());
+        for (int i = 0; i < displayableList.size(); i++){
+            System.out.printf("[%d]\n%s", i+1, displayableList.get(i));
+            System.out.println(displayableList.get(i).getSplitter());
         }
     }
 }
