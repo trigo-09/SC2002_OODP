@@ -188,7 +188,7 @@ public class StaffUI {
 
         try {
             staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         InputHelper.pause();
