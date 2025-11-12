@@ -169,7 +169,11 @@ public class InternshipService {
 
     public void removeApplicationFromInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
-        internshipOpportunity.addPendingApplication(app);
+        if(app.getStatus() == ApplicationStatus.APPROVED){
+            internshipOpportunity.removeApprovedapplication(app);
+        }else {
+            internshipOpportunity.removePendingApplication(app);
+        }
     }
 
 
