@@ -27,20 +27,20 @@ public class UserController {
 	 * 
 	 * @param oldPass
 	 * @param newPass
+     * @param user
+     * @param confirmPas
+     * @throws Exception        throws exception when the confirmed pass do not match or the same password used again
+     * @throws AuthenticationException      throws exception when there is arror in auth.changePassword
 	 */
-	public void changePassword(String oldPass, String newPass, User user, String confirmPas) {
+	public void changePassword(String oldPass, String newPass, User user, String confirmPas) throws Exception ,AuthenticationException {
         if (!newPass.equals(confirmPas)) {
             throw new IllegalArgumentException("New Password and confirmation do not match");
         }
         if (oldPass.equals(newPass)) {
             throw new IllegalArgumentException("New password cannot be the same as the old password");
         }
-        try {
-            auth.changePassword(user.getId(),oldPass,newPass);
-            System.out.println("Password has been changed successfully");
-        } catch (AuthenticationException e) {
-           System.out.println(e.getMessage());
-        }
+        auth.changePassword(user.getId(),oldPass,newPass);
+        System.out.println("Password has been changed successfully");
 	}
 
     public FilterCriteria getFilter() {return filter;}
