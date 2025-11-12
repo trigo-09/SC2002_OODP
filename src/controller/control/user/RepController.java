@@ -50,6 +50,9 @@ public class RepController extends UserController {
         this.applicationService = applicationService;
 	}
 
+     /**
+      * create nw RepMenuUI and launch its Menu
+      */
 	public void launch() {
     	new RepMenuUI(this).displayMenu();
 	}
@@ -76,7 +79,7 @@ public class RepController extends UserController {
                                                   LocalDate closingDate,
                                                   int numOfSlots) throws MaxExceedException, ObjectAlreadyExistsException{
         InternshipOpportunity internship =internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
-        request.createInternshipRequest(rep.getId(), internship);
+        requestService.createInternshipRequest(rep.getId(), internship);
     }
 	
 
@@ -85,7 +88,7 @@ public class RepController extends UserController {
      *
      * @param internshipId unique ID of the internship
      * @param visibility   true to make visible, false to hide
-     * @throws SecurityException        if the internship does not belong to this representative
+     * @throws SecurityException        if the internship does not belong to this representative or internship status is pending
      * @throws IllegalArgumentException if the internship ID is invalid
      * @throws IllegalStateException    if visibility cannot be changed due to current state
      */
@@ -132,9 +135,9 @@ public class RepController extends UserController {
             throw new SecurityException("You can only review applications for your own internships.");
         }
         if (internshipService.isFilled(internship)) {
-            throw new MaxExceedException("Max number of approved slot have be filles");
+            throw new MaxExceedException("Max number of approved slot have be filled");
         }
-		applicationService.reviewApplication(rep.getId(),appId, true);
+		applicationService.reviewApplication(appId, true);
         internshipService.addAcceptedApplicationToInternship(applicationService.findApplication(appId));
 	}
 
@@ -146,12 +149,12 @@ public class RepController extends UserController {
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
 	public void rejectApp(String appId) throws ObjectNotFoundException, MaxExceedException {
-		applicationService.reviewApplication(rep.getId(), appId, false);
+		applicationService.reviewApplication(appId, false);
 	}
 
     public void deleteInternship(String internshipId) throws ObjectNotFoundException{
         internshipService.removeInternship(rep.getId(), internshipId);
-        request.deleteInternshipRequest(internshipId);
+        requestService.deleteInternshipRequest(internshipId);
     }
 
     public void editInternship(String internshipId,

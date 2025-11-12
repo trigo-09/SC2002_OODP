@@ -13,17 +13,28 @@ import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
 import util.FilterCriteria;
-import util.exceptions.AlreadyApprovedException;
-import util.exceptions.MaxExceedException;
-import util.exceptions.ObjectAlreadyExistsException;
-import util.exceptions.ObjectNotFoundException;
+import util.exceptions.*;
 
+/**
+ * controller class for student
+ * act as layer between user and services
+ * allow student to view internship, apply and withdraw from internship
+ */
 public class StudentController extends UserController {
 
 	private final Student student;
     private final ApplicationService applicationService;
     private final InternshipService internshipService;
 
+    /**
+     * constructor for student controller
+     * @param auth authentication service
+     * @param repo repository service
+     * @param request request service
+     * @param internshipService internship service
+     * @param applicationService application service
+     * @param student student
+     */
     public StudentController(AuthenticationService auth, IRepository repo, RequestService request, InternshipService internshipService, ApplicationService applicationService ,Student student) {
         super(auth, repo, request);
         this.student = student;
@@ -31,23 +42,35 @@ public class StudentController extends UserController {
         this.applicationService = applicationService;
     }
 
+    /**
+     * create student UI and launch the menu of student UI
+     * @param systemController systemController
+     */
     public void launch(SystemController systemController) {
         StudentUI studentUI = new StudentUI(systemController, this);
         studentUI.menu();
     }
 
+    /**
+     * view filtered internships for student
+     * @param filter filter
+     * @return list of internships
+     */
 	public List<InternshipOpportunity> viewFilteredInternships(FilterCriteria filter) {
         List <InternshipOpportunity> eligibleInternships = internshipService.getEligibleInternships(student);
         return internshipService.getFilteredInternship(eligibleInternships, filter);
 	}
 
 	/**
-	 * 
-	 * @param internshipId
+	 * apply for internship
+	 * @param internshipId internship id
+     * @throws ObjectNotFoundException if internship not found
+     * @throws IllegalStateException if the student not eligible for internship
+     * @throws IllegalStateException if there are no slot left in internship
 	 */
-	public void applyInternship(String internshipId)  throws IllegalArgumentException, SecurityException, MaxExceedException {
+	public void applyInternship(String internshipId)  throws ObjectNotFoundException, MaxExceedException, UserNotFoundException {
         if (internshipService.findInternshipById(internshipId) == null) {
-            throw new IllegalArgumentException("Invalid internship ID: " + internshipId);
+            throw new ObjectNotFoundException("Invalid internship ID: " + internshipId);
         }
         if (!internshipService.isEligible(student, internshipId)) {
             throw new IllegalStateException("Student is not eligible to apply for this internship.");
@@ -58,16 +81,26 @@ public class StudentController extends UserController {
          Application app =applicationService.apply(student.getId(), internshipId);
          internshipService.addPendApplicationToInternship(app);
 	}
+
 	/**
-	 * 
-	 * @param applicationId
+	 *accept approved application for internship
+	 * @param applicationId application ID
+     * @throws ObjectNotFoundException if application cannot be found
 	 */
-	public void acceptPlacement(String applicationId) {
+	public void acceptPlacement(String applicationId) throws ObjectNotFoundException{
         applicationService.acceptApplication(student.getId(),applicationId);
 
 	}
 
-    public void withdrawPlacement(String appId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException, ObjectAlreadyExistsException, AlreadyApprovedException {
+    /**
+     * request withdrawal of application
+     * @param appId application ID
+     * @param reason reason for withdrawal
+     * @throws SecurityException if illegal access of other's application
+     * @throws ObjectNotFoundException if application cannot be found
+     * @throws ObjectAlreadyExistsException if there is already a withdrawal request
+     */
+    public void withdrawPlacement(String appId, String reason) throws IllegalStateException,SecurityException, ObjectNotFoundException, ObjectAlreadyExistsException{
         Application application = applicationService.findApplication(appId);
         // Ensure application exists
         if (application == null) {
@@ -79,17 +112,24 @@ public class StudentController extends UserController {
         }
         // Check if the application can be withdrawn
         if (applicationService.validStatusTransition(application.getStatus(), ApplicationStatus.WITHDRAWN)) {
-            request.createWithdrawalRequest(student.getId(), application, reason);
+            requestService.createWithdrawalRequest(student.getId(), application, reason);
         } else {
             throw new IllegalStateException("Application is already " + application.getStatus() + " and cannot be withdrawn.");
         }
     }
 
-
+    /**
+     *
+     * @return list of student's application
+     */
 	public List<Application> myApplications() {
         return student.getApplications();
 	}
 
+    /**
+     *
+     * @return return student
+     */
     public Student getStudent(){
         return student;
     }

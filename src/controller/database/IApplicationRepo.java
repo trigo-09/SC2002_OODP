@@ -4,42 +4,30 @@ import entity.application.Application;
 
 import java.util.List;
 
+/**
+ * contain methods related to application for repository to implement
+ */
 public interface IApplicationRepo {
 
-    List<Application> getAllApplications();
-
     /**
-     *
+     * find application using its ID
      * @param applicationId
-     *
      */
     Application findApplication(String applicationId);
 
     /**
-     *
+     * add application to student's application list and internship's list
      * @param studentId
      * @param app
      */
     void addApplication(String studentId, Application app);
 
     /**
-     *
-     * @param studentId
-     * @param applicationId
-     */
-    void deleteApplication(String studentId, String applicationId);
-
-    /**
-     *
+     * get all application of student
      * @param studentId
      */
     List<Application> applicationByStudent(String studentId);
 
-    /**
-     *
-     * @param internId
-     */
-    List<Application> applicationForInternship(String internId);
 
 
 }

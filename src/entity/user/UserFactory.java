@@ -13,7 +13,7 @@ public class UserFactory {
 	 * @param id
 	 * @param name
 	 * @param Password
-	 * @param attributes
+	 * @param attributes containes other paramter required for users
 	 */
 	public static User createUser(UserRole role, String id, String name, String Password, Map<String, String> attributes) {
         if(attributes == null || attributes.isEmpty()) {throw new IllegalArgumentException("attributes is null or empty");}

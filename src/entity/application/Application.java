@@ -61,31 +61,16 @@ public class Application implements Serializable, Displayable {
 	/**
 	 * Changes the status of this application to the specified new status.
 	 * @param newStatus the new status to set
-	 * @throws IllegalStateException if the status transition is invalid
 	 */
 	public void changeApplicationStatus(ApplicationStatus newStatus) {
-		if (!validStatusTransition(this.status, newStatus)) {
-			throw new IllegalStateException("Invalid status transition from " + this.status + " to " + newStatus);
-		}
 		this.status = newStatus;
 	}
 
-	/**
-	 * Helper method to validate status transitions.
-	 * @param current the current status
-	 * @param next the desired new status
-	 * @return true if the transition is valid, false otherwise
-	 */
-	private boolean validStatusTransition(ApplicationStatus current, ApplicationStatus next) {
-		return switch (current) {
-			case PENDING -> next == ApplicationStatus.APPROVED || next == ApplicationStatus.REJECTED || next == ApplicationStatus.WITHDRAWN;
-			case APPROVED -> next == ApplicationStatus.ACCEPTED || next == ApplicationStatus.WITHDRAWN;
-			case ACCEPTED -> next == ApplicationStatus.WITHDRAWN;
-			case REJECTED, WITHDRAWN -> false;
-			default -> false;
-		};
-	}
 
+    /**
+     *
+     * @return String for displaying
+     */
 	@Override
 	public String toString() {
 		return String.format(

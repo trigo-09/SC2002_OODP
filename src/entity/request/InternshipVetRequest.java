@@ -7,22 +7,41 @@ import entity.internship.InternshipOpportunity;
 public class InternshipVetRequest extends Request {
     private final InternshipOpportunity internship;
 
+    /**
+     * constructor for InternshipVetRequest
+     * @param internship
+     * @param requesterId
+     */
     public InternshipVetRequest(InternshipOpportunity internship, String requesterId) {
         super(requesterId);
         this.internship = internship;
     }
 
+    /**
+     *
+     * @return internship
+     */
     public InternshipOpportunity getInternship() { return internship; }
 
-    public void approve(IRepository repo) {
+    /**
+     * set internship to APPROVED and on visibility
+     */
+    public void approve() {
         internship.setStatus(InternStatus.APPROVED);
         internship.setVisibility(true);
     }
 
-    public void reject(IRepository repo) {
+    /**
+     * set internship to REJECTED
+     */
+    public void reject() {
         internship.setStatus(InternStatus.REJECTED);
     }
 
+    /**
+     *
+     * @return string for displaying
+     */
     @Override
     public String toString() {
         return String.format(

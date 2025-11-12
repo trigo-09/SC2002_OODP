@@ -6,13 +6,13 @@ import java.util.*;
 public class CompanyRep extends User {
 
 	private String department;
-	private String companyName;
+	private final String companyName;
 	private String position;
 	private RepStatus status;
 	private final List<InternshipOpportunity> internships;
 
     /**
-     *
+     * constructor of Companyrep
      * @param name
      * @param id
      * @param pass
@@ -27,71 +27,75 @@ public class CompanyRep extends User {
         this.position = position;
         internships = new ArrayList<>();
         this.status = RepStatus.PENDING;
-//        throw new UnsupportedOperationException();
     }
 
+    /**
+     *
+     * @return department of rep
+     */
 	public String getDepartment() {
         return department;
-//		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param department
-	 */
-	public void setDepartment(String department) {
-        this.department = department;
-//		throw new UnsupportedOperationException();
-	}
-
+    /**
+     *
+     * @return get company name
+     */
 	public String getCompanyName() {
         return companyName;
-//		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param companyName
-	 */
-	public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-//		throw new UnsupportedOperationException();
-	}
 
+    /**
+     *
+     * @return position of rep
+     */
 	public String getPosition() {
         return position;
-//		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param position
-	 */
-	public void setPosition(String position) {
-        this.position = position;
-//		throw new UnsupportedOperationException();
-	}
-
-
+    /**
+     *
+     * @return account status
+     */
 	public RepStatus getStatus() {
         return this.status;
 	}
 
 	/**
-	 * 
+	 * update status of account
 	 * @param status
 	 */
 	public void setStatus(RepStatus status) {
         this.status = status;
 	}
 
+    /**
+     * set department of rep
+     * @param department
+     */
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
+    /**
+     * set position of rep
+     * @param position
+     */
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    /**
+     *
+     * @return all the internship of rep
+     */
     public List<InternshipOpportunity> getInternships() {
         return new ArrayList<>(internships);
     }
 
     /**
-     *
+     * add new internship to list
      * @param internship
      */
     public void addInternship(InternshipOpportunity internship) {
@@ -99,20 +103,11 @@ public class CompanyRep extends User {
     }
 
     /**
-     *
+     * remove internship from list
+     * @param internship
      */
     public void removeInternship(InternshipOpportunity internship) {
         this.internships.remove(internship);
-    }
-
-    /**
-     * Only internship that are pending,approved and filled need to be count
-     *
-     */
-    public int getNumOfInternships() {
-        return (int)internships.stream()
-                .filter(internship-> internship.getStatus() != InternStatus.REJECTED)
-                .count();
     }
 
 }

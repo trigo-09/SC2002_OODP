@@ -66,4 +66,12 @@ public class GraphicLogo {
      * A red string with red color.
      */
     public static final String NEW = "\u001B[31m" + "NEW!" + "\u001B[0m"; // might delete it later
+
+    public static final String Random = "\n" +
+            "╭━━┳━━━┳━╮╭━┳━━━╮\n" +
+            "╰┫┣┫╭━╮┃┃╰╯┃┃╭━╮┃\n" +
+            "╱┃┃┃╰━╯┃╭╮╭╮┃╰━━╮\n" +
+            "╱┃┃┃╭━━┫┃┃┃┃┣━━╮┃\n" +
+            "╭┫┣┫┃╱╱┃┃┃┃┃┃╰━╯┃\n" +
+            "╰━━┻╯╱╱╰╯╰╯╰┻━━━╯";
 }

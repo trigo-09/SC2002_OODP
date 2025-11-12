@@ -2,13 +2,13 @@ package entity.internship;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import entity.Displayable;
 import entity.application.Application;
-
-
 import java.util.*;
 
+/**
+ * Each rep contains internshipOpportunity and this class help create the object
+ */
 public class InternshipOpportunity implements Serializable, Displayable {
 
 	private final String id;
@@ -26,6 +26,20 @@ public class InternshipOpportunity implements Serializable, Displayable {
 	private String createdBy;
 	private List<Application> approvedslots;
 
+    /**
+     * Constructor of internships with status set to PENDING
+     * @param id
+     * @param companyName
+     * @param title
+     * @param description
+     * @param level
+     * @param preferredMajors
+     * @param openingDate
+     * @param closingDate
+     * @param numOfSlots
+     * @param status
+     * @param createdBy
+     */
 	public InternshipOpportunity(String id,String companyName, String title, String description, InternshipLevel level,
 								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots, InternStatus status,
 								 String createdBy){
@@ -45,34 +59,50 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.approvedslots = new ArrayList<>();
 	}
 
+    /**
+     *
+     * @return ID of internship
+     */
 	public String getId(){
 		return this.id;
 	}
 
+    /**
+     *
+     * @return company name
+     */
 	public String getCompanyName() {
 		return this.companyName;
 	}
 
 	/**
 	 * 
-	 * @param companyName internship's company name
+	 * @param companyName  set internship's company name
 	 */
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
 
+    /**
+     *
+     * @return title of internship
+     */
 	public String getTitle() {
 		return this.title;
 	}
 
 	/**
 	 * 
-	 * @param title internship's title
+	 * @param title set internship's title
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+    /**
+     *
+     * @return description of internship
+     */
 	public String getDescription() {
 		return this.description;
 	}
@@ -85,6 +115,10 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.description = description;
 	}
 
+    /**
+     *
+     * @return internship level
+     */
 	public InternshipLevel getLevel() {
 		return this.level;
 	}
@@ -97,6 +131,10 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.level = level;
 	}
 
+    /**
+     *
+     * @return preferred major of internship
+     */
 	public String getPreferredMajors() {
 		return this.preferredMajors;
 	}
@@ -109,6 +147,10 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.preferredMajors = preferredMajors;
 	}
 
+    /**
+     *
+     * @return opening date
+     */
 	public LocalDate getOpeningDate() {
 		return this.openingDate;
 	}
@@ -121,6 +163,10 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.openingDate = openingDate;
 	}
 
+    /**
+     *
+     * @return closing date of internship
+     */
 	public LocalDate getClosingDate() {
 		return this.closingDate;
 	}
@@ -133,6 +179,10 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.closingDate = closingDate;
 	}
 
+    /**
+     *
+     * @return number of approved application slots
+     */
 	public int getNumOfSlots(){
 		return this.numOfSlots;
 	}
@@ -145,76 +195,115 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		this.numOfSlots = numOfSlots;
 	}
 
+    /**
+     *
+     * @return list of pending application
+     */
 	public List<Application> getPendingApplications() {
 		return new ArrayList<>(this.pendingApplications);
 	}
 
-
-
-
+    /**
+     * add application into pending list
+     * @param slot
+     */
     public void addPendingApplication(Application slot){
         this.pendingApplications.add(slot);
     }
 
+    /**
+     * remove application from pending list
+     * @param slot
+     */
     public void removePendingApplication(Application slot){
         this.pendingApplications.remove(slot);
     }
 
-
+    /**
+     *
+     * @return status of internship
+     */
 	public InternStatus getStatus() {
 		return this.status;
 	}
 
 	/**
 	 *
-	 * @param status internship's status
+	 * @param status set internship's status
 	 */
 	public void setStatus(InternStatus status) {
 		this.status = status;
 	}
 
+    /**
+     *
+     * @return visibility of internship
+     */
 	public Boolean getVisibility() {
 		return this.visibility;
 	}
 
-
 	/**
 	 * 
-	 * @param visibility internship's visibility
+	 * @param visibility set internship's visibility
 	 */
 	public void setVisibility(Boolean visibility) {
 		this.visibility = visibility;
 	}
 
+    /**
+     *
+     * @return rep' ID
+     */
 	public String getCreatedBy() {
 		return this.createdBy;
 	}
+
 	/**
 	 *
-	 * @param creator the comanyrep that created the internship
+	 * @param creator the company rep that created the internship
 	 */
 	public void setCreatedBy(String creator){
 		this.createdBy = creator;
 	}
 
+    /**
+     *
+     * @return approvedSlots
+     */
 	public List<Application>  getApprovedSlots(){
 		return this.approvedslots;
 	}
 
-
+    /**
+     * move application from pending to approved list
+     * @param application
+     */
     public void addApprovedapplication(Application application){
         this.pendingApplications.remove(application);
         this.approvedslots.add(application);
     }
 
+    /**
+     * remove app from approved list
+     * @param application
+     */
     public void removeApprovedapplication(Application application){
         this.approvedslots.remove(application);
     }
 
+    /**
+     *
+     * @return number of filled up slots
+     */
     public int getNumOfFilledSlots(){
         return approvedslots.size();
     }
 
+    /**
+     *
+     * @return String for displaying
+     */
 	@Override
 	public String toString() {
 		int approved = (approvedslots == null) ? 0 : approvedslots.size();

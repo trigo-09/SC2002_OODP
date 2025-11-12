@@ -23,27 +23,42 @@ public abstract class User implements Serializable {
         this.role = role;
     }
 
-
+    /**
+     *
+     * @return hashed password
+     */
     public String getHashedPassword() {
         return this.hashedPassword;
     }
 
+    /**
+     *
+     * @return type of user
+     */
     public UserRole getRole() {
         return this.role;
     }
 
     /**
-     *
+     * set new hashedpassword
      * @param pass
      */
     public void setHashedPassword(String pass) {
         this.hashedPassword = pass;
     }
 
+    /**
+     *
+     * @return user's name
+     */
     public String getUserName() {
         return this.name;
     }
 
+    /**
+     *
+     * @return user's ID
+     */
     public String getId() {
         return this.id;
     }

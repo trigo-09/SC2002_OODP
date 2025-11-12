@@ -11,24 +11,40 @@ public class Student extends User implements Displayable {
 	private int year;
 	private String major;
 
+    /**
+     *
+     * @return year of student
+     */
 	public int getYear() {
 		return this.year;
 	}
 
+    /**
+     *
+     * @param year set the year of student
+     */
 	public void setYear(int year) {
 		this.year = year;
 	}
 
+    /**
+     *
+     * @return major of student
+     */
 	public String getMajor() {
 		return this.major;
 	}
 
+    /**
+     *
+     * @param major set the major of student
+     */
 	public void setMajor(String major) {
 		this.major = major;
 	}
 
 	/**
-	 * 
+	 * constructor of student
 	 * @param name
 	 * @param id
 	 * @param pass
@@ -41,25 +57,28 @@ public class Student extends User implements Displayable {
         this.major = major;
         this.applications = new ArrayList<>();
 		// TODO - implement Student.Student
-//		throw new UnsupportedOperationException();
 	}
 
+    /**
+     *
+     * @param app add new application to list
+     */
 	public void addApplication(Application app) {
         applications.add(app);
-		//throw new UnsupportedOperationException();
 	}
 
-	public void withdrawApplication(String applicationId) {// this only happen after the request is accepted by rep
-        applications.stream()
-                .filter(app -> app.getApplicationId().equals(applicationId))
-                .findFirst()
-                .ifPresent(app -> app.changeApplicationStatus(ApplicationStatus.WITHDRAWN));
-	}
-
+    /**
+     *
+     * @return list of applications of student
+     */
     public List<Application> getApplications() {
         return applications;
     }
 
+    /**
+     *
+     * @return number of valid application meaning they are in pending,approved,accepted state
+     */
     public int getNumOfApplications() {
         return (int)applications.stream()
                 .filter(application -> application.getStatus() != ApplicationStatus.WITHDRAWN && application.getStatus() != ApplicationStatus.REJECTED)
@@ -67,6 +86,10 @@ public class Student extends User implements Displayable {
     }
 
 
+    /**
+     *
+     * @return toString for printing
+     */
 	@Override
 	public String toString() {
 		return String.format(

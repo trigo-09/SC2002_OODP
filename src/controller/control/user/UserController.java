@@ -12,25 +12,30 @@ public class UserController {
 	protected AuthenticationService auth;
     protected FilterCriteria filter;
     protected IRepository repo;
-    protected RequestService request;
+    protected RequestService requestService;
 
-
-
-    public UserController(AuthenticationService auth, IRepository repo, RequestService request) {
+    /**
+     * Constructor for abstract class user controller
+     * @param auth authentication service
+     * @param repo system repository
+     * @param requestService request service
+     */
+    public UserController(AuthenticationService auth, IRepository repo, RequestService requestService) {
         filter = new FilterCriteria();
         this.auth = auth;
         this.repo = repo;
-        this.request = request;
+        this.requestService = requestService;
     }
 
 	/**
-	 * 
+     *
+	 * call authentication service to change password
 	 * @param oldPass
 	 * @param newPass
      * @param user
      * @param confirmPas
-     * @throws Exception        throws exception when the confirmed pass do not match or the same password used again
-     * @throws AuthenticationException      throws exception when there is error in auth.changePassword
+     * @throws Exception if the confirmed pass do not match or the same password used again
+     * @throws AuthenticationException if there is error in auth.changePassword
 	 */
 	public void changePassword(String oldPass, String newPass, User user, String confirmPas) throws Exception ,AuthenticationException {
         if (!newPass.equals(confirmPas)) {
@@ -43,9 +48,28 @@ public class UserController {
         System.out.println("Password has been changed successfully");
 	}
 
+    /**
+     *
+     * @return filter
+     */
     public FilterCriteria getFilter() {return filter;}
+
+    /**
+     *
+     * @return authentication service
+     */
     public AuthenticationService getAuth() {return auth;}
+
+    /**
+     *
+     * @return repository
+     */
     public IRepository getRepo() {return repo;}
-    public RequestService getRequest() {return request;}
+
+    /**
+     *
+     * @return request service
+     */
+    public RequestService getRequestService() {return requestService;}
 
 }

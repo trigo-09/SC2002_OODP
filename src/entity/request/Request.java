@@ -10,27 +10,39 @@ public abstract class Request implements Serializable, Displayable {
     private final String requesterId;
     private final String requestId;
 
-    public Request(String requestId) {
+    /**
+     * constructor for request abstract class
+     * @param requesterId
+     */
+    public Request(String requesterId) {
         this.requestId = UUID.randomUUID().toString();
-        this.requesterId = requestId;
+        this.requesterId = requesterId;
     }
 
+    /**
+     *
+     * @return id of request
+     */
     public String getId(){
         return this.requestId;
     }
 
-
+    /**
+     *
+     * @return id of requestor
+     */
     public String getRequesterId(){
         return this.requesterId;
     }
 
+    /**
+     * abstract approve method
+     */
+    public abstract void approve();
 
-    public void approve(){
-        System.out.println("please code");
-    };
-
-    public void reject(){
-        System.out.println("please code");
-    };
+    /**
+     * abstract reject method
+     */
+    public abstract void reject();
 
 }

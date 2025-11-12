@@ -9,7 +9,10 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Stream;
 
-
+/**
+ * Class serve as Data base and contains all the system's data
+ * serve as single source of truth
+ */
 public class SystemRepository implements IRepository, Serializable {
 
     @Serial
@@ -21,9 +24,8 @@ public class SystemRepository implements IRepository, Serializable {
     private final Map<String, Request> requests = new HashMap<>();
 
 	/**
-	 * 
 	 * @param app
-     * add application to both student and internship object
+     * add application to both student and internship o
 	 */
 	public void addApplication(String studentId,Application app) {
         students.get(studentId.toLowerCase()).addApplication(app);
@@ -31,7 +33,7 @@ public class SystemRepository implements IRepository, Serializable {
 	}
 
 	/**
-	 * 
+	 *add staff to staff map
 	 * @param staff
 	 */
 	public void addCareerStaff(CareerStaff staff) {
@@ -39,7 +41,7 @@ public class SystemRepository implements IRepository, Serializable {
 	}
 
 	/**
-	 * 
+	 * add internship to rep's list
 	 * @param intern
 	 */
 	public void addInternship(String repId,InternshipOpportunity intern) {
@@ -47,7 +49,7 @@ public class SystemRepository implements IRepository, Serializable {
 	}
 
 	/**
-	 * 
+	 * add student to student hash map
 	 * @param student
 	 */
 	public void addStudent(Student student) {
@@ -116,19 +118,6 @@ public class SystemRepository implements IRepository, Serializable {
 
 	/**
 	 * 
-	 * @param internId
-	 */
-	public List<Application> applicationForInternship(String internId) {
-        return approvedReps.values().stream()
-                .flatMap(rep -> rep.getInternships().stream())
-                .filter(internship -> internship.getId().equals(internId.toLowerCase()))
-                .findFirst()
-                .map(InternshipOpportunity::getPendingApplications)
-                .orElseGet(Collections::emptyList);
-	}
-
-	/**
-	 * 
 	 * @param repId
 	 */
 	public void approveCompanyRep(String repId) {
@@ -140,13 +129,11 @@ public class SystemRepository implements IRepository, Serializable {
 
 	}
 
-    public void approveCompanyRep(CompanyRep rep) {
-        if(rep != null) {
-            pendingReps.remove(rep.getId().toLowerCase());
-            approvedReps.put(rep.getId().toLowerCase(), rep);
-        }
-    }
-
+    /**
+     *
+     * @param requestId
+     * @return
+     */
     public Request getRequest(String requestId) {
         return requests.get(requestId.toLowerCase());
     }
@@ -155,7 +142,6 @@ public class SystemRepository implements IRepository, Serializable {
 	 * 
 	 * @param userId
 	 */
-    // might change it
 	public User findUser(String userId) {
         return Stream.of(students, careerStaff, approvedReps, pendingReps)
                 .map(m -> m.get(userId.toLowerCase()))
@@ -164,6 +150,11 @@ public class SystemRepository implements IRepository, Serializable {
                 .orElse(null);
 	}
 
+    /**
+     *
+     * @param internshipId
+     * @return
+     */
     public InternshipOpportunity findInternshipOpportunity(String internshipId) {
         return approvedReps.values().stream()
                 .flatMap(c -> c.getInternships().stream())
@@ -187,49 +178,60 @@ public class SystemRepository implements IRepository, Serializable {
             .orElseThrow(() -> new IllegalArgumentException("Application not found: " + applicationId));
     }
 
-
-	public List<Application> getAllApplications() {
-        return students.values().stream()
-                .flatMap(s -> s.getApplications().stream())
-                .toList();
-	}
-
-
+    /**
+     *
+     * @return
+     */
 	public Map<String, CompanyRep> getApprovedReps() {
-		return this.approvedReps;
+		return Collections.unmodifiableMap(approvedReps);
 	}
 
+    /**
+     *
+     * @return
+     */
 	public Map<String, CareerStaff> getCareerStaff() {
-		return this.careerStaff;
+		return Collections.unmodifiableMap(careerStaff);
 	}
 
+    /**
+     *
+     * @return
+     */
 	public List<InternshipOpportunity> getAllInternships() {
 		return approvedReps.values().stream()
                 .flatMap(rep->rep.getInternships().stream())
                 .toList();
 	}
 
+    /**
+     *
+     * @return
+     */
 	public Map<String, CompanyRep> getPendingReps() {
-		return this.pendingReps;
+		return Collections.unmodifiableMap(pendingReps);
 	}
 
+    /**
+     *
+     * @return
+     */
 	public Map<String, Student> getStudents() {
-		return this.students;
+		return Collections.unmodifiableMap(students);
 	}
 
+    /**
+     *
+     * @param type
+     * @return
+     * @param <T>
+     */
     public <T extends Request> List<T> getAllRequests(Class<T> type) {
         return requests.values().stream()
                 .filter(type::isInstance)
                 .map(type::cast)
                 .toList();
     }
-
-    public void deleteApplication(String studentId, String applicationId) {
-        Optional.ofNullable(students.get(studentId.toLowerCase()))
-                .ifPresent(student -> student.withdrawApplication(applicationId.toLowerCase()));
-    }
-
-
 
 	/**
 	 * 
@@ -239,7 +241,11 @@ public class SystemRepository implements IRepository, Serializable {
         pendingReps.put(rep.getId().toLowerCase(), rep);
 	}
 
-
+    /**
+     *
+     * @param companyName
+     * @return
+     */
     @Override
     public List<InternshipOpportunity> getInternshipsByCompany(String companyName) {
         return approvedReps.values().stream()
@@ -247,9 +253,4 @@ public class SystemRepository implements IRepository, Serializable {
                 .flatMap(rep -> rep.getInternships().stream())
                 .toList();
     }
-
-   public List<InternshipOpportunity> getAllInternshipsByRep(String repId) {
-        return approvedReps.get(repId.toLowerCase()).getInternships();
-   }
-
 }

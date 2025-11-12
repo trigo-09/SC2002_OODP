@@ -113,7 +113,12 @@ public class StudentUI {
         }
 
         Application app = appList.get(index-1);
-        studentController.acceptPlacement(app.getApplicationId());
+        try {
+            studentController.acceptPlacement(app.getApplicationId());
+        }catch (Exception e){
+            System.out.println("ERROR: "+e.getMessage());
+        }
+
     }
 
     private void handleWithdrawal(){

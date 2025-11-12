@@ -15,12 +15,26 @@ import entity.user.CareerStaff;
 import java.util.*;
 import util.FilterCriteria;
 
+/**
+ * controller class for Career staff
+ * act as layer between user and services
+ * allow staff to view internship,process request and generate report
+ */
 public class StaffController extends UserController {
 
 	private final CareerStaff staff;
 	private final InternshipService internshipService;
     private final ApplicationService applicationService;
 
+    /**
+     * constructor of staff controller
+     * @param auth authentication service
+     * @param repository system repository
+     * @param requestService request service
+     * @param internshipService internship service
+     * @param applicationService application service
+     * @param staff staff
+     */
 	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,InternshipService internshipService, ApplicationService applicationService , CareerStaff staff){
 		super(auth, repository, requestService);
 		this.staff = staff;
@@ -29,81 +43,102 @@ public class StaffController extends UserController {
 
 	}
 
+    /**
+     * create staff UI and launch the menu of staff UI
+     * @param systemController systemController
+     */
 	public void launch(SystemController systemController){
 		StaffUI  staffUI = new StaffUI(systemController, this);
 		staffUI.menuLoop();
 	}
 
 	/**
-	 * 
-	 * @param rep
+	 * approve company rep account
+	 * @param reqId company rep's Id
 	 */
-	public void approveRep(String rep) throws Exception {
-		getRequest().approveRegistrationRequest(rep); // this returns the requestservice
+	public void approveRep(String reqId) throws Exception {
+		getRequestService().approveRegistrationRequest(reqId);
 	}
 
 	/**
-	 * 
-	 * @param rep
+	 * reject company rep account
+	 * @param reqId company rep's Id
 	 */
-	public void rejectRep(String rep) throws Exception {
-		getRequest().rejectRegistrationRequest(rep);
+	public void rejectRep(String reqId) throws Exception {
+		getRequestService().rejectRegistrationRequest(reqId);
 	}
 
 	/**
-	 * 
-	 * @param intern
+	 * approve internship
+	 * @param reqId request id
 	 */
-	public void approveInternship(String intern) throws Exception {
-		getRequest().approveInternshipRequest(intern);
+	public void approveInternship(String reqId) throws Exception {
+		getRequestService().approveInternshipRequest(reqId);
 	}
 
 	/**
-	 * 
-	 * @param intern
+	 * reject internship
+	 * @param reqId request id
 	 */
-	public void rejectInternship(String intern) throws Exception {
-		getRequest().rejectInternshipRequest(intern);
+	public void rejectInternship(String reqId) throws Exception {
+		getRequestService().rejectInternshipRequest(reqId);
 	}
 
 	/**
-	 * 
-	 * @param app
+	 * approve withdrawal of application
+	 * @param reqId request id
 	 */
-	public void approveWithdrawal(String app) throws Exception {
-		getRequest().acceptWithdrawalRequest(app);
-        internshipService.removeApplicationFromInternship(applicationService.findApplication(app));
+	public void approveWithdrawal(String reqId) throws Exception {
+        WithdrawalRequest request = (WithdrawalRequest) requestService.getRequest(reqId);
+        internshipService.removeApplicationFromInternship(request.getApplication());
+		requestService.acceptWithdrawalRequest(reqId);
 	}
 
 	/**
-	 * 
-	 * @param app
+	 * reject withdrawal request
+	 * @param reqId request id
 	 */
-	public void rejectWithdrawal(String app) throws Exception {
-		getRequest().rejectWithdrawalRequest(app);
+	public void rejectWithdrawal(String reqId) throws Exception {
+		getRequestService().rejectWithdrawalRequest(reqId);
 	}
 
 	/**
-	 * 
-	 * @param filter
+	 * get all filtered internship
+	 * @param filter filter
 	 */
 	public List<InternshipOpportunity> viewInternshipsFiltered(FilterCriteria filter) {
-		List<InternshipOpportunity> internships = getRepo().getAllInternships();
+		List<InternshipOpportunity> internships = repo.getAllInternships();
 		return internshipService.getFilteredInternship(internships, filter);
 	}
 
+    /**
+     *
+     * @return pending registration request
+     */
 	public List<RegistrationRequest> viewPendingReg(){
-		return getRequest().getPendingRegistration();
+		return getRequestService().getPendingRegistration();
 	}
 
+    /**
+     *
+     * @return pending internship request
+     */
 	public List<InternshipVetRequest> viewPendingInternshipVet(){
-		return getRequest().getPendingInternshipVet();
+		return getRequestService().getPendingInternshipVet();
 	}
 
+    /**
+     *
+     * @return pending withdrawal request
+     */
 	public List<WithdrawalRequest> viewPendingWithdrawal(){
-		return getRequest().getPendingWithdrawal();
+		return getRequestService().getPendingWithdrawal();
 	}
 
+    /**
+     *
+     * @return staff
+     */
 	public CareerStaff getStaff(){
 		return this.staff;
 	}
