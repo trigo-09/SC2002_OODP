@@ -30,4 +30,15 @@ public class InputHelper {
         }
         return password;
     }
+
+        /**
+         * to maintain formating
+         */
+        private static final String SPACE = "    ";
+
+        public static void printMenuItem(int num, String label) {
+            System.out.println(SPACE + num + ". " + label);
+        }
+
+    
 }
