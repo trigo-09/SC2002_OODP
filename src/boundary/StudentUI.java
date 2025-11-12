@@ -183,17 +183,7 @@ public class StudentUI {
             }
         }
 
-        String majorRaw = AttributeGetter.getString("Preferred Major contains [or CLEAR]: ");
-        if (!majorRaw.isBlank()){
-            String input = majorRaw.trim();
-            if (input.equals("CLEAR")){
-                filter.setPreferredMajor(null);
-                System.out.println("-> Preferred major filter cleared");
-            }
-            else{
-                filter.setPreferredMajor(input);
-            }
-        }
+    
 
         String levelRaw = AttributeGetter.getString("Level contains [or CLEAR]: ");
         if (!levelRaw.isBlank()){
