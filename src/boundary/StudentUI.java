@@ -161,12 +161,12 @@ public class StudentUI {
 
         System.out.println("Current Filter Criteria: ");
         System.out.println("- Status: " + filter.getStatus());
-        System.out.println("- Preferred Major: " + filter.getPreferredMajor());
         System.out.println("- Level:  " + filter.getLevel());
         System.out.println("- Closing Date: " + filter.getClosingDate());
         System.out.println();
 
-        String statusRaw = AttributeGetter.getString("Status (PENDING/APPROVED/REJECTED/FILLED) [or CLEAR]: ");
+        // i feel like student shld not be able to filter by status as they shld only see wats avail to them which is pending and filled
+        String statusRaw = AttributeGetter.getString("Status (PENDING/FILLED) [or CLEAR]: ");
         if (!statusRaw.isBlank()){
             String input = statusRaw.trim().toUpperCase();
             if (input.equals("CLEAR")){
