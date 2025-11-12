@@ -67,14 +67,15 @@ public class RepController extends UserController {
      * @throws IllegalStateException    if the representative has reached the internship limit
      * @throws IllegalArgumentException if any provided field is invalid
      */
-	public InternshipOpportunity createInternship(String title,
+	public void createInternship(String title,
                                                   String description,
                                                   InternshipLevel level,
                                                   String preferredMajors,
                                                   LocalDate openingDate,
                                                   LocalDate closingDate,
                                                   int numOfSlots) throws MaxExceedException {
-        return internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
+        InternshipOpportunity internship =internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
+        request.createInternshipRequest(rep.getId(), internship);
     }
 	
 
@@ -118,8 +119,22 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void approveApp(String appId) throws ObjectNotFoundException {
+	public void approveApp(String appId) throws ObjectNotFoundException,MaxExceedException {
+        Application app = applicationService.findApplication(appId);
+        InternshipOpportunity internship = internshipService.findInternshipById(app.getInternshipId());
+        // Ensure internship exists
+        if (internship == null) {
+            throw new ObjectNotFoundException("Invalid internship ID associated with application: " + app.getInternshipId());
+        }
+        // Security check: ensure the internship belongs to the representative
+        if (!internship.getCreatedBy().equalsIgnoreCase(rep.getId())) {
+            throw new SecurityException("You can only review applications for your own internships.");
+        }
+        if (internshipService.isFilled(internship)) {
+            throw new MaxExceedException("Max number of approved slot have be filles");
+        }
 		applicationService.reviewApplication(rep.getId(),appId, true);
+        internshipService.addAcceptedApplicationToInternship(applicationService.findApplication(appId));
 	}
 
 	/**
@@ -129,7 +144,7 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void rejectApp(String appId) throws ObjectNotFoundException {
+	public void rejectApp(String appId) throws ObjectNotFoundException, MaxExceedException {
 		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
 

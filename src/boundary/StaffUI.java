@@ -8,8 +8,10 @@ import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import entity.request.InternshipVetRequest;
 import entity.request.RegistrationRequest;
+import entity.request.Request;
 import entity.request.WithdrawalRequest;
-import util.FilterCriteria;
+import util.FilterCriteria;import util.exceptions.AuthenticationException;
+import util.exceptions.ObjectNotFoundException;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
 import util.ui.ChangePage;
@@ -29,304 +31,189 @@ public class StaffUI {
 
     public void menuLoop() {
         ChangePage.changePage();
-        boolean stay = true;
-        while (stay) {
-            System.out.println();
-            System.out.println("=== Career Center Staff Menu ===");
-            System.out.println("1.  View / filter internships");
-            System.out.println("2.  View pending rep registrations");
-            System.out.println("3.  Rep registration (Approve/Reject)");
-            System.out.println("4.  View internships pending approval");
-            System.out.println("5.  Internship (Approve/Reject)");
-            System.out.println("6.  View pending withdrawal requests");
-            System.out.println("7.  Withdrawal (Approve/Reject)");
-            System.out.println("8.  Update internship filter settings");
-            System.out.println("9.  Change password");
-            System.out.println("10. Logout");
-            System.out.print("Enter your choice (1-10): ");
+        System.out.println("=== Career Center Staff Menu ===");
+        System.out.println("1.  View / filter internships");
+        System.out.println("2.  View pending rep registrations");
+        System.out.println("3.  Rep registration (Approve/Reject)");
+        System.out.println("4.  View internships pending approval");
+        System.out.println("5.  Internship (Approve/Reject)");
+        System.out.println("6.  View pending withdrawal requests");
+        System.out.println("7.  Withdrawal (Approve/Reject)");
+        System.out.println("8.  Update internship filter settings");
+        System.out.println("9.  Change password");
+        System.out.println("10. Logout");
+        System.out.print("Enter your choice (1-10): ");
 
-            try {
-                int choice = InputHelper.readInt();
-                switch (choice) {
-                    case 1 -> ViewFilteredInternships();
-                    case 2 -> ViewPendingReps();
-                    case 3 -> ApproveRejectRep();               // merged
-                    case 4 -> ViewPendingInternships();
-                    case 5 -> ApproveRejectInternshipVet();     // merged
-                    case 6 -> ViewPendingWithdrawals();
-                    case 7 -> ApproveRejectWithdrawal();        // merged
-                    case 8 -> UpdateFilter();
-                    case 9 -> handleChangePassword();
-                    case 10 -> {
-                        System.out.println("Logging out...");
-                        stay = false;                // stop loop
-                        systemController.mainMenu(); // return to Welcome screen
-                    }
-                    default -> System.out.println("Invalid choice. Please try again.");
+        try {
+            int choice = InputHelper.readInt();
+            switch (choice) {
+                case 1 -> ViewFilteredInternships();
+                case 2 -> viewPendingReq("Rep Registration", staffController.viewPendingReg());
+                case 3 -> approveRejectReq("Rep Registration", staffController.viewPendingReg());               // merged
+                case 4 -> viewPendingReq("Internship Vetting", staffController.viewPendingInternshipVet());
+                case 5 -> approveRejectReq("Internship Vetting", staffController.viewPendingInternshipVet());     // merged
+                case 6 -> viewPendingReq("Withdrawal", staffController.viewPendingWithdrawal());
+                case 7 -> approveRejectReq("Withdrawal", staffController.viewPendingWithdrawal());        // merged
+                case 8 -> {
+                    FilterUI.update(staffController.getFilter());
+                    throw new PageBackException(); // so that it will loop
                 }
-            } catch (IllegalArgumentException e) {
-                System.out.println("Input error: " + e.getMessage());
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                case 9 -> handleChangePassword();
+                case 10 -> {
+                    System.out.println("Logging out...");
+                    systemController.mainMenu(); // return to Welcome screen
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
+        } catch (PageBackException e) {
+            menuLoop();
         }
+
     }
 
-    public void ApproveRejectInternshipVet(){
+    private void approveRejectReq(String requestType, List<? extends Request> pending){
         ChangePage.changePage();
-        System.out.println("All Internship Vetting Request");
-        List<InternshipVetRequest> pendingInternships = staffController.viewPendingInternshipVet();
-        if (pendingInternships.isEmpty()){
-            System.out.println("No internships pending approval");
-            return;
+        System.out.println("All " + requestType + " Requests");
+        if (pending.isEmpty()){
+            System.out.println("No " + requestType + " pending approval");
+            InputHelper.pause();
+            throw new PageBackException(); // goes back to the menu
         }
 
-        for (int i = 0; i < pendingInternships.size(); i++){
-            DisplayableViewer.displaySingle(pendingInternships.get(i), i+1);
-        }
+        DisplayableViewer.displayList(pending);
 
-        int index = -1;
-        while (true) {
-            System.out.println("Choose the index of the internship");
+        int index;
+        while (true){
+            System.out.println("Choose index (Enter [0] to go back to menu): ");
             index = InputHelper.readInt();
-            if (index >= 1 && index <= pendingInternships.size()) {
+            if (index == 0){
+                throw new PageBackException();
+            }
+            else if (index >= 1 && index <= pending.size()) {
                 break;
             } else {
                 System.out.println("Invalid Choice. Please enter a valid index.");
             }
         }
 
-        InternshipVetRequest choice1 = pendingInternships.get(index - 1);
+        Request request = pending.get(index-1);
+        String requestID = request.getId();
 
-        int choice2 = -1;
         while (true) {
-            System.out.print("Enter 0 to Reject, 1 to Approve: ");
-            choice2 = InputHelper.readInt();
-            if (choice2 == 1) {
+            System.out.print("Enter [1] to Reject, [2] to Approve (Enter [0] to go back to menu): ");
+            int choice = InputHelper.readInt();
+
+            if (choice == 0) {
+                throw new PageBackException();
+            } else if (choice == 1 || choice == 2) {
                 try {
-                    staffController.approveInternship(choice1.getId());
-                }catch (Exception e){
-                    System.out.println("ERROR: " + e.getMessage());
+                    if (request instanceof InternshipVetRequest) {
+                        if (choice == 1) {
+                            staffController.rejectInternship(requestID);
+                            DisplayableViewer.displaySingle(request);
+                        }
+                        else {
+                            staffController.approveInternship(requestID);
+                            DisplayableViewer.displaySingle(request);
+                        }
+                    } else if (request instanceof RegistrationRequest) {
+                        if (choice == 1) {
+                            staffController.rejectRep(requestID);
+                            DisplayableViewer.displaySingle(request);
+                        }
+                        else {
+                            staffController.approveRep(requestID);
+                            DisplayableViewer.displaySingle(request);
+                        }
+                    } else if (request instanceof WithdrawalRequest) {
+                        if (choice == 1) {
+                            staffController.rejectWithdrawal(requestID);
+                            DisplayableViewer.displaySingle(request);
+                        }
+                        else {
+                            staffController.approveWithdrawal(requestID);
+                            DisplayableViewer.displaySingle(request);
+                        }
+                    } else {
+                        System.out.println("Unknown request type.");
+                    }
+                    break; // exit while loop if they approve/rej or unknown type then go to pause
+
+                } catch (Exception e) { //exceptions thrown by approve and reject methods
+                    System.out.println("ERROR: " + e.getMessage()); // stay in the loop
                 }
-                break;
-            } else if (choice2 == 0) {
-                try {
-                    staffController.rejectInternship(choice1.getId());
-                }catch (Exception e){
-                    System.out.println("ERROR: " + e.getMessage());
-                }
-                break;
             } else {
-                System.out.println("Please Enter 0 to Reject or 1 to Approve");
-            }
-        }
-    }
-
-    public void ApproveRejectRep(){
-        ChangePage.changePage();
-        System.out.println("All Rep Registration Request");
-        List<RegistrationRequest> pendingReg = staffController.viewPendingReg();
-        if (pendingReg.isEmpty()){
-            System.out.println("No registration pending approval");
-            return;
+                System.out.println("Please Enter [1] (Reject), [2] (Approve), or [0] (Back).");
+            } // stay in loop
         }
 
-        for (int i = 0; i < pendingReg.size(); i++){
-            DisplayableViewer.displaySingle(pendingReg.get(i), i+1);
-        }
-
-        System.out.println("Choose the index of the Rep");
-        int index = InputHelper.readInt();
-        if (index < 1 || index > pendingReg.size()){
-            System.out.println("Invalid Choice"); // need error catching
-            return;
-        }
-
-        RegistrationRequest choice1 = pendingReg.get(index - 1);
-
-        System.out.print("Enter 0 to Reject, 1 to Approve: ");
-        int choice2 = InputHelper.readInt();
-        if (choice2 == 1){
-            try {
-                staffController.approveRep(choice1.getId());
-            }catch (Exception e){
-                System.out.println("ERROR: " + e.getMessage());
-            }
-        }
-        else if (choice2 == 0){
-            try {
-                staffController.rejectRep(choice1.getId());
-            }catch (Exception e){
-                System.out.println("ERROR: " + e.getMessage());
-            }
-        }
-        else{
-            System.out.println("Please Enter 0 to Reject or 1 to Approve");
-        }
-    }
-
-    public void ApproveRejectWithdrawal(){
-        ChangePage.changePage();
-        System.out.println("All Withdrawal Requests");
-        List<WithdrawalRequest> pendingWithdrawal = staffController.viewPendingWithdrawal();
-        if (pendingWithdrawal.isEmpty()){
-            System.out.println("No withdrawal pending approval");
-            return;
-        }
-
-        for (int i = 0; i < pendingWithdrawal.size(); i++){
-            DisplayableViewer.displaySingle(pendingWithdrawal.get(i), i+1);
-        }
-
-        System.out.println("Choose the index of the Withdrawal");
-        int index = InputHelper.readInt();
-        if (index < 1 || index > pendingWithdrawal.size()){
-            System.out.println("Invalid Choice"); // need error catching
-            return;
-        }
-
-        WithdrawalRequest choice1 = pendingWithdrawal.get(index - 1);
-
-        System.out.print("Enter 0 to Reject, 1 to Approve: ");
-        int choice2 = InputHelper.readInt();
-        if (choice2 == 1){
-            try {
-                staffController.approveWithdrawal(choice1.getId());
-            }catch (Exception e){
-                System.out.println("ERROR: " + e.getMessage());
-            }
-        }
-        else if (choice2 == 0){
-            try {
-                staffController.rejectWithdrawal(choice1.getId());
-            }catch (Exception e){
-                System.out.println("ERROR: " + e.getMessage());
-            }
-        }
-        else{
-            System.out.println("Please Enter 0 to Reject or 1 to Approve");
-        }
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
 
-    public void ViewFilteredInternships(){
+    private void ViewFilteredInternships(){
         ChangePage.changePage();
         System.out.println("All Internships(Filtered)");
         List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
         DisplayableViewer.displayList(filteredList);
+        InputHelper.pause();
+        throw new PageBackException();
     }
 
-    public void ViewPendingReps(){
+    private void viewPendingReq(String requestType, List<? extends Request> pending){
         ChangePage.changePage();
-        System.out.println("Pending Rep Registration Requests");
-        List<RegistrationRequest> pendingReg = staffController.viewPendingReg();
-        DisplayableViewer.displayList(pendingReg);
+        System.out.println("All " + requestType + " Requests");
+        if (pending.isEmpty()){
+            System.out.println("No " + requestType + " pending approval");
+            InputHelper.pause();
+            throw new PageBackException(); // goes back to the menu
+        }
+
+        DisplayableViewer.displayList(pending);
+        InputHelper.pause();
+        throw new PageBackException();
     }
-
-    public void ViewPendingInternships(){
-        ChangePage.changePage();
-        System.out.println("Pending Internship Vetting Requests");
-        List<InternshipVetRequest> pendingInternships = staffController.viewPendingInternshipVet();
-        DisplayableViewer.displayList(pendingInternships);
-    }
-
-
-    private void ViewPendingWithdrawals(){
-        ChangePage.changePage();
-        System.out.println("Pending Withdrawal Requests");
-        List<WithdrawalRequest> pendingWithdrawal = staffController.viewPendingWithdrawal();
-        DisplayableViewer.displayList(pendingWithdrawal);
-    }
-
 
     private void handleChangePassword(){
-        ChangePage.changePage();
-        String oldPass = AttributeGetter.getPassword("Enter old password: ");
-        String newPass = AttributeGetter.getPassword("Enter new password: ");
-        String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
+        boolean retry = true;
 
-        try {
-            staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+        while (retry) {
+            ChangePage.changePage();
+            String oldPass = AttributeGetter.getPassword("Enter old password: ");
+            String newPass = AttributeGetter.getPassword("Enter new password: ");
+            String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
+
+            try {
+                staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
+                InputHelper.pause();
+                throw new PageBackException(); // return to main menu
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+                boolean validChoice = false;
+
+                while (!validChoice) {
+                    System.out.println();
+                    System.out.println("1. Try again");
+                    System.out.println("2. Return to main menu");
+                    System.out.print("Enter choice (1 or 2): ");
+                    int choice = InputHelper.readInt();
+
+                    switch (choice) {
+                        case 1 -> validChoice = true; // retry outer loop
+                        case 2 -> {
+                            validChoice = true;
+                            throw new PageBackException();
+                        }
+                        default -> {
+                            System.out.println("Invalid choice. Please enter 1 or 2.");
+                            System.out.println();
+                        }
+                    }
+                }
+            }
         }
     }
-
-
-
-    public void UpdateFilter(){
-        ChangePage.changePage();
-        System.out.println("Update Filter Criteria");
-        FilterCriteria filter = staffController.getFilter();
-
-        System.out.println("Current Filter Criteria");
-        System.out.println(" - Status                 : " + filter.getStatus());
-        System.out.println(" - Preferred Major        : " + filter.getPreferredMajor());
-        System.out.println(" - Level                  : " + filter.getLevel());
-        System.out.println(" - Closing Date          : " + filter.getClosingDate());
-        System.out.println();
-
-        String statusRaw = AttributeGetter.getString("Status (PENDING / APPROVED / REJECTED / FILLED) [or CLEAR]: ");
-        if (!statusRaw.isBlank()) {
-            String input = statusRaw.trim().toUpperCase();
-            if (input.equals("CLEAR") || input.equals("NONE")) {
-                filter.setStatus(null);
-                System.out.println("→ Status filter cleared.");
-            } else {
-                try {
-                    InternStatus status = InternStatus.valueOf(input);
-                    filter.setStatus(status);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("!! Invalid status. Keeping previous.");
-                }
-            }
-        }
-
-        String majorRaw = AttributeGetter.getString("Preferred Major contains [or CLEAR]: ");
-        if (!majorRaw.isBlank()) {
-            String input = majorRaw.trim();
-            if (input.equalsIgnoreCase("CLEAR") || input.equalsIgnoreCase("NONE")) {
-                filter.setPreferredMajor(null);
-                System.out.println("→ Preferred Major filter cleared.");
-            } else {
-                filter.setPreferredMajor(input);
-            }
-        }
-
-        String levelRaw = AttributeGetter.getString("Internship Level (BASIC / INTERMEDIATE / ADVANCED) [or CLEAR]: ");
-        if (!levelRaw.isBlank()) {
-            String input = levelRaw.trim().toUpperCase();
-            if (input.equals("CLEAR") || input.equals("NONE")) {
-                filter.setLevel(null);
-                System.out.println("→ Level filter cleared.");
-            } else {
-                try {
-                    InternshipLevel level = InternshipLevel.valueOf(input);
-                    filter.setLevel(level);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("!! Invalid level. Keeping previous.");
-                }
-            }
-        }
-
-        String closeRaw = AttributeGetter.getString("Closing on/before (YYYY-MM-DD) [or CLEAR]: ");
-        if (!closeRaw.isBlank()) {
-            String input = closeRaw.trim();
-            if (input.equalsIgnoreCase("CLEAR") || input.equalsIgnoreCase("NONE")) {
-                filter.setClosingDate(null);
-                System.out.println("→ Closing date filter cleared.");
-            } else {
-                try {
-                    filter.setClosingDate(LocalDate.parse(input));
-                } catch (Exception e) {
-                    System.out.println("!! Invalid date. Keeping previous.");
-                }
-            }
-        }
-
-        System.out.println();
-        System.out.println("Filter updated. It will stay for this login session.");
-    }
-
 
 }
+

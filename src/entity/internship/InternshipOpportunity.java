@@ -149,16 +149,15 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		return new ArrayList<>(this.pendingApplications);
 	}
 
-	/**
-	 * 
-	 * @param slots internship applicationss
-	 */
-	public void setPendingApplications(List<Application> slots) {
-		this.pendingApplications = slots;
-	}
+
+
 
     public void addPendingApplication(Application slot){
         this.pendingApplications.add(slot);
+    }
+
+    public void removePendingApplication(Application slot){
+        this.pendingApplications.remove(slot);
     }
 
 
@@ -201,25 +200,23 @@ public class InternshipOpportunity implements Serializable, Displayable {
 	public List<Application>  getApprovedSlots(){
 		return this.approvedslots;
 	}
-	/**
-	 *
-	 * @param approvedslots approved pendingApplications
-	 */
-	public void setApprovedslots(List<Application> approvedslots){
-		this.approvedslots=approvedslots;
-	}
+
+
     public void addApprovedapplication(Application application){
         this.pendingApplications.remove(application);
         this.approvedslots.add(application);
     }
 
-	@Override
-	public String getSplitter() {
-		return "----------------------------------";
-	}
+    public void removeApprovedapplication(Application application){
+        this.approvedslots.remove(application);
+    }
+
+    public int getNumOfFilledSlots(){
+        return approvedslots.size();
+    }
 
 	@Override
-	public String getString() {
+	public String toString() {
 		int approved = (approvedslots == null) ? 0 : approvedslots.size();
 		int pending = (pendingApplications == null) ? 0 : pendingApplications.size();
 		int open = Math.max(0, numOfSlots - approved);

@@ -66,13 +66,9 @@ public class Student extends User implements Displayable {
                 .count();
     }
 
-	@Override
-	public String getSplitter(){
-		return Displayable.SPLITTER;
-	}
 
 	@Override
-	public String getString() {
+	public String toString() {
 		return String.format(
 				"Student ID: %s%n" +
 						"Name: %s%n" +

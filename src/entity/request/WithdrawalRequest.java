@@ -24,20 +24,17 @@ public class WithdrawalRequest extends Request {
 
 
     @Override
-    public String getSplitter() {
-        return "----------------------------------";
-    }
-
-    @Override
-    public String getString() {
+    public String toString() {
         return String.format(
                 "Request Type: Withdrawal%n" +
                         "Request ID: %s%n" +
                         "Requester ID: %s%n" +
+                        "Reason: %s%n" +
                         "Application ID: %s%n" +
                         "Current Application Status: %s%n",
                 getId(),
                 getRequesterId(),
+                getReason(),
                 application.getApplicationId(),
                 application.getStatus()
         );

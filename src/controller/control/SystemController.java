@@ -34,8 +34,8 @@ public class SystemController {
         repo = dataManager.load();
         auth = new AuthenticationService(repo);
         request = new RequestService(repo);
-        internshipService = new InternshipService(repo, request);
-        applicationService = new ApplicationService(repo, internshipService, request);
+        internshipService = new InternshipService(repo);
+        applicationService = new ApplicationService(repo);
 	}
 
 	public void start() {
@@ -53,9 +53,9 @@ public class SystemController {
     public void handleLogin(String userId, String password) throws AuthenticationException {
             User user = auth.authenticate(userId,password);
             switch (user.getRole()) {
-                case STUDENT -> new StudentController(auth,repo,request,(Student) user).launch(this);
+                case STUDENT -> new StudentController(auth,repo,request,internshipService,applicationService,(Student) user).launch(this);
 
-                case STAFF -> new StaffController(auth,repo,request,(CareerStaff) user).launch(this); // Pass SystemController instance to enable logout functionality from StaffController
+                case STAFF -> new StaffController(auth,repo,request,internshipService,applicationService,(CareerStaff) user).launch(this); // Pass SystemController instance to enable logout functionality from StaffController
 
                 case REP ->  new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch();
                     

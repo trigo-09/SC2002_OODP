@@ -312,7 +312,7 @@ public class RepMenuUI {
                     repController.rejectApp(appId);
                     System.out.println("Application rejected.");
                 }
-            } catch (ObjectNotFoundException | IllegalStateException | SecurityException e) {
+            } catch (ObjectNotFoundException | IllegalStateException | SecurityException | MaxExceedException e) {
                 System.out.println("Error approving/rejecting application: " + e.getMessage());
             }
             pause();

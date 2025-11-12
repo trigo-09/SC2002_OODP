@@ -21,7 +21,8 @@ public class LoginPageUI {
     public static void login(SystemController controller) throws PageBackException {
         ChangePage.changePage();
         int count = 0;
-        System.out.println("Please enter your credentials");
+        System.out.print("Please enter your credentials\n");
+        InputHelper.readLine();
         while (true) {
             String userId = AttributeGetter.getUserId();
             String password = AttributeGetter.getPassword();
@@ -63,6 +64,7 @@ public class LoginPageUI {
     public static void register(SystemController controller) throws PageBackException  {
         ChangePage.changePage();
         System.out.println("Please fill in the relevant information");
+        InputHelper.readLine();
         int count = 0;
         while (true) {
             String name = AttributeGetter.getName();
