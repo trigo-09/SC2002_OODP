@@ -9,7 +9,7 @@ import java.util.Objects;
 public class DisplayableViewer {
     public static <T extends Displayable> void displaySingle(T displayable) {
         System.out.println(displayable.getSplitter());
-        System.out.printf("%s", displayable);
+        System.out.println(displayable);
         System.out.println(displayable.getSplitter());
     }
 
