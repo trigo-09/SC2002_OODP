@@ -183,7 +183,7 @@ public class InternshipService {
 
     public boolean isEligibleToCreateInternship(String repId) {
         CompanyRep rep = (CompanyRep) repository.findUser(repId);
-        return repository.getInternshipsByCompany(rep.getCompanyName()).stream().filter(internshipOpportunity -> internshipOpportunity.getStatus() != InternStatus.REJECTED).count() < MAX_ACTIVE_INTERNSHIPS;
+        return rep.getNumOfInternships() < MAX_ACTIVE_INTERNSHIPS;
     }
 
     public void addPendApplicationToInternship(Application app) {
