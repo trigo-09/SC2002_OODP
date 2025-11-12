@@ -11,7 +11,7 @@ public class AttributeGetter {
 
     public static String getUserId(String msg){
         System.out.print(msg);
-        return InputHelper.readLine();
+        return InputHelper.readLine().trim();
     }
 
     public static String getPassword(){
