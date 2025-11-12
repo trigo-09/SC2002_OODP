@@ -159,17 +159,12 @@ public class ApplicationService {
         if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
             throw new SecurityException("You can only review applications for your own internships.");
         }
+
         if (approve) {
             if (internshipService.isFilled(application.getInternshipId())) {
                 throw new MaxExceedException("Max number of approved slot have be filles");
             }
-
-            // Add application to approved slot
-            internship.addApprovedapplication(application);
             application.changeApplicationStatus(ApplicationStatus.APPROVED);
-            if (internship.getNumOfFilledSlots() == internship.getNumOfSlots()) {
-                internship.setStatus(InternStatus.FILLED);
-            }
         }else {application.changeApplicationStatus(ApplicationStatus.REJECTED);}
 
     }

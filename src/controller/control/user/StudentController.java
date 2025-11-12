@@ -52,6 +52,7 @@ public class StudentController extends UserController {
 	 */
 	public void acceptPlacement(String applicationId) {
         applicationService.acceptApplication(student.getId(),applicationId);
+        internshipService.addAcceptedApplicationToInternship(applicationService.findApplication(applicationId));
 	}
 
     public void withdrawPlacement(String applicationId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException {
