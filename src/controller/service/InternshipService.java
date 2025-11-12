@@ -140,6 +140,12 @@ public class InternshipService {
                 // Students year must match the internship level
                 if (!i.getLevel().isEligible(s.getYear())) {return false;}
 
+                // Students cannot apply if there is no slots left
+                if(isFilled(i)){return false;}
+
+                // Student cannot apply if the internship is past closing date
+                if(i.getClosingDate().isBefore(LocalDate.now())){return false;}
+
                 // Major must match (unless internship accepts "Any")
                 String preferredMajors = i.getPreferredMajors();
                 if (!Objects.equals(preferredMajors, "Any") && !Objects.equals(preferredMajors, s.getMajor())) {
