@@ -81,7 +81,7 @@ public class ApplicationService {
      * 
      */
     public void acceptApplication(String studentId, String applicationId) {
-        Application application = systemRepository.findApplication(applicationId);
+        Application application = findApplication(applicationId);
         // Ensure application exists
         if (application == null) {
             throw new IllegalArgumentException("Invalid application ID: " + applicationId);
@@ -111,7 +111,7 @@ public class ApplicationService {
      * @throws SecurityException        if the application does not belong to the student
      */
     public void requestWithdrawal(String studentId, String appId, String reason) throws ObjectNotFoundException {
-        Application application = systemRepository.findApplication(appId);
+        Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
             throw new ObjectNotFoundException("Invalid application ID: " + appId);
@@ -140,7 +140,7 @@ public class ApplicationService {
      */
     public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException, MaxExceedException {
 
-        Application application = systemRepository.findApplication(appId);
+        Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
         throw new ObjectNotFoundException("Invalid application ID: " + appId);
