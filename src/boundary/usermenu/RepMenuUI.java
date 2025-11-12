@@ -42,7 +42,10 @@ public class RepMenuUI {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI();
                 case 3 -> changePasswordUI();
-                case 0 -> System.out.println("Logging out...");
+                case 0 -> {
+                    System.out.println("Logging out...");
+                    systemController.mainMenu();
+                }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
