@@ -16,6 +16,7 @@ public class InternshipVetRequest extends Request {
 
     public void approve(IRepository repo) {
         internship.setStatus(InternStatus.APPROVED);
+        internship.setVisibility(true);
     }
 
     public void reject(IRepository repo) {
