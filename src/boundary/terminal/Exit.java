@@ -1,7 +1,7 @@
 package boundary.terminal;
 
-import util.ui.ChangePage;
-import util.ui.GraphicLogo;
+import util.io.ChangePage;
+import util.io.GraphicLogo;
 
 /**
  * UI class to display exit page and end terminal

@@ -9,7 +9,7 @@ import java.util.Map;
 import util.exceptions.AuthenticationException;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
-import util.ui.ChangePage;
+import util.io.ChangePage;
 
 /**
  * contain UI for login and registration
