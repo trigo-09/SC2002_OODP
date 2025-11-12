@@ -29,10 +29,12 @@ public class WithdrawalRequest extends Request {
                 "Request Type: Withdrawal%n" +
                         "Request ID: %s%n" +
                         "Requester ID: %s%n" +
+                        "Reason: %s%n" +
                         "Application ID: %s%n" +
                         "Current Application Status: %s%n",
                 getId(),
                 getRequesterId(),
+                getReason(),
                 application.getApplicationId(),
                 application.getStatus()
         );
