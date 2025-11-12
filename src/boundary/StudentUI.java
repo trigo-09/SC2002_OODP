@@ -12,7 +12,6 @@ import java.util.*;
 import util.FilterCriteria;
 import util.io.InputHelper;
 import util.ui.ChangePage;
-import util.ui.UIHelper;
 
 public class StudentUI {
     private final StudentController studentController;
