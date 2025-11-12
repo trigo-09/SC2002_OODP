@@ -25,7 +25,6 @@ public class LoginPageUI {
         ChangePage.changePage();
         int count = 0;
         System.out.print("Please enter your credentials\n");
-        InputHelper.readLine();
         while (true) {
             String userId = AttributeGetter.getUserId();
             String password = AttributeGetter.getPassword();
