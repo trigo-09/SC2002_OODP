@@ -60,6 +60,12 @@ public class StudentUI {
             menu();
         }
     }
+
+    /**
+     *  Allow user to view internships based on their filter
+     *  If no internships are available then will just print "No internships found"
+     *
+     */
     private void handleViewInternships(){
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
         if (internshipList.isEmpty()) {
@@ -72,6 +78,13 @@ public class StudentUI {
         throw new PageBackException();
     }
 
+    /**
+     * Allow student to apply for a specific internship
+     * Will display list of internships based on filter
+     * Prompts student to give the index of the internship which he wants to apply for
+     * Maps the index to the internship and get the ID
+     * Calls the studentController to apply for that internship
+     */
     private void handleApplication(){
         System.out.println("Internship Application");
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
@@ -82,30 +95,39 @@ public class StudentUI {
             throw new PageBackException();
         }
 
-        for (int i = 0; i<internshipList.size(); i++){
-            DisplayableViewer.displaySingle(internshipList.get(i));
-        }
+        DisplayableViewer.displayList(internshipList);
+        int index;
 
-        System.out.println("Choose the index of the internship you want to apply");
-
-        int index = InputHelper.readInt();
-
-        if (index < 1 || index > internshipList.size()){
-            System.out.println("Invalid index");
-            InputHelper.pause();
-            throw new PageBackException();
+        while (true){
+            System.out.println("Select index of internship you want to apply for. (Enter [0] to go back to menu): ");
+            index = InputHelper.readInt();
+            if (index == 0) {
+                throw new PageBackException();
+            }
+            else if(index >= 1 && index <= internshipList.size()){
+                break;
+            }
+            else{
+                System.out.println("Invalid choice. Please enter a valid index.");
+            }
         }
 
         InternshipOpportunity internship = internshipList.get(index-1);
+
         try {
             studentController.applyInternship(internship.getId());
         }catch (Exception e){
             System.out.println("ERROR: "+e.getMessage());
         }
+
         InputHelper.pause();
         throw new PageBackException();
     }
 
+    /**
+     * Allows student to view their applications
+     * If student has not applied to any internships, print "No applications found"
+     */
     private void handleViewApplications(){
         System.out.println("Your Internship Applications");
         List<Application> appList = studentController.myApplications();
@@ -119,6 +141,11 @@ public class StudentUI {
         throw new PageBackException();
     }
 
+    /**
+     * Allow student to accept an internship application which has been offered to them
+     * Display a list of their applications first
+     * Prompts them for the index of the application they want to accept
+     */
     private void handleAcceptance(){
         System.out.println("Accept Internship Placement");
         List<Application> appList = studentController.myApplications();
@@ -128,18 +155,21 @@ public class StudentUI {
             throw new PageBackException();
         }
 
-        for (int i = 0; i<appList.size(); i++){
-            DisplayableViewer.displaySingle(appList.get(i));
-        }
+        DisplayableViewer.displayList(appList);
+        int index;
 
-        System.out.println("Choose the index of the application you want to accept");
-
-        int index = InputHelper.readInt();
-
-        if (index < 1 || index > appList.size()){
-            System.out.println("Invalid index");
-            InputHelper.pause();
-            throw new PageBackException();
+        while (true){
+            System.out.println("Select index of application you want to accept. (Enter [0] to go back to menu): ");
+            index = InputHelper.readInt();
+            if (index == 0) {
+                throw new PageBackException();
+            }
+            else if(index >= 1 && index <= appList.size()){
+                break;
+            }
+            else{
+                System.out.println("Invalid choice. Please enter a valid index.");
+            }
         }
 
         Application app = appList.get(index-1);
@@ -155,6 +185,11 @@ public class StudentUI {
 
     }
 
+    /**
+     * Allow student to withdraw an internship application
+     * Display a list of their applications first
+     * Prompts them for the index of the application they want to withdraw
+     */
     private void handleWithdrawal(){
         System.out.println("Withdraw Internship Placement");
         List<Application> appList = studentController.myApplications();
@@ -165,17 +200,20 @@ public class StudentUI {
             throw new PageBackException();
         }
 
-        for (int i = 0; i<appList.size(); i++){
-            DisplayableViewer.displaySingle(appList.get(i));
-        }
-
-        System.out.println("Choose the index of the application you want to withdraw");
-        int index = InputHelper.readInt();
-
-        if (index < 1 || index > appList.size()){
-            System.out.println("Invalid index");
-            InputHelper.pause();
-            throw new PageBackException();
+        DisplayableViewer.displayList(appList);
+        int index;
+        while (true){
+            System.out.println("Select index of application you want to withdraw. (Enter [0] to go back to menu): ");
+            index = InputHelper.readInt();
+            if (index == 0) {
+                throw new PageBackException();
+            }
+            else if(index >= 1 && index <= appList.size()){
+                break;
+            }
+            else{
+                System.out.println("Invalid choice. Please enter a valid index.");
+            }
         }
 
         String reason = AttributeGetter.getString("Please enter your reason for withdrawal.");
@@ -190,6 +228,10 @@ public class StudentUI {
         throw new PageBackException();
     }
 
+    /**
+     * Allow student to change their password
+     * Prompts them for old, new and confirm new password
+     */
     private void handleChangePass(){
         String oldPass = AttributeGetter.getString("Enter old password");
         String newPass = AttributeGetter.getString("Enter new password");
@@ -204,7 +246,11 @@ public class StudentUI {
         InputHelper.pause();
         throw new PageBackException();
     }
-
+    /**
+     * Allow student to change their filter options
+     * Display their current filter options
+     * Only can filter based on level and closing date as students are not allowed to see other internships which they are not eligible for
+     */
     private void handleChangeFilter(){
         System.out.println("Update Filter Criteria");
         FilterCriteria filter = studentController.getFilter();
@@ -214,7 +260,7 @@ public class StudentUI {
         System.out.println("- Closing Date: " + filter.getClosingDate());
         System.out.println();
 
-        String levelRaw = AttributeGetter.getString("Level contains [or CLEAR]: ");
+        String levelRaw = AttributeGetter.getString("Update Level [BASIC/INTERMEDIATE/ADVANCED/CLEAR]: ");
         if (!levelRaw.isBlank()){
             String input = levelRaw.trim();
             if (input.equals("CLEAR")){
@@ -231,10 +277,10 @@ public class StudentUI {
             }
         }
 
-        String closeRaw = AttributeGetter.getString("Enter closing date: ");
+        String closeRaw = AttributeGetter.getString("Enter closing date (yyyy-MM-dd) or 0 to clear: ");
         if (!closeRaw.isBlank()){
             String input = closeRaw.trim();
-            if (input.equals("CLEAR")){
+            if (input.equals("0")){
                 filter.setClosingDate(null);
                 System.out.println("-> Closing date filter cleared");
             }
