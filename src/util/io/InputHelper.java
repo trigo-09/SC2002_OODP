@@ -40,5 +40,10 @@ public class InputHelper {
             System.out.println(SPACE + num + ". " + label);
         }
 
+    public static void pause() {
+        System.out.print("Press Enter to continue...");
+        readLine();
+    }
+
 
 }
