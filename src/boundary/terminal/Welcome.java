@@ -3,8 +3,8 @@ package boundary.terminal;
 import controller.control.SystemController;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
-import util.ui.ChangePage;
-import util.ui.GraphicLogo;
+import util.io.ChangePage;
+import util.io.GraphicLogo;
 
 /**
  * UI class to show welcome page of system

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.*;
 import util.FilterCriteria;
 import util.io.InputHelper;
-import util.ui.ChangePage;
+import util.io.ChangePage;
 
 public class StudentUI {
     private final StudentController studentController;

@@ -12,7 +12,7 @@ import entity.request.Request;
 import entity.request.WithdrawalRequest;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
-import util.ui.ChangePage;
+import util.io.ChangePage;
 
 import java.util.List;
 
