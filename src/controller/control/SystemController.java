@@ -14,10 +14,7 @@ import controller.service.RequestService;
 import entity.user.*;
 import java.util.Map;
 import java.util.Scanner;
-import util.exceptions.AlreadyApprovedException;
-import util.exceptions.AuthenticationException;
-import util.exceptions.RepNotApprovedException;
-import util.exceptions.RepPendingApprovalException;
+import util.exceptions.*;
 import util.io.InputHelper;
 
 /**
@@ -77,7 +74,7 @@ public class SystemController {
                 case STUDENT ->  new StudentController(auth, repo, request, internshipService, applicationService, (Student) user).launch(this);
 
                 case STAFF -> new StaffController(auth, repo, request, internshipService, applicationService, (CareerStaff) user).launch(this);
-                
+
                 case REP ->   new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch();
             }
     }
