@@ -52,11 +52,11 @@ public class StaffUI {
                 int choice = InputHelper.readInt();
                 switch (choice) {
                     case 1 -> ViewFilteredInternships();
-                    case 2 -> ViewPendingReps();
+                    case 2 -> viewPendingReq("Rep Registration", staffController.viewPendingReg());
                     case 3 -> approveRejectReq("Rep Registration", staffController.viewPendingReg());               // merged
-                    case 4 -> ViewPendingInternships();
+                    case 4 -> viewPendingReq("Internship Vetting", staffController.viewPendingInternshipVet());
                     case 5 -> approveRejectReq("Internship Vetting", staffController.viewPendingInternshipVet());     // merged
-                    case 6 -> ViewPendingWithdrawals();
+                    case 6 -> viewPendingReq("Withdrawal", staffController.viewPendingWithdrawal());
                     case 7 -> approveRejectReq("Withdrawal", staffController.viewPendingWithdrawal());        // merged
                     case 8 -> {
                         FilterUI.update(staffController.getFilter());
@@ -157,7 +157,7 @@ public class StaffUI {
     }
 
 
-    public void ViewFilteredInternships(){
+    private void ViewFilteredInternships(){
         ChangePage.changePage();
         System.out.println("All Internships(Filtered)");
         List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
@@ -166,34 +166,19 @@ public class StaffUI {
         throw new PageBackException();
     }
 
-    public void ViewPendingReps(){
+    private void viewPendingReq(String requestType, List<? extends Request> pending){
         ChangePage.changePage();
-        System.out.println("Pending Rep Registration Requests");
-        List<RegistrationRequest> pendingReg = staffController.viewPendingReg();
-        DisplayableViewer.displayList(pendingReg);
+        System.out.println("All " + requestType + " Requests");
+        if (pending.isEmpty()){
+            System.out.println("No " + requestType + " pending approval");
+            InputHelper.pause();
+            throw new PageBackException(); // goes back to the menu
+        }
+
+        DisplayableViewer.displayList(pending);
         InputHelper.pause();
         throw new PageBackException();
     }
-
-    public void ViewPendingInternships(){
-        ChangePage.changePage();
-        System.out.println("Pending Internship Vetting Requests");
-        List<InternshipVetRequest> pendingInternships = staffController.viewPendingInternshipVet();
-        DisplayableViewer.displayList(pendingInternships);
-        InputHelper.pause();
-        throw new PageBackException();
-    }
-
-
-    private void ViewPendingWithdrawals(){
-        ChangePage.changePage();
-        System.out.println("Pending Withdrawal Requests");
-        List<WithdrawalRequest> pendingWithdrawal = staffController.viewPendingWithdrawal();
-        DisplayableViewer.displayList(pendingWithdrawal);
-        InputHelper.pause();
-        throw new PageBackException();
-    }
-
 
     private void handleChangePassword(){
         ChangePage.changePage();
