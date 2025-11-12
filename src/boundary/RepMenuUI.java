@@ -232,8 +232,11 @@ public class RepMenuUI {
         LocalDate closingDate;
         while (true) {
             closingDate = InputHelper.readOptionalDate();
-            if (!closingDate.isBefore(openingDate)) break;
-            System.out.println("Closing date cannot be before opening date. Please try again.");
+            if (closingDate != null && openingDate != null && closingDate.isBefore(openingDate)) {
+                System.out.println("Closing date cannot be before opening date. Please try again.");
+            } else {
+                break;
+            }
         }
 
         System.out.print("New Number of Slots: ");
