@@ -98,7 +98,14 @@ public class CompanyRep extends User {
         this.internships.add(internship);
     }
 
-    /*
+    /**
+     *
+     */
+    public void removeInternship(InternshipOpportunity internship) {
+        this.internships.remove(internship);
+    }
+
+    /**
      * Only internship that are pending,approved and filled need to be count
      *
      */
