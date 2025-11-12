@@ -104,25 +104,12 @@ public class ApplicationService {
         if (application == null) {
             throw new ObjectNotFoundException("Invalid application ID: " + appId);
         }
-        InternshipOpportunity internship = internshipService.findInternshipById(application.getInternshipId());
-        // Ensure internship exists
-        if (internship == null) {
-            throw new ObjectNotFoundException("Invalid internship ID associated with application: " + application.getInternshipId());
-        }
         // Ensure the application has not been reviewed already
         if (application.getStatus() != ApplicationStatus.PENDING) {
             throw new IllegalStateException("This application has already been reviewed.");
         }
         
-        // Security check: ensure the internship belongs to the representative
-        if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
-            throw new SecurityException("You can only review applications for your own internships.");
-        }
-        // Ensure number of available slots if approving
-        if (approve && internshipService.isFilled(internship.getId())) {
-            throw new IllegalStateException("Cannot approve application; internship is already filled.");
-        }
-        // Apply the decision  
+        // Apply the decision
         application.changeApplicationStatus(approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED);
     }
 
