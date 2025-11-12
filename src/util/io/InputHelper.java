@@ -37,7 +37,13 @@ public class InputHelper {
     }
 
     public static Integer readOptionalInt() {
-        return sc.hasNextInt() ? sc.nextInt() : null;
+        String input = readLine();
+        if (input.isEmpty()) return null;
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public static LocalDate readDate() {
