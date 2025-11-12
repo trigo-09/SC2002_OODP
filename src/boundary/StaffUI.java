@@ -10,7 +10,7 @@ import entity.request.InternshipVetRequest;
 import entity.request.RegistrationRequest;
 import entity.request.Request;
 import entity.request.WithdrawalRequest;
-import util.FilterCriteria;
+import util.FilterCriteria;import util.exceptions.AuthenticationException;
 import util.exceptions.ObjectNotFoundException;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
@@ -31,9 +31,6 @@ public class StaffUI {
 
     public void menuLoop() {
         ChangePage.changePage();
-
-
-        System.out.println();
         System.out.println("=== Career Center Staff Menu ===");
         System.out.println("1.  View / filter internships");
         System.out.println("2.  View pending rep registrations");
@@ -48,27 +45,25 @@ public class StaffUI {
         System.out.print("Enter your choice (1-10): ");
 
         try {
-            while (true) {
-                int choice = InputHelper.readInt();
-                switch (choice) {
-                    case 1 -> ViewFilteredInternships();
-                    case 2 -> viewPendingReq("Rep Registration", staffController.viewPendingReg());
-                    case 3 -> approveRejectReq("Rep Registration", staffController.viewPendingReg());               // merged
-                    case 4 -> viewPendingReq("Internship Vetting", staffController.viewPendingInternshipVet());
-                    case 5 -> approveRejectReq("Internship Vetting", staffController.viewPendingInternshipVet());     // merged
-                    case 6 -> viewPendingReq("Withdrawal", staffController.viewPendingWithdrawal());
-                    case 7 -> approveRejectReq("Withdrawal", staffController.viewPendingWithdrawal());        // merged
-                    case 8 -> {
-                        FilterUI.update(staffController.getFilter());
-                        throw new PageBackException(); // so that it will loop
-                    }
-                    case 9 -> handleChangePassword();
-                    case 10 -> {
-                        System.out.println("Logging out...");
-                        systemController.mainMenu(); // return to Welcome screen
-                    }
-                    default -> System.out.println("Invalid choice. Please try again.");
+            int choice = InputHelper.readInt();
+            switch (choice) {
+                case 1 -> ViewFilteredInternships();
+                case 2 -> viewPendingReq("Rep Registration", staffController.viewPendingReg());
+                case 3 -> approveRejectReq("Rep Registration", staffController.viewPendingReg());               // merged
+                case 4 -> viewPendingReq("Internship Vetting", staffController.viewPendingInternshipVet());
+                case 5 -> approveRejectReq("Internship Vetting", staffController.viewPendingInternshipVet());     // merged
+                case 6 -> viewPendingReq("Withdrawal", staffController.viewPendingWithdrawal());
+                case 7 -> approveRejectReq("Withdrawal", staffController.viewPendingWithdrawal());        // merged
+                case 8 -> {
+                    FilterUI.update(staffController.getFilter());
+                    throw new PageBackException(); // so that it will loop
                 }
+                case 9 -> handleChangePassword();
+                case 10 -> {
+                    System.out.println("Logging out...");
+                    systemController.mainMenu(); // return to Welcome screen
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         } catch (PageBackException e) {
             menuLoop();
@@ -105,7 +100,7 @@ public class StaffUI {
         String requestID = request.getId();
 
         while (true) {
-            System.out.print("Enter 1 to Reject, 2 to Approve (Enter [0] to go back to menu): ");
+            System.out.print("Enter [1] to Reject, [2] to Approve (Enter [0] to go back to menu): ");
             int choice = InputHelper.readInt();
 
             if (choice == 0) {
@@ -148,7 +143,7 @@ public class StaffUI {
                     System.out.println("ERROR: " + e.getMessage()); // stay in the loop
                 }
             } else {
-                System.out.println("Please Enter 1 (Reject), 2 (Approve), or 0 (Back).");
+                System.out.println("Please Enter [1] (Reject), [2] (Approve), or [0] (Back).");
             } // stay in loop
         }
 
@@ -181,19 +176,44 @@ public class StaffUI {
     }
 
     private void handleChangePassword(){
-        ChangePage.changePage();
-        String oldPass = AttributeGetter.getPassword("Enter old password: ");
-        String newPass = AttributeGetter.getPassword("Enter new password: ");
-        String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
+        boolean retry = true;
 
-        try {
-            staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+        while (retry) {
+            ChangePage.changePage();
+            String oldPass = AttributeGetter.getPassword("Enter old password: ");
+            String newPass = AttributeGetter.getPassword("Enter new password: ");
+            String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
+
+            try {
+                staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
+                InputHelper.pause();
+                throw new PageBackException(); // return to main menu
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+                boolean validChoice = false;
+
+                while (!validChoice) {
+                    System.out.println();
+                    System.out.println("1. Try again");
+                    System.out.println("2. Return to main menu");
+                    System.out.print("Enter choice (1 or 2): ");
+                    int choice = InputHelper.readInt();
+
+                    switch (choice) {
+                        case 1 -> validChoice = true; // retry outer loop
+                        case 2 -> {
+                            validChoice = true;
+                            throw new PageBackException();
+                        }
+                        default -> {
+                            System.out.println("Invalid choice. Please enter 1 or 2.");
+                            System.out.println();
+                        }
+                    }
+                }
+            }
         }
-        InputHelper.pause();
-        throw new PageBackException();
     }
 
-
 }
+
