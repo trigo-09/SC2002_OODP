@@ -1,6 +1,7 @@
 package controller.control.user;
 
 import boundary.usermenu.RepMenuUI;
+import controller.control.SystemController;
 import controller.database.IRepository;
 import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
@@ -53,8 +54,8 @@ public class RepController extends UserController {
      /**
       * create nw RepMenuUI and launch its Menu
       */
-	public void launch() {
-    	new RepMenuUI(this).displayMenu();
+	public void launch(SystemController systemController) {
+    	new RepMenuUI(this,systemController).displayMenu();
 	}
 
 	/**
