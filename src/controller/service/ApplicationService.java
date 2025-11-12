@@ -182,6 +182,11 @@ public class ApplicationService {
         internshipService.removeApplicationFromInternship(application);
     }
 
+    public Application findApplication(String applicationId) {
+        Application application = systemRepository.findApplication(applicationId);
+        return application;
+    }
+
     /**
 	 * Helper method to validate status transitions.
 	 * @param current the current status
