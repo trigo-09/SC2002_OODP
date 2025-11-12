@@ -1,53 +1,61 @@
 package controller.database;
 
 import entity.request.*;
-
 import java.util.List;
 
+/**
+ * contain methods related to request for repository to implement
+ */
 public interface IRequestRepo {
 
-    public <T extends Request> List<T> getAllRequests(Class<T> type);
+    /**
+     * get all request
+     * able to decide which type of request due to use of generics
+     * @param type request
+     * @return
+     * @param <T> type of request class
+     */
+    <T extends Request> List<T> getAllRequests(Class<T> type);
 
     /**
-     *
-     * @param requestId
-     *
+     * get request using its ID
+     * @param requestId request id
      */
     Request getRequest(String requestId);
 
     /**
-     *
-     * @param withdrawalRequest
+     * add withdrawal request to request map
+     * @param withdrawalRequest request object
      */
-    public void addWithdrawalRequest(WithdrawalRequest withdrawalRequest);
+   void addWithdrawalRequest(WithdrawalRequest withdrawalRequest);
 
     /**
-     *
+     * remove withdrawal request from map
      * @param requestId
      */
-    public void removeWithdrawalRequest(String requestId);
+     void removeWithdrawalRequest(String requestId);
 
     /**
-     *
+     * add registration request to request map
      * @param registrationRequest
      */
-    public void addRegistrationRequest(RegistrationRequest registrationRequest);
+     void addRegistrationRequest(RegistrationRequest registrationRequest);
 
     /**
-     *
+     * remove registration request from request map
      * @param requestId
      */
-    public void removeRegistrationRequest(String requestId);
+    void removeRegistrationRequest(String requestId);
 
     /**
-     *
+     * add internship request to request map
      * @param internshipVetRequest
      */
-    public void addInternshipVetRequest(InternshipVetRequest internshipVetRequest);
+    void addInternshipVetRequest(InternshipVetRequest internshipVetRequest);
 
     /**
-     *
+     * remove internship request from request map
      * @param requestId
      */
-    public void removeInternshipVetRequest(String requestId);
+     void removeInternshipVetRequest(String requestId);
 }

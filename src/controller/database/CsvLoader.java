@@ -2,39 +2,49 @@ package controller.database;
 
 import entity.user.*;
 import util.FindDataDirectory;
-
 import java.io.*;
 import java.util.*;
 
+/**
+ * CSVLoader read CSV to create relevant objects which are added to repository
+ */
 public class CsvLoader {
 
     private final String directoryPath;
     private final IRepository sysRepo;
 
+    /**
+     * constructor of csvloader if file dir specified
+     * @param sysRepo
+     * @param directoryPath
+     */
     public CsvLoader(IRepository sysRepo, String directoryPath) {
         this.sysRepo = sysRepo;
         this.directoryPath = directoryPath;
     }
 
+    /**
+     * constructor of CSVLoader with predefined file dir
+     * @param sysRepo
+     */
     public CsvLoader(IRepository sysRepo) {
         this.sysRepo = sysRepo;
         this.directoryPath = FindDataDirectory.findDataDirectory().toString();
     }
     /**
-     * Load all CSV files from a directory and populate the SystemRepository.
-     *
+     * Load all CSV files from a dir and add to Repository.
      */
     public IRepository load() {
 
         File dir = new File(directoryPath);
         if (!dir.exists() || !dir.isDirectory()) {
-            System.err.println("Invalid directory: " + directoryPath);
+            System.err.println("Invalid dir: " + directoryPath);
             return sysRepo;
         }
 
         File[] csvFiles = dir.listFiles((d, name) -> name.toLowerCase().endsWith(".csv"));
         if (csvFiles == null || csvFiles.length == 0) {
-            System.err.println("No CSV files found: " + directoryPath);
+            System.err.println("No csv file found: " + directoryPath);
             return sysRepo;
         }
 
@@ -43,17 +53,11 @@ public class CsvLoader {
             loadSingleFile(file);
         }
 
-        System.out.println("Dir loaded"
-                + sysRepo.getStudents().size() + " students, "
-                + sysRepo.getCareerStaff().size() + " staff, "
-                + sysRepo.getPendingReps().size() + " reps loaded.");
-
         return sysRepo;
     }
 
     /**
      * Load a CSV file.
-     *
      * @param file path to CSV file
      */
     public void loadSingleFile(File file) {
@@ -61,7 +65,7 @@ public class CsvLoader {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String header = reader.readLine();
             if (header == null || header.isBlank()) {
-                System.err.println("[ERROR] Empty file: " + file);
+                System.err.println("error empty file: " + file);
             }
 
             String[] headerParts = header.split(",");
@@ -85,7 +89,12 @@ public class CsvLoader {
 
     }
 
-    // === Student Loader ===
+    /**
+     * read student CSV and create student object
+     * add student object to repository
+     * @param reader
+     * @throws IOException if failed to read csv line
+     */
     private void loadStudents(BufferedReader reader) throws IOException {
         System.out.println("Loading student list...");
         String line;
@@ -116,7 +125,12 @@ public class CsvLoader {
         }
     }
 
-    // === Staff Loader ===
+    /**
+     * read staff CSV and create staff object
+     * add staff object to repository
+     * @param reader
+     * @throws IOException if failed to read csv line
+     */
     private void loadStaff(BufferedReader reader) throws IOException {
         System.out.println("Loading staff list...");
         String line;

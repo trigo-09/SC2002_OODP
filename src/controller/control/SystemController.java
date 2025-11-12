@@ -20,6 +20,10 @@ import util.exceptions.RepNotApprovedException;
 import util.exceptions.RepPendingApprovalException;
 import util.io.InputHelper;
 
+/**
+ * Serve as pseudo singleton
+ * coordinate the whole system
+ */
 public class SystemController {
 
 	private final IRepository repo;
@@ -29,6 +33,10 @@ public class SystemController {
     private final InternshipService internshipService;
     private final ApplicationService applicationService;
 
+    /**
+     * Constructor for system controller
+     * all services and repository are created
+     */
 	public SystemController() {
         dataManager = new SystemDataManager();
         repo = dataManager.load();
@@ -38,6 +46,9 @@ public class SystemController {
         applicationService = new ApplicationService(repo);
 	}
 
+    /**
+     * starts the system
+     */
 	public void start() {
         Scanner scanner = new Scanner(System.in);
         InputHelper.init(scanner);
@@ -46,33 +57,50 @@ public class SystemController {
         }
 	}
 
+    /**
+     * calls Welcome class which contain welcome page
+     */
 	public void mainMenu() {
         Welcome.welcome(this);
 	}
 
+    /**
+     * calls authentication service to validate login
+     * create and launch relevant user's controller
+     * @param userId user's ID
+     * @param password user's password
+     * @throws AuthenticationException if there are issue during authentication
+     */
     public void handleLogin(String userId, String password) throws AuthenticationException {
             User user = auth.authenticate(userId,password);
             switch (user.getRole()) {
                 case STUDENT -> new StudentController(auth,repo,request,internshipService,applicationService,(Student) user).launch(this);
 
-                case STAFF -> new StaffController(auth,repo,request,internshipService,applicationService,(CareerStaff) user).launch(this); // Pass SystemController instance to enable logout functionality from StaffController
+                case STAFF -> new StaffController(auth,repo,request,internshipService,applicationService,(CareerStaff) user).launch(this);
 
                 case REP ->  new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch();
                     
             }
-        }
+    }
 
-
+    /**
+     * saves repository and call exit page
+     */
 	public void shutdown() {
         dataManager.save(repo);
         Exit.exit();
 	}
 
-
+    /**
+     * creates new company rep object and registration request for account approval
+     * @param userId company rep email
+     * @param name rep's name
+     * @param Password rep's password
+     * @param attributes rep's other attributes
+     * @throws AuthenticationException if account exist or account rejected or account still under processing
+     * @throws IllegalArgumentException if the userId have invalid email format
+     */
     public void registerRep(String userId, String name, String Password, Map<String, String> attributes) throws AuthenticationException, IllegalArgumentException {
-        /**
-         * ensure the UserId is in valid format
-         */
         if (!userId.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             throw new IllegalArgumentException("Invalid email format") ;
         }
@@ -91,7 +119,7 @@ public class SystemController {
         User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
         request.createRegistrationRequest((CompanyRep) user);
         repo.registerCompanyRep((CompanyRep) user);
-        dataManager.saveUpdate(repo);
+        dataManager.save(repo);
     }
 
 }

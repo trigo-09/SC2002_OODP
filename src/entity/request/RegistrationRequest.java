@@ -5,23 +5,43 @@ import entity.user.RepStatus;
 
 public class RegistrationRequest extends Request {
     private final CompanyRep companyRep;
+
+    /**
+     * constructor of RegistrationRequest class
+     * @param companyRep
+     */
    public RegistrationRequest(CompanyRep companyRep) {
        super(companyRep.getId());
        this.companyRep = companyRep;
    }
 
+    /**
+     * once approved, company rep status set to registered
+     */
    public void approve() {
        companyRep.setStatus(RepStatus.REGISTERED);
    }
+
+    /**
+     * company rep account to be set rejected
+     */
    public void reject() {
        companyRep.setStatus(RepStatus.REJECTED);
    }
 
+    /**
+     *
+     * @return company rep account
+     */
    public CompanyRep getCompanyRep() {
        return companyRep;
    }
 
 
+    /**
+     *
+     * @return string for displaying purpose
+     */
     @Override
     public String toString() {
         return String.format(

@@ -56,4 +56,8 @@ public class FilterCriteria {
     public void setClosingDate(LocalDate closingDate) {
         this.closingDate = closingDate;
     }
+
+    public String getCompanyName() {return companyName;}
+
+    public void setCompanyName(String companyName) {this.companyName = companyName;}
 }

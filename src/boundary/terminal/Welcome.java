@@ -6,7 +6,15 @@ import util.io.InputHelper;
 import util.ui.ChangePage;
 import util.ui.GraphicLogo;
 
+/**
+ * UI class to show welcome page of system
+ */
 public class Welcome {
+
+    /**
+     *  welcome page of the system
+     * @param controller system controller
+     */
     public static void welcome(SystemController controller) {
         ChangePage.changePage();
         System.out.println(GraphicLogo.WELCOME_LOGO);

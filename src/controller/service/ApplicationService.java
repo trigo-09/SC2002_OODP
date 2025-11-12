@@ -2,16 +2,15 @@ package controller.service;
 
 import controller.database.*;
 import entity.application.*;
-import entity.internship.InternStatus;
-import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.List;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectNotFoundException;
+import util.exceptions.UserNotFoundException;
 
 /**
- * Service class for managing internship applications.
- * Handles application submissions, reviews, acceptances, and withdrawals.
+ * Service class for managing internship applications
+ * Handles application submissions, reviews, acceptances, and withdrawals
  */
 public class ApplicationService {
 
@@ -31,15 +30,14 @@ public class ApplicationService {
      * Student applies for an internship opportunity.
      * @param studentId the ID of the student
      * @param internshipId the ID of the internship opportunity
-     * @throws IllegalStateException if the student is not eligible, internship is filled, or max applications reached
-     * @throws IllegalArgumentException if the internship ID is invalid
+     * @throws UserNotFoundException if its invalid student id
+     * @throws IllegalStateException if the student applied for the internship already
+     * @throws MaxExceedException if student exceed their max allowed applications
      */
-    public Application apply(String studentId, String internshipId) throws MaxExceedException {
+    public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException {
         // check eligibility
         Student user = (Student) systemRepository.findUser(studentId);
-        if (user == null) throw new IllegalArgumentException("Invalid student ID: " + studentId);
-        if (!(systemRepository.findUser(studentId) instanceof Student))
-            throw new SecurityException("User is not a student: " + studentId);
+        if (user == null) throw new UserNotFoundException("Invalid student ID: " + studentId);
 
         else if (user.getNumOfApplications() >= MAX_ACTIVE_APPLICATIONS) {
             throw new MaxExceedException("Student already has " + MAX_ACTIVE_APPLICATIONS + " active applications");
@@ -60,15 +58,15 @@ public class ApplicationService {
      * This will automatically withdraw all other pending or approved applications of the student.
      * @param studentId the ID of the student
      * @param applicationId the ID of the application to accept
-     * @throws IllegalArgumentException if the application ID is invalid
+     * @throws ObjectNotFoundException if the application ID is invalid
      * @throws SecurityException        if the application does not belong to the student
      * 
      */
-    public void acceptApplication(String studentId, String applicationId) {
+    public void acceptApplication(String studentId, String applicationId) throws ObjectNotFoundException{
         Application application = findApplication(applicationId);
         // Ensure application exists
         if (application == null) {
-            throw new IllegalArgumentException("Invalid application ID: " + applicationId);
+            throw new ObjectNotFoundException("Invalid application ID: " + applicationId);
         }
         // Security check: ensure the application belongs to the student
         if (!application.getStudentId().equalsIgnoreCase(studentId)) {
@@ -89,33 +87,47 @@ public class ApplicationService {
 
 
     /**
-     * Reviews an application submitted to an internship opportunity.
-     * @param repId the ID of the company representative
+     * Reviews an application submitted to an internship opportunity for approval or rejection.
      * @param appId the ID of the application to review
      * @param approve true to approve, false to reject
      * @throws ObjectNotFoundException  if the application ID is invalid
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */
-    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException {
-
+    public void reviewApplication(String appId, boolean approve) throws ObjectNotFoundException {
         Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
             throw new ObjectNotFoundException("Invalid application ID: " + appId);
         }
+
         // Ensure the application has not been reviewed already
         if (application.getStatus() != ApplicationStatus.PENDING) {
             throw new IllegalStateException("This application has already been reviewed.");
         }
-        
+
         // Apply the decision
-        application.changeApplicationStatus(approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED);
+        if (approve) {
+            if (validStatusTransition(application.getStatus(), ApplicationStatus.APPROVED)) {
+                application.changeApplicationStatus(ApplicationStatus.APPROVED);
+            } else
+                throw new IllegalStateException("Invalid status transition from " + application.getStatus() + " to " + ApplicationStatus.APPROVED);
+        } else {
+            if (validStatusTransition(application.getStatus(), ApplicationStatus.REJECTED)) {
+                application.changeApplicationStatus(ApplicationStatus.REJECTED);
+            } else
+                throw new IllegalStateException("Invalid status transition from " + application.getStatus() + " to " + ApplicationStatus.REJECTED);
+        }
     }
 
+
+    /**
+     * finds application object and returns it
+     * @param applicationId
+     * @return Application
+     */
     public Application findApplication(String applicationId) {
-        Application application = systemRepository.findApplication(applicationId);
-        return application;
+        return systemRepository.findApplication(applicationId);
     }
 
     /**

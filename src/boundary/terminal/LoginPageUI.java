@@ -11,12 +11,15 @@ import util.exceptions.PageBackException;
 import util.io.InputHelper;
 import util.ui.ChangePage;
 
+/**
+ * contain UI for login and registration
+ */
 public class LoginPageUI {
+
     /**
      * Displays a login page
-     *
-     * @param controller
-     * @throws PageBackException
+     * @param controller system controller
+     * @throws PageBackException if user wants to return
      */
     public static void login(SystemController controller) throws PageBackException {
         ChangePage.changePage();
@@ -61,6 +64,11 @@ public class LoginPageUI {
         }
     }
 
+    /**
+     * Display registration page
+     * @param controller system controller
+     * @throws PageBackException if user want to exit
+     */
     public static void register(SystemController controller) throws PageBackException  {
         ChangePage.changePage();
         System.out.println("Please fill in the relevant information");

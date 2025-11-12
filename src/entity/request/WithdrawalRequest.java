@@ -9,20 +9,44 @@ public class WithdrawalRequest extends Request {
         private final Application application;
         private final String reason;
 
+    /**
+     * Constructor for withdrawal request
+     * @param application
+     * @param reason
+     * @param requesterId
+     */
         public WithdrawalRequest(Application application, String reason, String requesterId) {
             super(requesterId);
             this.application = application;
             this.reason = reason;
         }
 
-        public Application getApplication() {return application;}
-        public String getReason() {return reason;}
+    /**
+     *
+     * @return application
+     */
+    public Application getApplication() {return application;}
 
-        public void approve() {
-            application.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
-        }
+    /**
+     *
+     * @return reason for request
+     */
+    public String getReason() {return reason;}
+
+    /**
+     * change application to withdraw once approved
+     */
+    public void approve() {
+        application.changeApplicationStatus(ApplicationStatus.WITHDRAWN);
+    }
+
+    public void reject() {}
 
 
+    /**
+     *
+     * @return string for displaying
+     */
     @Override
     public String toString() {
         return String.format(

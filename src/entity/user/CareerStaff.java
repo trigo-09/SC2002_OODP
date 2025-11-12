@@ -6,7 +6,7 @@ public class CareerStaff extends User {
 
 
     /**
-     *
+     * constructor of Career staff
      * @param name
      * @param id
      * @param pass
@@ -17,12 +17,16 @@ public class CareerStaff extends User {
         this.staffDepartment = department;
     }
 
+    /**
+     *
+     * @return staff's department
+     */
 	public String getStaffDepartment() {
 		return this.staffDepartment;
 	}
 
 	/**
-	 * 
+	 * set new department
 	 * @param staffDepartment
 	 */
 	public void setStaffDepartment(String staffDepartment) {

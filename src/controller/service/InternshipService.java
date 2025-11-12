@@ -12,26 +12,36 @@ import util.FilterCriteria;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectNotFoundException;
 
+/**
+ * Service class for managing internship
+ * Handles internship creation, deletion, edit and changes
+ */
 public class InternshipService {
 
     private final IRepository repository;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
+    /**
+     * Constructor for internship service
+     * @param repository system repository
+     */
     public InternshipService(IRepository repository) {
         this.repository = repository;
     }
-    /**
-    * @param title
-    * @param description
-    * @param level
-    * @param preferredMajors
-    * @param closingDate
-    * @param openingDate
-    * @param numOfSlots
-    * @param createdBy
-    * @param companyName
-    */
 
+    /**
+     * create new internship and add it into rep's list
+    * @param title title
+    * @param description description of internship
+    * @param level level of internship
+    * @param preferredMajors preferred major
+    * @param closingDate closing date
+    * @param openingDate opening date
+    * @param numOfSlots number of approved application slot
+    * @param createdBy rep's ID
+    * @param companyName company name
+     * @throws MaxExceedException if the company creates max number of allocated internship
+    */
     public InternshipOpportunity proposeInternship (String title,
                                                    String description,
                                                    InternshipLevel level,
@@ -41,7 +51,7 @@ public class InternshipService {
                                                    int numOfSlots,
                                                    String createdBy,
                                                    String companyName) throws MaxExceedException {
-        if(!isEligibleToCreateInternship(createdBy)){
+        if(!isEligibleToCreateInternship(companyName)){
             throw new MaxExceedException("Max number of Internship created");
         }
         InternshipOpportunity internship = new InternBuilder()
@@ -61,18 +71,22 @@ public class InternshipService {
 	}
 
 	/**
-	 * 
-	 * @param internshipId
-	 * @param visible
+	 * changes the visibility of given internship
+	 * @param internshipId internship id
+	 * @param visible on or off visibility
+     * @throws SecurityException if the internship yet to be approved by career staff
 	 */
 	public void setVisibility(String internshipId, boolean visible) {
         InternshipOpportunity internship = findInternshipById(internshipId);
+        if(internship.getStatus() == InternStatus.PENDING){
+            throw new SecurityException("Internship visibility cannot be changed while in pending status");
+        }
         internship.setVisibility(visible);
 	}
 
 	/**
-	 * 
-	 * @param internship
+	 * checks whether internship can be edited
+	 * @param internship internship object
 	 *
 	 */
 	private boolean ableToEditInternship(InternshipOpportunity internship){
@@ -107,7 +121,13 @@ public class InternshipService {
         if (level != null)           internship.setLevel(level);
     }
 
-
+    /**
+     * deleted internship
+     * @param repId rep's ID
+     * @param internshipId internship's ID
+     * @throws ObjectNotFoundException if internship can not be found
+     * @throws SecurityException if internship is not in pending state or wrong person accessing it
+     */
     public void removeInternship(String repId,String internshipId) throws ObjectNotFoundException {
         CompanyRep rep = (CompanyRep) repository.findUser(repId);
         InternshipOpportunity internship = findInternshipById(internshipId);
@@ -126,29 +146,47 @@ public class InternshipService {
         }
     }
 
+    /**
+     * help to get internship after applying filter
+     * @param internList list of internship
+     * @param filter filter
+     * @return list of internship
+     */
 	public List<InternshipOpportunity> getFilteredInternship(List<InternshipOpportunity> internList, FilterCriteria filter) {
         return internList.stream()
                 .filter(internship -> filter.getStatus() == null || filter.getStatus() == internship.getStatus())
                 .filter(internship -> filter.getPreferredMajor().isEmpty() ||filter.getPreferredMajor().equals(internship.getPreferredMajors()))
                 .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()))
+                .filter(internship->filter.getCompanyName().isEmpty() ||filter.getCompanyName().equals(internship.getCompanyName()))
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
                 .toList();
     }
 
+    /**
+     * get all the internship of the company
+     * @param companyName company name
+     * @return list of internship
+     */
     public List<InternshipOpportunity> getInternshipsByCompany(String companyName){
         return repository.getInternshipsByCompany(companyName);
 	}
 
     // Get the list of eligible internships that a student can apply for
+
+    /**
+     * get all the internships that students can view
+     * @param s student
+     * @return list of internship
+     */
     public List<InternshipOpportunity> getEligibleInternships(Student s) {
         List<InternshipOpportunity> allInternships = repository.getAllInternships();
         return allInternships.stream().filter(internship -> isEligible(s, internship.getId())).collect(Collectors.toList());
     }
 
 	/**
-        *
-        * @param internshipId
-        */
+    * finding internship via ID
+    * @param internshipId internship ID
+    */
 	public InternshipOpportunity findInternshipById(String internshipId) {
         return repository.findInternshipOpportunity(internshipId);
 	}
@@ -173,24 +211,33 @@ public class InternshipService {
 
                 // Major must match (unless internship accepts "Any")
                 String preferredMajors = i.getPreferredMajors();
-                if (!Objects.equals(preferredMajors, "Any") && !Objects.equals(preferredMajors, s.getMajor())) {
-                return false;
-                }
+        return Objects.equals(preferredMajors, "Any") || Objects.equals(preferredMajors, s.getMajor());
 
                 // Passed all checks
-                return true;
-	}
-
-    public boolean isEligibleToCreateInternship(String repId) {
-        CompanyRep rep = (CompanyRep) repository.findUser(repId);
-        return rep.getNumOfInternships() < MAX_ACTIVE_INTERNSHIPS;
     }
 
+    /**
+     * ensure that the company does not create more than allocated internship slots
+     * @param companyName company name
+     * @return boolean
+     */
+    public boolean isEligibleToCreateInternship(String companyName) {
+        return getInternshipsByCompany(companyName).stream().filter(i->i.getStatus() != InternStatus.REJECTED).count() < MAX_ACTIVE_INTERNSHIPS;
+    }
+
+    /**
+     * add application to internship pending list
+     * @param app application object
+     */
     public void addPendApplicationToInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         internshipOpportunity.addPendingApplication(app);
     }
 
+    /**
+     * move approved application to approved list and change internship status to filled if application slot filled up
+     * @param app application object
+     */
     public void addAcceptedApplicationToInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         internshipOpportunity.addApprovedapplication(app);
@@ -199,6 +246,11 @@ public class InternshipService {
         }
     }
 
+    /**
+     * remove application from internship
+     * if internship status was filled, change to approved
+     * @param app application object
+     */
     public void removeApplicationFromInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         if(app.getStatus() == ApplicationStatus.ACCEPTED){
@@ -211,16 +263,18 @@ public class InternshipService {
         }
     }
 
-
-
-
 	/**
-        *
-        * @param internshipId
-        */
+    * checks if internship is FILLED
+    * @param internshipId internship ID
+    */
 	public boolean isFilled(String internshipId) {
                 return findInternshipById(internshipId).getStatus() == InternStatus.FILLED;
 	}
+
+    /**
+     * checks if internship is FILLED
+     * @param internship internship Object
+     */
     public boolean isFilled(InternshipOpportunity internship) {
         return internship.getStatus() == InternStatus.FILLED;
     }

@@ -8,12 +8,16 @@ import util.exceptions.PasswordIncorrectException;
 import util.exceptions.RepNotApprovedException;
 import util.exceptions.UserNotFoundException;
 
+/**
+ * Service class for authentication
+ * Handles changing password and validating login
+ */
 public class AuthenticationService {
 
     private final IRepository resposistory;
 
 	/**
-     *
+     * constructor of authentication Service
      * @param resposistory
      */
 	public AuthenticationService(IRepository resposistory) {
@@ -21,9 +25,10 @@ public class AuthenticationService {
 	}
 
 	/**
-	 * 
+	 * validate login and return user object
 	 * @param userId
 	 * @param password
+     * @throws AuthenticationException if user not found or user not approved or wrong password
 	 */
 	public User authenticate(String userId, String password) throws AuthenticationException {
         User user = resposistory.findUser(userId);
@@ -44,9 +49,10 @@ public class AuthenticationService {
 	}
 
 	/**
-     *
+     * changes password
      * @param userId
      * @param newPassword
+     * @throws if wrong old password entered
      */
 	public void changePassword(String userId,String oldPassword,String newPassword) throws AuthenticationException {
 		User user = resposistory.findUser(userId);
