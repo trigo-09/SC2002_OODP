@@ -148,7 +148,7 @@ public class RepController extends UserController {
 		applicationService.reviewApplication(rep.getId(), appId, false);
 	}
 
-    public void deleteInternship(String internshipId) {
+    public void deleteInternship(String internshipId) throws ObjectNotFoundException{
         internshipService.removeInternship(rep.getId(), internshipId);
         request.deleteInternshipRequest(internshipId);
     }
