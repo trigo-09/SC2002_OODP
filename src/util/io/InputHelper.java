@@ -30,4 +30,9 @@ public class InputHelper {
         }
         return password;
     }
+
+    public static void pause() {
+        System.out.print("Press Enter to continue...");
+        readLine();
+    }
 }
