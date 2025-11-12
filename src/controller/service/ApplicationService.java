@@ -2,6 +2,7 @@ package controller.service;
 
 import controller.database.*;
 import entity.application.*;
+import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import util.exceptions.MaxExceedException;
@@ -136,7 +137,7 @@ public class ApplicationService {
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */
-    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException {
+    public void reviewApplication(String repId, String appId, boolean approve) throws ObjectNotFoundException, MaxExceedException {
 
         Application application = systemRepository.findApplication(appId);
         // Ensure application exists
@@ -157,12 +158,20 @@ public class ApplicationService {
         if (!internship.getCreatedBy().equalsIgnoreCase(repId)) {
             throw new SecurityException("You can only review applications for your own internships.");
         }
+        if (approve) {
+            if (internship.getStatus() == InternStatus.FILLED) {
+                throw new MaxExceedException("Max number of approved slot have be filles");
+            }
 
-        // Apply the decision
-        application.changeApplicationStatus(
-            approve ? ApplicationStatus.APPROVED : ApplicationStatus.REJECTED
-        );
-    }   
+            // Add application to approved slot
+            internship.addApprovedapplication(application);
+            application.changeApplicationStatus(ApplicationStatus.APPROVED);
+            if (internship.getNumOfFilledSlots() == internship.getNumOfSlots()) {
+                internship.setStatus(InternStatus.FILLED);
+            }
+        }else {application.changeApplicationStatus(ApplicationStatus.REJECTED);}
+
+    }
 
     /**
 	 * Helper method to validate status transitions.
