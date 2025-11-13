@@ -67,6 +67,9 @@ public class GraphicLogo {
      */
     public static final String NEW = "\u001B[31m" + "NEW!" + "\u001B[0m"; // might delete it later
 
+    /**
+     * Logo string to display ASCII welcome LOGO
+     */
     public static final String WELCOME_LOGO = "\n" +
             "╭━━┳━━━┳━╮╭━┳━━━╮\n" +
             "╰┫┣┫╭━╮┃┃╰╯┃┃╭━╮┃\n" +
