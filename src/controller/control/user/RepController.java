@@ -81,6 +81,7 @@ public class RepController extends UserController {
                                                   int numOfSlots) throws MaxExceedException, ObjectAlreadyExistsException{
         InternshipOpportunity internship =internshipService.proposeInternship(title, description, level, preferredMajors, openingDate, closingDate, numOfSlots, rep.getId(), rep.getCompanyName());
         requestService.createInternshipRequest(rep.getId(), internship);
+		internshipService.addInternship(internship);
     }
 	
 
