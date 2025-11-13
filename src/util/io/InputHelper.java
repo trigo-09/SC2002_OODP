@@ -87,6 +87,27 @@ public class InputHelper {
             return readOptionalDate();
         }
     }
+    public static LocalDate readOptionalOpenDate() {
+        System.out.print("Open Date (DD-MM-YYYY) or leave blank to keep:");
+        String string = readLine();
+        if (string.isEmpty()) return null;
+        try { return LocalDate.parse(string, DMY); }
+        catch (DateTimeParseException e) {
+            System.out.println("Invalid date, use DD-MM-YYYY or leave blank.");
+            return readOptionalOpenDate();
+        }
+    }
+
+    public static LocalDate readOptionalCloseDate() {
+        System.out.print("Closing Date (DD-MM-YYYY) or leave blank to keep:");
+        String string = readLine();
+        if (string.isEmpty()) return null;
+        try { return LocalDate.parse(string, DMY); }
+        catch (DateTimeParseException e) {
+            System.out.println("Invalid date, use DD-MM-YYYY or leave blank.");
+            return readOptionalCloseDate();
+        }
+    }
     
        
      
