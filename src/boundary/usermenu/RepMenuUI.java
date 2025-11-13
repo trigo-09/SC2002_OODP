@@ -162,6 +162,7 @@ public class RepMenuUI {
             System.out.println("1) Set Internship Visibility");
             System.out.println("2) Edit Internship");
             System.out.println("3) Manage Applications for an Internship");
+            System.out.println("4) Manage Filter");
 
             while(true) {
                 System.out.print("Enter your choice: ");
@@ -170,7 +171,7 @@ public class RepMenuUI {
                     System.out.println("No internships available to manage. Please choose another option.");
                     continue;
                 }
-                if (choice < 0 || choice > 3) {
+                if (choice < 0 || choice > 4) {
                     System.out.println("Invalid choice. Please try again.");
                     continue;
                 }
@@ -335,23 +336,9 @@ public class RepMenuUI {
         InputHelper.pause();
     }
 
-    private void handleApplications(List<InternshipOpportunity> filteredInternships) {
-        ChangePage.changePage();
-        DisplayableViewer.displayList(filteredInternships);
-        int index;
-
-        while (true){
-            System.out.print("Enter index of internship to view: ");
-            index = InputHelper.readInt();
-            if (index == 0){
-                return;
-            }
-            else if (index<1 || index > filteredInternships.size()){
-                System.out.println("PLease enter a valid index.");
-                break;
-            }
-        }
-        String internId = filteredInternships.get(index-1).getId();
+    private void handleApplications() {
+        System.out.print("Enter Internship ID to manage applications: ");
+        String internId = InputHelper.readLine();
 
         try {
             List<Application> applications = repController.getApplications(internId);
