@@ -81,8 +81,8 @@ public class InternshipService {
 	 */
 	public void setVisibility(String internshipId, boolean visible) {
         InternshipOpportunity internship = findInternshipById(internshipId);
-        if(internship.getStatus() == InternStatus.PENDING){
-            throw new SecurityException("Internship visibility cannot be changed while in pending status");
+        if(internship.getStatus() == InternStatus.PENDING || internship.getStatus() == InternStatus.REJECTED){
+            throw new SecurityException("Internship visibility cannot be changed in "+ internship.getStatus()+" status");
         }
         internship.setVisibility(visible);
 	}
