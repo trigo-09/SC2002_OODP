@@ -171,17 +171,15 @@ public class StudentUI {
                 System.out.println("Invalid choice. Please enter a valid index.");
             }
         }
-
-        Application app = appList.get(index-1);
-        studentController.acceptPlacement(app.getApplicationId());
-        System.out.println("Application has been accepted.");
-        InputHelper.pause();
-        throw new PageBackException();
         try {
+            Application app = appList.get(index-1);
             studentController.acceptPlacement(app.getApplicationId());
+            System.out.println("Application has been accepted.");
         }catch (Exception e){
             System.out.println("ERROR: "+e.getMessage());
         }
+        InputHelper.pause();
+        throw new PageBackException();
 
     }
 
