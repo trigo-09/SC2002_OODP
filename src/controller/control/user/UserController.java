@@ -4,7 +4,7 @@ import controller.database.IRepository;
 import controller.service.AuthenticationService;
 import controller.service.RequestService;
 import entity.user.User;
-import util.FilterCriteria;
+import entity.FilterCriteria;
 import util.exceptions.AuthenticationException;
 
 public class UserController {

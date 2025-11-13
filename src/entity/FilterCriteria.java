@@ -1,4 +1,4 @@
-package util;
+package entity;
 
 import entity.internship.InternStatus;
 import entity.internship.InternshipLevel;

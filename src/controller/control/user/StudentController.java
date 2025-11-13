@@ -13,7 +13,7 @@ import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
-import util.FilterCriteria;
+import entity.FilterCriteria;
 import util.exceptions.*;
 
 /**
