@@ -84,8 +84,9 @@ public class StudentController extends UserController {
         if (internshipService.isFilled(internshipId)) {
             throw new IllegalStateException("Internship is already filled.");
         }
-         Application app =applicationService.apply(student.getId(), internshipId);
-         internshipService.addPendApplicationToInternship(app);
+        Application app =applicationService.apply(student.getId(), internshipId);
+        applicationService.addApplication(app);
+        internshipService.addPendApplicationToInternship(app);
 	}
 
 	/**

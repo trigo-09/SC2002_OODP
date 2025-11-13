@@ -48,7 +48,6 @@ public class ApplicationService {
         }
         else {
             Application application = new Application(user.getId(), internshipId);
-            systemRepository.addApplication(studentId, application);
             return application;
         }
     }
@@ -144,6 +143,10 @@ public class ApplicationService {
             case REJECTED, WITHDRAWN -> false;
             default -> false;
         };
+    }
+
+    public void addApplication(Application application) {
+        systemRepository.addApplication(application.getStudentId(), application);
     }
 }
 
