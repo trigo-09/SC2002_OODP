@@ -47,8 +47,7 @@ public class ApplicationService {
             throw new IllegalStateException("Student has already applied for this internship.");
         }
         else {
-            Application application = new Application(user.getId(), internshipId);
-            return application;
+            return new Application(user.getId(), internshipId);
         }
     }
 
