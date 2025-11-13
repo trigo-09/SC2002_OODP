@@ -165,6 +165,20 @@ public class InternshipService {
                 .toList();
     }
 
+    public List<InternshipOpportunity> getPendingInternships(List<InternshipOpportunity> internList){
+        return internList.stream()
+                .filter(internship -> internship.getStatus() == InternStatus.PENDING)
+                .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
+                .toList();
+    }
+
+    public List<InternshipOpportunity> getApprovedInternships(List<InternshipOpportunity> internList){
+        return internList.stream()
+                .filter(internship -> internship.getStatus() == InternStatus.APPROVED)
+                .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
+                .toList();
+    }
+
     /**
      * get all the internship of the company
      * @param companyName company name
