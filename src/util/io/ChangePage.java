@@ -26,7 +26,7 @@ public class ChangePage {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 // Unix-like systems
-                System.out.print("\u001b[H\u001b[2J");
+                System.out.print("\u001b[H\u001b[2J\u001b[3J");
                 System.out.flush();
             }
         } catch (IOException | InterruptedException e) {
