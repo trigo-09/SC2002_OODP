@@ -200,21 +200,22 @@ public class InternshipService {
 	 * @param internshipId The internship to apply for
 	 */
 	public boolean isEligible(Student s, String internshipId) {
-                InternshipOpportunity i = findInternshipById(internshipId);
-                if (!i.getVisibility()) {return false;}
+        InternshipOpportunity i = findInternshipById(internshipId);
+        if (!i.getVisibility()) {return false;}
 
-                // Students year must match the internship level
-                if (!i.getLevel().isEligible(s.getYear())) {return false;}
+        // Students year must match the internship level
+        if (!i.getLevel().isEligible(s.getYear())) {return false;}
 
-                // Students cannot apply if there is no slots left
-                if(isFilled(i)){return false;}
+        // Students cannot apply if there is no slots left
+        if(isFilled(i)){return false;}
 
-                // Student cannot apply if the internship is past closing date
-                if(i.getClosingDate().isBefore(LocalDate.now())){return false;}
+        // Student cannot apply if the internship is past closing date
+        if(i.getClosingDate().isBefore(LocalDate.now())){return false;}
 
-                // Major must match (unless internship accepts "Any")
-                String preferredMajors = i.getPreferredMajors();
-        return Objects.equals(preferredMajors, "Any") || Objects.equals(preferredMajors, s.getMajor());
+        // Major must match (unless internship accepts "Any")
+        String preferredMajors = i.getPreferredMajors();
+
+        return preferredMajors.equalsIgnoreCase("any") || preferredMajors.equalsIgnoreCase(s.getMajor());
 
                 // Passed all checks
     }
