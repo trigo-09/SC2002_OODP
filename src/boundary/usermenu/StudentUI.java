@@ -52,7 +52,12 @@ public class StudentUI {
                         System.out.println("Logging out...");
                         systemController.mainMenu();
                     }
-                    default -> System.out.println("Invalid choice. Please try again.");
+                    default -> {
+                        System.out.println("Invalid choice. Please try again.");
+                        InputHelper.pause();
+                        throw new PageBackException();
+                    }
+
                 }
             }
         }catch (PageBackException e){
@@ -230,18 +235,43 @@ public class StudentUI {
      * Prompts them for old, new and confirm new password
      */
     private void handleChangePass(){
-        String oldPass = AttributeGetter.getString("Enter old password");
-        String newPass = AttributeGetter.getString("Enter new password");
-        String confirmPass = AttributeGetter.getString("Confirm new password");
+        boolean retry = true;
 
-        try{
-            studentController.changePassword(oldPass, newPass, studentController.getStudent(),  confirmPass);
-        }
-        catch (Exception e){
-            System.out.println("Error: " + e.getMessage());
-        }
+        while (retry) {
+            ChangePage.changePage();
+            String oldPass = AttributeGetter.getPassword("Enter old password: ");
+            String newPass = AttributeGetter.getPassword("Enter new password: ");
+            String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
+
+            try {
+                studentController.changePassword(oldPass, newPass, studentController.getStudent(), confirmPass);
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+                boolean validChoice = false;
+
+                while (validChoice) {
+                    System.out.println();
+                    System.out.println("1. Try again");
+                    System.out.println("2. Return to main menu");
+                    System.out.print("Enter choice (1 or 2): ");
+                    int choice = InputHelper.readInt();
+
+                    switch (choice) {
+                        case 1 -> validChoice = true; // retry outer loop
+                        case 2 -> {
+                            validChoice = true;
+                            throw new PageBackException();
+                        }
+                        default -> {
+                            System.out.println("Invalid choice. Please enter 1 or 2.");
+                            System.out.println();
+                        }
+                    }
+                }
+            }
         InputHelper.pause();
         throw new PageBackException();
+        }
     }
     /**
      * Allow student to change their filter options
@@ -257,22 +287,21 @@ public class StudentUI {
         System.out.println("- Closing Date: " + filter.getClosingDate());
         System.out.println();
 
-        String levelRaw = AttributeGetter.getString("Update Level [BASIC/INTERMEDIATE/ADVANCED/CLEAR]: ");
-        if (!levelRaw.isBlank()){
-            String input = levelRaw.trim();
-            if (input.equals("CLEAR")){
-                filter.setLevel(null);
-                System.out.println("-> Level filter cleared");
-            }
-            else{
-                try{
-                    InternshipLevel level = InternshipLevel.valueOf(input);
-                    filter.setLevel(level);
-                }catch(IllegalArgumentException e){
-                    System.out.println("!! Invalid level. Keeping previous");
-                }
-            }
+        System.out.println("Enter Internship Level: ");
+        System.out.println("1) BASIC\n2) INTERMEDIATE\n3) ADVANCED\n4) CLEAR");
+        System.out.println("Enter choice: ");
+        int choice = InputHelper.readInt();
+
+        switch (choice) {
+            case 1 -> filter.setLevel(InternshipLevel.BASIC);
+            case 2 -> filter.setLevel(InternshipLevel.INTERMEDIATE);
+            case 3 -> filter.setLevel(InternshipLevel.ADVANCED);
+            case 4 -> filter.setLevel(null);
+            default -> System.out.println("Invalid choice. Keeping previous level.");
         }
+
+        System.out.println("Level updated: " + filter.getLevel());
+
 
         String closeRaw = AttributeGetter.getString("Enter closing date (yyyy-MM-dd) or 0 to clear: ");
         if (!closeRaw.isBlank()){
