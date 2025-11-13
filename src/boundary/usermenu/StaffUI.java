@@ -31,17 +31,19 @@ public class StaffUI {
         ChangePage.changePage();
         System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Welcome to Career Center Staff Menu!");
-        System.out.println(GraphicLogo.SEPARATOR);
-        System.out.println("1.  View / filter internships");
-        System.out.println("2.  View pending rep registrations");
-        System.out.println("3.  Rep registration (Approve/Reject)");
-        System.out.println("4.  View internships pending approval");
-        System.out.println("5.  Internship (Approve/Reject)");
-        System.out.println("6.  View pending withdrawal requests");
-        System.out.println("7.  Withdrawal (Approve/Reject)");
-        System.out.println("8.  Update internship filter settings");
-        System.out.println("9.  Change password");
-        System.out.println("10. Logout");
+        System.out.println("Hello, " + staffController.getStaff().getUserName()+"!");
+        System.out.print("\n");
+        System.out.println("\t1.  View / filter internships");
+        System.out.println("\t2.  View pending rep registrations");
+        System.out.println("\t3.  Rep registration (Approve/Reject)");
+        System.out.println("\t4.  View internships pending approval");
+        System.out.println("\t5.  Internship (Approve/Reject)");
+        System.out.println("\t6.  View pending withdrawal requests");
+        System.out.println("\t7.  Withdrawal (Approve/Reject)");
+        System.out.println("\t8.  Update internship filter settings");
+        System.out.println("\t9.  Change password");
+        System.out.println("\t10. Logout");
+        System.out.println(GraphicLogo.SEPARATOR + "\n");
         System.out.print("Enter your choice (1-10): ");
 
         try {
