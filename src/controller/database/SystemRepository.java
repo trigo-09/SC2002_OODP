@@ -29,7 +29,6 @@ public class SystemRepository implements IRepository, Serializable {
 	 */
 	public void addApplication(String studentId,Application app) {
         students.get(studentId.toLowerCase()).addApplication(app);
-        findInternshipOpportunity(app.getInternshipId().toLowerCase()).addPendingApplication(app);
 	}
 
 	/**
