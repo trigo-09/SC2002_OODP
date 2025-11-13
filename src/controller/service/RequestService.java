@@ -119,7 +119,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectRegistrationRequest(String requestId) throws ObjectNotFoundException {
-        RegistrationRequest req = (RegistrationRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
