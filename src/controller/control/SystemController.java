@@ -105,8 +105,8 @@ public class SystemController {
             throw new AlreadyApprovedException("Account is already registered and approved");
         }
         if (repo.getPendingReps().containsKey(userId)){
-            if (repo.getPendingReps().get(userId).getStatus() == RepStatus.REJECTED){
-                throw new RepNotApprovedException(userId);
+            if (repo.getPendingReps().get(userId).getStatus() == RepStatus.PENDING) {
+                throw new RepPendingApprovalException(userId);
             }
             else {
                 throw new RepPendingApprovalException(userId);
