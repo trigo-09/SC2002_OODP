@@ -2,12 +2,11 @@ package controller.service;
 
 import controller.database.IRepository;
 import controller.database.IUser;
+import entity.user.CompanyRep;
+import entity.user.RepStatus;
 import entity.user.User;
 import util.PasswordHasher;
-import util.exceptions.AuthenticationException;
-import util.exceptions.PasswordIncorrectException;
-import util.exceptions.RepNotApprovedException;
-import util.exceptions.UserNotFoundException;
+import util.exceptions.*;
 
 /**
  * Service class for authentication
@@ -39,7 +38,10 @@ public class AuthenticationService {
         }
 
         if (resposistory.getPendingReps().containsKey(userId)) {
-            throw new RepNotApprovedException(userId);
+            CompanyRep rep = (CompanyRep) user;
+            if (rep.getStatus() == RepStatus.REJECTED) {
+                throw new RepNotApprovedException(userId);
+            }else {throw new RepPendingApprovalException(userId);}
         }
 
         if (!PasswordHasher.verify(password,user.getHashedPassword())){
