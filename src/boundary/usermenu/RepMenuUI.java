@@ -341,7 +341,7 @@ public class RepMenuUI {
         int index;
 
         while (true){
-            System.out.print("Enter index of internship to edit: ");
+            System.out.print("Enter index of internship to view: ");
             index = InputHelper.readInt();
             if (index == 0){
                 return;
