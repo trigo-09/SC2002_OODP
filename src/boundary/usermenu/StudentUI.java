@@ -1,6 +1,7 @@
 package boundary.usermenu;
 
 import boundary.AttributeGetter;
+import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StudentController;
@@ -46,7 +47,7 @@ public class StudentUI {
                     case 3 -> handleViewApplications();
                     case 4 -> handleAcceptance();
                     case 5 -> handleWithdrawal();
-                    case 6 -> handleChangePass();
+                    case 6 -> ChangePasswordUI.handleChangePassword(systemController, studentController, studentController.getStudent());
                     case 7 -> handleChangeFilter();
                     case 8 -> {
                         System.out.println("Logging out...");

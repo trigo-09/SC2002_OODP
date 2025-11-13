@@ -1,6 +1,7 @@
 package boundary.terminal;
 
 import boundary.AttributeGetter;
+import controller.control.SystemController;
 import controller.control.user.UserController;
 import entity.user.User;
 import util.exceptions.PageBackException;
@@ -8,7 +9,7 @@ import util.io.ChangePage;
 import util.io.InputHelper;
 
 public class ChangePasswordUI {
-    public static void handleChangePassword(UserController userController, User user){
+    public static void handleChangePassword(SystemController systemController, UserController userController, User user){
         boolean retry = true;
 
         while (retry) {
@@ -19,7 +20,7 @@ public class ChangePasswordUI {
 
             try {
                 userController.changePassword(oldPass, newPass, user, confirmPass);
-                break;
+                systemController.mainMenu();
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 boolean validChoice = false;
@@ -33,9 +34,7 @@ public class ChangePasswordUI {
 
                     switch (choice) {
                         case 1 -> validChoice = true; // retry outer loop
-                        case 2 -> {
-                            throw new PageBackException();
-                        }
+                        case 2 -> throw new PageBackException();
                         default -> {
                             System.out.println("Invalid choice. Please enter [1] or [2].");
                             System.out.println();

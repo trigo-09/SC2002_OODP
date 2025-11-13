@@ -52,6 +52,7 @@ public class FilterUI {
             default -> System.out.println("Invalid choice, keeping previous status.");
         }
         System.out.println("Status updated: " + display(filter.getStatus()));
+        InputHelper.pause();
     }
 
     private static void updateMajor(FilterCriteria filter) {
@@ -59,6 +60,7 @@ public class FilterUI {
         if (major.equals("0")) filter.setPreferredMajor(null);
         else filter.setPreferredMajor(major);
         System.out.println("Preferred Major updated: " + display(filter.getPreferredMajor()));
+        InputHelper.pause();
     }
 
     private static void updateLevel(FilterCriteria filter) {
@@ -75,6 +77,7 @@ public class FilterUI {
             default -> System.out.println("Invalid choice, keeping previous level.");
         }
         System.out.println("Level updated: " + display(filter.getLevel()));
+        InputHelper.pause();
     }
 
     private static void updateClosingDate(FilterCriteria filter) {
@@ -89,6 +92,7 @@ public class FilterUI {
             }
         }
         System.out.println("Closing date updated: " + display(filter.getClosingDate()));
+        InputHelper.pause();
     }
 
     private static void clearAll(FilterCriteria filter) {
@@ -97,6 +101,7 @@ public class FilterUI {
         filter.setLevel(null);
         filter.setClosingDate(null);
         System.out.println("All filters cleared.");
+        InputHelper.pause();
     }
 
     private static String display(Object obj) {
