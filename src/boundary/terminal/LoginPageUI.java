@@ -82,7 +82,7 @@ public class LoginPageUI {
             count++;
             if(company.isEmpty() || department.isEmpty() || position.isEmpty() || userId.isEmpty() || password.isEmpty() || name.isEmpty() ) {
                 if (count > 1 ) {
-                    System.out.println("\nEnter [b] to go back, or any other key to try again.");
+                    System.out.println("\nEnter [b] to go back, or press [Enter] to try again.");
                     String choice = InputHelper.readLine();
                     if (choice.equalsIgnoreCase("b")) {
                         throw new PageBackException(); // signal upper controller to go back
