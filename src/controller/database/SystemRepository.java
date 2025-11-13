@@ -57,55 +57,21 @@ public class SystemRepository implements IRepository, Serializable {
 	}
 
     /**
-     *
-     * @param withdrawalRequest
+     * add request to request map
+     * @param request Request object
      */
-    public void addWithdrawalRequest(WithdrawalRequest withdrawalRequest) {
-        requests.put(withdrawalRequest.getId().toLowerCase(), withdrawalRequest);
+    public void addRequest(Request request) {
+        requests.put(request.getId().toLowerCase(), request);
     }
 
     /**
-     *
-     * @param registrationRequest
+     *  remove request from request map using request ID
+     * @param requestId request ID
      */
-    public void addRegistrationRequest(RegistrationRequest registrationRequest) {
-        requests.put(registrationRequest.getId().toLowerCase(), registrationRequest);
-    }
-
-    /**
-     *
-     * @param internshipVetRequest
-     */
-    public void addInternshipVetRequest(InternshipVetRequest internshipVetRequest) {
-        requests.put(internshipVetRequest.getId().toLowerCase(), internshipVetRequest);
-    }
-
-    /**
-     *
-     * @param requestId
-     */
-    @Override
-    public void removeWithdrawalRequest(String requestId) {
+    public void removeRequest(String requestId) {
         requests.remove(requestId.toLowerCase());
     }
 
-    /**
-     *
-     * @param requestId
-     */
-    @Override
-    public void removeInternshipVetRequest(String requestId) {
-        requests.remove(requestId.toLowerCase());
-    }
-
-    /**
-     *
-     * @param requestId
-     */
-    @Override
-    public void removeRegistrationRequest(String requestId) {
-        requests.remove(requestId.toLowerCase());
-    }
 
     /**
 	 * 
