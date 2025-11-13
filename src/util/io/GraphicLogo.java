@@ -10,7 +10,7 @@ public class GraphicLogo {
     /**
      * create divider to be used
      */
-    public static final String SEPARATOR = "=".repeat(90);
+    public static final String SEPARATOR = "=".repeat(50);
 
     /**
      * Logo string to display ASCII Welcome LOGO
