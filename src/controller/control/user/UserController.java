@@ -7,7 +7,11 @@ import entity.user.User;
 import entity.FilterCriteria;
 import util.exceptions.AuthenticationException;
 
-public class UserController {
+/**
+ * Base abstract class for user controls
+ * implements method for change of password
+ */
+public abstract class UserController {
 
 	protected AuthenticationService auth;
     protected FilterCriteria filter;
