@@ -13,7 +13,7 @@ import entity.request.RegistrationRequest;
 import entity.request.WithdrawalRequest;
 import entity.user.CareerStaff;
 import java.util.*;
-import util.FilterCriteria;
+import entity.FilterCriteria;
 
 /**
  * controller class for Career staff

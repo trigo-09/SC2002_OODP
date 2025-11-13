@@ -1,6 +1,6 @@
 package boundary;
 
-import util.FilterCriteria;
+import entity.FilterCriteria;
 import entity.internship.*;
 import util.io.ChangePage;
 import util.io.InputHelper;

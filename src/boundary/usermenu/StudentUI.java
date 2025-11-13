@@ -9,7 +9,7 @@ import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
 import java.util.*;
-import util.FilterCriteria;
+import entity.FilterCriteria;
 import util.exceptions.PageBackException;
 import util.io.InputHelper;
 import util.io.ChangePage;

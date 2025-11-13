@@ -13,7 +13,7 @@ import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
-import util.FilterCriteria;
+import entity.FilterCriteria;
 import util.exceptions.*;
 
 /**
@@ -106,8 +106,9 @@ public class StudentController extends UserController {
      * @throws IllegalArgumentException     if inputs are not strings
      * @throws SecurityException            if the application has already been withdrawn
      * @throws ObjectNotFoundException      if the application id is invalid
+     * @throws ObjectAlreadyExistsException if there has been a previous exception
      */
-    public void withdrawPlacement(String appId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException {
+    public void withdrawPlacement(String appId, String reason) throws IllegalArgumentException, SecurityException, ObjectNotFoundException,ObjectAlreadyExistsException {
         Application application = applicationService.findApplication(appId);
         // Ensure application exists
         if (application == null) {

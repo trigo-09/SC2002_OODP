@@ -9,7 +9,7 @@ import entity.user.Student;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import util.FilterCriteria;
+import entity.FilterCriteria;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectNotFoundException;
 
