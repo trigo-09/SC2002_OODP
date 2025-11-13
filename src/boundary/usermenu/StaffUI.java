@@ -29,6 +29,7 @@ public class StaffUI {
 
     public void menuLoop() {
         ChangePage.changePage();
+        System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Welcome to Career Center Staff Menu!");
         System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("1.  View / filter internships");
