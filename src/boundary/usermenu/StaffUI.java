@@ -11,6 +11,7 @@ import entity.request.RegistrationRequest;
 import entity.request.Request;
 import entity.request.WithdrawalRequest;
 import util.exceptions.PageBackException;
+import util.io.GraphicLogo;
 import util.io.InputHelper;
 import util.io.ChangePage;
 
@@ -28,7 +29,8 @@ public class StaffUI {
 
     public void menuLoop() {
         ChangePage.changePage();
-        System.out.println("=== Career Center Staff Menu ===");
+        System.out.println("Welcome to Career Center Staff Menu");
+        System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("1.  View / filter internships");
         System.out.println("2.  View pending rep registrations");
         System.out.println("3.  Rep registration (Approve/Reject)");
@@ -75,6 +77,7 @@ public class StaffUI {
     private void approveRejectReq(String requestType, List<? extends Request> pending){
         ChangePage.changePage();
         System.out.println("All " + requestType + " Requests");
+        System.out.println(GraphicLogo.SEPARATOR);
         if (pending.isEmpty()){
             System.out.println("No " + requestType + " pending approval");
             InputHelper.pause();
@@ -85,7 +88,10 @@ public class StaffUI {
 
         int index;
         while (true){
-            System.out.println("Choose index (Enter [0] to go back to menu): ");
+            System.out.println("Please choose request");
+            System.out.println("- Enter the index of the request to continue");
+            System.out.println("- Enter [0] to go back to main menu");
+            System.out.print("Your choice: ");
             index = InputHelper.readInt();
             if (index == 0){
                 throw new PageBackException();
@@ -101,7 +107,11 @@ public class StaffUI {
         String requestID = request.getId();
 
         while (true) {
-            System.out.print("Enter [1] to Reject, [2] to Approve (Enter [0] to go back to menu): ");
+            System.out.println("Please select an action:");
+            System.out.println("- Enter 1 to Reject");
+            System.out.println("- Enter 2 to Approve");
+            System.out.println("- Enter 0 to return to the menu");
+            System.out.print("Your choice: ");
             int choice = InputHelper.readInt();
 
             if (choice == 0) {
@@ -156,6 +166,7 @@ public class StaffUI {
     private void ViewFilteredInternships(){
         ChangePage.changePage();
         System.out.println("All Internships(Filtered)");
+        System.out.println(GraphicLogo.SEPARATOR);
         List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
         DisplayableViewer.displayList(filteredList);
         InputHelper.pause();
@@ -165,6 +176,7 @@ public class StaffUI {
     private void viewPendingReq(String requestType, List<? extends Request> pending){
         ChangePage.changePage();
         System.out.println("All " + requestType + " Requests");
+        System.out.println(GraphicLogo.SEPARATOR);
         if (pending.isEmpty()){
             System.out.println("No " + requestType + " pending approval");
             InputHelper.pause();
@@ -187,6 +199,7 @@ public class StaffUI {
 
             try {
                 staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
+                break;
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 boolean validChoice = false;
@@ -195,7 +208,7 @@ public class StaffUI {
                     System.out.println();
                     System.out.println("1. Try again");
                     System.out.println("2. Return to main menu");
-                    System.out.print("Enter choice (1 or 2): ");
+                    System.out.print("Enter choice ([1] or [2]): ");
                     int choice = InputHelper.readInt();
 
                     switch (choice) {
@@ -205,7 +218,7 @@ public class StaffUI {
                             throw new PageBackException();
                         }
                         default -> {
-                            System.out.println("Invalid choice. Please enter 1 or 2.");
+                            System.out.println("Invalid choice. Please enter [1] or [2].");
                             System.out.println();
                         }
                     }

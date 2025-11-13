@@ -31,7 +31,7 @@ public class InternshipService {
     }
 
     /**
-     * create new internship and add it into rep's list
+     * create new internship
     * @param title title
     * @param description description of internship
     * @param level level of internship
@@ -66,10 +66,12 @@ public class InternshipService {
                 .createdBy(createdBy)
                 .companyName(companyName)
                 .build();
-
-        repository.addInternship(createdBy, internship);
         return internship;
 	}
+
+    public void addInternship(InternshipOpportunity internship){
+        repository.addInternship(internship.getCreatedBy(),internship);
+    }
 
 	/**
 	 * changes the visibility of given internship
