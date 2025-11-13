@@ -47,8 +47,7 @@ public class StudentController extends UserController {
 
     /**
      * Launches the student UI interface after log in
-     *
-     * @param systemController       shared controller class which allows student to navigate back to main menu
+     * @param systemController shared controller class which allows student to navigate back to main menu
      */
     public void launch(SystemController systemController) {
         StudentUI studentUI = new StudentUI(systemController, this);
