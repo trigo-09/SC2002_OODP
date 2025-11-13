@@ -20,7 +20,7 @@ public class DisplayableViewer {
         }
         System.out.println(displayableList.get(0).getSplitter());
         for (int i = 0; i < displayableList.size(); i++){
-            System.out.printf("[%d]\n%s", i+1, displayableList.get(i));
+            System.out.printf("Index: [%d]\n%s", i+1, displayableList.get(i));
             System.out.println(displayableList.get(i).getSplitter());
         }
     }

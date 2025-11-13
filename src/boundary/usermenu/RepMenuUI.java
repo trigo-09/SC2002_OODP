@@ -1,13 +1,18 @@
 package boundary.usermenu;
 
+import boundary.FilterUI;
+import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.RepController;
+import entity.FilterCriteria;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
 import java.util.List;
 import util.exceptions.*;
+import util.io.ChangePage;
+import util.io.GraphicLogo;
 import util.io.InputHelper;
 
  /**
@@ -31,20 +36,24 @@ public class RepMenuUI {
      * All business-rule and authorization errors are caught and shown to the user.
      */
     public void displayMenu() {
+        ChangePage.changePage();
         int choice = -1;
         while (choice != 0) {
-            System.out.println("\n=== Company Representative Menu ===");
+            System.out.println("Welcome to Company Representative Menu!");
+            System.out.println(GraphicLogo.SEPARATOR);
             System.out.println("1) Create Internship Opportunity");
             System.out.println("2) Manage Your Internship Opportunities");
             System.out.println("3) Change Password");
+            System.out.println("4) Update Filter");
             System.out.println("0) Logout");
             System.out.print("Enter your choice: ");
             choice = InputHelper.readInt();
 
             switch (choice) {
                 case 1 -> createInternshipUI();
-                case 2 -> manageInternshipsUI();
+                case 2 -> manageInternshipsUI(repController);
                 case 3 -> changePasswordUI();
+                case 4 -> FilterUI.update(repController.getFilter());
                 case 0 -> {
                     System.out.println("Logging out...");
                     systemController.mainMenu();
@@ -60,6 +69,7 @@ public class RepMenuUI {
       * Business-rule violations (e.g., max postings reached) are caught and shown.
       */
     private void createInternshipUI() {
+        ChangePage.changePage();
         System.out.println("=== Create Internship Opportunity ===");
         System.out.print("Title: ");
         String title = InputHelper.readLine();
@@ -84,7 +94,7 @@ public class RepMenuUI {
         System.out.print("Preferred Major or 'Any': ");
         String preferredMajor = InputHelper.readLine();
         
-        System.out.println("Enter Opening Date (DD-MM-YYYY):");
+        System.out.print("Enter Opening Date (DD-MM-YYYY):");
         LocalDate openingDate = InputHelper.readDate();
         System.out.print("Enter Closing Date (DD-MM-YYYY): ");
 
@@ -93,7 +103,7 @@ public class RepMenuUI {
         while (true) {
             closingDate = InputHelper.readDate();
             if (!closingDate.isBefore(openingDate)) break;
-            System.out.println("Closing date cannot be before opening date. Please try again.");
+            System.out.print("Closing date cannot be before opening date. Please try again: ");
         }
 
         // Re-prompt until valid number of slots is entered
@@ -124,22 +134,27 @@ public class RepMenuUI {
         } catch (IllegalArgumentException | IllegalStateException | SecurityException | MaxExceedException | ObjectAlreadyExistsException e) {
             System.out.println("Error creating internship: " + e.getMessage());
         }
-        pause();
+        InputHelper.pause();
     }
 
      /**
       * List the representative's internships and allow actions such as toggling visibility
       * and listing and accepting/rejecting applications. Errors are caught and shown.
       */
-    private void manageInternshipsUI() {
+    private void manageInternshipsUI(RepController repController) {
+        ChangePage.changePage();
         int choice = -1;
         while (choice != 0) {
-            System.out.println("=== Your Internship Opportunities ===");
-            List<InternshipOpportunity> internships = repController.getInternships();
-            if (internships.isEmpty()) {
+            System.out.println("=== Your Internship Opportunities (Filtered) ===");
+            List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
+
+            if (filteredInternships.isEmpty()) {
                 System.out.println("(No opportunities yet)");
+                InputHelper.pause();
+                return;
+
             } else {
-                internships.forEach(i -> System.out.println("- " + i));
+                DisplayableViewer.displayList(filteredInternships);
             }
 
             System.out.println("Actions:");
@@ -151,7 +166,7 @@ public class RepMenuUI {
             while(true) {
                 System.out.print("Enter your choice: ");
                 choice = InputHelper.readInt();
-                if (internships.isEmpty() && (choice == 1 || choice == 2 || choice == 3)) {
+                if (filteredInternships.isEmpty() && (choice == 1 || choice == 2 || choice == 3)) {
                     System.out.println("No internships available to manage. Please choose another option.");
                     continue;
                 }
@@ -163,16 +178,19 @@ public class RepMenuUI {
             }
 
             switch (choice) {
-                case 1 ->   handleVisibility();
-                case 2 ->   handleEditInternship();
-                case 3 ->   handleApplications(); 
-                case 0 ->   System.out.println("Returning to main menu...");
+                case 1 ->   handleVisibility(filteredInternships);
+                case 2 ->   handleEditInternship(filteredInternships);
+                case 3 ->   handleApplications(filteredInternships);
+                case 0 ->   {
+                    System.out.println("Returning to main menu...");
+                }
                 default ->  System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
     private void changePasswordUI() {
+        ChangePage.changePage();
         System.out.print("Enter your current password: ");
         String currentPassword = InputHelper.readLine();
         System.out.print("Enter your new password: ");
@@ -186,12 +204,26 @@ public class RepMenuUI {
         } catch (Exception e) {
             System.out.println("Error changing password: " + e.getMessage());
         }
-        pause();
+        InputHelper.pause();
     }
 
-    private void handleVisibility() {
-        System.out.print("Enter Internship ID to change visibility: ");
-        String internId = InputHelper.readLine();
+    private void handleVisibility(List<InternshipOpportunity> filteredInternships) {
+        ChangePage.changePage();
+        DisplayableViewer.displayList(filteredInternships);
+        int index;
+
+        while (true){
+            System.out.print("Enter index of internship to edit: ");
+            index = InputHelper.readInt();
+            if (index == 0){
+                return;
+            }
+            else if (index<1 || index > filteredInternships.size()){
+                System.out.println("PLease enter a valid index.");
+                break;
+            }
+        }
+        String internId = filteredInternships.get(index-1).getId();
         System.out.print("Set visibility to Visible (1) or Hidden (0): ");
         int visChoice = InputHelper.readInt();
         boolean visibility = visChoice == 1;
@@ -202,18 +234,33 @@ public class RepMenuUI {
         } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
             System.out.println("Error updating visibility: " + e.getMessage());
         }
-        pause();
+        InputHelper.pause();
     }
 
-    private void handleEditInternship() {
-        System.out.print("Enter Internship ID to edit: ");
-        String internId = InputHelper.readLine();
+    private void handleEditInternship(List<InternshipOpportunity> filteredInternships) {
+        ChangePage.changePage();
+        DisplayableViewer.displayList(filteredInternships);
+        int index;
+
+        while (true){
+            System.out.print("Enter index of internship to edit: ");
+            index = InputHelper.readInt();
+            if (index == 0){
+                return;
+            }
+            else if (index<1 || index > filteredInternships.size()){
+                System.out.println("PLease enter a valid index.");
+                break;
+            }
+        }
+
+        String internId = filteredInternships.get(index-1).getId();
 
         // Check if internship exists before prompting for fields
         try {repController.validateInternshipId(internId);}
         catch (IllegalArgumentException | SecurityException e) {
             System.out.println("Error: " + e.getMessage());
-            pause();
+            InputHelper.pause();
             return;
         }
         System.out.println("Leave fields blank to keep current values.");
@@ -229,7 +276,7 @@ public class RepMenuUI {
         String preferredMajor = InputHelper.readLine();
         if (preferredMajor.isEmpty()) preferredMajor = null;
 
-        System.out.println("New Opening Date (DD-MM-YYYY):");
+        System.out.print("New Opening Date (DD-MM-YYYY):");
         LocalDate openingDate = InputHelper.readOptionalDate();
         System.out.print("New Closing Date (DD-MM-YYYY): ");
         // Re-prompt until closing date is after opening date
@@ -285,23 +332,37 @@ public class RepMenuUI {
         } catch (IllegalArgumentException | IllegalStateException | SecurityException | ObjectNotFoundException e) {
             System.out.println("Error updating internship: " + e.getMessage());
         }
-        pause();
+        InputHelper.pause();
     }
 
-    private void handleApplications() {
-        System.out.print("Enter Internship ID to manage applications: ");
-        String internId = InputHelper.readLine();
+    private void handleApplications(List<InternshipOpportunity> filteredInternships) {
+        ChangePage.changePage();
+        DisplayableViewer.displayList(filteredInternships);
+        int index;
+
+        while (true){
+            System.out.print("Enter index of internship to edit: ");
+            index = InputHelper.readInt();
+            if (index == 0){
+                return;
+            }
+            else if (index<1 || index > filteredInternships.size()){
+                System.out.println("PLease enter a valid index.");
+                break;
+            }
+        }
+        String internId = filteredInternships.get(index-1).getId();
 
         try {
             List<Application> applications = repController.getApplications(internId);
             if (applications.isEmpty()) {
                 System.out.println("(No applications yet)");
-                pause();
+                InputHelper.pause();
                 return;
             } else {
                 applications.forEach(a -> System.out.println("- " + a));
             }
-            pause();
+            InputHelper.pause();
         } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
             System.out.println("Error retrieving applications: " + e.getMessage());
         }
@@ -326,16 +387,9 @@ public class RepMenuUI {
             } catch (ObjectNotFoundException | IllegalStateException | SecurityException | MaxExceedException e) {
                 System.out.println("Error approving/rejecting application: " + e.getMessage());
             }
-            pause();
+            InputHelper.pause();
         }
     }
 
-    /**
-     * Pauses execution until the user presses Enter.
-     * This is useful for allowing the user to read messages before continuing.
-     */
-    private void pause() {
-        System.out.print("Press Enter to continue...");
-        InputHelper.readLine();
-    }
+
 }

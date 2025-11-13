@@ -322,7 +322,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 						"Visibility: %s%n" +
 						"Slots: %d total | %d approved | %d pending | %d open%n" +
 						"Created By: %s%n" +
-						"Description: %s",
+						"Description: %s%n",
 				id,
 				title,
 				companyName,
