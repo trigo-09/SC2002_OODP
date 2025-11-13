@@ -13,6 +13,8 @@ import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
 import java.time.LocalDate;
 import java.util.List;
+
+import util.FilterCriteria;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectAlreadyExistsException;
 import util.exceptions.ObjectNotFoundException;
@@ -116,6 +118,10 @@ public class RepController extends UserController {
 	 */
 	public List<InternshipOpportunity> getInternships() {
 		return internshipService.getInternshipsByCompany(rep.getCompanyName());
+	}
+
+	public List<InternshipOpportunity> getFilteredInternships(List<InternshipOpportunity> internshipOpportunities, FilterCriteria filter){
+		return internshipService.getFilteredInternship(internshipOpportunities, filter);
 	}
 
 	/**
