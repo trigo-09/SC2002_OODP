@@ -120,6 +120,7 @@ public class StudentUI {
 
         try {
             studentController.applyInternship(internship.getId());
+            System.out.println("Successfully applied.");
         }catch (Exception e){
             System.out.println("ERROR: "+e.getMessage());
         }
@@ -285,6 +286,7 @@ public class StudentUI {
         System.out.println("Current Filter Criteria: ");
         System.out.println("- Level:  " + filter.getLevel());
         System.out.println("- Closing Date: " + filter.getClosingDate());
+        System.out.println("- Company Name: " + filter.getCompanyName());
         System.out.println();
 
         System.out.println("Enter Internship Level: ");
@@ -318,6 +320,23 @@ public class StudentUI {
                 }
             }
         }
+
+        String companyNameRaw = AttributeGetter.getString("Enter company name or 0 to clear: ");
+        if (!companyNameRaw.isBlank()){
+            String input = companyNameRaw.trim();
+            if (input.equals("0")){
+                filter.setCompanyName(null);
+                System.out.println("-> Company name filter cleared");
+            }
+            else{
+                try{
+                    filter.setCompanyName(companyNameRaw);
+                }catch(Exception e){
+                    System.out.println("!! Invalid company name. Keeping previous");
+                }
+            }
+        }
+
 
         System.out.println();
         System.out.println("Filter updated.");

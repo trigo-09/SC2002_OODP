@@ -14,11 +14,11 @@ public class FilterCriteria {
     private String companyName;
 
     public FilterCriteria(InternStatus status, String preferredMajor, InternshipLevel level, LocalDate closingDate, String companyName) {
-        this.status = status == null ? InternStatus.APPROVED : status;
-        this.preferredMajor = preferredMajor == null ? "" : preferredMajor;
-        this.level = level == null ? InternshipLevel.BASIC : level;
-        this.closingDate = closingDate == null ? LocalDate.now() : closingDate;
-        this.companyName = companyName == null ? "" : companyName;
+        this.status = status;
+        this.preferredMajor= preferredMajor;
+        this.level = level;
+        this.closingDate = closingDate;
+        this.companyName = companyName;
 
     }
     public FilterCriteria() {
