@@ -119,7 +119,10 @@ public class StudentController extends UserController {
         }
         // Check if the application can be withdrawn
         if (applicationService.validStatusTransition(application.getStatus(), ApplicationStatus.WITHDRAWN)) {
-            requestService.createWithdrawalRequest(student.getId(), application, reason);
+            try {requestService.createWithdrawalRequest(student.getId(), application, reason);}
+            catch (ObjectAlreadyExistsException e) {
+                throw new IllegalStateException("Failed to create withdrawal request: " + e.getMessage());
+            }
         } else {
             throw new IllegalStateException("Application is already " + application.getStatus() + " and cannot be withdrawn.");
         }

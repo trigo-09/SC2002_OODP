@@ -4,16 +4,15 @@ import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StudentController;
 import entity.application.Application;
-import entity.internship.InternStatus;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
 import java.util.*;
 import util.FilterCriteria;
+import util.exceptions.ObjectNotFoundException;
 import util.exceptions.PageBackException;
-import util.exceptions.AuthenticationException;
+import util.io.ChangePage;
 import util.io.InputHelper;
-import util.ui.ChangePage;
 
 public class StudentUI {
     private final StudentController studentController;
@@ -173,7 +172,12 @@ public class StudentUI {
         }
 
         Application app = appList.get(index-1);
-        studentController.acceptPlacement(app.getApplicationId());
+        try {studentController.acceptPlacement(app.getApplicationId());}
+        catch (ObjectNotFoundException e){
+            System.out.println("ERROR: "+e.getMessage());
+            InputHelper.pause();
+            throw new PageBackException();
+        }
         System.out.println("Application has been accepted.");
         InputHelper.pause();
         throw new PageBackException();
