@@ -108,9 +108,6 @@ public class SystemController {
             if (repo.getPendingReps().get(userId).getStatus() == RepStatus.PENDING) {
                 throw new RepPendingApprovalException(userId);
             }
-            else {
-                throw new RepPendingApprovalException(userId);
-            }
         }
         User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
         request.createRegistrationRequest((CompanyRep) user);
