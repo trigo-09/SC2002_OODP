@@ -22,10 +22,8 @@ public class ChangePage {
         String os = System.getProperty("os.name").toLowerCase();
         try {
             if (os.contains("win")) {
-                // Windows
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                // Unix-like systems
                 System.out.print("\u001b[H\u001b[2J\u001b[3J");
                 System.out.flush();
             }

@@ -15,7 +15,7 @@ public class GraphicLogo {
     /**
      * Logo string to display ASCII exit LOGO
      */
-    public static final String EXIT_LOGO = "\n" +
+    public static final String EXIT_LOGO =
             "████████╗██╗░░██╗░█████╗░███╗░░██╗██╗░░██╗         ██╗░░░██╗░█████╗░██╗░░░██╗\n" +
             "╚══██╔══╝██║░░██║██╔══██╗████╗░██║██║░██╔╝        ╚██╗░██╔╝██╔══██╗██║░░░██║\n" +
             "░░░██║░░░███████║███████║██╔██╗██║█████═╝░        ░╚████╔╝░██║░░██║██║░░░██║\n" +
@@ -38,7 +38,7 @@ public class GraphicLogo {
     /**
      * Logo string to display ASCII welcome LOGO
      */
-    public static final String WELCOME_LOGO = "\n" +
+    public static final String WELCOME_LOGO =
             "╭━━┳━━━┳━╮╭━┳━━━╮\n" +
             "╰┫┣┫╭━╮┃┃╰╯┃┃╭━╮┃\n" +
             "╱┃┃┃╰━╯┃╭╮╭╮┃╰━━╮\n" +
