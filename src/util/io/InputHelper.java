@@ -56,6 +56,26 @@ public class InputHelper {
             catch (DateTimeParseException e) { System.out.println("Invalid date, use DD-MM-YYYY."); }
         }
     }
+    public static LocalDate readOpenDate() {
+        while (true) {
+            String in = readLine();
+            try { return LocalDate.parse(in, DMY); }
+            catch (DateTimeParseException e) {
+                System.out.println("Invalid date, use DD-MM-YYYY.");
+                System.out.print("Enter Opening Date (DD-MM-YYYY): ");
+            }
+        }
+    }
+    public static LocalDate readCloseDate() {
+        while (true) {
+            String in = readLine();
+            try { return LocalDate.parse(in, DMY); }
+            catch (DateTimeParseException e) {
+                System.out.println("Invalid date, use DD-MM-YYYY.");
+                System.out.print("Enter Opening Date (DD-MM-YYYY): ");
+            }
+        }
+    }
     
 
     public static LocalDate readOptionalDate() {
