@@ -32,8 +32,7 @@ public class StaffUI {
         ChangePage.changePage();
         System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Welcome to Career Center Staff Menu!");
-        System.out.println("Hello, " + staffController.getStaff().getUserName()+"!");
-        System.out.print("\n");
+        System.out.println("Hello, " + staffController.getStaff().getUserName()+"!\n");
         System.out.println("\t1.  View / filter internships");
         System.out.println("\t2.  View pending rep registrations");
         System.out.println("\t3.  Rep registration (Approve/Reject)");
