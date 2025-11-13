@@ -56,7 +56,8 @@ public class RegistrationRequest extends Request {
                 new AsciiTableFormatter.Row("Current Status", String.valueOf(companyRep.getStatus()))
         );
 
-        return AsciiTableFormatter.formatTable(rows);
+        String table = AsciiTableFormatter.formatTable(rows);
+        return table.replace(String.valueOf(companyRep.getStatus()), companyRep.getStatus().coloredString());
     }
 
 

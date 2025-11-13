@@ -58,11 +58,11 @@ public class WithdrawalRequest extends Request {
                 new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
                 new AsciiTableFormatter.Row("Reason", reason),
                 new AsciiTableFormatter.Row("Application ID", application.getApplicationId()),
-                new AsciiTableFormatter.Row("Current Application Status",
-                        String.valueOf(application.getStatus()))
+                new AsciiTableFormatter.Row("Current Application Status", String.valueOf(application.getStatus()))
         );
 
-        return AsciiTableFormatter.formatTable(rows);
+        String table = AsciiTableFormatter.formatTable(rows);
+        return table.replace(String.valueOf(application.getStatus()), application.getStatus().coloredString());
     }
 
 

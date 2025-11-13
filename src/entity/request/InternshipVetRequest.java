@@ -60,7 +60,8 @@ public class InternshipVetRequest extends Request {
                 new AsciiTableFormatter.Row("Current Status", String.valueOf(internship.getStatus()))
         );
 
-        return AsciiTableFormatter.formatTable(rows);
+        String table = AsciiTableFormatter.formatTable(rows);
+        return table.replace(String.valueOf(internship.getStatus()), internship.getStatus().coloredString());
     }
 
 

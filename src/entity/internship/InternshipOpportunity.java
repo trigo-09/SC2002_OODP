@@ -333,7 +333,8 @@ public class InternshipOpportunity implements Serializable, Displayable {
 
 		);
 
-		return AsciiTableFormatter.formatTable(rows);
+		String table = AsciiTableFormatter.formatTable(rows);
+		return table.replace(String.valueOf(status), status.coloredString());
 	}
 
 }

@@ -82,7 +82,8 @@ public class Application implements Serializable, Displayable {
 				new AsciiTableFormatter.Row("Status", String.valueOf(status))
 		);
 
-		return AsciiTableFormatter.formatTable(rows);
+		String table = AsciiTableFormatter.formatTable(rows);
+		return table.replace(String.valueOf(status), status.coloredString());
 	}
 
 }
