@@ -93,7 +93,7 @@ public class ApplicationService {
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */
-    public void reviewApplication(String appId, boolean approve) throws ObjectNotFoundException {
+    public void reviewApplication(String appId, boolean approve) throws ObjectNotFoundException,IllegalArgumentException {
         Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {
