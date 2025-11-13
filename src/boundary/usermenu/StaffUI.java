@@ -214,7 +214,6 @@ public class StaffUI {
                     switch (choice) {
                         case 1 -> validChoice = true; // retry outer loop
                         case 2 -> {
-                            validChoice = true;
                             throw new PageBackException();
                         }
                         default -> {
