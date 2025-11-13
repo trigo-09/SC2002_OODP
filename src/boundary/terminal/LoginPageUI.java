@@ -92,7 +92,8 @@ public class LoginPageUI {
                     }
                 }
                 ChangePage.changePage();
-                System.out.println("Please enter all the fields");
+                System.out.println("Failed to register, please try again.");
+                System.out.println("Please fill up all fields.");
                 continue;
             }
 
