@@ -34,7 +34,7 @@ public class ApplicationService {
      * @throws IllegalStateException if the student applied for the internship already
      * @throws MaxExceedException if student exceed their max allowed applications
      */
-    public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException {
+    public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException,IllegalArgumentException {
         // check eligibility
         Student user = (Student) systemRepository.findUser(studentId);
         if (user == null) throw new UserNotFoundException("Invalid student ID: " + studentId);
