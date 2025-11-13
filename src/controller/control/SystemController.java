@@ -93,7 +93,7 @@ public class SystemController {
      * @param name rep's name
      * @param Password rep's password
      * @param attributes rep's other attributes
-     * @throws AuthenticationException if account exist or account rejected or account still under processing
+     * @throws AuthenticationException if account exist or account still under processing
      * @throws IllegalArgumentException if the userId have invalid email format
      */
     public void registerRep(String userId, String name, String Password, Map<String, String> attributes) throws AuthenticationException, IllegalArgumentException {
