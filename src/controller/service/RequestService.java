@@ -67,7 +67,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
      */
 	public void acceptWithdrawalRequest(String requestId) throws ObjectNotFoundException{
-        WithdrawalRequest req = (WithdrawalRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
@@ -81,7 +81,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectWithdrawalRequest(String requestId) throws ObjectNotFoundException {
-        WithdrawalRequest req = (WithdrawalRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
@@ -104,7 +104,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
 	 */
 	public void approveRegistrationRequest(String requestId) throws ObjectNotFoundException{
-        RegistrationRequest req = (RegistrationRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
@@ -119,7 +119,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectRegistrationRequest(String requestId) throws ObjectNotFoundException {
-        RegistrationRequest req = (RegistrationRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
@@ -156,7 +156,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
      */
 	public void approveInternshipRequest(String requestId) throws ObjectNotFoundException{
-        InternshipVetRequest req = (InternshipVetRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
@@ -170,7 +170,7 @@ public class RequestService {
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectInternshipRequest(String requestId) throws ObjectNotFoundException{
-        InternshipVetRequest req = (InternshipVetRequest) getRequest(requestId);
+        Request req = getRequest(requestId);
         if(req==null){
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
