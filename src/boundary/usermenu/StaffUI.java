@@ -2,6 +2,7 @@ package boundary.usermenu;
 
 import boundary.AttributeGetter;
 import boundary.FilterUI;
+import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StaffController;
@@ -57,7 +58,7 @@ public class StaffUI {
                     FilterUI.update(staffController.getFilter());
                     throw new PageBackException(); // so that it will loop
                 }
-                case 9 -> handleChangePassword();
+                case 9 -> ChangePasswordUI.handleChangePassword(systemController, staffController, staffController.getStaff());
                 case 10 -> {
                     System.out.println("Logging out...");
                     systemController.mainMenu(); // return to Welcome screen
@@ -199,7 +200,7 @@ public class StaffUI {
 
             try {
                 staffController.changePassword(oldPass, newPass, staffController.getStaff(), confirmPass);
-                break;
+                systemController.mainMenu();
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
                 boolean validChoice = false;

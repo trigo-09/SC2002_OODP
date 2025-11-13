@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import entity.Displayable;
 import entity.application.Application;
+import util.io.AsciiTableFormatter;
+
 import java.util.*;
 
 /**
@@ -310,31 +312,28 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		int pending = (pendingApplications == null) ? 0 : pendingApplications.size();
 		int open = Math.max(0, numOfSlots - approved);
 
-		return String.format(
-				"Internship ID: %s%n" +
-						"Title: %s%n" +
-						"Company: %s%n" +
-						"Level: %s%n" +
-						"Preferred Majors: %s%n" +
-						"Opening Date: %s%n" +
-						"Closing Date: %s%n" +
-						"Status: %s%n" +
-						"Visibility: %s%n" +
-						"Slots: %d total | %d approved | %d pending | %d open%n" +
-						"Created By: %s%n" +
-						"Description: %s%n",
-				id,
-				title,
-				companyName,
-				level,
-				preferredMajors,
-				openingDate,
-				closingDate,
-				status,
-				(visibility != null && visibility) ? "Public" : "Hidden",
-				numOfSlots, approved, pending, open,
-				createdBy,
-				description
+		String slotsSummary = String.format(
+				"%d total | %d approved | %d pending | %d open",
+				numOfSlots, approved, pending, open
 		);
+
+		List<AsciiTableFormatter.Row> rows = List.of(
+				new AsciiTableFormatter.Row("Internship ID", id),
+				new AsciiTableFormatter.Row("Title", title),
+				new AsciiTableFormatter.Row("Company", companyName),
+				new AsciiTableFormatter.Row("Level", String.valueOf(level)),
+				new AsciiTableFormatter.Row("Preferred Majors", preferredMajors),
+				new AsciiTableFormatter.Row("Description", description),
+				new AsciiTableFormatter.Row("Opening Date", String.valueOf(openingDate)),
+				new AsciiTableFormatter.Row("Closing Date", String.valueOf(closingDate)),
+				new AsciiTableFormatter.Row("Status", String.valueOf(status)),
+				new AsciiTableFormatter.Row("Visibility", (visibility != null && visibility) ? "Public" : "Hidden"),
+				new AsciiTableFormatter.Row("Slots", slotsSummary),
+				new AsciiTableFormatter.Row("Created By", createdBy)
+
+		);
+
+		return AsciiTableFormatter.formatTable(rows);
 	}
+
 }

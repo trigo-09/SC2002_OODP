@@ -2,6 +2,7 @@ package entity.user;
 import entity.Displayable;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
+import util.io.AsciiTableFormatter;
 
 import java.util.*;
 
@@ -92,16 +93,14 @@ public class Student extends User implements Displayable {
      */
 	@Override
 	public String toString() {
-		return String.format(
-				"Student ID: %s%n" +
-						"Name: %s%n" +
-						"Year: %d%n" +
-						"Major: %s%n",
-				getId(),
-				getUserName(),
-				year,
-				major
+		List<AsciiTableFormatter.Row> rows = List.of(
+				new AsciiTableFormatter.Row("Student ID", getId()),
+				new AsciiTableFormatter.Row("Name", getUserName()),
+				new AsciiTableFormatter.Row("Year", String.valueOf(year)),
+				new AsciiTableFormatter.Row("Major", major)
 		);
+
+		return AsciiTableFormatter.formatTable(rows);
 	}
 
 
