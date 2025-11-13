@@ -162,7 +162,6 @@ public class RepMenuUI {
             System.out.println("1) Set Internship Visibility");
             System.out.println("2) Edit Internship");
             System.out.println("3) Manage Applications for an Internship");
-            System.out.println("4) Manage Filter");
 
             while(true) {
                 System.out.print("Enter your choice: ");
@@ -171,7 +170,7 @@ public class RepMenuUI {
                     System.out.println("No internships available to manage. Please choose another option.");
                     continue;
                 }
-                if (choice < 0 || choice > 4) {
+                if (choice < 0 || choice > 3) {
                     System.out.println("Invalid choice. Please try again.");
                     continue;
                 }

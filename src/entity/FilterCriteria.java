@@ -15,7 +15,7 @@ public class FilterCriteria {
 
     public FilterCriteria(InternStatus status, String preferredMajor, InternshipLevel level, LocalDate closingDate, String companyName) {
         this.status = status;
-        this.preferredMajor= preferredMajor;
+        this.preferredMajor = preferredMajor;
         this.level = level;
         this.closingDate = closingDate;
         this.companyName = companyName;
