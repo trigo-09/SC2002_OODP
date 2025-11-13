@@ -1,6 +1,7 @@
 package controller.service;
 
 import controller.database.IRepository;
+import controller.database.IRequestRepo;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.CompanyRep;
@@ -57,8 +58,8 @@ public class RequestService {
             }
 
         }
-        WithdrawalRequest request = new WithdrawalRequest(app,reason,studentId);
-		repo.addWithdrawalRequest(request);
+        Request request = new WithdrawalRequest(app,reason,studentId);
+		repo.addRequest(request);
 	}
 
 	/**
@@ -72,12 +73,12 @@ public class RequestService {
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
         req.approve();
-        repo.removeWithdrawalRequest(req.getId());
+        repo.removeRequest(req.getId());
 	}
 
     /**
      * reject withdrawal request and delete request from repositoru
-     * @param requestId
+     * @param requestId request ID
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectWithdrawalRequest(String requestId) throws ObjectNotFoundException {
@@ -86,7 +87,7 @@ public class RequestService {
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
         req.reject();
-        repo.removeWithdrawalRequest(req.getId());
+        repo.removeRequest(req.getId());
     }
 
 	/**
@@ -94,8 +95,8 @@ public class RequestService {
 	 * @param rep
 	 */
 	public void createRegistrationRequest(CompanyRep rep) {
-        RegistrationRequest request = new RegistrationRequest(rep);
-        repo.addRegistrationRequest(request);
+        Request request = new RegistrationRequest(rep);
+        repo.addRequest(request);
 	}
 
 	/**
@@ -110,7 +111,7 @@ public class RequestService {
         }
         req.approve();
         repo.approveCompanyRep(req.getRequesterId());
-        repo.removeRegistrationRequest(req.getId());
+        repo.removeRequest(req.getId());
 	}
 
     /**
@@ -124,7 +125,7 @@ public class RequestService {
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
         req.reject();
-        repo.removeRegistrationRequest(req.getId());
+        repo.removeRequest(req.getId());
     }
 
 	/**
@@ -146,8 +147,8 @@ public class RequestService {
                 throw new ObjectAlreadyExistsException("Internship opportunity with identical title already exists");
             }
         }
-        InternshipVetRequest req = new InternshipVetRequest(internship,repId);
-        repo.addInternshipVetRequest(req);
+        Request req = new InternshipVetRequest(internship,repId);
+        repo.addRequest(req);
 	}
 
     /**
@@ -161,7 +162,7 @@ public class RequestService {
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
         req.approve();
-        repo.removeInternshipVetRequest(req.getId());
+        repo.removeRequest(req.getId());
 	}
 
     /**
@@ -175,7 +176,7 @@ public class RequestService {
             throw new ObjectNotFoundException("Invalid requestId, Request not found");
         }
         req.reject();
-        repo.removeInternshipVetRequest(req.getId());
+        repo.removeRequest(req.getId());
     }
 
     /**
@@ -184,7 +185,7 @@ public class RequestService {
      */
     public void deleteInternshipRequest(String internshipId) {
        Request request = getPendingInternshipVet().stream().filter(i-> i.getInternship().getId().equals(internshipId)).findFirst().get();
-       repo.removeInternshipVetRequest(request.getId());
+       repo.removeRequest(request.getId());
     }
 
     /**
