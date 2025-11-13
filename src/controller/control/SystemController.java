@@ -106,7 +106,7 @@ public class SystemController {
         }
         if (repo.getPendingReps().containsKey(userId)){
             if (repo.getPendingReps().get(userId).getStatus() == RepStatus.PENDING) {
-                throw new RepPendingApprovalException(userId);
+                throw new RepPendingApprovalException(userId,": Account is already registered");
             }
         }
         User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
