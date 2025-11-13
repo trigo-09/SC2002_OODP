@@ -116,7 +116,7 @@ public class LoginPageUI {
 
             }catch (AuthenticationException | IllegalArgumentException e){
                 System.out.println("Registration failed: "+e.getMessage());
-                System.out.println("\nEnter [b] to go back, or any other key to retry.");
+                System.out.println("\nEnter [b] to go back, or press [Entry] to retry.");
                 String choice = InputHelper.readLine();
                 if (choice.equalsIgnoreCase("b")) {
                     throw new PageBackException();
