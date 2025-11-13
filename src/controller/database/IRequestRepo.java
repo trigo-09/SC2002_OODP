@@ -1,6 +1,8 @@
 package controller.database;
 
 import entity.request.*;
+import entity.user.CompanyRep;
+
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ public interface IRequestRepo {
      * get all request
      * able to decide which type of request due to use of generics
      * @param type request
-     * @return
+     * @return list of request type class or its child
      * @param <T> type of request class
      */
     <T extends Request> List<T> getAllRequests(Class<T> type);
@@ -24,38 +26,15 @@ public interface IRequestRepo {
     Request getRequest(String requestId);
 
     /**
-     * add withdrawal request to request map
-     * @param withdrawalRequest request object
+     * add request object to the request map
+     * @param request Request object
      */
-   void addWithdrawalRequest(WithdrawalRequest withdrawalRequest);
+    void addRequest(Request request);
 
     /**
-     * remove withdrawal request from map
-     * @param requestId
+     * removed request from repo using it ID.
+     * @param requestId request id
      */
-     void removeWithdrawalRequest(String requestId);
+    void removeRequest(String requestId);
 
-    /**
-     * add registration request to request map
-     * @param registrationRequest
-     */
-     void addRegistrationRequest(RegistrationRequest registrationRequest);
-
-    /**
-     * remove registration request from request map
-     * @param requestId
-     */
-    void removeRegistrationRequest(String requestId);
-
-    /**
-     * add internship request to request map
-     * @param internshipVetRequest
-     */
-    void addInternshipVetRequest(InternshipVetRequest internshipVetRequest);
-
-    /**
-     * remove internship request from request map
-     * @param requestId
-     */
-     void removeInternshipVetRequest(String requestId);
 }
