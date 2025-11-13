@@ -5,7 +5,6 @@ import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StudentController;
 import entity.application.Application;
-import entity.internship.InternStatus;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
 import java.time.LocalDate;
