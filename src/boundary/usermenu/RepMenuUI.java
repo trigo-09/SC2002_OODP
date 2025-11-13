@@ -5,7 +5,6 @@ import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.RepController;
-import entity.FilterCriteria;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
@@ -37,9 +36,9 @@ public class RepMenuUI {
      * All business-rule and authorization errors are caught and shown to the user.
      */
     public void displayMenu() {
-        ChangePage.changePage();
         int choice = -1;
         while (choice != 0) {
+            ChangePage.changePage();
             System.out.println("Welcome to Company Representative Menu!");
             System.out.println(GraphicLogo.SEPARATOR);
             System.out.println("1) Create Internship Opportunity");
@@ -53,7 +52,7 @@ public class RepMenuUI {
             switch (choice) {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI(repController);
-                case 3 -> ChangePasswordUI.handleChangePassword(repController, repController.getRep());
+                case 3 -> ChangePasswordUI.handleChangePassword(systemController, repController, repController.getRep());
                 case 4 -> FilterUI.update(repController.getFilter());
                 case 0 -> {
                     System.out.println("Logging out...");
@@ -165,6 +164,7 @@ public class RepMenuUI {
             System.out.println("3) Manage Applications for an Internship");
 
             while(true) {
+                ChangePage.changePage();
                 System.out.print("Enter your choice: ");
                 choice = InputHelper.readInt();
                 if (filteredInternships.isEmpty() && (choice == 1 || choice == 2 || choice == 3)) {
@@ -386,7 +386,7 @@ public class RepMenuUI {
             if (index == 0){
                 return;
             }
-            else if (index<1 || index > filteredInternships.size()){
+            else if (index<1 || index > approved.size()){
                 System.out.println("PLease enter a valid index.");
             }
             else{
@@ -394,7 +394,7 @@ public class RepMenuUI {
             }
         }
 
-        String internId = filteredInternships.get(index-1).getId();
+        String internId = approved.get(index-1).getId();
 
         try {
             List<Application> applications = repController.getApplications(internId);

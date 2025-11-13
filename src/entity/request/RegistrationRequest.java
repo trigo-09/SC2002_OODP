@@ -2,6 +2,9 @@ package entity.request;
 
 import entity.user.CompanyRep;
 import entity.user.RepStatus;
+import util.io.AsciiTableFormatter;
+
+import java.util.List;
 
 public class RegistrationRequest extends Request {
     private final CompanyRep companyRep;
@@ -44,19 +47,17 @@ public class RegistrationRequest extends Request {
      */
     @Override
     public String toString() {
-        return String.format(
-                "Request Type: Company Representative Registration%n" +
-                        "Request ID: %s%n" +
-                        "Requester ID: %s%n" +
-                        "Representative Name: %s%n" +
-                        "Company Name: %s%n" +
-                        "Current Status: %s%n",
-                getId(),
-                getRequesterId(),
-                companyRep.getUserName(),
-                companyRep.getCompanyName(),
-                companyRep.getStatus()
+        List<AsciiTableFormatter.Row> rows = List.of(
+                new AsciiTableFormatter.Row("Request Type", "Company Representative Registration"),
+                new AsciiTableFormatter.Row("Request ID", getId()),
+                new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
+                new AsciiTableFormatter.Row("Representative Name", companyRep.getUserName()),
+                new AsciiTableFormatter.Row("Company Name", companyRep.getCompanyName()),
+                new AsciiTableFormatter.Row("Current Status", String.valueOf(companyRep.getStatus()))
         );
+
+        return AsciiTableFormatter.formatTable(rows);
     }
+
 
 }

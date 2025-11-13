@@ -3,6 +3,9 @@ package entity.request;
 import controller.database.IRepository;
 import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
+import util.io.AsciiTableFormatter;
+
+import java.util.List;
 
 public class InternshipVetRequest extends Request {
     private final InternshipOpportunity internship;
@@ -44,27 +47,21 @@ public class InternshipVetRequest extends Request {
      */
     @Override
     public String toString() {
-        return String.format(
-                "Request Type: Internship Vetting%n" +
-                        "Request ID: %s%n" +
-                        "Requester ID: %s%n" +
-                        "Internship ID: %s%n" +
-                        "Title: %s%n" +
-                        "Company: %s%n" +
-                        "Level: %s%n" +
-                        "Opening Date: %s%n" +
-                        "Closing Date: %s%n" +
-                        "Current Status: %s%n",
-                getId(),
-                getRequesterId(),
-                internship.getId(),
-                internship.getTitle(),
-                internship.getCompanyName(),
-                internship.getLevel(),
-                internship.getOpeningDate(),
-                internship.getClosingDate(),
-                internship.getStatus()
+        List<AsciiTableFormatter.Row> rows = List.of(
+                new AsciiTableFormatter.Row("Request Type", "Internship Vetting"),
+                new AsciiTableFormatter.Row("Request ID", getId()),
+                new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
+                new AsciiTableFormatter.Row("Internship ID", internship.getId()),
+                new AsciiTableFormatter.Row("Title", internship.getTitle()),
+                new AsciiTableFormatter.Row("Company", internship.getCompanyName()),
+                new AsciiTableFormatter.Row("Level", String.valueOf(internship.getLevel())),
+                new AsciiTableFormatter.Row("Opening Date", String.valueOf(internship.getOpeningDate())),
+                new AsciiTableFormatter.Row("Closing Date", String.valueOf(internship.getClosingDate())),
+                new AsciiTableFormatter.Row("Current Status", String.valueOf(internship.getStatus()))
         );
+
+        return AsciiTableFormatter.formatTable(rows);
     }
+
 
 }
