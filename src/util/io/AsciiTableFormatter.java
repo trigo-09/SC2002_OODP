@@ -16,8 +16,6 @@ public final class AsciiTableFormatter {
         for (int i = 0; i < rows.size(); i++) {
             Row row = rows.get(i);
             appendRow(sb, row.label(), row.value());
-            // separator after every attribute
-
         }
 
         return sb.toString();

@@ -7,6 +7,7 @@ import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
 import controller.service.InternshipService;
 import controller.service.RequestService;
+import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.request.InternshipVetRequest;
 import entity.request.RegistrationRequest;
@@ -109,6 +110,10 @@ public class StaffController extends UserController {
 	public List<InternshipOpportunity> viewInternshipsFiltered(FilterCriteria filter) {
 		List<InternshipOpportunity> internships = repo.getAllInternships();
 		return internshipService.getFilteredInternship(internships, filter);
+	}
+
+	public List<Application> getAcceptedApplications(String internshipId){
+		return internshipService.findInternshipById(internshipId).getApprovedSlots();
 	}
 
     /**
