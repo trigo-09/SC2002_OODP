@@ -1,6 +1,7 @@
 package boundary.usermenu;
 
 import boundary.FilterUI;
+import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.RepController;
@@ -52,7 +53,7 @@ public class RepMenuUI {
             switch (choice) {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI(repController);
-                case 3 -> changePasswordUI();
+                case 3 -> ChangePasswordUI.handleChangePassword(repController, repController.getRep());
                 case 4 -> FilterUI.update(repController.getFilter());
                 case 0 -> {
                     System.out.println("Logging out...");
@@ -209,9 +210,14 @@ public class RepMenuUI {
 
     private void handleVisibility(List<InternshipOpportunity> filteredInternships) {
         ChangePage.changePage();
-        DisplayableViewer.displayList(filteredInternships);
-        int index;
+        List<InternshipOpportunity> approved = repController.getApprovedInternships(filteredInternships);
+        DisplayableViewer.displayList(approved);
+        if (approved.isEmpty()){
+            InputHelper.pause();
+            return;
+        }
 
+        int index;
         while (true){
             System.out.print("Enter index of internship to edit: ");
             index = InputHelper.readInt();
@@ -220,36 +226,58 @@ public class RepMenuUI {
             }
             else if (index<1 || index > filteredInternships.size()){
                 System.out.println("PLease enter a valid index.");
+            }
+            else {
                 break;
             }
         }
-        String internId = filteredInternships.get(index-1).getId();
-        System.out.print("Set visibility to Visible (1) or Hidden (0): ");
-        int visChoice = InputHelper.readInt();
-        boolean visibility = visChoice == 1;
 
-        try {
-            repController.toggleVisibility(internId, visibility);
-            System.out.println("Internship visibility updated successfully.");
-        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
-            System.out.println("Error updating visibility: " + e.getMessage());
+        String internId = filteredInternships.get(index-1).getId();
+        System.out.print("Set visibility to Visible [1] or Hidden [0], (Enter [2] to return): ");
+        int visChoice = InputHelper.readInt();
+
+        while (true) {
+            if (visChoice == 2){
+                InputHelper.pause();
+                return;
+            }
+            else if (visChoice == 0 || visChoice == 1){
+                boolean visibility = (visChoice == 1);
+
+                try {
+                    repController.toggleVisibility(internId, visibility);
+                    System.out.println("Internship visibility updated successfully.");
+                } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+                    System.out.println("Error updating visibility: " + e.getMessage());
+                }
+                InputHelper.pause();
+            }
+            else {
+                System.out.println("Invalid input");
+            }
         }
-        InputHelper.pause();
     }
 
     private void handleEditInternship(List<InternshipOpportunity> filteredInternships) {
         ChangePage.changePage();
-        DisplayableViewer.displayList(filteredInternships);
-        int index;
+        List<InternshipOpportunity> pending = repController.getPendingInternships(filteredInternships);
+        DisplayableViewer.displayList(pending);
+        if (pending.isEmpty()){
+            InputHelper.pause();
+            return;
+        }
 
+        int index;
         while (true){
-            System.out.print("Enter index of internship to edit: ");
+            System.out.print("Enter index of internship to edit (Enter [0] to return): ");
             index = InputHelper.readInt();
             if (index == 0){
                 return;
             }
             else if (index<1 || index > filteredInternships.size()){
                 System.out.println("PLease enter a valid index.");
+            }
+            else {
                 break;
             }
         }
@@ -309,7 +337,13 @@ public class RepMenuUI {
         InternshipLevel level;
         while(true) {
             try {
-                level = repController.parseLevel(InputHelper.readLine(), true);
+                String inputLevel = InputHelper.readLine();
+                if (inputLevel.isEmpty()){
+                    level = null;
+                }
+                else {
+                    level = repController.parseLevel(inputLevel, true);
+                }
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Error parsing internship level: " + e.getMessage());
@@ -337,20 +371,29 @@ public class RepMenuUI {
 
     private void handleApplications(List<InternshipOpportunity> filteredInternships) {
         ChangePage.changePage();
-        DisplayableViewer.displayList(filteredInternships);
+        List<InternshipOpportunity> approved = repController.getApprovedInternships(filteredInternships);
+        DisplayableViewer.displayList(approved);
+        if (approved.isEmpty()){
+            InputHelper.pause();
+            return;
+        }
+
         int index;
 
         while (true){
-            System.out.print("Enter index of internship to view: ");
+            System.out.print("Enter index of internship to manage applications (Enter 0 to go back to menu): ");
             index = InputHelper.readInt();
             if (index == 0){
                 return;
             }
             else if (index<1 || index > filteredInternships.size()){
                 System.out.println("PLease enter a valid index.");
+            }
+            else{
                 break;
             }
         }
+
         String internId = filteredInternships.get(index-1).getId();
 
         try {
@@ -360,7 +403,7 @@ public class RepMenuUI {
                 InputHelper.pause();
                 return;
             } else {
-                applications.forEach(a -> System.out.println("- " + a));
+                DisplayableViewer.displayList(applications);
             }
             InputHelper.pause();
         } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
@@ -370,8 +413,23 @@ public class RepMenuUI {
         System.out.print("1: Accept or Reject an Application, 0: back: ");
         int appChoice = InputHelper.readInt();
 
+
         if (appChoice == 1) {
-            System.out.print("Enter Application ID: ");
+            while (true){
+                System.out.print("Enter index of the Application ID (Enter [0] to return): ");
+                int applicationIndex = InputHelper.readInt();
+
+                if (applicationIndex == 0) {
+                    return;
+                }
+                else if (applicationIndex < 1 || applicationIndex > repController.getApplications(internId).size()) {
+                    System.out.println("Please enter a valid index");
+                }
+                else {
+                    break;
+                }
+            }
+
             String appId = InputHelper.readLine();
             System.out.print("Accept (1) or Reject (0) the application? ");
             int decision = InputHelper.readInt();
