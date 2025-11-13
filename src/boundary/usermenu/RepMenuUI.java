@@ -74,11 +74,11 @@ public class RepMenuUI {
         ChangePage.changePage();
         System.out.println("Create Internship Opportunity");
         System.out.println(GraphicLogo.SEPARATOR);
-        System.out.printf("%-20s", "Title:");
+        System.out.print("Title: ");
         String title = InputHelper.readLine();
-        System.out.printf("%-20s", "Description:");
+        System.out.print("Description: ");
         String description = InputHelper.readLine();
-        System.out.printf("%-20s" ,"Level (Basic / Intermediate / Advanced):");
+        System.out.print("Level (Basic / Intermediate / Advanced): ");
         // Re-prompt until valid level is entered
         // Convert user input to InternshipLevel enum
         InternshipLevel level;
