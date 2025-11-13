@@ -106,7 +106,7 @@ public class LoginPageUI {
                 controller.registerRep(userId,name,password,attributes);
                 System.out.println("Register successfully!");
                 System.out.println("Please wait for account to be approved");
-                System.out.println("Press any key to continue");
+                System.out.println("Press [Entry] to continue");
                 try {
                     System.in.read();
                 } catch (IOException e) {
