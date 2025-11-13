@@ -125,6 +125,14 @@ public class RepController extends UserController {
 		return internshipService.getFilteredInternship(internshipOpportunities, filter);
 	}
 
+	public List<InternshipOpportunity> getPendingInternships(List<InternshipOpportunity> internshipOpportunities){
+		return internshipService.getPendingInternships(internshipOpportunities);
+	}
+
+	public List<InternshipOpportunity> getApprovedInternships(List<InternshipOpportunity> internshipOpportunities){
+		return internshipService.getApprovedInternships(internshipOpportunities);
+	}
+
 	/**
 	 * Approves an internship application.
 	 * @param appId application ID
