@@ -45,7 +45,11 @@ public class SystemRepository implements IRepository, Serializable {
 	 * @param intern
 	 */
 	public void addInternship(String repId,InternshipOpportunity intern) {
-        approvedReps.get(repId.toLowerCase()).addInternship(intern);
+        CompanyRep rep = approvedReps.get(repId.toLowerCase());
+        if(rep == null){
+            System.out.println("rep not found");
+        }
+        rep.addInternship(intern);
 	}
 
 	/**
@@ -89,8 +93,11 @@ public class SystemRepository implements IRepository, Serializable {
 	public void approveCompanyRep(String repId) {
         CompanyRep rep = pendingReps.get(repId.toLowerCase());
         if (rep != null) {
-            pendingReps.remove(repId);
-            approvedReps.put(repId, rep);
+            pendingReps.remove(repId.toLowerCase());
+            approvedReps.put(repId.toLowerCase(), rep);
+        }
+        else {
+            System.out.println("Company rep cannot be swapped");
         }
 
 	}
