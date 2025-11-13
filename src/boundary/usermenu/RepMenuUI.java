@@ -4,6 +4,7 @@ import boundary.FilterUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.RepController;
+import entity.FilterCriteria;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
@@ -43,6 +44,7 @@ public class RepMenuUI {
             System.out.println("1) Create Internship Opportunity");
             System.out.println("2) Manage Your Internship Opportunities");
             System.out.println("3) Change Password");
+            System.out.println("4) Update Filter");
             System.out.println("0) Logout");
             System.out.print("Enter your choice: ");
             choice = InputHelper.readInt();
@@ -51,6 +53,7 @@ public class RepMenuUI {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI(repController);
                 case 3 -> changePasswordUI();
+                case 4 -> FilterUI.update(repController.getFilter());
                 case 0 -> {
                     System.out.println("Logging out...");
                     systemController.mainMenu();
@@ -91,7 +94,7 @@ public class RepMenuUI {
         System.out.print("Preferred Major or 'Any': ");
         String preferredMajor = InputHelper.readLine();
         
-        System.out.println("Enter Opening Date (DD-MM-YYYY):");
+        System.out.print("Enter Opening Date (DD-MM-YYYY):");
         LocalDate openingDate = InputHelper.readDate();
         System.out.print("Enter Closing Date (DD-MM-YYYY): ");
 
@@ -100,7 +103,7 @@ public class RepMenuUI {
         while (true) {
             closingDate = InputHelper.readDate();
             if (!closingDate.isBefore(openingDate)) break;
-            System.out.println("Closing date cannot be before opening date. Please try again.");
+            System.out.print("Closing date cannot be before opening date. Please try again: ");
         }
 
         // Re-prompt until valid number of slots is entered
@@ -143,7 +146,7 @@ public class RepMenuUI {
         int choice = -1;
         while (choice != 0) {
             System.out.println("=== Your Internship Opportunities (Filtered) ===");
-            List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getRep().getInternships(), repController.getFilter());
+            List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
 
             if (filteredInternships.isEmpty()) {
                 System.out.println("(No opportunities yet)");
@@ -159,7 +162,6 @@ public class RepMenuUI {
             System.out.println("1) Set Internship Visibility");
             System.out.println("2) Edit Internship");
             System.out.println("3) Manage Applications for an Internship");
-            System.out.println("4) Manage Filter");
 
             while(true) {
                 System.out.print("Enter your choice: ");
@@ -168,7 +170,7 @@ public class RepMenuUI {
                     System.out.println("No internships available to manage. Please choose another option.");
                     continue;
                 }
-                if (choice < 0 || choice > 4) {
+                if (choice < 0 || choice > 3) {
                     System.out.println("Invalid choice. Please try again.");
                     continue;
                 }
@@ -179,8 +181,9 @@ public class RepMenuUI {
                 case 1 ->   handleVisibility(filteredInternships);
                 case 2 ->   handleEditInternship(filteredInternships);
                 case 3 ->   handleApplications(filteredInternships);
-                case 4 ->   FilterUI.update(repController.getFilter());
-                case 0 ->   System.out.println("Returning to main menu...");
+                case 0 ->   {
+                    System.out.println("Returning to main menu...");
+                }
                 default ->  System.out.println("Invalid choice. Please try again.");
             }
         }

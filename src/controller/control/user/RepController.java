@@ -7,6 +7,7 @@ import controller.service.ApplicationService;
 import controller.service.AuthenticationService;
 import controller.service.InternshipService;
 import controller.service.RequestService;
+import entity.FilterCriteria;
 import entity.application.Application;
 import entity.internship.InternshipLevel;
 import entity.internship.InternshipOpportunity;
@@ -14,7 +15,7 @@ import entity.user.CompanyRep;
 import java.time.LocalDate;
 import java.util.List;
 
-import util.FilterCriteria;
+
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectAlreadyExistsException;
 import util.exceptions.ObjectNotFoundException;
