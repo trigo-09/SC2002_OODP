@@ -15,7 +15,7 @@ public interface IRepository extends IApplicationRepo,IRequestRepo,IInternshipRe
     Map<String, CompanyRep> getApprovedReps();
 
     /**
-     * get hash map of all careerstaff
+     * get hash map of all career staff
      * @return
      */
     Map<String, CareerStaff> getCareerStaff();
