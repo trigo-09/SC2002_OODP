@@ -2,6 +2,7 @@ package boundary;
 
 import entity.FilterCriteria;
 import entity.internship.*;
+import util.io.ChangePage;
 import util.io.InputHelper;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public class FilterUI {
     private static final DateTimeFormatter DMY = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static void update(FilterCriteria filter) {
+        ChangePage.changePage();
         boolean back = false;
         while (!back) {
             System.out.println("\n=== FILTER SETTINGS ===");
