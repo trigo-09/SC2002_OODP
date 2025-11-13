@@ -23,7 +23,7 @@ public class InputHelper {
             return value;
         } catch (Exception e) {
             System.out.println("Invalid input");
-            System.out.println("Please enter a valid integer");
+            System.out.println("Please enter a valid integer: ");
             sc.nextLine(); // clear bad input
             return readInt();
         }
