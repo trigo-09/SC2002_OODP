@@ -160,7 +160,7 @@ public class RepMenuUI {
             System.out.println("Actions:");
             System.out.println("0) Back to Main Menu");
             System.out.println("1) Set Internship Visibility");
-            System.out.println("2) Edit Internship"); //can either add a delete option here or just create a new function
+            System.out.println("2) Edit Internship");
             System.out.println("3) Manage Applications for an Internship");
 
             while(true) {
@@ -411,10 +411,10 @@ public class RepMenuUI {
         }
 
         System.out.print("1: Accept or Reject an Application, 0: back: ");
-        int appChoice = InputHelper.readInt(); //something is eating the line here i think
+        int appChoice = InputHelper.readInt();
 
 
-        if (appChoice == 1) { // theres some error with this logic
+        if (appChoice == 1) {
             while (true){
                 System.out.print("Enter index of the Application ID (Enter [0] to return): ");
                 int applicationIndex = InputHelper.readInt();

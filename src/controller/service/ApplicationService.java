@@ -34,7 +34,7 @@ public class ApplicationService {
      * @throws IllegalStateException if the student applied for the internship already
      * @throws MaxExceedException if student exceed their max allowed applications
      */
-    public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException {
+    public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException,IllegalArgumentException {
         // check eligibility
         Student user = (Student) systemRepository.findUser(studentId);
         if (user == null) throw new UserNotFoundException("Invalid student ID: " + studentId);
@@ -47,8 +47,7 @@ public class ApplicationService {
             throw new IllegalStateException("Student has already applied for this internship.");
         }
         else {
-            Application application = new Application(user.getId(), internshipId);
-            return application;
+            return new Application(user.getId(), internshipId);
         }
     }
 
@@ -93,7 +92,7 @@ public class ApplicationService {
      * @throws SecurityException        if the application does not belong to this representative
      * @throws IllegalStateException    if the application has already been reviewed
      */
-    public void reviewApplication(String appId, boolean approve) throws ObjectNotFoundException {
+    public void reviewApplication(String appId, boolean approve) throws ObjectNotFoundException,IllegalArgumentException {
         Application application = findApplication(appId);
         // Ensure application exists
         if (application == null) {

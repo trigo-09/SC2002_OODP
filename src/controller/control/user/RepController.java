@@ -140,7 +140,7 @@ public class RepController extends UserController {
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
-	public void approveApp(String appId) throws ObjectNotFoundException,MaxExceedException {
+	public void approveApp(String appId) throws ObjectNotFoundException,MaxExceedException,SecurityException,IllegalStateException {
         Application app = applicationService.findApplication(appId);
         InternshipOpportunity internship = internshipService.findInternshipById(app.getInternshipId());
         // Ensure internship exists

@@ -70,7 +70,7 @@ public class LoginPageUI {
      */
     public static void register(SystemController controller) throws PageBackException  {
         ChangePage.changePage();
-        System.out.println("Please fill in the relevant information");
+        System.out.println("Please fill in the relevant information to register");
         int count = 0;
         while (true) {
             String name = AttributeGetter.getName();
@@ -82,7 +82,7 @@ public class LoginPageUI {
             count++;
             if(company.isEmpty() || department.isEmpty() || position.isEmpty() || userId.isEmpty() || password.isEmpty() || name.isEmpty() ) {
                 if (count > 1 ) {
-                    System.out.println("\nEnter [b] to go back, or any other key to try again.");
+                    System.out.println("\nEnter [b] to go back, or press [Enter] to try again.");
                     String choice = InputHelper.readLine();
                     if (choice.equalsIgnoreCase("b")) {
                         throw new PageBackException(); // signal upper controller to go back
@@ -92,7 +92,8 @@ public class LoginPageUI {
                     }
                 }
                 ChangePage.changePage();
-                System.out.println("Please enter all the fields");
+                System.out.println("Failed to register, please try again.");
+                System.out.println("Please fill up all fields.");
                 continue;
             }
 
@@ -103,9 +104,9 @@ public class LoginPageUI {
 
             try {
                 controller.registerRep(userId,name,password,attributes);
-                System.out.println("Register successfully!");
+                System.out.println("\nRegister successfully!");
                 System.out.println("Please wait for account to be approved");
-                System.out.println("Press any key to continue");
+                System.out.println("Press [Entry] to continue");
                 try {
                     System.in.read();
                 } catch (IOException e) {
@@ -115,7 +116,7 @@ public class LoginPageUI {
 
             }catch (AuthenticationException | IllegalArgumentException e){
                 System.out.println("Registration failed: "+e.getMessage());
-                System.out.println("\nEnter [b] to go back, or any other key to retry.");
+                System.out.println("\nEnter [b] to go back, or press [Entry] to retry.");
                 String choice = InputHelper.readLine();
                 if (choice.equalsIgnoreCase("b")) {
                     throw new PageBackException();
