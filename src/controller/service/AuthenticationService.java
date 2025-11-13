@@ -1,6 +1,7 @@
 package controller.service;
 
 import controller.database.IRepository;
+import controller.database.IUser;
 import entity.user.User;
 import util.PasswordHasher;
 import util.exceptions.AuthenticationException;

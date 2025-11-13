@@ -33,12 +33,6 @@ public interface IRepository extends IApplicationRepo,IRequestRepo,IInternshipRe
     Map<String, Student> getStudents();
 
     /**
-     * find user using their ID and return them
-     * @param userId
-     */
-    User findUser(String userId);
-
-    /**
      * add career Staff to hash map
      * @param staff
      */

@@ -14,7 +14,7 @@ import util.exceptions.UserNotFoundException;
  */
 public class ApplicationService {
 
-    private final IRepository systemRepository;
+    private final IApplicationRepo systemRepository;
     private static final int MAX_ACTIVE_APPLICATIONS = 3;
 
     /**

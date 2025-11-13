@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * contain methods related to request for repository to implement
  */
-public interface IRequestRepo {
+public interface IRequestRepo extends IUser{
 
     /**
      * get all request

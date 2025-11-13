@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * contain methods related to internship for repository to implement
  */
-public interface IInternshipRepo {
+public interface IInternshipRepo extends IUser {
 
     /**
      * get all internships

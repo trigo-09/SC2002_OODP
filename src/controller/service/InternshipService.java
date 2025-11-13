@@ -1,4 +1,5 @@
 package controller.service;
+import controller.database.IInternshipRepo;
 import controller.database.IRepository;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
@@ -18,7 +19,7 @@ import util.exceptions.ObjectNotFoundException;
  */
 public class InternshipService {
 
-    private final IRepository repository;
+    private final IInternshipRepo repository;
     private static final int MAX_ACTIVE_INTERNSHIPS = 5;
 
     /**

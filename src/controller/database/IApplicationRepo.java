@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * contain methods related to application for repository to implement
  */
-public interface IApplicationRepo {
+public interface IApplicationRepo extends IUser{
 
     /**
      * find application using its ID
