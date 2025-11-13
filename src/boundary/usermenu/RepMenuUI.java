@@ -39,13 +39,15 @@ public class RepMenuUI {
         int choice = -1;
         while (choice != 0) {
             ChangePage.changePage();
-            System.out.println("Welcome to Company Representative Menu!");
             System.out.println(GraphicLogo.SEPARATOR);
-            System.out.println("1) Create Internship Opportunity");
-            System.out.println("2) Manage Your Internship Opportunities");
-            System.out.println("3) Change Password");
-            System.out.println("4) Update Filter");
-            System.out.println("0) Logout");
+            System.out.println("Welcome to Company Representative Menu!");
+            System.out.println("Hello, "+repController.getRep().getUserName() +"!\n");
+            System.out.println("\t1. Create Internship Opportunity");
+            System.out.println("\t2. Manage Your Internship Opportunities");
+            System.out.println("\t3. Change Password");
+            System.out.println("\t4. Update Filter");
+            System.out.println("\t0. Logout");
+            System.out.println(GraphicLogo.SEPARATOR +"\n");
             System.out.print("Enter your choice: ");
             choice = InputHelper.readInt();
 
@@ -70,13 +72,13 @@ public class RepMenuUI {
       */
     private void createInternshipUI() {
         ChangePage.changePage();
-        System.out.println("=== Create Internship Opportunity ===");
-        System.out.print("Title: ");
+        System.out.println("Create Internship Opportunity");
+        System.out.println(GraphicLogo.SEPARATOR);
+        System.out.printf("%-20s", "Title:");
         String title = InputHelper.readLine();
-        System.out.print("Description: ");
+        System.out.printf("%-20s", "Description:");
         String description = InputHelper.readLine();
-
-        System.out.print("Level (Basic / Intermediate / Advanced): ");
+        System.out.printf("%-20s" ,"Level (Basic / Intermediate / Advanced):");
         // Re-prompt until valid level is entered
         // Convert user input to InternshipLevel enum
         InternshipLevel level;
@@ -86,7 +88,8 @@ public class RepMenuUI {
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Error parsing internship level: " + e.getMessage());
-                System.out.print("Please try again: ");
+                System.out.print("Please try again");
+                System.out.printf("%-20s" ,"Level (Basic / Intermediate / Advanced):");
             }
         }
         
@@ -95,13 +98,13 @@ public class RepMenuUI {
         String preferredMajor = InputHelper.readLine();
         
         System.out.print("Enter Opening Date (DD-MM-YYYY):");
-        LocalDate openingDate = InputHelper.readDate();
+        LocalDate openingDate = InputHelper.readOpenDate();
         System.out.print("Enter Closing Date (DD-MM-YYYY): ");
 
         // Re-prompt until closing date is after opening date
         LocalDate closingDate;
         while (true) {
-            closingDate = InputHelper.readDate();
+            closingDate = InputHelper.readCloseDate();
             if (!closingDate.isBefore(openingDate)) break;
             System.out.print("Closing date cannot be before opening date. Please try again: ");
         }
