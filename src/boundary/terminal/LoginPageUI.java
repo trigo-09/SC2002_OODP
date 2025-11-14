@@ -70,7 +70,7 @@ public class LoginPageUI {
      */
     public static void register(SystemController controller) throws PageBackException  {
         ChangePage.changePage();
-        System.out.println("Please fill in the relevant information to register");
+        System.out.println("Please fill in the relevant information to register (leave it blank to exit)");
         int count = 0;
         while (true) {
             String name = AttributeGetter.getName();
