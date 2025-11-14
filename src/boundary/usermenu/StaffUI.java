@@ -1,6 +1,5 @@
 package boundary.usermenu;
 
-import boundary.AttributeGetter;
 import boundary.FilterUI;
 import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
@@ -279,6 +278,7 @@ public class StaffUI {
                             if (request instanceof InternshipVetRequest) {
                                 if (choice == 1) {
                                     staffController.rejectInternship(requestID);
+                                    systemController.update();
                                     ChangePage.changePage();
                                     System.out.println("Updated Request");
                                     System.out.println(GraphicLogo.LONG_SEP);
@@ -286,6 +286,7 @@ public class StaffUI {
                                 }
                                 else {
                                     staffController.approveInternship(requestID);
+                                    systemController.update();
                                     ChangePage.changePage();
                                     System.out.println("Updated Request");
                                     System.out.println(GraphicLogo.LONG_SEP);
@@ -294,6 +295,7 @@ public class StaffUI {
                             } else if (request instanceof RegistrationRequest) {
                                 if (choice == 1) {
                                     staffController.rejectRep(requestID);
+                                    systemController.update();
                                     ChangePage.changePage();
                                     System.out.println("Updated Request");
                                     System.out.println(GraphicLogo.LONG_SEP);
@@ -301,6 +303,7 @@ public class StaffUI {
                                 }
                                 else {
                                     staffController.approveRep(requestID);
+                                    systemController.update();
                                     ChangePage.changePage();
                                     System.out.println("Updated Request");
                                     System.out.println(GraphicLogo.LONG_SEP);
@@ -309,6 +312,7 @@ public class StaffUI {
                             } else if (request instanceof WithdrawalRequest) {
                                 if (choice == 1) {
                                     staffController.rejectWithdrawal(requestID);
+                                    systemController.update();
                                     ChangePage.changePage();
                                     System.out.println("Updated Request");
                                     System.out.println(GraphicLogo.LONG_SEP);
@@ -316,6 +320,7 @@ public class StaffUI {
                                 }
                                 else {
                                     staffController.approveWithdrawal(requestID);
+                                    systemController.update();
                                     ChangePage.changePage();
                                     System.out.println("Updated Request");
                                     System.out.println(GraphicLogo.LONG_SEP);

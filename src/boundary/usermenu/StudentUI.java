@@ -16,15 +16,26 @@ import util.io.GraphicLogo;
 import util.io.InputHelper;
 import util.io.ChangePage;
 
+/**
+ * UI for student
+ */
 public class StudentUI {
     private final StudentController studentController;
     private final SystemController systemController;
 
+    /**
+     * constructor of student UI
+     * @param systemController system controller
+     * @param studentController student controller
+     */
     public StudentUI(SystemController systemController, StudentController studentController) {
         this.systemController = systemController;
         this.studentController = studentController;
     }
 
+    /**
+     * main menu, show all broad actions for user
+     */
     public void menu() {
         ChangePage.changePage();
         System.out.print(GraphicLogo.SEPARATOR);
@@ -66,7 +77,6 @@ public class StudentUI {
     /**
      *  Allow user to view internships based on their filter
      *  If no internships are available then will just print "No internships found"
-     *
      */
     private void handleInternships(){
         ChangePage.changePage();
@@ -123,6 +133,7 @@ public class StudentUI {
         try {
             studentController.applyInternship(internship.getId());
             System.out.println("Successfully applied.");
+            systemController.update();
         }catch (Exception e){
             System.out.println("ERROR: "+e.getMessage());
         }
@@ -204,6 +215,7 @@ public class StudentUI {
                 try{
                     studentController.acceptPlacement(app.getApplicationId());
                     System.out.println("Application has been accepted.");
+                    systemController.update();
                     break;
                 }catch (Exception e){
                     System.out.println("ERROR: "+e.getMessage());
@@ -214,6 +226,7 @@ public class StudentUI {
                 try{
                     studentController.withdrawPlacement(app.getApplicationId(), reason);
                     System.out.println("Withdrawal reqeust has been sent.");
+                    systemController.update();
                     break;
                 }catch (Exception e){
                     System.out.println("ERROR: "+e.getMessage());
@@ -227,12 +240,6 @@ public class StudentUI {
         InputHelper.pause();
         throw new PageBackException();
     }
-
-    /**
-     * Allow student to accept an internship application which has been offered to them
-     * Display a list of their applications first
-     * Prompts them for the index of the application they want to accept
-     */
 
     /**
      * Allow student to change their filter options

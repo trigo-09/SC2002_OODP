@@ -134,6 +134,7 @@ public class RepMenuUI {
                 numOfSlots
             );
         System.out.println("Internship opportunity created successfully.");
+        systemController.update();
         } catch (IllegalArgumentException | IllegalStateException | SecurityException | MaxExceedException | ObjectAlreadyExistsException e) {
             System.out.println("Error creating internship: " + e.getMessage());
         }
@@ -232,6 +233,7 @@ public class RepMenuUI {
                 try {
                     repController.toggleVisibility(internId, visibility);
                     System.out.println("Internship visibility updated successfully.");
+                    systemController.update();
                     run = false;
                 } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
                     System.out.println("Error updating visibility: " + e.getMessage());
@@ -404,6 +406,7 @@ public class RepMenuUI {
                                 level
                         );
                         System.out.println("Internship updated successfully.");
+                        systemController.update();
                         done = true;
                     } catch (IllegalArgumentException | IllegalStateException | SecurityException | ObjectNotFoundException e) {
                         System.out.println("Error updating internship: " + e.getMessage());
@@ -527,9 +530,11 @@ public class RepMenuUI {
                      if (decision == 1) {
                          repController.approveApp(appId);
                          System.out.println("Application accepted.");
+                         systemController.update();
                      } else {
                          repController.rejectApp(appId);
                          System.out.println("Application rejected.");
+                         systemController.update();
                      }
                  } catch (ObjectNotFoundException | IllegalStateException | SecurityException | MaxExceedException e) {
                      System.out.println("Error approving/rejecting application: " + e.getMessage());
@@ -594,6 +599,7 @@ public class RepMenuUI {
                     try {
                         repController.deleteInternship(internId);
                         System.out.println("Internship Deleted.");
+                        systemController.update();
                         InputHelper.pause();
                         manageDeleteInternship();
                     }catch (ObjectNotFoundException e) {

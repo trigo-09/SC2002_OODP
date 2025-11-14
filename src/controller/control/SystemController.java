@@ -87,6 +87,8 @@ public class SystemController {
         Exit.exit();
 	}
 
+    public void update(){dataManager.save(repo);}
+
     /**
      * creates new company rep object and registration request for account approval
      * @param userId company rep email
@@ -112,7 +114,7 @@ public class SystemController {
         User user = UserFactory.createUser(UserRole.REP,userId,name,Password,attributes);
         request.createRegistrationRequest((CompanyRep) user);
         repo.registerCompanyRep((CompanyRep) user);
-        dataManager.save(repo);
+        update();
     }
 
 }
