@@ -32,6 +32,7 @@ public class ChangePasswordUI {
 
             try {
                 userController.changePassword(oldPass, newPass, user, confirmPass);
+                InputHelper.pause();
                 systemController.mainMenu();
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
