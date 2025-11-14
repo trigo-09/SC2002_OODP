@@ -24,8 +24,8 @@ public class InternBuilder {
 
     /**
      * set companyName
-     * @param companyName
-     * @return
+     * @param companyName company name
+     * @return company name
      */
 	public InternBuilder companyName(String companyName){
 		this.companyName = companyName;
@@ -34,8 +34,8 @@ public class InternBuilder {
 
     /**
      * set title
-     * @param title
-     * @return
+     * @param title internship title
+     * @return title
      */
 	public InternBuilder title(String title){
 		this.title =  title;
@@ -44,8 +44,8 @@ public class InternBuilder {
 
     /**
      * set description
-     * @param description
-     * @return
+     * @param description internship description
+     * @return description
      */
 	public InternBuilder description(String description){
 		this.description = description;
@@ -54,8 +54,8 @@ public class InternBuilder {
 
     /**
      * set internship level
-     * @param level
-     * @return
+     * @param level internship level
+     * @return internship level
      */
 	public InternBuilder level(InternshipLevel level){
 		this.level = level;
@@ -64,8 +64,8 @@ public class InternBuilder {
 
     /**
      * set preferredMajors
-     * @param preferredMajors
-     * @return
+     * @param preferredMajors preferred majors
+     * @return preferred majors
      */
 	public InternBuilder preferredMajors(String preferredMajors){
 		this.preferredMajors = preferredMajors;
@@ -74,8 +74,8 @@ public class InternBuilder {
 
     /**
      * set Opening date
-     * @param openingDate
-     * @return
+     * @param openingDate opening date
+     * @return opening date
      */
 	public InternBuilder openingDate(LocalDate openingDate){
 		this.openingDate = openingDate;
@@ -84,8 +84,8 @@ public class InternBuilder {
 
     /**
      * set Closing date
-     * @param closingDate
-     * @return
+     * @param closingDate closing date
+     * @return closing date
      */
 	public InternBuilder closingDate(LocalDate closingDate){
 		this.closingDate = closingDate;
@@ -94,8 +94,8 @@ public class InternBuilder {
 
     /**
      * set number of application slot
-     * @param numOfSlots
-     * @return
+     * @param numOfSlots number of application slot
+     * @return number of application slot
      */
 	public InternBuilder numOfSlots(int numOfSlots){
 		this.numOfSlots = numOfSlots;
@@ -104,8 +104,8 @@ public class InternBuilder {
 
     /**
      * set rep id
-     * @param createdBy
-     * @return
+     * @param createdBy rep id
+     * @return rep id
      */
 	public InternBuilder createdBy(String createdBy){
 		this.createdBy = createdBy;

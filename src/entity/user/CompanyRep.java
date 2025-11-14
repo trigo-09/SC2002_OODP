@@ -16,12 +16,12 @@ public class CompanyRep extends User {
 
     /**
      * constructor of Companyrep
-     * @param name
-     * @param id
-     * @param pass
-     * @param company
-     * @param department
-     * @param position
+     * @param name name of rep
+     * @param id id of rep
+     * @param pass password of rep
+     * @param company company name of rep
+     * @param department department of rep
+     * @param position position of rep
      */
     public CompanyRep(String name, String id, String pass, String company, String department, String position) {
         super(name, id, pass, UserRole.REP);
@@ -67,7 +67,7 @@ public class CompanyRep extends User {
 
 	/**
 	 * update status of account
-	 * @param status
+	 * @param status status of account
 	 */
 	public void setStatus(RepStatus status) {
         this.status = status;
@@ -75,7 +75,7 @@ public class CompanyRep extends User {
 
     /**
      * set department of rep
-     * @param department
+     * @param department name of department
      */
     public void setDepartment(String department) {
         this.department = department;
@@ -83,7 +83,7 @@ public class CompanyRep extends User {
 
     /**
      * set position of rep
-     * @param position
+     * @param position name of position
      */
     public void setPosition(String position) {
         this.position = position;
@@ -99,7 +99,7 @@ public class CompanyRep extends User {
 
     /**
      * add new internship to list
-     * @param internship
+     * @param internship internship object
      */
     public void addInternship(InternshipOpportunity internship) {
         this.internships.add(internship);
@@ -107,7 +107,7 @@ public class CompanyRep extends User {
 
     /**
      * remove internship from list
-     * @param internship
+     * @param internship internship object
      */
     public void removeInternship(InternshipOpportunity internship) {
         this.internships.remove(internship);

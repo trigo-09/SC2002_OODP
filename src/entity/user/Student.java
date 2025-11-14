@@ -49,11 +49,11 @@ public class Student extends User implements Displayable {
 
 	/**
 	 * constructor of student
-	 * @param name
-	 * @param id
-	 * @param pass
-	 * @param year
-	 * @param major
+	 * @param name name of student
+	 * @param id id of student
+	 * @param pass password of student
+	 * @param year year of student
+	 * @param major major of student
 	 */
 	protected Student(String name, String id, String pass, int year, String major) {
         super(name, id, pass,UserRole.STUDENT);

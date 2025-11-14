@@ -10,49 +10,49 @@ public interface IRepository extends IApplicationRepo,IRequestRepo,IInternshipRe
 
     /**
      * get the hash map of all approved rep
-     * @return
+     * @return map of approved reps
      */
     Map<String, CompanyRep> getApprovedReps();
 
     /**
      * get hash map of all career staff
-     * @return
+     * @return map of career staff
      */
     Map<String, CareerStaff> getCareerStaff();
 
     /**
      * get hash map of all pending rep
-     * @return
+     * @return map of pending reps
      */
     Map<String, CompanyRep> getPendingReps();
 
     /**
      * get hash map of all students
-     * @return
+     * @return map of students
      */
     Map<String, Student> getStudents();
 
     /**
      * add career Staff to hash map
-     * @param staff
+     * @param staff career staff
      */
     void addCareerStaff(CareerStaff staff);
 
     /**
      * add student to hash map
-     * @param student
+     * @param student student object
      */
     void addStudent(Student student);
 
     /**
      * move company rep from pending to approved
-     * @param repId
+     * @param repId rep id
      */
     void approveCompanyRep(String repId);
 
     /**
      * add company rep to pending map
-     * @param rep
+     * @param rep company rep object
      */
     void registerCompanyRep(CompanyRep rep);
 }

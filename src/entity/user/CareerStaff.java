@@ -11,10 +11,10 @@ public class CareerStaff extends User {
 
     /**
      * constructor of Career staff
-     * @param name
-     * @param id
-     * @param pass
-     * @param department
+     * @param name name of staff
+     * @param id id of staff
+     * @param pass password of staff
+     * @param department department of staff
      */
     public CareerStaff(String name, String id, String pass, String department) {
         super(name, id, pass, UserRole.STAFF);
@@ -31,7 +31,7 @@ public class CareerStaff extends User {
 
 	/**
 	 * set new department
-	 * @param staffDepartment
+	 * @param staffDepartment new department name
 	 */
 	public void setStaffDepartment(String staffDepartment) {
 		this.staffDepartment = staffDepartment;

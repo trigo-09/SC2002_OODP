@@ -72,7 +72,6 @@ public class RepController extends UserController {
      * @param openingDate     date when applications open
      * @param closingDate     date when applications close
      * @param numOfSlots      number of available slots (1–10)
-     * @return                the created InternshipOpportunity entity
      * @throws IllegalStateException    if the representative has reached the internship limit
      * @throws IllegalArgumentException if any provided field is invalid
      */
@@ -134,7 +133,7 @@ public class RepController extends UserController {
      /**
       *  filters internships
       * @param internshipOpportunities list of internship
-      * @param filter fitler
+      * @param filter filter
       * @return list of internship
       */
 	public List<InternshipOpportunity> getFilteredInternships(List<InternshipOpportunity> internshipOpportunities, FilterCriteria filter){

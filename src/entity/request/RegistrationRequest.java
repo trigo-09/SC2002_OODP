@@ -15,7 +15,7 @@ public class RegistrationRequest extends Request {
 
     /**
      * constructor of RegistrationRequest class
-     * @param companyRep
+     * @param companyRep company rep object
      */
    public RegistrationRequest(CompanyRep companyRep) {
        super(companyRep.getId());

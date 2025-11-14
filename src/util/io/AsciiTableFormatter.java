@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class helps to format data into table form
+ * class helps to format data into table form.
  */
 public final class AsciiTableFormatter {
 

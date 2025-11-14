@@ -15,7 +15,7 @@ public abstract class Request implements Serializable, Displayable {
 
     /**
      * constructor for request abstract class
-     * @param requesterId
+     * @param requesterId id of requester
      */
     public Request(String requesterId) {
         this.requestId = UUID.randomUUID().toString();

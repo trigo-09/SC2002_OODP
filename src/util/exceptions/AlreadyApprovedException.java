@@ -14,7 +14,7 @@ public class AlreadyApprovedException extends AuthenticationException {
 
     /**
      *Constructs a new {@code AlreadyRegisteredException} with a message param
-     * @param message
+     * @param message custom message to be passed
      */
 
     public AlreadyApprovedException(String message) {

@@ -19,9 +19,9 @@ public class WithdrawalRequest extends Request {
 
     /**
      * Constructor for withdrawal request
-     * @param application
-     * @param reason
-     * @param requesterId
+     * @param application application object to be withdrawn
+     * @param reason reason for withdrawal
+     * @param requesterId requester id
      */
         public WithdrawalRequest(Application application, String reason, String requesterId) {
             super(requesterId);
@@ -62,7 +62,7 @@ public class WithdrawalRequest extends Request {
                 new AsciiTableFormatter.Row("Request Type", "Withdrawal"),
                 new AsciiTableFormatter.Row("Request ID", getId()),
                 new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
-                new AsciiTableFormatter.Row("Reason", reason),
+                new AsciiTableFormatter.Row("Reason", getReason()),
                 new AsciiTableFormatter.Row("Application ID", application.getApplicationId()),
                 new AsciiTableFormatter.Row("Application Status", placeholder)
         );

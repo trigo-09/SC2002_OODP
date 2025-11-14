@@ -287,9 +287,6 @@ public class InternshipService {
     public void addAcceptedApplicationToInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
         internshipOpportunity.addApprovedapplication(app);
-        if(internshipOpportunity.getNumOfFilledSlots() == internshipOpportunity.getNumOfSlots()){
-            internshipOpportunity.setStatus(InternStatus.FILLED);
-        }
     }
 
     /**
@@ -299,9 +296,9 @@ public class InternshipService {
      */
     public void removeApplicationFromInternship(Application app) {
         InternshipOpportunity internshipOpportunity = findInternshipById(app.getInternshipId());
-        if(app.getStatus() == ApplicationStatus.ACCEPTED){
+        if(app.getStatus() == ApplicationStatus.ACCEPTED || app.getStatus() == ApplicationStatus.APPROVED){
             internshipOpportunity.removeApprovedapplication(app);
-            if(isFilled(internshipOpportunity)){
+            if(isFilled(internshipOpportunity) && app.getStatus() == ApplicationStatus.ACCEPTED){
                 internshipOpportunity.setStatus(InternStatus.APPROVED);
             }
         }else {

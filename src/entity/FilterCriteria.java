@@ -18,11 +18,11 @@ public class FilterCriteria {
     private String companyName;
 	/**
 	 * Constructs FilterCriteria obj
-	 * @param status
-	 * @param preferredMajor
-	 * @param level
-	 * @param closingDate
-	 * @param companyName
+	 * @param status internship status
+	 * @param preferredMajor major preferred
+	 * @param level internship level
+	 * @param closingDate closing date
+	 * @param companyName company name
 	 */
     public FilterCriteria(InternStatus status, String preferredMajor, InternshipLevel level, LocalDate closingDate, String companyName) {
         this.status = status;
@@ -47,7 +47,7 @@ public class FilterCriteria {
     }
 	/**
 	* sets status
-	* @param status
+	* @param status internship status
 	*/
     public void setStatus(InternStatus status) {
         this.status = status;
@@ -61,7 +61,7 @@ public class FilterCriteria {
     }
 	/**
 	* sets preferredMajor
-	* @param preferredMajor
+	* @param preferredMajor preferred major
 	*/
     public void setPreferredMajor(String preferredMajor) {
         this.preferredMajor = preferredMajor;
@@ -75,7 +75,7 @@ public class FilterCriteria {
     }
 	/**
 	* sets level
-	* @param level
+	* @param level internship level
 	*/
     public void setLevel(InternshipLevel level) {
         this.level = level;
@@ -89,7 +89,7 @@ public class FilterCriteria {
     }
 	/**
 	* sets closingDate
-	* @param closingDate
+	* @param closingDate closing date
 	*/
     public void setClosingDate(LocalDate closingDate) {
         this.closingDate = closingDate;
@@ -101,7 +101,7 @@ public class FilterCriteria {
     public String getCompanyName() {return companyName;}
 	/**
 	* sets companyName
-	* @param companyName
+	* @param companyName company name
 	*/
     public void setCompanyName(String companyName) {this.companyName = companyName;}
 }

@@ -15,8 +15,8 @@ public class CsvLoader {
 
     /**
      * constructor of csvloader if file dir specified
-     * @param sysRepo
-     * @param directoryPath
+     * @param sysRepo system repository
+     * @param directoryPath file directory path
      */
     public CsvLoader(IRepository sysRepo, String directoryPath) {
         this.sysRepo = sysRepo;
@@ -25,7 +25,7 @@ public class CsvLoader {
 
     /**
      * constructor of CSVLoader with predefined file dir
-     * @param sysRepo
+     * @param sysRepo system repository
      */
     public CsvLoader(IRepository sysRepo) {
         this.sysRepo = sysRepo;
@@ -92,7 +92,7 @@ public class CsvLoader {
     /**
      * read student CSV and create student object
      * add student object to repository
-     * @param reader
+     * @param reader buffered reader
      * @throws IOException if failed to read csv line
      */
     private void loadStudents(BufferedReader reader) throws IOException {
@@ -128,7 +128,7 @@ public class CsvLoader {
     /**
      * read staff CSV and create staff object
      * add staff object to repository
-     * @param reader
+     * @param reader buffered reader
      * @throws IOException if failed to read csv line
      */
     private void loadStaff(BufferedReader reader) throws IOException {

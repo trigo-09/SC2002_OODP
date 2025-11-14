@@ -23,25 +23,25 @@ public class InternshipOpportunity implements Serializable, Displayable {
 	private LocalDate openingDate;
 	private LocalDate closingDate;
 	private int numOfSlots;
-	private List<Application> pendingApplications;
+	private final List<Application> pendingApplications;
 	private InternStatus status;
 	private Boolean visibility;
 	private String createdBy;
-	private List<Application> approvedslots;
+	private final List<Application> approvedslots;
 
     /**
      * Constructor of internships with status set to PENDING
-     * @param id
-     * @param companyName
-     * @param title
-     * @param description
-     * @param level
-     * @param preferredMajors
-     * @param openingDate
-     * @param closingDate
-     * @param numOfSlots
-     * @param status
-     * @param createdBy
+     * @param id ID of internship
+     * @param companyName company name
+     * @param title title of internship
+     * @param description description of internship
+     * @param level level of internship
+     * @param preferredMajors preferred majors
+     * @param openingDate opening date
+     * @param closingDate closing date
+     * @param numOfSlots number of approved application slots
+     * @param status status of internship
+     * @param createdBy rep's ID
      */
 	public InternshipOpportunity(String id,String companyName, String title, String description, InternshipLevel level,
 								 String preferredMajors, LocalDate openingDate, LocalDate closingDate, int numOfSlots, InternStatus status,
@@ -208,7 +208,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 
     /**
      * add application into pending list
-     * @param slot
+     * @param slot application to be added
      */
     public void addPendingApplication(Application slot){
         this.pendingApplications.add(slot);
@@ -216,7 +216,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 
     /**
      * remove application from pending list
-     * @param slot
+     * @param slot application to be removed
      */
     public void removePendingApplication(Application slot){
         this.pendingApplications.remove(slot);
@@ -280,7 +280,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 
     /**
      * move application from pending to approved list
-     * @param application
+     * @param application application to be moved
      */
     public void addApprovedapplication(Application application){
         this.pendingApplications.remove(application);
@@ -289,7 +289,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 
     /**
      * remove app from approved list
-     * @param application
+     * @param application application to be removed
      */
     public void removeApprovedapplication(Application application){
         this.approvedslots.remove(application);

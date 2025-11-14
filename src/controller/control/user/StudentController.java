@@ -96,6 +96,11 @@ public class StudentController extends UserController {
 	 */
 	public void acceptPlacement(String applicationId) throws ObjectNotFoundException{
         applicationService.acceptApplication(student.getId(),applicationId);
+        Application application = applicationService.findApplication(applicationId);
+        InternshipOpportunity internship = internshipService.findInternshipById(application.getInternshipId());
+        int count = (int) internship.getApprovedSlots().stream().filter(app-> app.getStatus() == ApplicationStatus.ACCEPTED).count();
+        if(count == internship.getNumOfSlots()){internship.setStatus(InternStatus.FILLED);
+        }
 
 	}
 

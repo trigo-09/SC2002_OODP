@@ -134,8 +134,8 @@ public class ApplicationService {
 
     /**
      * finds application object and returns it
-     * @param applicationId
-     * @return Application
+     * @param applicationId application id
+     * @return Application object
      */
     public Application findApplication(String applicationId) {
         return systemRepository.findApplication(applicationId);

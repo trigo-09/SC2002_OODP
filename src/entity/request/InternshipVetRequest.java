@@ -17,8 +17,8 @@ public class InternshipVetRequest extends Request {
 
     /**
      * constructor for InternshipVetRequest
-     * @param internship
-     * @param requesterId
+     * @param internship internship to be vetted
+     * @param requesterId requester id
      */
     public InternshipVetRequest(InternshipOpportunity internship, String requesterId) {
         super(requesterId);

@@ -19,7 +19,7 @@ public class RequestService {
 
     /**
      * constructor of request service class
-     * @param repo
+     * @param repo system repository
      */
     public RequestService(IRepository repo) {
         this.repo = repo;
@@ -36,9 +36,9 @@ public class RequestService {
 
 	/**
      * create request to withdraw application and add to request repository
-     * @param studentId
-     * @param app
-     * @param reason
+     * @param studentId student id
+     * @param app application object
+     * @param reason reason for withdrawal
      * @throws ObjectNotFoundException if application can not be found
      * @throws ObjectNotFoundException if there has been a request created already
      * @throws SecurityException if illegal access of application by student
@@ -64,7 +64,7 @@ public class RequestService {
 
 	/**
      * accept withdrawal request and delete request from repository
-     * @param requestId
+     * @param requestId request ID
      * @throws ObjectNotFoundException if request cannot be found
      */
 	public void acceptWithdrawalRequest(String requestId) throws ObjectNotFoundException{
@@ -92,7 +92,7 @@ public class RequestService {
 
 	/**
 	 * create registration request from new company rep account and add request to repository
-	 * @param rep
+	 * @param rep company rep object
 	 */
 	public void createRegistrationRequest(CompanyRep rep) {
         Request request = new RegistrationRequest(rep);
@@ -101,7 +101,7 @@ public class RequestService {
 
 	/**
 	 *accept request and delete request from repository
-	 * @param requestId
+	 * @param requestId request ID
      * @throws ObjectNotFoundException if request cannot be found
 	 */
 	public void approveRegistrationRequest(String requestId) throws ObjectNotFoundException{
@@ -116,7 +116,7 @@ public class RequestService {
 
     /**
      *reject request and delete request from repository
-     * @param requestId
+     * @param requestId request ID
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectRegistrationRequest(String requestId) throws ObjectNotFoundException {
@@ -130,8 +130,8 @@ public class RequestService {
 
 	/**
 	 * create new internship request and add to repository
-	 * @param internship
-     * @param repId
+	 * @param internship internship object
+     * @param repId rep's id
      * @throws ObjectAlreadyExistsException if there is already request made
 	 */
 	public void createInternshipRequest(String repId, InternshipOpportunity internship) throws ObjectAlreadyExistsException {
@@ -153,7 +153,7 @@ public class RequestService {
 
     /**
      *accept request and delete request from repository
-     * @param requestId
+     * @param requestId request ID
      * @throws ObjectNotFoundException if request cannot be found
      */
 	public void approveInternshipRequest(String requestId) throws ObjectNotFoundException{
@@ -167,7 +167,7 @@ public class RequestService {
 
     /**
      *reject request and delete request from repository
-     * @param requestId
+     * @param requestId request ID
      * @throws ObjectNotFoundException if request cannot be found
      */
     public void rejectInternshipRequest(String requestId) throws ObjectNotFoundException{
@@ -181,7 +181,7 @@ public class RequestService {
 
     /**
      * delete internshipRequest
-     * @param internshipId
+     * @param internshipId internship ID
      */
     public void deleteInternshipRequest(String internshipId) {
        Request request = getPendingInternshipVet().stream().filter(i-> i.getInternship().getId().equalsIgnoreCase(internshipId)).findFirst().get();
@@ -190,7 +190,7 @@ public class RequestService {
 
     /**
      * get all requests
-     * @return
+     * @return list of requests
      */
     public List<Request> getAllRequests() {
         return repo.getAllRequests(Request.class);
@@ -198,7 +198,7 @@ public class RequestService {
 
     /**
      * get all pendingRegistration request
-     * @return
+     * @return list of registration request
      */
     public List<RegistrationRequest> getPendingRegistration(){
         return repo.getAllRequests(RegistrationRequest.class);
@@ -206,7 +206,7 @@ public class RequestService {
 
     /**
      * get all pending internship request
-     * @return
+     * @return list of internship request
      */
     public List<InternshipVetRequest> getPendingInternshipVet(){
         return repo.getAllRequests(InternshipVetRequest.class);
@@ -214,7 +214,7 @@ public class RequestService {
 
     /**
      * get all pending withdrawal request
-     * @return
+     * @return list of withdrawal request
      */
     public List<WithdrawalRequest> getPendingWithdrawal(){
         return repo.getAllRequests(WithdrawalRequest.class);

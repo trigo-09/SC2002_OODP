@@ -15,7 +15,6 @@ public class InputHelper {
     */
     private static Scanner sc = new Scanner(System.in);
     private static final DateTimeFormatter DMY = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private static final String SPACE = "    ";
     /**
     * Shared Scanner for program
     * @param shared scanner

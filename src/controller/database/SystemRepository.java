@@ -24,7 +24,7 @@ public class SystemRepository implements IRepository, Serializable {
     private final Map<String, Request> requests = new HashMap<>();
 
 	/**
-	 * @param app
+	 * @param app application object
      * add application to both student and internship o
 	 */
 	public void addApplication(String studentId,Application app) {
@@ -33,7 +33,7 @@ public class SystemRepository implements IRepository, Serializable {
 
 	/**
 	 *add staff to staff map
-	 * @param staff
+	 * @param staff staff object
 	 */
 	public void addCareerStaff(CareerStaff staff) {
         careerStaff.put(staff.getId().toLowerCase(), staff);
@@ -41,19 +41,22 @@ public class SystemRepository implements IRepository, Serializable {
 
 	/**
 	 * add internship to rep's list
-	 * @param intern
+	 * @param intern internship object
 	 */
 	public void addInternship(String repId,InternshipOpportunity intern) {
         CompanyRep rep = approvedReps.get(repId.toLowerCase());
         if(rep == null){
             System.out.println("rep not found");
         }
+        if(intern == null){
+            System.out.println("internship not found");
+        }
         rep.addInternship(intern);
 	}
 
 	/**
 	 * add student to student hash map
-	 * @param student
+	 * @param student student object
 	 */
 	public void addStudent(Student student) {
         students.put(student.getId().toLowerCase(), student);
@@ -78,7 +81,7 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
 	 * 
-	 * @param studentId
+	 * @param studentId student ID
 	 */
 	public List<Application> applicationByStudent(String studentId) {
         Student student = students.get(studentId.toLowerCase());
@@ -87,7 +90,7 @@ public class SystemRepository implements IRepository, Serializable {
 
 	/**
 	 * 
-	 * @param repId
+	 * @param repId rep ID
 	 */
 	public void approveCompanyRep(String repId) {
         CompanyRep rep = pendingReps.get(repId.toLowerCase());
@@ -103,8 +106,8 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @param requestId
-     * @return
+     * @param requestId request ID
+     * @return request
      */
     public Request getRequest(String requestId) {
         return requests.get(requestId.toLowerCase());
@@ -112,7 +115,7 @@ public class SystemRepository implements IRepository, Serializable {
 
 	/**
 	 * 
-	 * @param userId
+	 * @param userId user ID
 	 */
 	public User findUser(String userId) {
         return Stream.of(students, careerStaff, approvedReps, pendingReps)
@@ -124,8 +127,8 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @param internshipId
-     * @return
+     * @param internshipId internship ID
+     * @return internship
      */
     public InternshipOpportunity findInternshipOpportunity(String internshipId) {
         return approvedReps.values().stream()
@@ -152,7 +155,7 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @return
+     * @return Map of Approved Reps
      */
 	public Map<String, CompanyRep> getApprovedReps() {
 		return Collections.unmodifiableMap(approvedReps);
@@ -160,7 +163,7 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @return
+     * @return Map of Career Staff
      */
 	public Map<String, CareerStaff> getCareerStaff() {
 		return Collections.unmodifiableMap(careerStaff);
@@ -168,7 +171,7 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @return
+     * @return list of all internships
      */
 	public List<InternshipOpportunity> getAllInternships() {
 		return approvedReps.values().stream()
@@ -178,7 +181,7 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @return
+     * @return Map of Pending Reps
      */
 	public Map<String, CompanyRep> getPendingReps() {
 		return Collections.unmodifiableMap(pendingReps);
@@ -186,7 +189,7 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @return
+     * @return Map of Students
      */
 	public Map<String, Student> getStudents() {
 		return Collections.unmodifiableMap(students);
@@ -194,9 +197,9 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @param type
-     * @return
-     * @param <T>
+     * @param type Request type
+     * @return list of requests of given type
+     * @param <T> type of request class
      */
     public <T extends Request> List<T> getAllRequests(Class<T> type) {
         return requests.values().stream()
@@ -207,7 +210,7 @@ public class SystemRepository implements IRepository, Serializable {
 
 	/**
 	 * 
-	 * @param rep
+	 * @param rep company rep object
 	 */
 	public void registerCompanyRep(CompanyRep rep) {
         pendingReps.put(rep.getId().toLowerCase(), rep);
@@ -215,8 +218,8 @@ public class SystemRepository implements IRepository, Serializable {
 
     /**
      *
-     * @param companyName
-     * @return
+     * @param companyName company name
+     * @return list of internships of given company
      */
     @Override
     public List<InternshipOpportunity> getInternshipsByCompany(String companyName) {

@@ -10,16 +10,16 @@ import java.io.Serializable;
  */
 public abstract class User implements Serializable {
 
-    private String name;
+    private final String name;
     private final String id;
     private String hashedPassword;
     private final UserRole role;
 
     /**
      * Contructor of User abstract class
-     * @param name
-     * @param id
-     * @param pass
+     * @param name name of user
+     * @param id id of user
+     * @param pass password of user
      */
     public User(String name, String id, String pass, UserRole role) {
         this.name = name;
@@ -46,7 +46,7 @@ public abstract class User implements Serializable {
 
     /**
      * set new hashedpassword
-     * @param pass
+     * @param pass new hashedpassword
      */
     public void setHashedPassword(String pass) {
         this.hashedPassword = pass;

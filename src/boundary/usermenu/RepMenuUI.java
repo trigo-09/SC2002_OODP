@@ -389,7 +389,7 @@ public class RepMenuUI {
                             System.out.print("Please try again: ");
                         }
                     }
-                    if (slots !=null) slot = slots.intValue();
+                    if (slots !=null) slot = slots;
                     System.out.println("saved");
                     InputHelper.pause();
                 }

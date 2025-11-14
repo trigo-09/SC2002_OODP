@@ -12,6 +12,16 @@ public enum ApplicationStatus implements Serializable {
     ACCEPTED, // application accepted by rep and student
     WITHDRAWN; // student withdraw application
 
+    /**
+     * Returns a string current enum instance with color formatting based on its status.
+     * Each status is assigned a specific color:
+     * - PENDING: Yellow
+     * - APPROVED: Green
+     * - REJECTED: Red
+     * - ACCEPTED: Green
+     * - WITHDRAWN: Red
+     * @return
+     */
     public String coloredString() {
         return switch(this){
             case PENDING -> "\u001B[33m" + this + "\u001B[0m";

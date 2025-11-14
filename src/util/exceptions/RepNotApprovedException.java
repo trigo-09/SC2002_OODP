@@ -5,6 +5,11 @@ package util.exceptions;
  * The exception provides a message detailing the specific representative's ID.
  */
 public class RepNotApprovedException extends AuthenticationException {
+
+    /**
+     * Constructs a new {@code RepNotApprovedException} with a default detail message.
+     * @param repId
+     */
     public RepNotApprovedException(String repId) {
         super("Company representative account " + repId + " has been rejected");
     }

@@ -11,26 +11,26 @@ public interface IInternshipRepo extends IUser {
 
     /**
      * get all internships
-     * @return
+     * @return list of internship
      */
     List<InternshipOpportunity> getAllInternships();
 
     /**
      * get all internship of the company
-     * @param companyName
+     * @param companyName company name
      */
     List<InternshipOpportunity> getInternshipsByCompany(String companyName);
 
     /**
      * find internship by its ID
-     * @param internshipId
+     * @param internshipId internship Id
      */
     InternshipOpportunity findInternshipOpportunity(String internshipId);
 
     /**
      * add internship to rep's internship list
-     * @param repId
-     * @param intern
+     * @param repId rep id
+     * @param intern internship object
      */
     void addInternship(String repId, InternshipOpportunity intern);
 }
