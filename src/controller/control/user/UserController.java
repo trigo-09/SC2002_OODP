@@ -49,7 +49,7 @@ public abstract class UserController {
             throw new IllegalArgumentException("New password cannot be the same as the old password");
         }
         auth.changePassword(user.getId(),oldPass,newPass);
-        System.out.println("Password has been changed successfully");
+        System.out.println("Password has been changed successfully. Please login again.");
 	}
 
     /**
