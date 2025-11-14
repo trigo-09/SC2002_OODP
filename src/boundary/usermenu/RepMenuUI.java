@@ -444,16 +444,19 @@ public class RepMenuUI {
                  break;
              }
          }
-         ChangePage.changePage();
-         System.out.println(GraphicLogo.SEPARATOR);
-         System.out.println("Actions:");
-         System.out.println("\t0. Back to Main Menu");
-         System.out.println("\t1. View Approved Applications");
-         System.out.println("\t2. View Pending Applications");
-         System.out.println(GraphicLogo.SEPARATOR + "\n");
-         System.out.print("Enter your choice: ");
+
          int choice;
          while (true) {
+             ChangePage.changePage();
+             System.out.println(GraphicLogo.LONG_SEP);
+             InternshipOpportunity intern = approved.get(index - 1);
+             DisplayableViewer.displaySingle(intern);
+             System.out.println("Actions:");
+             System.out.println("\t0. Back to Main Menu");
+             System.out.println("\t1. View Approved Applications");
+             System.out.println("\t2. View Pending Applications");
+             System.out.println(GraphicLogo.LONG_SEP + "\n");
+             System.out.print("Enter your choice: ");
              choice = InputHelper.readInt();
              if (choice < 0 || choice > 2) {
                  System.out.println("Please enter a valid choice.");
@@ -475,7 +478,7 @@ public class RepMenuUI {
                      handleApplications();
                      return;
                  }
-                 DisplayableViewer.displayList(applications);
+                 DisplayableViewer.displayList(applications, repController);
              } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
                  System.out.println("Error retrieving applications: " + e.getMessage());
                  InputHelper.pause();
@@ -496,7 +499,7 @@ public class RepMenuUI {
                      handleApplications();
                      return;
                  }
-                 DisplayableViewer.displayList(applications);
+                 DisplayableViewer.displayList(applications, repController);
 
              } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
                  System.out.println("Error retrieving applications: " + e.getMessage());
@@ -523,7 +526,7 @@ public class RepMenuUI {
                  }
 
                  ChangePage.changePage();
-                 DisplayableViewer.displaySingle(applications.get(applicationIndex - 1));
+                 DisplayableViewer.displaySingle(applications.get(applicationIndex - 1), repController);
                  String appId = applications.get(applicationIndex - 1).getApplicationId();
                  System.out.print("Accept (1) or Reject (0) the application? ");
                  int decision = InputHelper.readInt();

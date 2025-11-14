@@ -327,7 +327,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 				new AsciiTableFormatter.Row("Description", description),
 				new AsciiTableFormatter.Row("Opening Date", String.valueOf(openingDate)),
 				new AsciiTableFormatter.Row("Closing Date", String.valueOf(closingDate)),
-				new AsciiTableFormatter.Row("Status", placeholder),
+				new AsciiTableFormatter.Row("Internship Status", placeholder),
 				new AsciiTableFormatter.Row("Visibility", (visibility != null && visibility) ? "Public" : "Hidden"),
 				new AsciiTableFormatter.Row("Slots", slotsSummary),
 				new AsciiTableFormatter.Row("Created By", createdBy)

@@ -179,7 +179,7 @@ public class StudentUI {
                 throw new PageBackException();
             }
 
-            DisplayableViewer.displayList(appList);
+            DisplayableViewer.displayList(appList, studentController);
             System.out.println("Please select an action:");
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Accept/Withdraw an Application");
@@ -212,7 +212,7 @@ public class StudentUI {
                 InputHelper.pause();
                 throw new PageBackException();
             }
-            DisplayableViewer.displayList(appList);
+            DisplayableViewer.displayList(appList, studentController);
 
             System.out.print("Select index of the application. (Enter [0] to go back to menu): ");
             index = InputHelper.readInt();
@@ -236,7 +236,7 @@ public class StudentUI {
             ChangePage.changePage();
             List<Application> appList = studentController.myApplications();
             Application app = appList.get(index-1);
-            DisplayableViewer.displaySingle(app);
+            DisplayableViewer.displaySingle(app, studentController);
 
             System.out.println("Please select an action:");
             System.out.println("\t1. Accept Application");

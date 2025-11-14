@@ -78,7 +78,7 @@ public class Application implements Serializable, Displayable {
 		String placeholder = "#".repeat(String.valueOf(status).length());
 		List<AsciiTableFormatter.Row> rows = List.of(
 				new AsciiTableFormatter.Row("Student ID", studentId),
-				new AsciiTableFormatter.Row("Status", placeholder)
+				new AsciiTableFormatter.Row("Application Status", placeholder)
 		);
 
 		String table = AsciiTableFormatter.formatTable(rows);
