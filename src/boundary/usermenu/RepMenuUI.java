@@ -164,7 +164,7 @@ public class RepMenuUI {
             System.out.println("\t2. Edit Internship");
             System.out.println("\t3. Manage Applications for an Internship");
             System.out.println("\t4. Delete Internship");
-            System.out.println(GraphicLogo.SEPARATOR + "\n");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.print("Enter your choice: ");
             choice = InputHelper.readInt();
             if (choice < 0 || choice > 4) {
@@ -177,10 +177,10 @@ public class RepMenuUI {
 
 
             switch (choice) {
-                case 1 ->   handleVisibility(filteredInternships);
-                case 2 ->   handleEditInternship(filteredInternships);
-                case 3 ->   handleApplications(filteredInternships);
-                case 4 ->   manageDeleteInternship(filteredInternships);
+                case 1 ->   handleVisibility();
+                case 2 ->   handleEditInternship();
+                case 3 ->   handleApplications();
+                case 4 ->   manageDeleteInternship();
                 case 0 ->   {
                     System.out.println("Returning to main menu...");
                 }
@@ -189,8 +189,9 @@ public class RepMenuUI {
     }
 
 
-    private void handleVisibility(List<InternshipOpportunity> filteredInternships) {
+    private void handleVisibility() {
         ChangePage.changePage();
+        List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
         System.out.println("Toggle Internship Opportunities Visibility");
         System.out.println(GraphicLogo.LONG_SEP);
         List<InternshipOpportunity> approved = repController.getApprovedInternships(filteredInternships);
@@ -223,7 +224,7 @@ public class RepMenuUI {
         while (run) {
             int visChoice = InputHelper.readInt();
             if (visChoice == 2){
-                handleVisibility(filteredInternships);
+                handleVisibility();
                 return;
             }
             else if (visChoice == 0 || visChoice == 1){
@@ -244,14 +245,15 @@ public class RepMenuUI {
             }
         }
         InputHelper.pause();
-        handleVisibility(filteredInternships);
+        handleVisibility();
 
     }
 
-    private void handleEditInternship(List<InternshipOpportunity> filteredInternships) {
+    private void handleEditInternship() {
         ChangePage.changePage();
+        List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
         System.out.println("Edit Internship Opportunities");
-        System.out.println(GraphicLogo.SEPARATOR);
+        System.out.println(GraphicLogo.LONG_SEP);
         List<InternshipOpportunity> pending = repController.getPendingInternships(filteredInternships);
         if (pending.isEmpty()){
             System.out.println("No pending Internships found for editing...");
@@ -413,10 +415,11 @@ public class RepMenuUI {
             }
         }
         InputHelper.pause();
-        handleEditInternship(filteredInternships);
+        handleEditInternship();
     }
-     private void handleApplications(List<InternshipOpportunity> filteredInternships) {
+     private void handleApplications() {
          ChangePage.changePage();
+         List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
          List<InternshipOpportunity> approved = repController.getApprovedInternships(filteredInternships);
          if (approved.isEmpty()) {
              System.out.println("No Internship with application found.");
@@ -457,7 +460,7 @@ public class RepMenuUI {
              }
          }
          if (choice == 0) {
-             handleApplications(filteredInternships);
+             handleApplications();
              return;
          } else if (choice == 1) {
              ChangePage.changePage();
@@ -467,17 +470,17 @@ public class RepMenuUI {
                  if (applications.isEmpty()) {
                      System.out.println("No Internship with approved application found.");
                      InputHelper.pause();
-                     handleApplications(filteredInternships);
+                     handleApplications();
                      return;
                  }
                  DisplayableViewer.displayList(applications);
              } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
                  System.out.println("Error retrieving applications: " + e.getMessage());
                  InputHelper.pause();
-                 handleApplications(filteredInternships);
+                 handleApplications();
              }
              InputHelper.pause();
-             handleApplications(filteredInternships);
+             handleApplications();
 
          } else {
 
@@ -488,7 +491,7 @@ public class RepMenuUI {
                  if (applications.isEmpty()) {
                      System.out.println("(No applications yet)");
                      InputHelper.pause();
-                     handleApplications(filteredInternships);
+                     handleApplications();
                      return;
                  }
                  DisplayableViewer.displayList(applications);
@@ -496,7 +499,7 @@ public class RepMenuUI {
              } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
                  System.out.println("Error retrieving applications: " + e.getMessage());
                  InputHelper.pause();
-                 handleApplications(filteredInternships);
+                 handleApplications();
              }
 
              System.out.print("1: Process Application, 0: back: ");
@@ -508,7 +511,7 @@ public class RepMenuUI {
                      applicationIndex = InputHelper.readInt();
 
                      if (applicationIndex == 0) {
-                         handleApplications(filteredInternships);
+                         handleApplications();
                          return;
                      } else if (applicationIndex < 1 || applicationIndex > repController.getPendApplications(internId).size()) {
                          System.out.println("Please enter a valid index");
@@ -537,75 +540,81 @@ public class RepMenuUI {
                      System.out.println("Error approving/rejecting application: " + e.getMessage());
                  }
                  InputHelper.pause();
-                 handleApplications(filteredInternships);
+                 handleApplications();
              }
          }
      }
 
-     private void manageDeleteInternship(List<InternshipOpportunity> filteredInternships) {
-        ChangePage.changePage();
-        System.out.println("Internship Opportunities for Deletion");
-        System.out.println(GraphicLogo.SEPARATOR);
-        List<InternshipOpportunity> pending = repController.getCanDeleteInternships(filteredInternships);
-        if (pending.isEmpty()){
-            System.out.println("No pending Internships found for deletion...");
-            InputHelper.pause();
-            manageInternshipsUI();
-            return;
-        }
-        DisplayableViewer.displayList(pending);
-         int index;
-         while (true){
-             System.out.print("Enter index of internship to delete (Enter [0] to return): ");
-             index = InputHelper.readInt();
-             if (index == 0){
-                 manageInternshipsUI();
-                 return;
-             }
-             else if (index<1 || index > pending.size()){
-                 System.out.println("PLease enter a valid index.");
-             }
-             else {
-                 break;
-             }
-         }
+     private void manageDeleteInternship() {
+        try{
+            ChangePage.changePage();
+            List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
+            System.out.println("Internship Opportunities for Deletion");
+            System.out.println(GraphicLogo.LONG_SEP);
+            List<InternshipOpportunity> pending = repController.getCanDeleteInternships(filteredInternships);
+            if (pending.isEmpty()){
+                System.out.println("No pending Internships found for deletion...");
+                InputHelper.pause();
+                manageInternshipsUI();
+                return;
+            }
+            DisplayableViewer.displayList(pending);
+            int index;
+            while (true){
+                System.out.print("Enter index of internship to delete (Enter [0] to return): ");
+                index = InputHelper.readInt();
+                if (index == 0){
+                    manageInternshipsUI();
+                    throw new PageBackException();
+                }
+                else if (index<1 || index > pending.size()){
+                    System.out.println("PLease enter a valid index.");
+                }
+                else {
+                    break;
+                }
+            }
 
-         String internId = pending.get(index-1).getId();
-         ChangePage.changePage();
-         System.out.println("Internship Opportunity for Deletion");
-         System.out.println(GraphicLogo.SEPARATOR);
-         DisplayableViewer.displaySingle(pending.get(index-1));
-         // Check if internship exists before prompting for fields
-         try {repController.validateInternshipId(internId);}
-         catch (IllegalArgumentException | SecurityException e) {
-             System.out.println("Error: " + e.getMessage());
-             InputHelper.pause();
-             return;
-         }
-         int choice;
-         while (true) {
-         System.out.print("1: Confirm Delete Internship, 0: back: ");
-         choice = InputHelper.readInt();
-         if (choice == 0) {
-             manageDeleteInternship(filteredInternships);
-             break;
-         }
-         else if (choice == 1) {
-             try {
-                 repController.deleteInternship(internId);
-                 System.out.println("Internship Deleted.");
-                 systemController.update();
-                 InputHelper.pause();
-                 manageDeleteInternship(filteredInternships);
-             }catch (ObjectNotFoundException e) {
-                 System.out.println("Error: " + e.getMessage());
-                 InputHelper.pause();
-             }
-         }
-         else{
-             System.out.println("Please enter a valid index.");
-         }
-         }
+            String internId = pending.get(index-1).getId();
+            ChangePage.changePage();
+            System.out.println("Internship Opportunity for Deletion");
+            System.out.println(GraphicLogo.LONG_SEP);
+            DisplayableViewer.displaySingle(pending.get(index-1));
+            // Check if internship exists before prompting for fields
+            try {repController.validateInternshipId(internId);}
+            catch (IllegalArgumentException | SecurityException e) {
+                System.out.println("Error: " + e.getMessage());
+                InputHelper.pause();
+                return;
+            }
+            int choice;
+            while (true) {
+                System.out.print("1: Confirm Delete Internship, 0: back: ");
+                choice = InputHelper.readInt();
+                if (choice == 0) {
+                    manageDeleteInternship();
+                    break;
+                }
+                else if (choice == 1) {
+                    try {
+                        repController.deleteInternship(internId);
+                        System.out.println("Internship Deleted.");
+                        systemController.update();
+                        InputHelper.pause();
+                        manageDeleteInternship();
+                    }catch (ObjectNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                        InputHelper.pause();
+                    }
+                }
+                else{
+                    System.out.println("Please enter a valid index.");
+                }
+            }
+        } catch(PageBackException e){
+            displayMenu();
+        }
+
 
     }
 }
