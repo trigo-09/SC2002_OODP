@@ -1,12 +1,17 @@
 package entity.request;
 
-import controller.database.IRepository;
 import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import util.io.AsciiTableFormatter;
 
 import java.util.List;
 
+/**
+ * Represents a request for vetting an internship.
+ * extends the abstract Request class
+ * Change status of internship to approved or rejected
+ * change the visibility of internship
+ */
 public class InternshipVetRequest extends Request {
     private final InternshipOpportunity internship;
 

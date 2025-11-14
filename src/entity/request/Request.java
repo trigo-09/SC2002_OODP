@@ -5,6 +5,9 @@ import entity.Displayable;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * Represents an abstract request that contains details about a request and provide method approve and reject to be implemented
+ */
 public abstract class Request implements Serializable, Displayable {
 
     private final String requesterId;

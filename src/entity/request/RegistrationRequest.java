@@ -6,6 +6,10 @@ import util.io.AsciiTableFormatter;
 
 import java.util.List;
 
+/**
+ * Represents a registration request
+ * allows the processing of registration requests, including approval or rejection,
+ */
 public class RegistrationRequest extends Request {
     private final CompanyRep companyRep;
 

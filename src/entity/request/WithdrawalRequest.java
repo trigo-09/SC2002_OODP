@@ -7,6 +7,11 @@ import util.io.AsciiTableFormatter;
 
 import java.util.List;
 
+/**
+ * Represents a withdrawal request made for a specific application.
+ * allows a student to submit a reason for withdrawing their application.
+ * Once approved, the application status is updated to 'WITHDRAWN'.
+ */
 public class WithdrawalRequest extends Request {
 
         private final Application application;
