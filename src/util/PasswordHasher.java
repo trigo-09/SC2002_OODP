@@ -9,11 +9,14 @@ public class PasswordHasher {
 
     private PasswordHasher() {} // to prevent instantiation
 
+    /**
+     * Algorithm type
+     */
     private static final String HASH_ALGORITHM = "SHA-256";
 
 	/**
-	 * 
-	 * @param password
+	 *  hashes password
+	 * @param password plain password
      * @return String
 	 */
 	public static String hash(String password) {
@@ -32,9 +35,9 @@ public class PasswordHasher {
 	}
 
 	/**
-	 * 
-	 * @param password
-	 * @param hashpassword
+	 * check if the plain and hashed after hashing plain
+	 * @param password plain password
+	 * @param hashpassword hashed version
 	 */
 	public static boolean verify(String password, String hashpassword) {
         return hash(password).equals(hashpassword);

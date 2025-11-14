@@ -5,7 +5,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * find the data dir in user machine
+ */
 public class FindDataDirectory {
+
+    /**
+     * help to find the dir where /data present
+     * @return correct dir
+     */
     public static Path findDataDirectory() {
         Path current = Paths.get(System.getProperty("user.dir"));
 

@@ -12,6 +12,9 @@ public class GraphicLogo {
      */
     public static final String SEPARATOR = "=".repeat(50);
 
+    /**
+     * create divider of table with
+     */
     public static final String LONG_SEP = "=".repeat(AsciiTableFormatter.TABLE_WIDTH);
 
     /**
@@ -35,7 +38,7 @@ public class GraphicLogo {
     /**
      * A red string with red color.
      */
-    public static final String NEW = "\u001B[31m" + "NEW!" + "\u001B[0m"; // might delete it later
+    public static final String NEW = "\u001B[31m" + "NEW!" + "\u001B[0m";
 
     /**
      * Logo string to display ASCII welcome LOGO

@@ -3,6 +3,9 @@ package util.io;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class helps to format data into table form
+ */
 public final class AsciiTableFormatter {
 
     public static final int TABLE_WIDTH = 80;
@@ -10,6 +13,11 @@ public final class AsciiTableFormatter {
     public static final int VALUE_WIDTH = 52; // widths must add up to 73
 
 
+    /**
+     * format rows into table
+     * @param rows rows
+     * @return table
+     */
     public static String formatTable(List<Row> rows) {
         StringBuilder sb = new StringBuilder();
 
@@ -21,6 +29,12 @@ public final class AsciiTableFormatter {
         return sb.toString();
     }
 
+    /**
+     *  builds string into rows
+     * @param sb builder
+     * @param label labeling
+     * @param value value
+     */
     public static void appendRow(StringBuilder sb, String label, String value) {
         if (value == null) value = "";
         List<String> wrappedLines = wrap(value, VALUE_WIDTH);
@@ -33,6 +47,12 @@ public final class AsciiTableFormatter {
         }
     }
 
+    /**
+     * modify string of text into list of string
+     * @param text text
+     * @param width size
+     * @return list of string
+     */
     private static List<String> wrap(String text, int width) {
         List<String> lines = new ArrayList<>();
         String remaining = text.trim();

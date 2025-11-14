@@ -4,7 +4,6 @@ import java.io.IOException;
 
 /**
  * The ChangePage class is responsible for changing the console output screen to a new blank screen.
- * This is done using the appropriate command depending on the operating system.
  */
 public class ChangePage {
 
@@ -15,7 +14,7 @@ public class ChangePage {
 
     /**
      * Changes the console output screen to a new blank screen.
-     * This is done using the appropriate command depending on the operating system.
+     * This is done using the relevant command depending on the OS.
      *
      */
     public static void changePage() {
