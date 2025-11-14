@@ -25,9 +25,9 @@ public class Welcome {
         System.out.println("Please enter your choice to continue");
         boolean run = true;
         while (run) {
-            InputHelper.printMenuItem(1,"Login");
-            InputHelper.printMenuItem(2,"Register");
-            InputHelper.printMenuItem(3,"Exit");
+            System.out.println("\t1. Login");
+            System.out.println("\t2. Register");
+            System.out.println("\t3. Exit");
             System.out.print("Enter your choice (1-3): ");
             int choice = InputHelper.readInt();
             switch (choice) {
