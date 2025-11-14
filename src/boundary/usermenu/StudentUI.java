@@ -71,7 +71,7 @@ public class StudentUI {
     private void handleInternships(){
         ChangePage.changePage();
         System.out.println("Internship Opportunities");
-        System.out.print(GraphicLogo.SEPARATOR);
+        System.out.println(GraphicLogo.LONG_SEP);
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
         if (internshipList.isEmpty()) {
             System.out.println("No internships found.");
@@ -86,7 +86,7 @@ public class StudentUI {
             System.out.println("Please select an action:");
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Apply for Internship");
-            System.out.println(GraphicLogo.SEPARATOR +"\n");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.println("Enter your choice (0/1): ");
             choice = InputHelper.readInt();
 
@@ -138,7 +138,7 @@ public class StudentUI {
     private void handleApplications(){
         ChangePage.changePage();
         System.out.println("Your Internship Applications");
-        System.out.println(GraphicLogo.SEPARATOR);
+        System.out.println(GraphicLogo.LONG_SEP);
         List<Application> appList = studentController.myApplications();
         if (appList.isEmpty()) {
             System.out.println("No applications found.");
@@ -152,7 +152,7 @@ public class StudentUI {
             System.out.println("Please select an action:");
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Accept/Withdraw an Application");
-            System.out.println(GraphicLogo.SEPARATOR +"\n");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.println("Enter your choice (0/1): ");
 
             choice = InputHelper.readInt();
@@ -193,7 +193,7 @@ public class StudentUI {
             System.out.println("\t1. Accept Application");
             System.out.println("\t2. Withdraw Application: ");
             System.out.println("\t0. Back to Main Menu");
-            System.out.println(GraphicLogo.SEPARATOR +"\n");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.println("Enter your choice (1/2/0): ");
             choice2 = InputHelper.readInt();
             if (choice2 == 0) {
@@ -242,7 +242,7 @@ public class StudentUI {
     private void handleChangeFilter(){
         ChangePage.changePage();
         System.out.println("Update Filter Criteria");
-        System.out.println(GraphicLogo.SEPARATOR +"\n");
+        System.out.println(GraphicLogo.LONG_SEP + "\n");
         FilterCriteria filter = studentController.getFilter();
 
         System.out.println("Current Filter Criteria: ");
@@ -258,7 +258,7 @@ public class StudentUI {
             System.out.println("\t3. Change Company Name");
             System.out.println("\t4. Clear All Filters");
             System.out.println("\t0. Back");
-            System.out.println(GraphicLogo.SEPARATOR +"\n");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.print("Enter choice: ");
             int choice = InputHelper.readInt();
 
