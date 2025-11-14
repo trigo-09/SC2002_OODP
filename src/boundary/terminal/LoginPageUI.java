@@ -30,7 +30,7 @@ public class LoginPageUI {
             String password = AttributeGetter.getPassword();
             count++;
             if (userId.isEmpty() || password.isEmpty()) {
-                if (count > 1 ) {
+                if (count > 0 ) {
                     System.out.println("\nEnter [b] to go back, or any other key to try again.");
                     String choice = InputHelper.readLine();
                     if (choice.equalsIgnoreCase("b")) {
