@@ -8,9 +8,7 @@ import entity.Displayable;
 import entity.application.Application;
 import entity.internship.InternshipOpportunity;
 import entity.user.Student;
-import entity.user.User;
 import util.io.AsciiTableFormatter;
-import util.io.GraphicLogo;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,7 +46,7 @@ public class DisplayableViewer {
             System.out.println(student.getMidBorder());
             System.out.print(student);
             System.out.println(student.getMidBorder());
-            InternshipOpportunity intern = ((RepController) userController).getInternship(((Application) displayable).getInternshipId());
+            InternshipOpportunity intern = ((RepController) userController).getInternshipById(((Application) displayable).getInternshipId());
             System.out.print(intern);
         }
         System.out.println(displayable.getBottomBorder());
@@ -96,7 +94,7 @@ public class DisplayableViewer {
                 System.out.println(student.getMidBorder());
                 System.out.print(student);
                 System.out.println(student.getMidBorder());
-                InternshipOpportunity intern = ((RepController) userController).getInternship(((Application) displayable).getInternshipId());
+                InternshipOpportunity intern = ((RepController) userController).getInternshipById(((Application) displayable).getInternshipId());
                 System.out.print(intern);
             }
             else if ( userController instanceof StudentController && displayable instanceof Application){

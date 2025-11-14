@@ -54,7 +54,7 @@ public class ApplicationService {
         }
     }
 
-    public User getStudent(String studentId){
+    public User getUserById(String studentId){
         return systemRepository.findUser(studentId);
     }
 

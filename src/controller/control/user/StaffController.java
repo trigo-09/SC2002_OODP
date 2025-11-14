@@ -151,7 +151,7 @@ public class StaffController extends UserController {
 	}
 
 	public User getStudentById(String studentId){
-		return applicationService.getStudent(studentId);
+		return applicationService.getUserById(studentId);
 	}
 
 	public InternshipOpportunity getInternshipById(String InternID){
