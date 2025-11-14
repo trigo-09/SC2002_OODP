@@ -79,20 +79,21 @@ public class StudentUI {
      *  If no internships are available then will just print "No internships found"
      */
     private void handleInternships(){
-        ChangePage.changePage();
-        System.out.println("Internship Opportunities");
-        System.out.println(GraphicLogo.LONG_SEP);
-        List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
-        if (internshipList.isEmpty()) {
-            System.out.println("No internships found.");
-            InputHelper.pause();
-            throw new PageBackException();
-        }
 
-        DisplayableViewer.displayList(internshipList);
         int choice;
 
         while (true) {
+            ChangePage.changePage();
+            System.out.println("Internship Opportunities");
+            System.out.println(GraphicLogo.LONG_SEP);
+            List<InternshipOpportunity> refresedList = studentController.viewFilteredInternships(studentController.getFilter());
+            if (refresedList.isEmpty()) {
+                System.out.println("No internships found.");
+                InputHelper.pause();
+                throw new PageBackException();
+            }
+
+            DisplayableViewer.displayList(refresedList);
             System.out.println("Please select an action:");
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Apply for Internship");
@@ -109,26 +110,43 @@ public class StudentUI {
             }
             else{
                 System.out.println("Invalid choice. Please try again.");
+                InputHelper.pause();
             }
         }
 
         int index;
 
         while (true){
+            ChangePage.changePage();
+            System.out.println("Internship Opportunities");
+            System.out.println(GraphicLogo.LONG_SEP);
+            List<InternshipOpportunity> refresedList = studentController.viewFilteredInternships(studentController.getFilter());
+            if (refresedList.isEmpty()) {
+                System.out.println("No internships found.");
+                InputHelper.pause();
+                throw new PageBackException();
+            }
+
+            DisplayableViewer.displayList(refresedList);
+
             System.out.print("Select index of internship you want to apply for. (Enter [0] to go back to menu): ");
             index = InputHelper.readInt();
             if (index == 0) {
                 throw new PageBackException();
             }
-            else if(index >= 1 && index <= internshipList.size()){
+            else if(index >= 1 && index <= refresedList.size()){
                 break;
             }
             else{
                 System.out.println("Invalid choice. Please enter a valid index.");
+                InputHelper.pause();
             }
         }
 
-        InternshipOpportunity internship = internshipList.get(index-1);
+        ChangePage.changePage();
+        List<InternshipOpportunity> refresedList = studentController.viewFilteredInternships(studentController.getFilter());
+        InternshipOpportunity internship = refresedList.get(index-1);
+        DisplayableViewer.displaySingle(internship);
 
         try {
             studentController.applyInternship(internship.getId());
@@ -147,19 +165,21 @@ public class StudentUI {
      * If student has not applied to any internships, print "No applications found"
      */
     private void handleApplications(){
-        ChangePage.changePage();
-        System.out.println("Your Internship Applications");
-        System.out.println(GraphicLogo.LONG_SEP);
-        List<Application> appList = studentController.myApplications();
-        if (appList.isEmpty()) {
-            System.out.println("No applications found.");
-            InputHelper.pause();
-            throw new PageBackException();
-        }
-        DisplayableViewer.displayList(appList);
+
         int choice;
 
         while (true) {
+            ChangePage.changePage();
+            System.out.println("Your Internship Applications");
+            System.out.println(GraphicLogo.LONG_SEP);
+            List<Application> appList = studentController.myApplications();
+            if (appList.isEmpty()) {
+                System.out.println("No applications found.");
+                InputHelper.pause();
+                throw new PageBackException();
+            }
+
+            DisplayableViewer.displayList(appList);
             System.out.println("Please select an action:");
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Accept/Withdraw an Application");
@@ -176,12 +196,24 @@ public class StudentUI {
             }
             else{
                 System.out.println("Invalid choice. Please try again.");
+                InputHelper.pause();
             }
         }
 
         int index;
 
         while (true) {
+            ChangePage.changePage();
+            System.out.println("Your Internship Applications");
+            System.out.println(GraphicLogo.LONG_SEP);
+            List<Application> appList = studentController.myApplications();
+            if (appList.isEmpty()) {
+                System.out.println("No applications found.");
+                InputHelper.pause();
+                throw new PageBackException();
+            }
+            DisplayableViewer.displayList(appList);
+
             System.out.print("Select index of the application. (Enter [0] to go back to menu): ");
             index = InputHelper.readInt();
             if (index == 0) {
@@ -193,13 +225,19 @@ public class StudentUI {
             }
             else{
                 System.out.println("Invalid choice. Please enter a valid index.");
+                InputHelper.pause();
             }
         }
 
-        Application app = appList.get(index-1);
+
         int choice2;
 
         while (true){
+            ChangePage.changePage();
+            List<Application> appList = studentController.myApplications();
+            Application app = appList.get(index-1);
+            DisplayableViewer.displaySingle(app);
+
             System.out.println("Please select an action:");
             System.out.println("\t1. Accept Application");
             System.out.println("\t2. Withdraw Application: ");
@@ -219,6 +257,7 @@ public class StudentUI {
                     break;
                 }catch (Exception e){
                     System.out.println("ERROR: "+e.getMessage());
+                    InputHelper.pause();
                 }
             }
             else if (choice2 == 2) {
@@ -230,10 +269,12 @@ public class StudentUI {
                     break;
                 }catch (Exception e){
                     System.out.println("ERROR: "+e.getMessage());
+                    InputHelper.pause();
                 }
             }
             else{
                 System.out.println("Invalid choice. Please enter a valid choice.");
+                InputHelper.pause();
             }
         }
 
@@ -247,19 +288,18 @@ public class StudentUI {
      * Only can filter based on level and closing date as students are not allowed to see other internships which they are not eligible for
      */
     private void handleChangeFilter(){
-        ChangePage.changePage();
-        System.out.println("Update Filter Criteria");
-        System.out.println(GraphicLogo.LONG_SEP + "\n");
-        FilterCriteria filter = studentController.getFilter();
-
-        System.out.println("Current Filter Criteria: ");
-        System.out.println("- Level:  " + filter.getLevel());
-        System.out.println("- Closing Date: " + filter.getClosingDate());
-        System.out.println("- Company Name: " + filter.getCompanyName());
-        System.out.println();
-
         boolean back = false;
         while (!back) {
+            ChangePage.changePage();
+            System.out.println("Update Filter Criteria");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
+            FilterCriteria filter = studentController.getFilter();
+
+            System.out.println("Current Filter Criteria: ");
+            System.out.println("- Level:  " + filter.getLevel());
+            System.out.println("- Closing Date: " + filter.getClosingDate());
+            System.out.println("- Company Name: " + filter.getCompanyName());
+            System.out.println();
             System.out.println("\t1. Change Internship Level");
             System.out.println("\t2. Change Closing Date");
             System.out.println("\t3. Change Company Name");
@@ -280,10 +320,17 @@ public class StudentUI {
                     case 2 -> filter.setLevel(InternshipLevel.INTERMEDIATE);
                     case 3 -> filter.setLevel(InternshipLevel.ADVANCED);
                     case 4 -> filter.setLevel(null);
-                    default -> System.out.println("Invalid choice. Keeping previous level.");
+                    default -> {
+                        System.out.println("Invalid choice. Keeping previous level." + filter.getLevel());
+                    }
                 }
-                System.out.println("Level updated -> " + filter.getLevel());
+                if (choice2 >= 1 || choice2 <= 4){
+                    System.out.println("Level updated -> " + filter.getLevel());
+                }
+                InputHelper.pause();
+
             }
+
 
             else if (choice == 2) {
                 String closeRaw = AttributeGetter.getString("Enter closing date (yyyy-MM-dd) or 0 to clear: ");
@@ -292,15 +339,19 @@ public class StudentUI {
                     if (input.equals("0")){
                         filter.setClosingDate(null);
                         System.out.println("-> Closing date filter cleared");
+
                     }
                     else{
                         try{
                             filter.setClosingDate(LocalDate.parse(input));
                             System.out.println("Closing date updated -> " + filter.getClosingDate());
+
                         }catch(Exception e){
                             System.out.println("!! Invalid closing date. Keeping previous");
+
                         }
                     }
+                    InputHelper.pause();
                 }
             }
 
@@ -320,7 +371,9 @@ public class StudentUI {
                             System.out.println("!! Invalid company name. Keeping previous");
                         }
                     }
+                    InputHelper.pause();
                 }
+
             }
 
             else if (choice == 4) {
@@ -328,6 +381,7 @@ public class StudentUI {
                 filter.setClosingDate(null);
                 filter.setCompanyName(null);
                 System.out.println("All Filters Cleared.");
+                InputHelper.pause();
             }
 
             else if (choice == 0) {
@@ -336,9 +390,9 @@ public class StudentUI {
 
             else {
                 System.out.println("Invalid choice. Please try again.");
+                InputHelper.pause();
             }
         }
-        InputHelper.pause();
-        throw new PageBackException();
+
     }
 }
