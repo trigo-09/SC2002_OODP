@@ -24,7 +24,7 @@ public class LoginPageUI {
     public static void login(SystemController controller) throws PageBackException {
         ChangePage.changePage();
         int count = 0;
-        System.out.print("Please enter your credentials(leave it blank to exit)\n");
+        System.out.print("Please enter your credentials\n");
         while (true) {
             String userId = AttributeGetter.getUserId();
             String password = AttributeGetter.getPassword();
