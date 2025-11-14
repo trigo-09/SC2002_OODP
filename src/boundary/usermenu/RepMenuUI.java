@@ -179,7 +179,7 @@ public class RepMenuUI {
                 case 1 ->   handleVisibility(filteredInternships);
                 case 2 ->   handleEditInternship(filteredInternships);
                 case 3 ->   handleApplications(filteredInternships);
-                case 4 ->   deleteInternship(filteredInternships);
+                case 4 ->   manageDeleteInternship(filteredInternships);
                 case 0 ->   {
                     System.out.println("Returning to main menu...");
                 }
@@ -196,7 +196,7 @@ public class RepMenuUI {
         if (approved.isEmpty()){
             System.out.println("No approved Internships found to toggle visibility...");
             InputHelper.pause();
-
+            manageInternshipsUI();
         }
         DisplayableViewer.displayList(approved);
         int index;
@@ -310,27 +310,27 @@ public class RepMenuUI {
                     System.out.print("New Title (Blank to keep): ");
                     String t = InputHelper.readLine();
                     if (!t.isEmpty()) title = t;
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 2 -> {
                     System.out.print("New Description (Blank to keep): ");
                     String describe = InputHelper.readLine();
                     if (!describe.isEmpty()) description = describe;
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 3 -> {
                     System.out.print("New Preferred Major (Blank to keep): ");
                     String major = InputHelper.readLine();
                     if (!major.isEmpty()) preferredMajor = major;
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 4 -> {
                     LocalDate temp = InputHelper.readOptionalOpenDate();
                     if(temp != null) openingDate = temp;
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 5 -> {
@@ -339,12 +339,13 @@ public class RepMenuUI {
                         temp = InputHelper.readOptionalCloseDate();
                         if (temp != null && openingDate != null && temp.isBefore(openingDate)) {
                             System.out.println("Closing date cannot be before opening date. Please try again.");
-                        } else {
+                        }
+                        else {
                             break;
                         }
                     }
                     if (temp !=null) closingDate = temp;
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 6 -> {
@@ -361,7 +362,7 @@ public class RepMenuUI {
                         }
                     }
                     if (slots !=null) slot = slots.intValue();
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 7 -> {
@@ -385,7 +386,7 @@ public class RepMenuUI {
                         }
                     }
                     if(lvl != null){level=lvl;}
-                    System.out.print("saved");
+                    System.out.println("saved");
                     InputHelper.pause();
                 }
                 case 0 -> {
@@ -536,11 +537,11 @@ public class RepMenuUI {
          }
      }
 
-     private void deleteInternship(List<InternshipOpportunity> filteredInternships) {
+     private void manageDeleteInternship(List<InternshipOpportunity> filteredInternships) {
         ChangePage.changePage();
         System.out.println("Internship Opportunities for Deletion");
         System.out.println(GraphicLogo.SEPARATOR);
-        List<InternshipOpportunity> pending = repController.getPendingInternships(filteredInternships);
+        List<InternshipOpportunity> pending = repController.getCanDeleteInternships(filteredInternships);
         if (pending.isEmpty()){
             System.out.println("No pending Internships found for deletion...");
             InputHelper.pause();
@@ -581,7 +582,7 @@ public class RepMenuUI {
          System.out.print("1: Confirm Delete Internship, 0: back: ");
          choice = InputHelper.readInt();
          if (choice == 0) {
-             deleteInternship(filteredInternships);
+             manageDeleteInternship(filteredInternships);
              break;
          }
          else if (choice == 1) {
@@ -589,7 +590,7 @@ public class RepMenuUI {
                  repController.deleteInternship(internId);
                  System.out.println("Internship Deleted.");
                  InputHelper.pause();
-                 deleteInternship(filteredInternships);
+                 manageDeleteInternship(filteredInternships);
              }catch (ObjectNotFoundException e) {
                  System.out.println("Error: " + e.getMessage());
                  InputHelper.pause();

@@ -113,6 +113,11 @@ public class RepController extends UserController {
 		return internshipService.findInternshipById(internshipId).getPendingApplications();
 	}
 
+     /**
+      * find all the approved application of given internship
+      * @param internshipId internship ID
+      * @return list of application
+      */
     public List<Application> getApproveApplications(String internshipId) {
         return internshipService.findInternshipById(internshipId).getApprovedSlots();
     }
@@ -125,17 +130,42 @@ public class RepController extends UserController {
 		return internshipService.getInternshipsByCompany(rep.getCompanyName());
 	}
 
+     /**
+      *  filters internships
+      * @param internshipOpportunities list of internship
+      * @param filter fitler
+      * @return list of internship
+      */
 	public List<InternshipOpportunity> getFilteredInternships(List<InternshipOpportunity> internshipOpportunities, FilterCriteria filter){
 		return internshipService.getFilteredInternship(internshipOpportunities, filter);
 	}
 
+     /**
+      * get all pending internship from given list
+      * @param internshipOpportunities list of internship
+      * @return list of internship
+      */
 	public List<InternshipOpportunity> getPendingInternships(List<InternshipOpportunity> internshipOpportunities){
 		return internshipService.getPendingInternships(internshipOpportunities);
 	}
 
+     /**
+      * get all approved internship from given list
+      * @param internshipOpportunities list of internship
+      * @return list of internship
+      */
 	public List<InternshipOpportunity> getApprovedInternships(List<InternshipOpportunity> internshipOpportunities){
 		return internshipService.getApprovedInternships(internshipOpportunities);
 	}
+
+     /**
+      * get all the internship qualified for deletion
+      * @param internshipOpportunities list of internship
+      * @return list of internship
+      */
+    public List<InternshipOpportunity> getCanDeleteInternships(List<InternshipOpportunity> internshipOpportunities){
+        return internshipService.getPendingRejectedInternships(internshipOpportunities);
+    }
 
 	/**
 	 * Approves an internship application.
@@ -173,11 +203,29 @@ public class RepController extends UserController {
 		applicationService.reviewApplication(appId, false);
 	}
 
+     /**
+      * deletes internship
+      * @param internshipId internship ID
+      * @throws ObjectNotFoundException if internship cannot be found
+      */
     public void deleteInternship(String internshipId) throws ObjectNotFoundException{
         internshipService.removeInternship(rep.getId(), internshipId);
         requestService.deleteInternshipRequest(internshipId);
     }
 
+     /**
+      * edit internship
+      * @param internshipId internship id
+      * @param title title
+      * @param description description
+      * @param preferredMajors major
+      * @param openingDate open date
+      * @param closingDate close date
+      * @param slot num of slot
+      * @param level level
+      * @throws ObjectNotFoundException if internship not found
+      * @throws SecurityException if illegal access
+      */
     public void editInternship(String internshipId,
 							   String title, 
 							   String description, 
@@ -189,6 +237,10 @@ public class RepController extends UserController {
 		internshipService.editInternship(internshipId,title, description, preferredMajors, openingDate, closingDate,slot, level);
     }
 
+     /**
+      *
+      * @return company rep
+      */
 	public CompanyRep getRep() {
 		return rep;
 	}
