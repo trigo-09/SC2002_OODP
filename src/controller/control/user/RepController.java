@@ -159,10 +159,6 @@ public class RepController extends UserController {
 		return internshipService.getApprovedInternships(internshipOpportunities);
 	}
 
-	public InternshipOpportunity getInternship(String InternID){
-		return internshipService.findInternshipById(InternID);
-	}
-
      /**
       * get all the internship qualified for deletion
       * @param internshipOpportunities list of internship
@@ -289,6 +285,10 @@ public class RepController extends UserController {
 	}
 
 	public User getStudentById(String studentId){
-		return applicationService.getStudent(studentId);
+		return applicationService.getUserById(studentId);
+	 }
+
+	 public InternshipOpportunity getInternshipById(String InternID){
+		 return internshipService.findInternshipById(InternID);
 	 }
 }
