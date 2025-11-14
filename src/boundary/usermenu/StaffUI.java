@@ -246,7 +246,7 @@ public class StaffUI {
             DisplayableViewer.displayList(refreshedPending);
 
             System.out.println("Please choose request");
-            System.out.println("\t- Enter the index of the request to approve or reject");
+            System.out.println("\t- Enter the index of the request to process");
             System.out.println("\t- Enter [0] to return");
             System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.print("Your choice: ");
