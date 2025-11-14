@@ -51,6 +51,7 @@ public class RepMenuUI {
             System.out.print("Enter your choice: ");
             choice = InputHelper.readInt();
 
+            try {
             switch (choice) {
                 case 1 -> createInternshipUI();
                 case 2 -> manageInternshipsUI();
@@ -62,6 +63,7 @@ public class RepMenuUI {
                 }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
+            }catch (PageBackException e){displayMenu();}
         }
     }
 
