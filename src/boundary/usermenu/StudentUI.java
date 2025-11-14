@@ -164,7 +164,7 @@ public class StudentUI {
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Accept/Withdraw an Application");
             System.out.println(GraphicLogo.LONG_SEP + "\n");
-            System.out.println("Enter your choice (0/1): ");
+            System.out.print("Enter your choice (0/1): ");
 
             choice = InputHelper.readInt();
             if (choice == 0) {
@@ -182,7 +182,7 @@ public class StudentUI {
         int index;
 
         while (true) {
-            System.out.println("Select index of the application. (Enter [0] to go back to menu): ");
+            System.out.print("Select index of the application. (Enter [0] to go back to menu): ");
             index = InputHelper.readInt();
             if (index == 0) {
                 ChangePage.changePage();
@@ -205,7 +205,7 @@ public class StudentUI {
             System.out.println("\t2. Withdraw Application: ");
             System.out.println("\t0. Back to Main Menu");
             System.out.println(GraphicLogo.LONG_SEP + "\n");
-            System.out.println("Enter your choice (1/2/0): ");
+            System.out.print("Enter your choice (1/2/0): ");
             choice2 = InputHelper.readInt();
             if (choice2 == 0) {
                 ChangePage.changePage();
@@ -225,7 +225,7 @@ public class StudentUI {
                 String reason = AttributeGetter.getString("Please enter your reason for withdrawal: ");
                 try{
                     studentController.withdrawPlacement(app.getApplicationId(), reason);
-                    System.out.println("Withdrawal reqeust has been sent.");
+                    System.out.println("Withdrawal request has been sent.");
                     systemController.update();
                     break;
                 }catch (Exception e){
