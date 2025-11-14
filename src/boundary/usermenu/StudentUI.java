@@ -1,6 +1,7 @@
 package boundary.usermenu;
 
 import boundary.AttributeGetter;
+import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;
 import controller.control.user.StudentController;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.*;
 import entity.FilterCriteria;
 import util.exceptions.PageBackException;
+import util.io.GraphicLogo;
 import util.io.InputHelper;
 import util.io.ChangePage;
 
@@ -25,13 +27,16 @@ public class StudentUI {
 
     public void menu() {
         ChangePage.changePage();
-        System.out.println("=== Student Menu ===");
-        InputHelper.printMenuItem(1, "View / Apply Internships");
-        InputHelper.printMenuItem(2, "Manage Applications");
-        InputHelper.printMenuItem(3, "Change Password");
-        InputHelper.printMenuItem(4, "Change Filter Setting");
-        InputHelper.printMenuItem(5, "Logout");
-        System.out.print("Enter your choice (1-5): ");
+        System.out.print(GraphicLogo.SEPARATOR);
+        System.out.println("Welcome to Student Menu!");
+        System.out.println("Hello, "+studentController.getStudent().getUserName()+"!\n");
+        System.out.println("\t1. View / Apply Internships");
+        System.out.println("\t2. Manage Applications");
+        System.out.println("\t3. Change Password");
+        System.out.println("\t4. Update Filter");
+        System.out.println("\t0. Logout");
+        System.out.println(GraphicLogo.SEPARATOR +"\n");
+        System.out.print("Enter your choice(0-4): ");
 
         try {
             while (true) {
@@ -39,9 +44,9 @@ public class StudentUI {
                 switch (choice) {
                     case 1 -> handleInternships();
                     case 2 -> handleApplications();
-                    case 3 -> handleChangePass();
+                    case 3 -> ChangePasswordUI.handleChangePassword(systemController,studentController,studentController.getStudent());
                     case 4 -> handleChangeFilter();
-                    case 5 -> {
+                    case 0 -> {
                         System.out.println("Logging out...");
                         systemController.mainMenu();
                     }
@@ -65,6 +70,8 @@ public class StudentUI {
      */
     private void handleInternships(){
         ChangePage.changePage();
+        System.out.println("Internship Opportunities");
+        System.out.print(GraphicLogo.SEPARATOR);
         List<InternshipOpportunity> internshipList = studentController.viewFilteredInternships(studentController.getFilter());
         if (internshipList.isEmpty()) {
             System.out.println("No internships found.");
@@ -77,8 +84,9 @@ public class StudentUI {
 
         while (true) {
             System.out.println("Please select an action:");
-            System.out.println("0) Back to Main Menu");
-            System.out.println("1) Apply for Internship");
+            System.out.println("\t0. Back to Main Menu");
+            System.out.println("\t1. Apply for Internship");
+            System.out.println(GraphicLogo.SEPARATOR +"\n");
             System.out.println("Enter your choice (0/1): ");
             choice = InputHelper.readInt();
 
@@ -128,7 +136,9 @@ public class StudentUI {
      * If student has not applied to any internships, print "No applications found"
      */
     private void handleApplications(){
+        ChangePage.changePage();
         System.out.println("Your Internship Applications");
+        System.out.println(GraphicLogo.SEPARATOR);
         List<Application> appList = studentController.myApplications();
         if (appList.isEmpty()) {
             System.out.println("No applications found.");
@@ -140,9 +150,10 @@ public class StudentUI {
 
         while (true) {
             System.out.println("Please select an action:");
-            System.out.println("0) Back to Main Menu");
-            System.out.println("1) Accept/Withdraw an Application");
-            System.out.println("Enter your choice (0/1/2): ");
+            System.out.println("\t0. Back to Main Menu");
+            System.out.println("\t1. Accept/Withdraw an Application");
+            System.out.println(GraphicLogo.SEPARATOR +"\n");
+            System.out.println("Enter your choice (0/1): ");
 
             choice = InputHelper.readInt();
             if (choice == 0) {
@@ -179,12 +190,13 @@ public class StudentUI {
 
         while (true){
             System.out.println("Please select an action:");
-            System.out.println("1) Accept Application");
-            System.out.println("2) Withdraw Application: ");
-            System.out.println("3) Back to Main Menu");
-            System.out.println("Enter your choice (1/2/3): ");
+            System.out.println("\t1. Accept Application");
+            System.out.println("\t2. Withdraw Application: ");
+            System.out.println("\t0. Back to Main Menu");
+            System.out.println(GraphicLogo.SEPARATOR +"\n");
+            System.out.println("Enter your choice (1/2/0): ");
             choice2 = InputHelper.readInt();
-            if (choice2 == 3) {
+            if (choice2 == 0) {
                 ChangePage.changePage();
                 throw new PageBackException();
             }
@@ -223,60 +235,17 @@ public class StudentUI {
      */
 
     /**
-     * Allow student to change their password
-     * Prompts them for old, new and confirm new password
-     */
-    private void handleChangePass(){
-        ChangePage.changePage();
-        boolean retry = true;
-
-        while (retry) {
-            ChangePage.changePage();
-            String oldPass = AttributeGetter.getPassword("Enter old password: ");
-            String newPass = AttributeGetter.getPassword("Enter new password: ");
-            String confirmPass = AttributeGetter.getPassword("Confirm new password: ");
-
-            try {
-                studentController.changePassword(oldPass, newPass, studentController.getStudent(), confirmPass);
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-                boolean validChoice = false;
-
-                while (validChoice) {
-                    System.out.println();
-                    System.out.println("1. Try again");
-                    System.out.println("2. Return to main menu");
-                    System.out.print("Enter choice (1 or 2): ");
-                    int choice = InputHelper.readInt();
-
-                    switch (choice) {
-                        case 1 -> validChoice = true; // retry outer loop
-                        case 2 -> {
-                            validChoice = true;
-                            throw new PageBackException();
-                        }
-                        default -> {
-                            System.out.println("Invalid choice. Please enter 1 or 2.");
-                            System.out.println();
-                        }
-                    }
-                }
-            }
-        InputHelper.pause();
-        throw new PageBackException();
-        }
-    }
-    /**
      * Allow student to change their filter options
      * Display their current filter options
      * Only can filter based on level and closing date as students are not allowed to see other internships which they are not eligible for
      */
     private void handleChangeFilter(){
         ChangePage.changePage();
-        System.out.println("===Update Filter Criteria===");
+        System.out.println("Update Filter Criteria");
+        System.out.println(GraphicLogo.SEPARATOR +"\n");
         FilterCriteria filter = studentController.getFilter();
 
-        System.out.println("\nCurrent Filter Criteria: ");
+        System.out.println("Current Filter Criteria: ");
         System.out.println("- Level:  " + filter.getLevel());
         System.out.println("- Closing Date: " + filter.getClosingDate());
         System.out.println("- Company Name: " + filter.getCompanyName());
@@ -284,17 +253,18 @@ public class StudentUI {
 
         boolean back = false;
         while (!back) {
-            System.out.println("1) Change Internship Level");
-            System.out.println("2) Change Closing Date");
-            System.out.println("3) Change Company Name");
-            System.out.println("4) Clear All Filters");
-            System.out.println("0) Back");
+            System.out.println("\t1. Change Internship Level");
+            System.out.println("\t2. Change Closing Date");
+            System.out.println("\t3. Change Company Name");
+            System.out.println("\t4. Clear All Filters");
+            System.out.println("\t0. Back");
+            System.out.println(GraphicLogo.SEPARATOR +"\n");
             System.out.print("Enter choice: ");
             int choice = InputHelper.readInt();
 
             if (choice == 1) {
                 System.out.println("Enter Internship Level: ");
-                System.out.println("1) BASIC\n2) INTERMEDIATE\n3) ADVANCED\n4) CLEAR");
+                System.out.println("1. BASIC\n2. INTERMEDIATE\n3. ADVANCED\n4. CLEAR");
                 System.out.println("Enter choice: ");
                 int choice2 = InputHelper.readInt();
 
