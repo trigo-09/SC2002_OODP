@@ -91,20 +91,16 @@ public class StaffUI {
     private void viewFilteredInternships(){
         int loop = 1;
         try {
-            ChangePage.changePage();
-            System.out.println("All Internships(Filtered)");
-            System.out.println(GraphicLogo.LONG_SEP);
-            List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
-            if (filteredList.isEmpty()) {
-                System.out.println("There is no internship opportunity");
-                InputHelper.pause();
-                throw new PageBackException();
-            }
-
             while (true) {
                 ChangePage.changePage();
                 System.out.println("All Internships(Filtered)");
                 System.out.println(GraphicLogo.LONG_SEP);
+                List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
+                if (filteredList.isEmpty()) {
+                    System.out.println("There is no internship opportunity");
+                    InputHelper.pause();
+                    throw new PageBackException();
+                }
                 DisplayableViewer.displayList(filteredList);
                 System.out.println("Please select action");
                 System.out.println("- Enter [1] if you would like to view applications of a certain internship opportunity");
@@ -181,25 +177,21 @@ public class StaffUI {
         int loop = 1; //indicates to go back to staff menu
         try {
             ChangePage.changePage();
-            List<? extends Request> pending = switch (requestType){
-                case "Rep Registration" -> staffController.viewPendingReg();
-                case "Internship Vetting" -> staffController.viewPendingInternshipVet();
-                case "Withdrawal" -> staffController.viewPendingWithdrawal();
-                default -> List.of();
-            };
-
-            System.out.println("All Pending " + requestType + " Requests");
-            System.out.println(GraphicLogo.LONG_SEP);
-            if (pending.isEmpty()) {
-                System.out.println("No " + requestType + " pending approval");
-                InputHelper.pause();
-                throw new PageBackException(); // goes back to the menu
-            }
-
             while (true){
                 ChangePage.changePage();
+                List<? extends Request> pending = switch (requestType){
+                    case "Rep Registration" -> staffController.viewPendingReg();
+                    case "Internship Vetting" -> staffController.viewPendingInternshipVet();
+                    case "Withdrawal" -> staffController.viewPendingWithdrawal();
+                    default -> List.of();
+                };
                 System.out.println("All Pending " + requestType + " Requests");
                 System.out.println(GraphicLogo.LONG_SEP);
+                if (pending.isEmpty()) {
+                    System.out.println("No " + requestType + " pending approval");
+                    InputHelper.pause();
+                    throw new PageBackException(); // goes back to the menu
+                }
                 DisplayableViewer.displayList(pending);
                 System.out.println("Please select action");
                 System.out.println("- Enter [1] to manage requests");
