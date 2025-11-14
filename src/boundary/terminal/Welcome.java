@@ -8,6 +8,8 @@ import util.io.GraphicLogo;
 
 /**
  * UI class to show welcome page of system
+ * Displaying menu to login, register or exit the system
+ * User is promopted for input and its validated before calling relevant methods
  */
 public class Welcome {
 

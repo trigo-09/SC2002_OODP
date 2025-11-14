@@ -18,6 +18,8 @@ public class LoginPageUI {
 
     /**
      * Displays a login page
+     * prompt user for userId and password
+     * show relavant error if there was any authentication issues or input validation error
      * @param controller system controller
      * @throws PageBackException if user wants to return
      */
@@ -65,6 +67,8 @@ public class LoginPageUI {
 
     /**
      * Display registration page
+     * promopt user to fill up each field 1 by 1 and validate the field
+     * display error if the user have already registered
      * @param controller system controller
      * @throws PageBackException if user want to exit
      */

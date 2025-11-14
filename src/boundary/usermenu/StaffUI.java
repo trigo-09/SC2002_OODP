@@ -15,19 +15,30 @@ import util.exceptions.PageBackException;
 import util.io.GraphicLogo;
 import util.io.InputHelper;
 import util.io.ChangePage;
-
 import java.util.List;
 
+/**
+ * The StaffUI class for staff UI
+ * It interacts with staff to manage internships and process request
+ */
 public class StaffUI {
 
     private final SystemController systemController;
     private final StaffController staffController;
 
+    /**
+     * Constructor for staffUI
+     * @param systemController systemController
+     * @param staffController staffController
+     */
     public StaffUI(SystemController systemController, StaffController staffController){
         this.systemController = systemController;
         this.staffController = staffController;
     }
 
+    /**
+     * main menu, show all broad actions for staff
+     */
     public void menuLoop() {
         ChangePage.changePage();
         System.out.println(GraphicLogo.SEPARATOR);
@@ -87,6 +98,12 @@ public class StaffUI {
 
     }
 
+    /**
+     * Displays a list of internships filtered based on filter set
+     * Functionality breakdown:
+     * - Displays the filtered internships list.
+     * - Provides options for the staff to view applications of a specific internship
+     */
     private void viewFilteredInternships(){
         int loop = 1;
         try {
@@ -132,6 +149,14 @@ public class StaffUI {
 
     }
 
+    /**
+     * Allows the user to view applications for a specified internship from a filtered list.
+     * Display the internships, and enable selection
+     * and retrieves approved application for processing
+     * Provides options to return to the previous menu or handle invalid inputs.
+     *
+     * @param filteredList the list of filtered internship
+     */
     private void viewApplications(List<InternshipOpportunity> filteredList){
         int index;
         while (true){
@@ -174,6 +199,15 @@ public class StaffUI {
 
     }
 
+    /**
+     * Displays a list of pending requests for a specified request type and
+     * manages the requests or returning to the main menu.
+     * depending on request type, it get the relevant requests
+     * and provides options for further actions.
+     *
+     * @param requestType the type of the requests to view, such as
+     *                    "Rep Registration", "Internship Vetting", or "Withdrawal"
+     */
     private void viewPendingReq(String requestType){
         int loop = 1; //indicates to go back to staff menu
         try {
@@ -225,6 +259,16 @@ public class StaffUI {
         }
     }
 
+    /**
+     * Processes the requests based on request type.
+     * The method continuously retrieves the list of pending requests of the specified type and
+     * allows the user to view details and choose to approve or reject and updates
+     * the status of selected requests accordingly.
+     *
+     * @param requestType the type of requests to manage, such as "Rep Registration",
+     *                    "Internship Vetting", or "Withdrawal". Determines the type of
+     *                    requests to fetch and the actions available for processing.
+     */
     private void approveRejectReq(String requestType){
         int index;
         while (true){

@@ -191,6 +191,16 @@ public class RepMenuUI {
     }
 
 
+     /**
+      * Handles toggling the visibility status of internship.
+      * Display approved internship and then prompts for selection, and allows toggling visibility between visible or hidden.
+      * Validations are performed and appropriate prompts are displayed for errors.
+      * The method performs the following steps:
+      * 1. Displays the approved internships after filtering.
+      * 2. select an internship
+      * 3. set the visibility to visible, hidden, or return
+      * 4. Updates the visibility
+      */
     private void handleVisibility() {
         ChangePage.changePage();
         List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
@@ -251,6 +261,18 @@ public class RepMenuUI {
 
     }
 
+     /**
+      * Handles UI for editing internship
+      *
+      * The method allows users to view, select, and edit specific internship opportunities from
+      * a filtered list of pending internships.
+      * the user can modify multiple
+      * fields such as the internship title, description, preferred major, opening date, closing date,
+      * available slots, or internship level.
+      * Changes are saved upon confirmation, and the updated
+      * internship data is validated and persisted.
+      *
+      */
     private void handleEditInternship() {
         ChangePage.changePage();
         List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
@@ -419,6 +441,16 @@ public class RepMenuUI {
         InputHelper.pause();
         handleEditInternship();
     }
+
+     /**
+      * manage internship applications, including displaying filtered internships, select an internship for application management, and processing
+      * applications
+      * 1. Displays a list of approved internships
+      * 2. select an internship
+      * 3.  view approved or pending applications
+      * 4. For pending applications, staff can process applications
+      * 5. Displays error messages for invalid inputs or any exceptions
+      */
      private void handleApplications() {
          ChangePage.changePage();
          List<InternshipOpportunity> filteredInternships = repController.getFilteredInternships(repController.getInternships(), repController.getFilter());
@@ -547,6 +579,14 @@ public class RepMenuUI {
          }
      }
 
+     /**
+      * Handles the deletion process for internship opportunities.
+      *
+      * 1. Checks if there are any internships available for deletion
+      * 2. Displays the list of delete-able internship
+      * 3. confirm the internship deletion or return to the menu.
+      *    - If confirmed, the internship is deleted
+      */
      private void manageDeleteInternship() {
         try{
             ChangePage.changePage();

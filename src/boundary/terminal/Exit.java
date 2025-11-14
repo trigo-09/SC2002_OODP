@@ -5,6 +5,7 @@ import util.io.GraphicLogo;
 
 /**
  * UI class to display exit page and end terminal
+ * terminal is stopped and system is killed
  */
 public class Exit {
     /**

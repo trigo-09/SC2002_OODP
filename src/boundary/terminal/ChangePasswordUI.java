@@ -8,7 +8,19 @@ import util.exceptions.PageBackException;
 import util.io.ChangePage;
 import util.io.InputHelper;
 
+/**
+ * This class is UI for change of user's password.
+ */
 public class ChangePasswordUI {
+
+    /**
+     * prompts user for old password, new password and confirm password.
+     * work with controller to validate old password and update new
+     * Display any exception or errors
+     * @param systemController the system controller to navigate back to the main menu if necessary
+     * @param userController the user controller used to handle the password change functionality
+     * @param user the user who is requesting the password change
+     */
     public static void handleChangePassword(SystemController systemController, UserController userController, User user){
         boolean retry = true;
 

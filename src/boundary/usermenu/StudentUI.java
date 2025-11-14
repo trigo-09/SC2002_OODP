@@ -34,7 +34,7 @@ public class StudentUI {
     }
 
     /**
-     * main menu, show all broad actions for user
+     * main menu, show all broad actions for student
      */
     public void menu() {
         ChangePage.changePage();
