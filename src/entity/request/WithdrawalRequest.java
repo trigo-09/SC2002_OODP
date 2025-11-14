@@ -59,7 +59,7 @@ public class WithdrawalRequest extends Request {
                 new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
                 new AsciiTableFormatter.Row("Reason", reason),
                 new AsciiTableFormatter.Row("Application ID", application.getApplicationId()),
-                new AsciiTableFormatter.Row("Current Application Status", placeholder)
+                new AsciiTableFormatter.Row("Application Status", placeholder)
         );
 
         String table = AsciiTableFormatter.formatTable(rows);
