@@ -130,7 +130,7 @@ public class SystemRepository implements IRepository, Serializable {
     public InternshipOpportunity findInternshipOpportunity(String internshipId) {
         return approvedReps.values().stream()
                 .flatMap(c -> c.getInternships().stream())
-                .filter(intern -> intern.getId().equals(internshipId.toLowerCase()))
+                .filter(intern -> intern.getId().equalsIgnoreCase(internshipId))
                 .findFirst()
                 .orElse(null);
     }

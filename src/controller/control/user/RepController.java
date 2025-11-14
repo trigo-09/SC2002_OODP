@@ -109,9 +109,13 @@ public class RepController extends UserController {
      * @throws IllegalArgumentException if the internship ID is invalid
      * @throws SecurityException        if the internship does not belong to this representative
      */
-	public List<Application> getApplications(String internshipId) {
+	public List<Application> getPendApplications(String internshipId) {
 		return internshipService.findInternshipById(internshipId).getPendingApplications();
 	}
+
+    public List<Application> getApproveApplications(String internshipId) {
+        return internshipService.findInternshipById(internshipId).getApprovedSlots();
+    }
 
 	/**
 	 * Retrieves all internship opportunities for the company representative.
@@ -155,7 +159,7 @@ public class RepController extends UserController {
             throw new MaxExceedException("Max number of approved slot have be filled");
         }
 		applicationService.reviewApplication(appId, true);
-        internshipService.addAcceptedApplicationToInternship(applicationService.findApplication(appId));
+        internshipService.addAcceptedApplicationToInternship(app);
 	}
 
 	/**
