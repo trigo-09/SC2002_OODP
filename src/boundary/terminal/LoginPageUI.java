@@ -1,7 +1,7 @@
 package boundary.terminal;
 
 
-import boundary.AttributeGetter;
+import util.AttributeGetter;
 import controller.control.SystemController;
 import java.io.IOException;
 import java.util.HashMap;

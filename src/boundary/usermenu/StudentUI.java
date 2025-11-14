@@ -1,6 +1,6 @@
 package boundary.usermenu;
 
-import boundary.AttributeGetter;
+import util.AttributeGetter;
 import boundary.terminal.ChangePasswordUI;
 import boundary.viewer.DisplayableViewer;
 import controller.control.SystemController;

@@ -1,6 +1,6 @@
 package boundary.terminal;
 
-import boundary.AttributeGetter;
+import util.AttributeGetter;
 import controller.control.SystemController;
 import controller.control.user.UserController;
 import entity.user.User;

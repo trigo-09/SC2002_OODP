@@ -2,6 +2,7 @@ package boundary;
 
 import entity.FilterCriteria;
 import entity.internship.*;
+import util.AttributeGetter;
 import util.io.ChangePage;
 import util.io.GraphicLogo;
 import util.io.InputHelper;

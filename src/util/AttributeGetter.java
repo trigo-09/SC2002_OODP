@@ -1,4 +1,4 @@
-package boundary;
+package util;
 
 import util.io.InputHelper;
 
