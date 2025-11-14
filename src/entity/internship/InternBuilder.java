@@ -3,6 +3,11 @@ package entity.internship;
 import java.time.LocalDate;
 import java.util.UUID;
 
+/**
+ * Builder class for creating an instance of {@link InternshipOpportunity}.
+ * This class utilizes the builder design pattern to simplify the creation and customization
+ * of {@code InternshipOpportunity} objects.
+ */
 public class InternBuilder {
 	private String id = UUID.randomUUID().toString();
 	private String companyName;

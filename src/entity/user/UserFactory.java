@@ -3,18 +3,28 @@ import util.PasswordHasher;
 
 import java.util.*;
 
+/**
+ * The UserFactory class provides a static factory method to create
+ * different types of users based on role. It encapsulates
+ * This class is not intended to be instantiated
+ */
 public class UserFactory {
 
     private UserFactory() {} //prevent instantiation of class
 
-	/**
-	 * 
-	 * @param role
-	 * @param id
-	 * @param name
-	 * @param Password
-	 * @param attributes containes other paramter required for users
-	 */
+    /**
+     * Creates a new user based on the provided role and attributes.
+     * type of user to create (Student, CareerStaff, or CompanyRep)
+     *
+     * @param role       the role of the user
+     * @param id         ID of user
+     * @param name       the name of the user
+     * @param Password   plain password which will be hashed
+     * @param attributes a map containing additional details required to construct the user;
+     * @return a User instance based on the provided role and attributes
+     * @throws IllegalArgumentException if the attributes map is null or empty
+     * @throws UnsupportedOperationException if the role is unsupported
+     */
 	public static User createUser(UserRole role, String id, String name, String Password, Map<String, String> attributes) {
         if(attributes == null || attributes.isEmpty()) {throw new IllegalArgumentException("attributes is null or empty");}
         String hashedPassword = PasswordHasher.hash(Password);

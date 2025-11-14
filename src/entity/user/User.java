@@ -3,6 +3,11 @@ package entity.user;
 import java.io.Serializable;
 
 
+/**
+ * Abstract class for user serving as the base class
+ * for different types of users and provides common attributes - name, ID,
+ * hashed password, and role
+ */
 public abstract class User implements Serializable {
 
     private String name;

@@ -1,5 +1,9 @@
 package entity.user;
 
+/**
+ * Represents a career staff
+ * extends the User class
+ */
 public class CareerStaff extends User {
 
 	private String staffDepartment;

@@ -1,8 +1,11 @@
 package entity.user;
-import entity.internship.InternStatus;
 import entity.internship.InternshipOpportunity;
 import java.util.*;
 
+/**
+ * Represents a company representative
+ * Extends the User class to inherit basic user attributes
+ */
 public class CompanyRep extends User {
 
 	private String department;

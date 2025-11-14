@@ -6,6 +6,9 @@ import util.io.AsciiTableFormatter;
 
 import java.util.*;
 
+/**
+ * Represents a student user
+ */
 public class Student extends User implements Displayable {
 
 	private final List<Application> applications;

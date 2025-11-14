@@ -10,6 +10,7 @@ import java.util.*;
 
 /**
  * Each rep contains internshipOpportunity and this class help create the object
+ * Contains the relevant beaviours such as adding application to pending list or moving it to approved
  */
 public class InternshipOpportunity implements Serializable, Displayable {
 
