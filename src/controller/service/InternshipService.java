@@ -69,6 +69,10 @@ public class InternshipService {
         return internship;
 	}
 
+    /**
+     * add internship to repo
+     * @param internship internship object
+     */
     public void addInternship(InternshipOpportunity internship){
         repository.addInternship(internship.getCreatedBy(),internship);
     }
@@ -146,9 +150,8 @@ public class InternshipService {
         if(internship.getStatus() == InternStatus.PENDING || internship.getStatus() == InternStatus.REJECTED) {
             rep.removeInternship(internship);
         }
-        boolean removed =rep.getInternships().removeIf(i->i.getId().equals(internshipId) && i.getStatus() == InternStatus.PENDING && i.getStatus() == InternStatus.FILLED );
-        if(!removed){
-            throw new SecurityException("Unable to remove internship");
+        else {
+            throw new SecurityException("Internship can not be removed");
         }
     }
 
@@ -168,6 +171,11 @@ public class InternshipService {
                 .toList();
     }
 
+    /**
+     * help to get pending internships from the list
+     * @param internList list of internship
+     * @return list of internship
+     */
     public List<InternshipOpportunity> getPendingInternships(List<InternshipOpportunity> internList){
         return internList.stream()
                 .filter(internship -> internship.getStatus() == InternStatus.PENDING)
@@ -175,9 +183,26 @@ public class InternshipService {
                 .toList();
     }
 
+    /**
+     * help to get approved internships from the list
+     * @param internList list of internship
+     * @return list of internship
+     */
     public List<InternshipOpportunity> getApprovedInternships(List<InternshipOpportunity> internList){
         return internList.stream()
                 .filter(internship -> internship.getStatus() == InternStatus.APPROVED)
+                .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
+                .toList();
+    }
+
+    /**
+     * help to get pending and rejected internships from the list
+     * @param internList list of internship
+     * @return list of internship
+     */
+    public List<InternshipOpportunity> getPendingRejectedInternships(List<InternshipOpportunity> internList){
+        return internList.stream()
+                .filter(internship-> internship.getStatus() == InternStatus.PENDING || internship.getStatus() == InternStatus.REJECTED)
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
                 .toList();
     }
