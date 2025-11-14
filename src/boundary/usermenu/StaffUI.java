@@ -56,9 +56,9 @@ public class StaffUI {
 
         System.out.println("\t5.  Update internship filter settings");
         System.out.println("\t6.  Change password");
-        System.out.println("\t7.  Logout");
+        System.out.println("\t0.  Logout");
         System.out.println(GraphicLogo.SEPARATOR + "\n");
-        System.out.print("Enter your choice (1-7): ");
+        System.out.print("Enter your choice (0-6): ");
 
         try {
             int choice = InputHelper.readInt();
@@ -72,7 +72,7 @@ public class StaffUI {
                     throw new PageBackException(); // so that it will loop
                 }
                 case 6 -> ChangePasswordUI.handleChangePassword(systemController, staffController, staffController.getStaff());
-                case 7 -> {
+                case 0 -> {
                     System.out.println("Logging out...");
                     systemController.mainMenu(); // return to Welcome screen
                 }
@@ -103,8 +103,9 @@ public class StaffUI {
                 }
                 DisplayableViewer.displayList(filteredList);
                 System.out.println("Please select action");
-                System.out.println("- Enter [1] if you would like to view applications of a certain internship opportunity");
-                System.out.println("- Enter [0] to return to main menu");
+                System.out.println("\t- Enter [1] if you would like to view applications of a certain internship opportunity");
+                System.out.println("\t- Enter [0] to return to main menu");
+                System.out.println(GraphicLogo.LONG_SEP + "\n");
                 System.out.print("Your choice: ");
 
                 int action = InputHelper.readInt();
@@ -140,8 +141,9 @@ public class StaffUI {
             System.out.println(GraphicLogo.LONG_SEP);
             DisplayableViewer.displayList(filteredList);
             System.out.println("Please choose internship");
-            System.out.println("- Enter the index of the internship you would like to view application");
-            System.out.println("- Enter [0] to return");
+            System.out.println("\t- Enter the index of the internship you would like to view application");
+            System.out.println("\t- Enter [0] to return");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.print("Your choice: ");
 
             index = InputHelper.readInt();
@@ -194,8 +196,9 @@ public class StaffUI {
                 }
                 DisplayableViewer.displayList(pending);
                 System.out.println("Please select action");
-                System.out.println("- Enter [1] to manage requests");
-                System.out.println("- Enter [0] to return to main menu");
+                System.out.println("\t- Enter [1] to manage requests");
+                System.out.println("\t- Enter [0] to return to main menu");
+                System.out.println(GraphicLogo.LONG_SEP + "\n");
                 System.out.print("Your choice: ");
 
                 int action = InputHelper.readInt();
@@ -243,8 +246,9 @@ public class StaffUI {
             DisplayableViewer.displayList(refreshedPending);
 
             System.out.println("Please choose request");
-            System.out.println("- Enter the index of the request to approve or reject");
-            System.out.println("- Enter [0] to return");
+            System.out.println("\t- Enter the index of the request to approve or reject");
+            System.out.println("\t- Enter [0] to return");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             System.out.print("Your choice: ");
 
             index = InputHelper.readInt();
@@ -261,9 +265,10 @@ public class StaffUI {
                     System.out.println(GraphicLogo.LONG_SEP);
                     DisplayableViewer.displaySingle(request);
                     System.out.println("Please select an action:");
-                    System.out.println("- Enter [1] to Reject");
-                    System.out.println("- Enter [2] to Approve");
-                    System.out.println("- Enter [0] to return");
+                    System.out.println("\t- Enter [1] to Reject");
+                    System.out.println("\t- Enter [2] to Approve");
+                    System.out.println("\t- Enter [0] to return");
+                    System.out.println(GraphicLogo.LONG_SEP + "\n");
                     System.out.print("Your choice: ");
                     int choice = InputHelper.readInt();
 
