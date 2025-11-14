@@ -38,7 +38,7 @@ public class StudentUI {
      */
     public void menu() {
         ChangePage.changePage();
-        System.out.print(GraphicLogo.SEPARATOR);
+        System.out.println(GraphicLogo.SEPARATOR);
         System.out.println("Welcome to Student Menu!");
         System.out.println("Hello, "+studentController.getStudent().getUserName()+"!\n");
         System.out.println("\t1. View / Apply Internships");
