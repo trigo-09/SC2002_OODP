@@ -2,8 +2,11 @@ package controller.service;
 
 import controller.database.*;
 import entity.application.*;
+import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.List;
+
+import entity.user.User;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectNotFoundException;
 import util.exceptions.UserNotFoundException;
@@ -50,6 +53,11 @@ public class ApplicationService {
             return new Application(user.getId(), internshipId);
         }
     }
+
+    public User getStudent(String studentId){
+        return systemRepository.findUser(studentId);
+    }
+
 
     /** 
      * Student accepts an approved application.

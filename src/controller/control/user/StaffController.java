@@ -15,6 +15,7 @@ import entity.request.WithdrawalRequest;
 import entity.user.CareerStaff;
 import java.util.*;
 import entity.FilterCriteria;
+import entity.user.User;
 
 /**
  * controller class for Career staff
@@ -143,6 +144,14 @@ public class StaffController extends UserController {
      */
 	public CareerStaff getStaff(){
 		return this.staff;
+	}
+
+	public User getStudentById(String studentId){
+		return applicationService.getStudent(studentId);
+	}
+
+	public InternshipOpportunity getInternshipById(String InternID){
+		return internshipService.findInternshipById(InternID);
 	}
 
 }

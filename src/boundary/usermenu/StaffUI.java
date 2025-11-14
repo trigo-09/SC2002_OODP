@@ -183,7 +183,7 @@ public class StaffUI {
                     } else {
                         System.out.println("Approved applications");
                         System.out.println(GraphicLogo.LONG_SEP);
-                        DisplayableViewer.displayList(applications);
+                        DisplayableViewer.displayList(applications, staffController);
                     }
                     InputHelper.pause();
                 } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
