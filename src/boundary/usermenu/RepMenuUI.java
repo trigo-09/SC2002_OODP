@@ -88,7 +88,7 @@ public class RepMenuUI {
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Error parsing internship level: " + e.getMessage());
-                System.out.print("Please try again");
+                System.out.println("Please try again");
                 System.out.printf("%-20s" ,"Level (Basic / Intermediate / Advanced):");
             }
         }
