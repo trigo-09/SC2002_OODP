@@ -151,9 +151,9 @@ public class RepMenuUI {
         while (choice != 0) {
             ChangePage.changePage();
             System.out.println("Your Internship Opportunities");
-            System.out.println(GraphicLogo.LONG_SEP + "\n");
+            System.out.println(GraphicLogo.LONG_SEP);
             if (filteredInternships.isEmpty()) {
-                System.out.println("(No opportunities yet)");
+                System.out.println("No internship opportunities yet");
                 InputHelper.pause();
                 return;
             }
@@ -556,7 +556,7 @@ public class RepMenuUI {
                 System.out.println("No pending Internships found for deletion...");
                 InputHelper.pause();
                 manageInternshipsUI();
-                return;
+                throw new PageBackException();
             }
             DisplayableViewer.displayList(pending);
             int index;
