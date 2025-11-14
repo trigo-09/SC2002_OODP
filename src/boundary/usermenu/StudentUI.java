@@ -98,7 +98,7 @@ public class StudentUI {
             System.out.println("\t0. Back to Main Menu");
             System.out.println("\t1. Apply for Internship");
             System.out.println(GraphicLogo.LONG_SEP + "\n");
-            System.out.println("Enter your choice (0/1): ");
+            System.out.print("Enter your choice (0/1): ");
             choice = InputHelper.readInt();
 
             if  (choice == 0) {
