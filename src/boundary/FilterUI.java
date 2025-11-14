@@ -3,6 +3,7 @@ package boundary;
 import entity.FilterCriteria;
 import entity.internship.*;
 import util.io.ChangePage;
+import util.io.GraphicLogo;
 import util.io.InputHelper;
 
 import java.time.LocalDate;
@@ -15,13 +16,15 @@ public class FilterUI {
         ChangePage.changePage();
         boolean back = false;
         while (!back) {
-            System.out.println("\n=== FILTER SETTINGS ===");
-            System.out.println("1) Change Status (" + display(filter.getStatus()) + ")");
-            System.out.println("2) Change Preferred Major (" + display(filter.getPreferredMajor()) + ")");
-            System.out.println("3) Change Internship Level (" + display(filter.getLevel()) + ")");
-            System.out.println("4) Change Closing Date (" + display(filter.getClosingDate()) + ")");
-            System.out.println("5) Clear All Filters");
-            System.out.println("0) Back");
+            System.out.println("FILTER SETTINGS");
+            System.out.println(GraphicLogo.SEPARATOR);
+            System.out.println("\t1. Change Status (" + display(filter.getStatus()) + ")");
+            System.out.println("\t2. Change Preferred Major (" + display(filter.getPreferredMajor()) + ")");
+            System.out.println("\t3. Change Internship Level (" + display(filter.getLevel()) + ")");
+            System.out.println("\t4. Change Closing Date (" + display(filter.getClosingDate()) + ")");
+            System.out.println("\t5. Clear All Filters");
+            System.out.println("\t0. Back");
+            System.out.println(GraphicLogo.SEPARATOR +"\n");
             System.out.print("Enter choice: ");
             int choice = InputHelper.readInt();
 
@@ -39,7 +42,7 @@ public class FilterUI {
 
     private static void updateStatus(FilterCriteria filter) {
         System.out.println("Select Status:");
-        System.out.println("1) PENDING\n2) APPROVED\n3) REJECTED\n4) FILLED\n5) CLEAR");
+        System.out.println("1. PENDING\n2. APPROVED\n3. REJECTED\n4. FILLED\n5. CLEAR");
         System.out.print("Enter choice: ");
         int choice = InputHelper.readInt();
 
@@ -65,7 +68,7 @@ public class FilterUI {
 
     private static void updateLevel(FilterCriteria filter) {
         System.out.println("Select Internship Level:");
-        System.out.println("1) BASIC\n2) INTERMEDIATE\n3) ADVANCED\n4) CLEAR");
+        System.out.println("1. BASIC\n2. INTERMEDIATE\n3. ADVANCED\n4. CLEAR");
         System.out.print("Enter choice: ");
         int choice = InputHelper.readInt();
 
