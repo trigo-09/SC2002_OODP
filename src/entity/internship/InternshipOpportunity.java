@@ -320,7 +320,6 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		String placeholder = "#".repeat(String.valueOf(status).length());
 
 		List<AsciiTableFormatter.Row> rows = List.of(
-				new AsciiTableFormatter.Row("Internship ID", id),
 				new AsciiTableFormatter.Row("Title", title),
 				new AsciiTableFormatter.Row("Company", companyName),
 				new AsciiTableFormatter.Row("Level", String.valueOf(level)),
