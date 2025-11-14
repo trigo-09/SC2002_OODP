@@ -2,6 +2,9 @@ package entity;
 
 import util.io.AsciiTableFormatter;
 
+/**
+ * The Displayable interface provides a structure for objects to be formatted into table for displaying
+ */
 public interface Displayable {
     String TOP_BORDER =
             "\u250C" + "\u2500".repeat(AsciiTableFormatter.TABLE_WIDTH - 2) + "\u2510";
