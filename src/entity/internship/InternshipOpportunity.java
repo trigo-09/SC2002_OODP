@@ -317,6 +317,8 @@ public class InternshipOpportunity implements Serializable, Displayable {
 				numOfSlots, approved, pending, open
 		);
 
+		String placeholder = "#".repeat(String.valueOf(status).length());
+
 		List<AsciiTableFormatter.Row> rows = List.of(
 				new AsciiTableFormatter.Row("Internship ID", id),
 				new AsciiTableFormatter.Row("Title", title),
@@ -326,7 +328,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 				new AsciiTableFormatter.Row("Description", description),
 				new AsciiTableFormatter.Row("Opening Date", String.valueOf(openingDate)),
 				new AsciiTableFormatter.Row("Closing Date", String.valueOf(closingDate)),
-				new AsciiTableFormatter.Row("Status", String.valueOf(status)),
+				new AsciiTableFormatter.Row("Status", placeholder),
 				new AsciiTableFormatter.Row("Visibility", (visibility != null && visibility) ? "Public" : "Hidden"),
 				new AsciiTableFormatter.Row("Slots", slotsSummary),
 				new AsciiTableFormatter.Row("Created By", createdBy)
@@ -334,7 +336,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 		);
 
 		String table = AsciiTableFormatter.formatTable(rows);
-		return table.replace(String.valueOf(status), status.coloredString());
+		return table.replace(placeholder, status.coloredString());
 	}
 
 }

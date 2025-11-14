@@ -47,17 +47,18 @@ public class RegistrationRequest extends Request {
      */
     @Override
     public String toString() {
+        String placeholder = "#".repeat(String.valueOf(companyRep.getStatus()).length());
         List<AsciiTableFormatter.Row> rows = List.of(
                 new AsciiTableFormatter.Row("Request Type", "Company Representative Registration"),
                 new AsciiTableFormatter.Row("Request ID", getId()),
                 new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
                 new AsciiTableFormatter.Row("Representative Name", companyRep.getUserName()),
                 new AsciiTableFormatter.Row("Company Name", companyRep.getCompanyName()),
-                new AsciiTableFormatter.Row("Current Status", String.valueOf(companyRep.getStatus()))
+                new AsciiTableFormatter.Row("Current Status", placeholder)
         );
 
         String table = AsciiTableFormatter.formatTable(rows);
-        return table.replace(String.valueOf(companyRep.getStatus()), companyRep.getStatus().coloredString());
+        return table.replace(placeholder, companyRep.getStatus().coloredString());
     }
 
 

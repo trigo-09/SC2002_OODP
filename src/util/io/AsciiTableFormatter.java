@@ -6,8 +6,8 @@ import java.util.List;
 public final class AsciiTableFormatter {
 
     public static final int TABLE_WIDTH = 80;
-    public static final int LABEL_WIDTH = 22;
-    public static final int VALUE_WIDTH = 51;
+    public static final int LABEL_WIDTH = 21;
+    public static final int VALUE_WIDTH = 52; // widths must add up to 73
 
 
     public static String formatTable(List<Row> rows) {
