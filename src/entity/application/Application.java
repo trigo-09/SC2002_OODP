@@ -75,15 +75,16 @@ public class Application implements Serializable, Displayable {
      */
 	@Override
 	public String toString() {
+		String placeholder = "#".repeat(String.valueOf(status).length());
 		List<AsciiTableFormatter.Row> rows = List.of(
 				new AsciiTableFormatter.Row("Application ID", applicationId),
 				new AsciiTableFormatter.Row("Student ID", studentId),
 				new AsciiTableFormatter.Row("Internship ID", internshipId),
-				new AsciiTableFormatter.Row("Status", String.valueOf(status))
+				new AsciiTableFormatter.Row("Status", placeholder)
 		);
 
 		String table = AsciiTableFormatter.formatTable(rows);
-		return table.replace(String.valueOf(status), status.coloredString());
+		return table.replace(placeholder, status.coloredString());
 	}
 
 }

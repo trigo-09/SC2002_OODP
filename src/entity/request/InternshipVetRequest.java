@@ -47,6 +47,7 @@ public class InternshipVetRequest extends Request {
      */
     @Override
     public String toString() {
+        String placeholder = "#".repeat(String.valueOf(internship.getStatus()).length());
         List<AsciiTableFormatter.Row> rows = List.of(
                 new AsciiTableFormatter.Row("Request Type", "Internship Vetting"),
                 new AsciiTableFormatter.Row("Request ID", getId()),
@@ -57,11 +58,11 @@ public class InternshipVetRequest extends Request {
                 new AsciiTableFormatter.Row("Level", String.valueOf(internship.getLevel())),
                 new AsciiTableFormatter.Row("Opening Date", String.valueOf(internship.getOpeningDate())),
                 new AsciiTableFormatter.Row("Closing Date", String.valueOf(internship.getClosingDate())),
-                new AsciiTableFormatter.Row("Current Status", String.valueOf(internship.getStatus()))
+                new AsciiTableFormatter.Row("Current Status", placeholder)
         );
 
         String table = AsciiTableFormatter.formatTable(rows);
-        return table.replace(String.valueOf(internship.getStatus()), internship.getStatus().coloredString());
+        return table.replace(placeholder, internship.getStatus().coloredString());
     }
 
 
