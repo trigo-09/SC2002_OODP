@@ -7,7 +7,11 @@ import entity.user.User;
 import entity.FilterCriteria;
 import util.exceptions.AuthenticationException;
 
-public class UserController {
+/**
+ * Base abstract class for user controls
+ * implements method for change of password
+ */
+public abstract class UserController {
 
 	protected AuthenticationService auth;
     protected FilterCriteria filter;
@@ -37,7 +41,7 @@ public class UserController {
      * @throws Exception if the confirmed pass do not match or the same password used again
      * @throws AuthenticationException if there is error in auth.changePassword
 	 */
-	public void changePassword(String oldPass, String newPass, User user, String confirmPas) throws Exception ,AuthenticationException {
+	public void changePassword(String oldPass, String newPass, User user, String confirmPas) throws AuthenticationException, IllegalArgumentException {
         if (!newPass.equals(confirmPas)) {
             throw new IllegalArgumentException("New Password and confirmation do not match");
         }

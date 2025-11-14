@@ -23,7 +23,7 @@ public class InputHelper {
             return value;
         } catch (Exception e) {
             System.out.println("Invalid input");
-            System.out.println("Please enter a valid integer");
+            System.out.print("Please enter a valid integer: ");
             sc.nextLine(); // clear bad input
             return readInt();
         }
@@ -56,6 +56,26 @@ public class InputHelper {
             catch (DateTimeParseException e) { System.out.println("Invalid date, use DD-MM-YYYY."); }
         }
     }
+    public static LocalDate readOpenDate() {
+        while (true) {
+            String in = readLine();
+            try { return LocalDate.parse(in, DMY); }
+            catch (DateTimeParseException e) {
+                System.out.println("Invalid date, use DD-MM-YYYY.");
+                System.out.print("Enter Opening Date (DD-MM-YYYY): ");
+            }
+        }
+    }
+    public static LocalDate readCloseDate() {
+        while (true) {
+            String in = readLine();
+            try { return LocalDate.parse(in, DMY); }
+            catch (DateTimeParseException e) {
+                System.out.println("Invalid date, use DD-MM-YYYY.");
+                System.out.print("Enter Opening Date (DD-MM-YYYY): ");
+            }
+        }
+    }
     
 
     public static LocalDate readOptionalDate() {
@@ -65,6 +85,27 @@ public class InputHelper {
         catch (DateTimeParseException e) {
             System.out.println("Invalid date, use DD-MM-YYYY or leave blank.");
             return readOptionalDate();
+        }
+    }
+    public static LocalDate readOptionalOpenDate() {
+        System.out.print("Open Date (DD-MM-YYYY) or leave blank to keep:");
+        String string = readLine();
+        if (string.isEmpty()) return null;
+        try { return LocalDate.parse(string, DMY); }
+        catch (DateTimeParseException e) {
+            System.out.println("Invalid date, use DD-MM-YYYY or leave blank.");
+            return readOptionalOpenDate();
+        }
+    }
+
+    public static LocalDate readOptionalCloseDate() {
+        System.out.print("Closing Date (DD-MM-YYYY) or leave blank to keep:");
+        String string = readLine();
+        if (string.isEmpty()) return null;
+        try { return LocalDate.parse(string, DMY); }
+        catch (DateTimeParseException e) {
+            System.out.println("Invalid date, use DD-MM-YYYY or leave blank.");
+            return readOptionalCloseDate();
         }
     }
     

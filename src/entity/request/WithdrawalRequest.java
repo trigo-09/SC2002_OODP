@@ -3,6 +3,9 @@ package entity.request;
 import controller.database.IRepository;
 import entity.application.Application;
 import entity.application.ApplicationStatus;
+import util.io.AsciiTableFormatter;
+
+import java.util.List;
 
 public class WithdrawalRequest extends Request {
 
@@ -49,20 +52,20 @@ public class WithdrawalRequest extends Request {
      */
     @Override
     public String toString() {
-        return String.format(
-                "Request Type: Withdrawal%n" +
-                        "Request ID: %s%n" +
-                        "Requester ID: %s%n" +
-                        "Reason: %s%n" +
-                        "Application ID: %s%n" +
-                        "Current Application Status: %s%n",
-                getId(),
-                getRequesterId(),
-                getReason(),
-                application.getApplicationId(),
-                application.getStatus()
+        String placeholder = "#".repeat(String.valueOf(application.getStatus()).length());
+        List<AsciiTableFormatter.Row> rows = List.of(
+                new AsciiTableFormatter.Row("Request Type", "Withdrawal"),
+                new AsciiTableFormatter.Row("Request ID", getId()),
+                new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
+                new AsciiTableFormatter.Row("Reason", reason),
+                new AsciiTableFormatter.Row("Application ID", application.getApplicationId()),
+                new AsciiTableFormatter.Row("Current Application Status", placeholder)
         );
+
+        String table = AsciiTableFormatter.formatTable(rows);
+        return table.replace(placeholder, application.getStatus().coloredString());
     }
+
 
 }
 

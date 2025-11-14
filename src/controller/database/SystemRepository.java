@@ -29,7 +29,6 @@ public class SystemRepository implements IRepository, Serializable {
 	 */
 	public void addApplication(String studentId,Application app) {
         students.get(studentId.toLowerCase()).addApplication(app);
-        findInternshipOpportunity(app.getInternshipId().toLowerCase()).addPendingApplication(app);
 	}
 
 	/**
@@ -131,7 +130,7 @@ public class SystemRepository implements IRepository, Serializable {
     public InternshipOpportunity findInternshipOpportunity(String internshipId) {
         return approvedReps.values().stream()
                 .flatMap(c -> c.getInternships().stream())
-                .filter(intern -> intern.getId().equals(internshipId.toLowerCase()))
+                .filter(intern -> intern.getId().equalsIgnoreCase(internshipId))
                 .findFirst()
                 .orElse(null);
     }

@@ -47,8 +47,7 @@ public class StudentController extends UserController {
 
     /**
      * Launches the student UI interface after log in
-     *
-     * @param systemController       shared controller class which allows student to navigate back to main menu
+     * @param systemController shared controller class which allows student to navigate back to main menu
      */
     public void launch(SystemController systemController) {
         StudentUI studentUI = new StudentUI(systemController, this);
@@ -74,7 +73,7 @@ public class StudentController extends UserController {
      * @throws IllegalArgumentException    if the internship ID is invalid
      * @throws IllegalStateException       if the internship has already been filled or the student is not eligible to apply
 	 */
-	public void applyInternship(String internshipId)  throws ObjectNotFoundException, MaxExceedException, UserNotFoundException {
+	public void applyInternship(String internshipId)  throws ObjectNotFoundException, MaxExceedException, UserNotFoundException, IllegalStateException {
         if (internshipService.findInternshipById(internshipId) == null) {
             throw new ObjectNotFoundException("Invalid internship ID: " + internshipId);
         }

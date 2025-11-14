@@ -1,7 +1,9 @@
 package entity.application;
 import entity.Displayable;
+import util.io.AsciiTableFormatter;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -73,15 +75,14 @@ public class Application implements Serializable, Displayable {
      */
 	@Override
 	public String toString() {
-		return String.format(
-				"Application ID: %s%n" +
-						"Student ID: %s%n" +
-						"Internship ID: %s%n" +
-						"Status: %s",
-				applicationId,
-				studentId,
-				internshipId,
-				status
+		String placeholder = "#".repeat(String.valueOf(status).length());
+		List<AsciiTableFormatter.Row> rows = List.of(
+				new AsciiTableFormatter.Row("Student ID", studentId),
+				new AsciiTableFormatter.Row("Status", placeholder)
 		);
+
+		String table = AsciiTableFormatter.formatTable(rows);
+		return table.replace(placeholder, status.coloredString());
 	}
+
 }

@@ -184,7 +184,7 @@ public class RequestService {
      * @param internshipId
      */
     public void deleteInternshipRequest(String internshipId) {
-       Request request = getPendingInternshipVet().stream().filter(i-> i.getInternship().getId().equals(internshipId)).findFirst().get();
+       Request request = getPendingInternshipVet().stream().filter(i-> i.getInternship().getId().equalsIgnoreCase(internshipId)).findFirst().get();
        repo.removeRequest(request.getId());
     }
 
