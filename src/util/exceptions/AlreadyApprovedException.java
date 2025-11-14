@@ -1,5 +1,8 @@
 package util.exceptions;
 
+/**
+ * Represents an exception that is thrown when someone tries to registers but the account exists and approved
+ */
 public class AlreadyApprovedException extends AuthenticationException {
     /**
      * Constructs a new {@code AlreadyRegisteredException} with a default detail message.

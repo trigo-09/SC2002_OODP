@@ -1,5 +1,9 @@
 package util.exceptions;
 
+/**
+ * Represents an exception that is thrown when a specific user cannot be found.
+ * Used in Login page and other user finding instance.
+ */
 public class UserNotFoundException extends AuthenticationException{
     /**
      * Constructs a new {@code UserNotFoundException} with a default detail message.

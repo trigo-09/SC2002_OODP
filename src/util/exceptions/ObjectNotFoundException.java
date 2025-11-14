@@ -1,5 +1,8 @@
 package util.exceptions;
 
+/**
+ * Represents an exception that is thrown when a requested object is not found.
+ */
 public class ObjectNotFoundException extends Exception {
       /**
      * Creates a new instance of the {@link ObjectNotFoundException} class with a default error message.

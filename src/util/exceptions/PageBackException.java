@@ -1,5 +1,8 @@
 package util.exceptions;
 
+/**
+ * Represents an exception that is thrown to simulate toggling to the previous page.
+ */
 public class PageBackException extends RuntimeException {
 
     /**
