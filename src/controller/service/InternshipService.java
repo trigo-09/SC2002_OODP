@@ -109,7 +109,7 @@ public class InternshipService {
      * @throws ObjectNotFoundException if the internship with the given ID does not exist
      * @throws SecurityException if the internship cannot be edited due to its current status
      */
-    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate, Integer slot, InternshipLevel level) throws ObjectNotFoundException {
+    public void editInternship(String internshipId,String title, String description, String preferredMajors, LocalDate openingDate, LocalDate closingDate, Integer slot, InternshipLevel level) throws ObjectNotFoundException,IllegalArgumentException {
         InternshipOpportunity internship = repository.findInternshipOpportunity(internshipId);
         if(internship == null) {throw new ObjectNotFoundException("Internship not found");}
         if(!ableToEditInternship(internship)) {throw new SecurityException("Internship can not be edited");}
@@ -119,7 +119,10 @@ public class InternshipService {
         if (description != null)     internship.setDescription(description);
         if (preferredMajors != null) internship.setPreferredMajors(preferredMajors);
         if (openingDate != null)     internship.setOpeningDate(openingDate);
-        if (closingDate != null)     internship.setClosingDate(closingDate);
+        if (closingDate != null){
+            if(closingDate.isBefore(internship.getOpeningDate())){internship.setClosingDate(closingDate);}
+             else throw new IllegalArgumentException("Closing date cannot be before opening date");
+        }
         if (slot != null)            internship.setNumOfSlots(slot);
         if (level != null)           internship.setLevel(level);
     }
