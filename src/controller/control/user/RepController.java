@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
+import entity.user.User;
 import util.exceptions.MaxExceedException;
 import util.exceptions.ObjectAlreadyExistsException;
 import util.exceptions.ObjectNotFoundException;
@@ -158,6 +159,10 @@ public class RepController extends UserController {
 		return internshipService.getApprovedInternships(internshipOpportunities);
 	}
 
+	public InternshipOpportunity getInternship(String InternID){
+		return internshipService.findInternshipById(InternID);
+	}
+
      /**
       * get all the internship qualified for deletion
       * @param internshipOpportunities list of internship
@@ -282,4 +287,8 @@ public class RepController extends UserController {
 	public void checkValidSlots(Integer slots, boolean allowNull) {
 		InternshipService.checkValidSlots(slots, allowNull);
 	}
+
+	public User getStudentById(String studentId){
+		return applicationService.getStudent(studentId);
+	 }
 }

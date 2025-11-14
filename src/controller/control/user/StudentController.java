@@ -14,6 +14,7 @@ import entity.internship.InternshipOpportunity;
 import entity.user.Student;
 import java.util.*;
 import entity.FilterCriteria;
+import entity.user.User;
 import util.exceptions.*;
 
 /**
@@ -139,5 +140,13 @@ public class StudentController extends UserController {
      */
     public Student getStudent(){
         return student;
+    }
+
+    public User getStudentById(String studentId){
+        return applicationService.getStudent(studentId);
+    }
+
+    public InternshipOpportunity getInternshipById(String InternID){
+        return internshipService.findInternshipById(InternID);
     }
 }
