@@ -200,7 +200,9 @@ public class RepController extends UserController {
 	 * @throws IllegalStateException    if the application has already been reviewed
 	 */
 	public void rejectApp(String appId) throws ObjectNotFoundException, MaxExceedException {
+        Application app = applicationService.findApplication(appId);
 		applicationService.reviewApplication(appId, false);
+        internshipService.removeApplicationFromInternship(app);
 	}
 
      /**
