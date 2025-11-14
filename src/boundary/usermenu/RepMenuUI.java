@@ -578,7 +578,7 @@ public class RepMenuUI {
          }
          int choice;
          while (true) {
-         System.out.print("1: Confirm Delete Application, 0: back: ");
+         System.out.print("1: Confirm Delete Internship, 0: back: ");
          choice = InputHelper.readInt();
          if (choice == 0) {
              deleteInternship(filteredInternships);
