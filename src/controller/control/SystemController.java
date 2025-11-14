@@ -19,7 +19,7 @@ import util.io.InputHelper;
 
 /**
  * Serve as pseudo singleton
- * coordinate the whole system
+ * coordinate the whole system and intialise all the required service and repository
  */
 public class SystemController {
 
@@ -73,7 +73,7 @@ public class SystemController {
             switch (user.getRole()) {
                 case STUDENT ->  new StudentController(auth, repo, request, internshipService, applicationService, (Student) user).launch(this);
 
-                case STAFF -> new StaffController(auth, repo, request, internshipService, applicationService, (CareerStaff) user).launch(this);
+                case STAFF -> new StaffController(auth, repo, request, internshipService, (CareerStaff) user).launch(this);
 
                 case REP ->   new RepController(auth, repo, request, (CompanyRep) user, internshipService, applicationService).launch(this);
             }

@@ -25,7 +25,6 @@ public class StaffController extends UserController {
 
 	private final CareerStaff staff;
 	private final InternshipService internshipService;
-    private final ApplicationService applicationService;
 
     /**
      * constructor of staff controller
@@ -33,14 +32,12 @@ public class StaffController extends UserController {
      * @param repository system repository
      * @param requestService request service
      * @param internshipService internship service
-     * @param applicationService application service
      * @param staff staff
      */
-	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,InternshipService internshipService, ApplicationService applicationService , CareerStaff staff){
+	public StaffController(AuthenticationService auth, IRepository repository, RequestService requestService,InternshipService internshipService, CareerStaff staff){
 		super(auth, repository, requestService);
 		this.staff = staff;
 		this.internshipService = internshipService;
-        this.applicationService = applicationService;
 
 	}
 
