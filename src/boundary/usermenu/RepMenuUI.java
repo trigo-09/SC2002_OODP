@@ -150,7 +150,7 @@ public class RepMenuUI {
         while (choice != 0) {
             ChangePage.changePage();
             System.out.println("Your Internship Opportunities");
-            System.out.println(GraphicLogo.SEPARATOR + "\n");
+            System.out.println(GraphicLogo.LONG_SEP + "\n");
             if (filteredInternships.isEmpty()) {
                 System.out.println("(No opportunities yet)");
                 InputHelper.pause();
@@ -191,7 +191,7 @@ public class RepMenuUI {
     private void handleVisibility(List<InternshipOpportunity> filteredInternships) {
         ChangePage.changePage();
         System.out.println("Toggle Internship Opportunities Visibility");
-        System.out.println(GraphicLogo.SEPARATOR);
+        System.out.println(GraphicLogo.LONG_SEP);
         List<InternshipOpportunity> approved = repController.getApprovedInternships(filteredInternships);
         if (approved.isEmpty()){
             System.out.println("No approved Internships found to toggle visibility...");
