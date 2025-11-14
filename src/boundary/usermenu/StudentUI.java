@@ -115,7 +115,7 @@ public class StudentUI {
         int index;
 
         while (true){
-            System.out.println("Select index of internship you want to apply for. (Enter [0] to go back to menu): ");
+            System.out.print("Select index of internship you want to apply for. (Enter [0] to go back to menu): ");
             index = InputHelper.readInt();
             if (index == 0) {
                 throw new PageBackException();
