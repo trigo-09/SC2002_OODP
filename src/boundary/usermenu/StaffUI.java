@@ -93,7 +93,7 @@ public class StaffUI {
         try {
             ChangePage.changePage();
             System.out.println("All Internships(Filtered)");
-            System.out.println(GraphicLogo.SEPARATOR);
+            System.out.println(GraphicLogo.LONG_SEP);
             List<InternshipOpportunity> filteredList = staffController.viewInternshipsFiltered(staffController.getFilter());
             if (filteredList.isEmpty()) {
                 System.out.println("There is no internship opportunity");
@@ -102,6 +102,8 @@ public class StaffUI {
             }
 
             while (true) {
+                System.out.println("All Internships(Filtered)");
+                System.out.println(GraphicLogo.LONG_SEP);
                 DisplayableViewer.displayList(filteredList);
                 System.out.println("Please select action");
                 System.out.println("- Enter [1] if you would like to view applications of a certain internship opportunity");
@@ -137,6 +139,8 @@ public class StaffUI {
         int index;
         while (true){
             ChangePage.changePage();
+            System.out.println("All Internships(Filtered)");
+            System.out.println(GraphicLogo.LONG_SEP);
             DisplayableViewer.displayList(filteredList);
             System.out.println("Please choose internship");
             System.out.println("- Enter the index of the internship you would like to view application");
@@ -148,32 +152,32 @@ public class StaffUI {
                 throw new PageBackException();
             }
             else if (index >= 1 && index <= filteredList.size()) {
-                break;
+                String internId = filteredList.get(index-1).getId();
+                try {
+                    List<Application> applications = staffController.getAcceptedApplications(internId);
+                    if (applications.isEmpty()) {
+                        System.out.println("(No applications yet)");
+                    } else {
+                        System.out.println("Approved applications");
+                        System.out.println(GraphicLogo.LONG_SEP);
+                        DisplayableViewer.displayList(applications);
+                    }
+                    InputHelper.pause();
+                } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
+                    System.out.println("Error retrieving applications: " + e.getMessage());
+                    InputHelper.pause();
+                }
             } else {
                 System.out.println("Invalid Choice. Please enter a valid index.");
                 InputHelper.pause();
             }
         }
 
-        String internId = filteredList.get(index-1).getId();
-        try {
-            List<Application> applications = staffController.getAcceptedApplications(internId);
-            if (applications.isEmpty()) {
-                System.out.println("(No applications yet)");
-                InputHelper.pause();
-                return;
-            } else {
-                DisplayableViewer.displayList(applications);
-            }
-            InputHelper.pause();
-        } catch (IllegalArgumentException | IllegalStateException | SecurityException e) {
-            System.out.println("Error retrieving applications: " + e.getMessage());
-            InputHelper.pause();
-        }
+
     }
 
     private void viewPendingReq(String requestType){
-        int loop = 1;
+        int loop = 1; //indicates to go back to staff menu
         try {
             ChangePage.changePage();
             List<? extends Request> pending = switch (requestType){
@@ -183,8 +187,8 @@ public class StaffUI {
                 default -> List.of();
             };
 
-            System.out.println("All " + requestType + " Requests");
-            System.out.println(GraphicLogo.SEPARATOR);
+            System.out.println("All Pending " + requestType + " Requests");
+            System.out.println(GraphicLogo.LONG_SEP);
             if (pending.isEmpty()) {
                 System.out.println("No " + requestType + " pending approval");
                 InputHelper.pause();
@@ -193,6 +197,8 @@ public class StaffUI {
 
             while (true){
                 ChangePage.changePage();
+                System.out.println("All Pending " + requestType + " Requests");
+                System.out.println(GraphicLogo.LONG_SEP);
                 DisplayableViewer.displayList(pending);
                 System.out.println("Please select action");
                 System.out.println("- Enter [1] to manage requests");
@@ -201,8 +207,8 @@ public class StaffUI {
 
                 int action = InputHelper.readInt();
                 if (action == 1){
-                    loop = -1;
-                    approveRejectReq(requestType, pending);
+                    loop = -1; // indicates to go back to req menu
+                    approveRejectReq(requestType);
                 }
                 else if (action == 0){
                     throw new PageBackException();
@@ -224,22 +230,27 @@ public class StaffUI {
         }
     }
 
-    private void approveRejectReq(String requestType, List<? extends Request> pending){
-        ChangePage.changePage();
-        System.out.println("All " + requestType + " Requests");
-        System.out.println(GraphicLogo.SEPARATOR);
-        if (pending.isEmpty()){
-            System.out.println("No " + requestType + " pending approval");
-            InputHelper.pause();
-            throw new PageBackException(); // goes back to the menu
-        }
-
+    private void approveRejectReq(String requestType){
         int index;
         while (true){
+            List<? extends Request> refreshedPending = switch (requestType){
+                case "Rep Registration" -> staffController.viewPendingReg();
+                case "Internship Vetting" -> staffController.viewPendingInternshipVet();
+                case "Withdrawal" -> staffController.viewPendingWithdrawal();
+                default -> List.of();
+            };
+            if (refreshedPending.isEmpty()){
+                throw new PageBackException(); // goes back to the menu
+            }
+
             ChangePage.changePage();
-            DisplayableViewer.displayList(pending);
+            System.out.println("All Pending " + requestType + " Requests");
+            System.out.println(GraphicLogo.LONG_SEP);
+
+            DisplayableViewer.displayList(refreshedPending);
+
             System.out.println("Please choose request");
-            System.out.println("- Enter the index of the request to continue");
+            System.out.println("- Enter the index of the request to approve or reject");
             System.out.println("- Enter [0] to return");
             System.out.print("Your choice: ");
 
@@ -247,75 +258,96 @@ public class StaffUI {
             if (index == 0){
                 throw new PageBackException();
             }
-            else if (index >= 1 && index <= pending.size()) {
-                break;
+            else if (index >= 1 && index <= refreshedPending.size()) {
+                Request request = refreshedPending.get(index-1);
+                String requestID = request.getId();
+
+                while (true) {
+                    ChangePage.changePage();
+                    System.out.println("Your chosen request");
+                    System.out.println(GraphicLogo.LONG_SEP);
+                    DisplayableViewer.displaySingle(request);
+                    System.out.println("Please select an action:");
+                    System.out.println("- Enter [1] to Reject");
+                    System.out.println("- Enter [2] to Approve");
+                    System.out.println("- Enter [0] to return");
+                    System.out.print("Your choice: ");
+                    int choice = InputHelper.readInt();
+
+                    if (choice == 0) {
+                        throw new PageBackException();
+                    } else if (choice == 1 || choice == 2) {
+                        try {
+                            if (request instanceof InternshipVetRequest) {
+                                if (choice == 1) {
+                                    staffController.rejectInternship(requestID);
+                                    ChangePage.changePage();
+                                    System.out.println("Updated Request");
+                                    System.out.println(GraphicLogo.LONG_SEP);
+                                    DisplayableViewer.displaySingle(request);
+                                }
+                                else {
+                                    staffController.approveInternship(requestID);
+                                    ChangePage.changePage();
+                                    System.out.println("Updated Request");
+                                    System.out.println(GraphicLogo.LONG_SEP);
+                                    DisplayableViewer.displaySingle(request);
+                                }
+                            } else if (request instanceof RegistrationRequest) {
+                                if (choice == 1) {
+                                    staffController.rejectRep(requestID);
+                                    ChangePage.changePage();
+                                    System.out.println("Updated Request");
+                                    System.out.println(GraphicLogo.LONG_SEP);
+                                    DisplayableViewer.displaySingle(request);
+                                }
+                                else {
+                                    staffController.approveRep(requestID);
+                                    ChangePage.changePage();
+                                    System.out.println("Updated Request");
+                                    System.out.println(GraphicLogo.LONG_SEP);
+                                    DisplayableViewer.displaySingle(request);
+                                }
+                            } else if (request instanceof WithdrawalRequest) {
+                                if (choice == 1) {
+                                    staffController.rejectWithdrawal(requestID);
+                                    ChangePage.changePage();
+                                    System.out.println("Updated Request");
+                                    System.out.println(GraphicLogo.LONG_SEP);
+                                    DisplayableViewer.displaySingle(request);
+                                }
+                                else {
+                                    staffController.approveWithdrawal(requestID);
+                                    ChangePage.changePage();
+                                    System.out.println("Updated Request");
+                                    System.out.println(GraphicLogo.LONG_SEP);
+                                    DisplayableViewer.displaySingle(request);
+                                }
+                            } else {
+                                System.out.println("Unknown request type.");
+                            }
+                            break; // exit while loop if they approve/rej or unknown type then go to pause
+
+                        } catch (Exception e) { //exceptions thrown by approve and reject methods
+                            System.out.println("ERROR: " + e.getMessage()); // stay in the loop
+                            InputHelper.pause();
+                        }
+                    } else {
+                        System.out.println("Please Enter [1] (Reject), [2] (Approve), or [0] (Back).");
+                        InputHelper.pause();
+                    } // stay in loop
+                }
+
+                InputHelper.pause();
             } else {
                 System.out.println("Invalid Choice. Please enter a valid index.");
                 InputHelper.pause();
             }
         }
 
-        Request request = pending.get(index-1);
-        String requestID = request.getId();
 
-        while (true) {
-            ChangePage.changePage();
-            DisplayableViewer.displaySingle(request);
-            System.out.println("Please select an action:");
-            System.out.println("- Enter [1] to Reject");
-            System.out.println("- Enter [2] to Approve");
-            System.out.println("- Enter [0] to return");
-            System.out.print("Your choice: ");
-            int choice = InputHelper.readInt();
 
-            if (choice == 0) {
-                throw new PageBackException();
-            } else if (choice == 1 || choice == 2) {
-                try {
-                    if (request instanceof InternshipVetRequest) {
-                        if (choice == 1) {
-                            staffController.rejectInternship(requestID);
-                            DisplayableViewer.displaySingle(request);
-                        }
-                        else {
-                            staffController.approveInternship(requestID);
-                            DisplayableViewer.displaySingle(request);
-                        }
-                    } else if (request instanceof RegistrationRequest) {
-                        if (choice == 1) {
-                            staffController.rejectRep(requestID);
-                            DisplayableViewer.displaySingle(request);
-                        }
-                        else {
-                            staffController.approveRep(requestID);
-                            DisplayableViewer.displaySingle(request);
-                        }
-                    } else if (request instanceof WithdrawalRequest) {
-                        if (choice == 1) {
-                            staffController.rejectWithdrawal(requestID);
-                            DisplayableViewer.displaySingle(request);
-                        }
-                        else {
-                            staffController.approveWithdrawal(requestID);
-                            DisplayableViewer.displaySingle(request);
-                        }
-                    } else {
-                        System.out.println("Unknown request type.");
-                    }
-                    break; // exit while loop if they approve/rej or unknown type then go to pause
 
-                } catch (Exception e) { //exceptions thrown by approve and reject methods
-                    System.out.println("ERROR: " + e.getMessage()); // stay in the loop
-                    InputHelper.pause();
-                }
-            } else {
-                System.out.println("Please Enter [1] (Reject), [2] (Approve), or [0] (Back).");
-                InputHelper.pause();
-            } // stay in loop
-        }
-
-        InputHelper.pause();
-        throw new PageBackException();
     }
 
 }

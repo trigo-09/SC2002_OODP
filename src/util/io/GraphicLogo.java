@@ -12,6 +12,8 @@ public class GraphicLogo {
      */
     public static final String SEPARATOR = "=".repeat(50);
 
+    public static final String LONG_SEP = "=".repeat(80);
+
     /**
      * Logo string to display ASCII exit LOGO
      */

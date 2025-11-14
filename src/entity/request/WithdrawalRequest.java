@@ -52,17 +52,18 @@ public class WithdrawalRequest extends Request {
      */
     @Override
     public String toString() {
+        String placeholder = "#".repeat(String.valueOf(application.getStatus()).length());
         List<AsciiTableFormatter.Row> rows = List.of(
                 new AsciiTableFormatter.Row("Request Type", "Withdrawal"),
                 new AsciiTableFormatter.Row("Request ID", getId()),
                 new AsciiTableFormatter.Row("Requester ID", getRequesterId()),
                 new AsciiTableFormatter.Row("Reason", reason),
                 new AsciiTableFormatter.Row("Application ID", application.getApplicationId()),
-                new AsciiTableFormatter.Row("Current Application Status", String.valueOf(application.getStatus()))
+                new AsciiTableFormatter.Row("Current Application Status", placeholder)
         );
 
         String table = AsciiTableFormatter.formatTable(rows);
-        return table.replace(String.valueOf(application.getStatus()), application.getStatus().coloredString());
+        return table.replace(placeholder, application.getStatus().coloredString());
     }
 
 
