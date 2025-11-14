@@ -39,7 +39,7 @@ public class ApplicationService {
      */
     public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException,IllegalArgumentException {
         // check eligibility
-        Student user = (Student) systemRepository.findUser(studentId);
+        Student user = (Student) getUserById(studentId);
         if (user == null) throw new UserNotFoundException("Invalid student ID: " + studentId);
 
         else if (user.getNumOfApplications() >= MAX_ACTIVE_APPLICATIONS) {
@@ -54,6 +54,11 @@ public class ApplicationService {
         }
     }
 
+    /**
+     *
+     * @param studentId student ID
+     * @return student object corresponding to the Id
+     */
     public User getUserById(String studentId){
         return systemRepository.findUser(studentId);
     }
@@ -152,6 +157,10 @@ public class ApplicationService {
         };
     }
 
+    /**
+     *
+     * @param application application object added the student application list
+     */
     public void addApplication(Application application) {
         systemRepository.addApplication(application.getStudentId(), application);
     }

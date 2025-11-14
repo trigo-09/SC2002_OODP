@@ -114,13 +114,18 @@ public class StaffController extends UserController {
 		return internshipService.getFilteredInternship(internships, filter);
 	}
 
+    /**
+     *
+     * @param internshipId internship id
+     * @return list of approved application for the given internship
+     */
 	public List<Application> getAcceptedApplications(String internshipId){
 		return internshipService.findInternshipById(internshipId).getApprovedSlots();
 	}
 
     /**
      *
-     * @return pending registration request
+     * @return  list pending registration request
      */
 	public List<RegistrationRequest> viewPendingReg(){
 		return getRequestService().getPendingRegistration();
@@ -150,12 +155,21 @@ public class StaffController extends UserController {
 		return this.staff;
 	}
 
+    /**
+     * @param studentId student id
+     * @return find the related student object and return as User type
+     */
 	public User getStudentById(String studentId){
 		return applicationService.getUserById(studentId);
 	}
 
-	public InternshipOpportunity getInternshipById(String InternID){
-		return internshipService.findInternshipById(InternID);
+    /**
+     *
+     * @param InternId internship Id
+     * @return the related internship object and return it
+     */
+	public InternshipOpportunity getInternshipById(String InternId){
+		return internshipService.findInternshipById(InternId);
 	}
 
 }

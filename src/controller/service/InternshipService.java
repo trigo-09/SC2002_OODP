@@ -360,15 +360,4 @@ public class InternshipService {
                 }
         }
 
-        /**
-         * Validates the opening and closing dates for an internship.
-         * @param opening Opening date of internship
-         * @param closing Closing date of internship
-         * @throws IllegalArgumentException if the closing date is before the opening date
-         */
-        public static void checkValidDates(LocalDate opening, LocalDate closing) {
-                if (opening != null && closing != null && closing.isBefore(opening)) {
-                        throw new IllegalArgumentException("Closing date cannot be before opening date");
-                }
-        }
 }

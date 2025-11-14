@@ -135,18 +135,27 @@ public class StudentController extends UserController {
 	}
 
     /**
-     *
-     * @return return student
+     * @return return student object
      */
     public Student getStudent(){
         return student;
     }
 
+    /**
+     *
+     * @param studentId student id
+     * @return find the related student object and return as User type
+     */
     public User getStudentById(String studentId){
         return applicationService.getUserById(studentId);
     }
 
-    public InternshipOpportunity getInternshipById(String InternID){
-        return internshipService.findInternshipById(InternID);
+    /**
+     *
+     * @param InternId internship Id
+     * @return the related internship object and return it
+     */
+    public InternshipOpportunity getInternshipById(String InternId){
+        return internshipService.findInternshipById(InternId);
     }
 }
