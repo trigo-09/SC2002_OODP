@@ -309,14 +309,6 @@ public class InternshipOpportunity implements Serializable, Displayable {
      */
 	@Override
 	public String toString() {
-		int approved = (approvedslots == null) ? 0 : approvedslots.size();
-		int pending = (pendingApplications == null) ? 0 : pendingApplications.size();
-		int open = Math.max(0, numOfSlots - approved);
-
-		String slotsSummary = String.format(
-				"%d total | %d approved | %d pending | %d open",
-				numOfSlots, approved, pending, open
-		);
 
 		String placeholder = "#".repeat(String.valueOf(status).length());
 
@@ -330,7 +322,7 @@ public class InternshipOpportunity implements Serializable, Displayable {
 				new AsciiTableFormatter.Row("Closing Date", String.valueOf(closingDate)),
 				new AsciiTableFormatter.Row("Internship Status", placeholder),
 				new AsciiTableFormatter.Row("Visibility", (visibility != null && visibility) ? "Public" : "Hidden"),
-				new AsciiTableFormatter.Row("Slots", slotsSummary),
+				new AsciiTableFormatter.Row("Slots", String.valueOf(numOfSlots)),
 				new AsciiTableFormatter.Row("Created By", createdBy)
 
 		);
