@@ -75,7 +75,7 @@ The system also creates .dat files during runtime to store persistent state.
 
 ## Team Members
 
-Mega
+Mega     
 Soren  
 Cristian  
 Cheng kiat  
