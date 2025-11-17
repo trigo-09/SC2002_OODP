@@ -9,11 +9,6 @@ import util.io.GraphicLogo;
  */
 public class Exit {
     /**
-     * prevent instantiation of Exit class
-     */
-    private Exit(){}
-
-    /**
      * display exit page and end terminal session
      */
     public static void exit() {
