@@ -10,8 +10,6 @@ import java.util.*;
  */
 public class UserFactory {
 
-    private UserFactory() {} //prevent instantiation of class
-
     /**
      * Creates a new user based on the provided role and attributes.
      * type of user to create (Student, CareerStaff, or CompanyRep)
