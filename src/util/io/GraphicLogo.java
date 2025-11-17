@@ -2,10 +2,6 @@ package util.io;
 
 // reference for logo -> https://fsymbols.com/generators/carty/
 public class GraphicLogo {
-    /**
-     * to prevent instantiation
-     */
-    private GraphicLogo() {}
 
     /**
      * create divider to be used
