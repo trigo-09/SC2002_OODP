@@ -7,7 +7,6 @@ import java.security.MessageDigest;
  */
 public class PasswordHasher {
 
-
     /**
      * Algorithm type
      */
