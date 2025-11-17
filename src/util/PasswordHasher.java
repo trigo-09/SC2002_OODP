@@ -7,7 +7,6 @@ import java.security.MessageDigest;
  */
 public class PasswordHasher {
 
-    private PasswordHasher() {} // to prevent instantiation
 
     /**
      * Algorithm type
