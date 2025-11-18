@@ -48,6 +48,8 @@ Navigate into the out folder and run:
     java Main
 
 The system will launch starting from the Welcome Page.
+Remember that system.dat file will be generated after your initial run.
+DO NOT DELETE THE FILE, YOU WILL LOSE YOUR PROGRESS
 
 ---
 
