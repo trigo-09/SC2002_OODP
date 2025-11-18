@@ -34,7 +34,7 @@ public class ApplicationService {
      * @param studentId the ID of the student
      * @param internshipId the ID of the internship opportunity
      * @throws UserNotFoundException if its invalid student id
-     * @throws IllegalStateException if the student applied for the internship already
+     * @throws IllegalStateException if the student applied for the internship already or have accepted application
      * @throws MaxExceedException if student exceed their max allowed applications
      */
     public Application apply(String studentId, String internshipId) throws MaxExceedException,UserNotFoundException,IllegalArgumentException {
