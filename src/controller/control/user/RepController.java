@@ -189,7 +189,7 @@ public class RepController extends UserController {
             throw new SecurityException("You can only review applications for your own internships.");
         }
         if (internshipService.isFilled(internship)) {
-            throw new MaxExceedException("Max number of approved slot have be filled");
+            throw new MaxExceedException("Internship have been filled");
         }
 		applicationService.reviewApplication(appId, true);
         internshipService.addAcceptedApplicationToInternship(app);
