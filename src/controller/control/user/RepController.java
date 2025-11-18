@@ -173,6 +173,7 @@ public class RepController extends UserController {
 	 * @throws IllegalArgumentException if the application ID is invalid
 	 * @throws SecurityException        if the application does not belong to this representative
 	 * @throws IllegalStateException    if the application has already been reviewed
+     * @throws MaxExceedException       if the number of approved slots have exceed the max allowed
 	 */
 	public void approveApp(String appId) throws ObjectNotFoundException,MaxExceedException,SecurityException,IllegalStateException {
         Application app = applicationService.findApplication(appId);
