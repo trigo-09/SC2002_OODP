@@ -181,6 +181,7 @@ public class RepController extends UserController {
         if (internship == null) {
             throw new ObjectNotFoundException("Invalid internship ID associated with application: " + app.getInternshipId());
         }
+        // Do not overfill the approved slots
         if (internship.getNumOfFilledSlots() == internship.getNumOfSlots()){
             throw new MaxExceedException("Max number of approved slot have be filled");
         }
