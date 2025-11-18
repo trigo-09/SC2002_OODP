@@ -50,7 +50,7 @@ public class ApplicationService {
             throw new IllegalStateException("Student has already applied for this internship.");
         }
         else if (systemRepository.applicationByStudent(studentId).stream()
-                .anyMatch(app -> app.getStatus() == ApplicationStatus.APPROVED)) {
+                .anyMatch(app -> app.getStatus() == ApplicationStatus.ACCEPTED)) {
             throw new IllegalStateException("Student has already approved for internship.");
         }
         else {
