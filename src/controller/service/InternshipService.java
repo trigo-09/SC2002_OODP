@@ -167,6 +167,7 @@ public class InternshipService {
                 .filter(internship -> filter.getPreferredMajor() == null ||filter.getPreferredMajor().equalsIgnoreCase(internship.getPreferredMajors()))
                 .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()) || internship.getClosingDate().isEqual(filter.getClosingDate()))
                 .filter(internship->filter.getCompanyName() == null ||filter.getCompanyName().equals(internship.getCompanyName()))
+                .filter(internship->filter.getLevel() == null ||filter.getLevel() == internship.getLevel())
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
                 .toList();
     }
