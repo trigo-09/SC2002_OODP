@@ -164,7 +164,7 @@ public class InternshipService {
 	public List<InternshipOpportunity> getFilteredInternship(List<InternshipOpportunity> internList, FilterCriteria filter) {
         return internList.stream()
                 .filter(internship -> filter.getStatus() == null || filter.getStatus() == internship.getStatus())
-                .filter(internship -> filter.getPreferredMajor() == null ||filter.getPreferredMajor().equals(internship.getPreferredMajors()))
+                .filter(internship -> filter.getPreferredMajor() == null ||filter.getPreferredMajor().equalsIgnoreCase(internship.getPreferredMajors()))
                 .filter(internship->filter.getClosingDate() == null || internship.getClosingDate().isBefore(filter.getClosingDate()) || internship.getClosingDate().isEqual(filter.getClosingDate()))
                 .filter(internship->filter.getCompanyName() == null ||filter.getCompanyName().equals(internship.getCompanyName()))
                 .sorted(Comparator.comparing(InternshipOpportunity::getTitle))
